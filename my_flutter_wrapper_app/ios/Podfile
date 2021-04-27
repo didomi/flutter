@@ -1,0 +1,6 @@
+
+target "Runner" do
+	use_frameworks!
+
+	pod "Didomi-XCFramework", "1.47.0"
+end
