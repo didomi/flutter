@@ -1,5 +1,5 @@
-name: flutter_plugin_test
-description: A new Flutter plugin.
+name: didomi_sdk
+description: Didomi CMP Plugin
 version: 0.0.1
 author:
 homepage:
@@ -28,10 +28,10 @@ flutter:
   plugin:
     platforms:
       android:
-        package: io.didomi.fluttersdk
-        pluginClass: FlutterPluginTestPlugin
+        package: io.didomi.didomi_sdk
+        pluginClass: DidomiSdkPlugin
       ios:
-        pluginClass: FlutterPluginTestPlugin
+        pluginClass: DidomiSdkPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

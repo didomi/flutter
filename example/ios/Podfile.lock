@@ -1,0 +1,22 @@
+PODS:
+  - didomi_sdk (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+
+DEPENDENCIES:
+  - didomi_sdk (from `.symlinks/plugins/didomi_sdk/ios`)
+  - Flutter (from `Flutter`)
+
+EXTERNAL SOURCES:
+  didomi_sdk:
+    :path: ".symlinks/plugins/didomi_sdk/ios"
+  Flutter:
+    :path: Flutter
+
+SPEC CHECKSUMS:
+  didomi_sdk: fa9ce3e4bcfcd780bf42f9761ff67d37f182d562
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+
+COCOAPODS: 1.10.1

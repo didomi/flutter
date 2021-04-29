@@ -1,6 +1,6 @@
-# flutter_plugin_test_example
+# didomi_sdk_example
 
-Demonstrates how to use the flutter_plugin_test plugin.
+Demonstrates how to use the didomi_sdk plugin.
 
 ## Getting Started
 

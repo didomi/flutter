@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
-import 'package:flutter_plugin_test/flutter_plugin_test.dart';
+import 'package:didomi_sdk/didomi_sdk.dart';
 
 void main() {
   runApp(MyApp());
@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      platformVersion = await FlutterPluginTest.platformVersion;
+      platformVersion = await DidomiSdk.platformVersion;
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -82,10 +82,20 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Future<void> _initialize() async {
+    String messageFromNative;
+    try {
+      final bool result = await DidomiSdk.initialize;
+      messageFromNative = 'Response from native: $result';
+    } on PlatformException catch (e) {
+      messageFromNative = "Failed: '${e.message}'.";
+    }
+  }
+
   Future<void> _getShouldConsentBeCollected() async {
     String messageFromNative;
     try {
-      final bool result = await FlutterPluginTest.getShouldConsentBeCollected;
+      final bool result = await DidomiSdk.getShouldConsentBeCollected;
       messageFromNative = 'Response from native: $result';
     } on PlatformException catch (e) {
       messageFromNative = "Failed: '${e.message}'.";
@@ -99,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _resetDidomi() async {
     String messageFromNative;
     try {
-      await FlutterPluginTest.resetDidomi;
+      await DidomiSdk.resetDidomi;
       messageFromNative = 'Native call OK';
     } on PlatformException catch (e) {
       messageFromNative = "Failed: '${e.message}'.";
@@ -109,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _showPreferences() async {
     String messageFromNative;
     try {
-      await FlutterPluginTest.showPreferences;
+      await DidomiSdk.showPreferences;
       messageFromNative = 'Native call OK';
     } on PlatformException catch (e) {
       messageFromNative = "Failed: '${e.message}'.";
@@ -124,7 +134,11 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Center(
-              child: Text('Running on: $_platformVersion\n')
+                child: Text('Running on: $_platformVersion\n')
+            ),
+            ElevatedButton(
+              child: Text('Initialize SDK'),
+              onPressed: _initialize,
             ),
             ElevatedButton(
               child: Text('Should Consent be collected?'),
