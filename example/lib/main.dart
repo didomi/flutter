@@ -55,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //static const platform = const MethodChannel('flutter_plugin_test');
   String _shouldConsentBeCollected = 'Should consent be collected?.';
   String _platformVersion = 'Unknown';
+  String _messageFromNative = '--';
 
   @override
   void initState() {
@@ -82,14 +83,32 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Future<void> updateMessageFromNative(String messageFromNative) async {
+    setState(() {
+      _messageFromNative = messageFromNative;
+    });
+  }
+
   Future<void> _initialize() async {
     String messageFromNative;
     try {
-      final bool result = await DidomiSdk.initialize;
-      messageFromNative = 'Response from native: $result';
+      await DidomiSdk.initialize;
+      messageFromNative = 'Response from native: OK';
     } on PlatformException catch (e) {
       messageFromNative = "Failed: '${e.message}'.";
     }
+    updateMessageFromNative(messageFromNative);
+  }
+
+  Future<void> _setupUI() async {
+    String messageFromNative;
+    try {
+      await DidomiSdk.setupUI;
+      messageFromNative = 'Response from native: OK';
+    } on PlatformException catch (e) {
+      messageFromNative = "Failed: '${e.message}'.";
+    }
+    updateMessageFromNative(messageFromNative);
   }
 
   Future<void> _getShouldConsentBeCollected() async {
@@ -100,6 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } on PlatformException catch (e) {
       messageFromNative = "Failed: '${e.message}'.";
     }
+    updateMessageFromNative(messageFromNative);
 
     setState(() {
       _shouldConsentBeCollected = messageFromNative;
@@ -114,6 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } on PlatformException catch (e) {
       messageFromNative = "Failed: '${e.message}'.";
     }
+    updateMessageFromNative(messageFromNative);
   }
 
   Future<void> _showPreferences() async {
@@ -124,6 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } on PlatformException catch (e) {
       messageFromNative = "Failed: '${e.message}'.";
     }
+    updateMessageFromNative(messageFromNative);
   }
 
   @override
@@ -136,9 +158,16 @@ class _MyHomePageState extends State<MyHomePage> {
             Center(
                 child: Text('Running on: $_platformVersion\n')
             ),
+            Center(
+                child: Text('Native message: $_messageFromNative\n')
+            ),
             ElevatedButton(
               child: Text('Initialize SDK'),
               onPressed: _initialize,
+            ),
+            ElevatedButton(
+              child: Text('Setup UI'),
+              onPressed: _setupUI,
             ),
             ElevatedButton(
               child: Text('Should Consent be collected?'),

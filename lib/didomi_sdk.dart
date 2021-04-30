@@ -22,13 +22,15 @@ class DidomiSdk {
     return result;
   }
 
-  static Future<bool> get resetDidomi async {
-    final bool result = await _channel.invokeMethod('resetDidomi');
-    return result;
+  static Future<void> get resetDidomi async {
+    await _channel.invokeMethod('resetDidomi');
   }
 
-  static Future<bool> get showPreferences async {
-    final bool result = await _channel.invokeMethod('showPreferences');
-    return result;
+  static Future<void> get showPreferences async {
+    await _channel.invokeMethod('showPreferences');
+  }
+
+  static Future<void> get setupUI async {
+    return await _channel.invokeMethod('setupUI');
   }
 }
