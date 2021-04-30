@@ -1,8 +1,3 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="io.didomi.didomi_sdk">
-    <application>
-        <activity
-            android:name=".DidomiActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
-    </application>
 </manifest>

@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Didomi Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -52,10 +52,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  //static const platform = const MethodChannel('flutter_plugin_test');
   String _shouldConsentBeCollected = 'Should consent be collected?.';
   String _platformVersion = 'Unknown';
   String _messageFromNative = '--';
+
+  TextEditingController _apiKeyController = TextEditingController(
+      text: "b5c8560d-77c7-4b1e-9200-954c0693ae1a");
+
+  TextEditingController _noticeIdController = TextEditingController(
+      text: "NDQxnJbk");
+
+  TextEditingController _languageController = TextEditingController();
+
+  bool _disableRemoteConfigValue = false;
 
   @override
   void initState() {
@@ -92,7 +101,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _initialize() async {
     String messageFromNative;
     try {
-      await DidomiSdk.initialize;
+      await DidomiSdk.initialize(
+          _apiKeyController.text,
+          disableDidomiRemoteConfig: _disableRemoteConfigValue,
+          languageCode: _languageController.text,
+          noticeId: _noticeIdController.text
+      );
       messageFromNative = 'Response from native: OK';
     } on PlatformException catch (e) {
       messageFromNative = "Failed: '${e.message}'.";
@@ -103,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _setupUI() async {
     String messageFromNative;
     try {
-      await DidomiSdk.setupUI;
+      await DidomiSdk.setupUI();
       messageFromNative = 'Response from native: OK';
     } on PlatformException catch (e) {
       messageFromNative = "Failed: '${e.message}'.";
@@ -114,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _getShouldConsentBeCollected() async {
     String messageFromNative;
     try {
-      final bool result = await DidomiSdk.getShouldConsentBeCollected;
+      final bool result = await DidomiSdk.shouldConsentBeCollected;
       messageFromNative = 'Response from native: $result';
     } on PlatformException catch (e) {
       messageFromNative = "Failed: '${e.message}'.";
@@ -129,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _resetDidomi() async {
     String messageFromNative;
     try {
-      await DidomiSdk.resetDidomi;
+      await DidomiSdk.reset();
       messageFromNative = 'Native call OK';
     } on PlatformException catch (e) {
       messageFromNative = "Failed: '${e.message}'.";
@@ -140,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _showPreferences() async {
     String messageFromNative;
     try {
-      await DidomiSdk.showPreferences;
+      await DidomiSdk.showPreferences();
       messageFromNative = 'Native call OK';
     } on PlatformException catch (e) {
       messageFromNative = "Failed: '${e.message}'.";
@@ -155,15 +169,43 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Center(
-                child: Text('Running on: $_platformVersion\n')
-            ),
-            Center(
-                child: Text('Native message: $_messageFromNative\n')
-            ),
+            Text('Running on: $_platformVersion\n'),
+            Text('Native message: $_messageFromNative\n'),
             ElevatedButton(
               child: Text('Initialize SDK'),
               onPressed: _initialize,
+            ),
+            Text('With parameters: \n'),
+            TextFormField(
+                controller: _apiKeyController,
+                decoration: InputDecoration(
+                    labelText: 'API Key'
+                )
+            ),
+            TextFormField(
+                controller: _noticeIdController,
+                decoration: InputDecoration(
+                    labelText: 'Notice id'
+                )
+            ),
+            TextFormField(
+                controller: _languageController,
+                decoration: InputDecoration(
+                    labelText: 'Language code'
+                )
+            ),
+            CheckboxListTile(
+              title: Text("Disable remote config"),
+              value: _disableRemoteConfigValue,
+              onChanged: (newValue) {
+                if (newValue != null) {
+                  setState(() {
+                    _disableRemoteConfigValue = newValue;
+                  });
+                }
+              },
+              controlAffinity: ListTileControlAffinity
+                  .leading, //  <-- leading Checkbox
             ),
             ElevatedButton(
               child: Text('Setup UI'),

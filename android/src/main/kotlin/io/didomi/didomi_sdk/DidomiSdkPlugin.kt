@@ -65,23 +65,7 @@ class DidomiSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "getPlatformVersion" -> result.success("Android ${android.os.Build.VERSION.RELEASE}")
 
-                "initialize" -> {
-                    val disableRemote = false
-                    currentActivity?.also {
-                        Didomi.getInstance().initialize(
-                                it.application,
-                                "b5c8560d-77c7-4b1e-9200-954c0693ae1a",
-                                null,
-                                null,
-                                null,
-                                disableRemote,
-                                "NDQxnJbk"
-                        )
-                        result.success(null)
-                    } ?: run {
-                        result.error("no_activity", "No activity available", null)
-                    }
-                }
+                "initialize" -> initializeSdk(call, result)
 
                 "setupUI" -> {
                     getFragmentActivity(result)?.also {
@@ -90,9 +74,9 @@ class DidomiSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     }
                 }
 
-                "getShouldConsentBeCollected" -> result.success(Didomi.getInstance().shouldConsentBeCollected())
+                "shouldConsentBeCollected" -> result.success(Didomi.getInstance().shouldConsentBeCollected())
 
-                "resetDidomi" -> {
+                "reset" -> {
                     Didomi.getInstance().reset()
                     result.success(null)
                 }
@@ -108,6 +92,24 @@ class DidomiSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             }
         } catch(e: Exception) {
             result.error("didomi_exception", "An error occured: ${e.message}", e)
+        }
+    }
+
+    fun initializeSdk(call: MethodCall, result: Result) {
+        currentActivity?.also {
+            Didomi.getInstance().initialize(
+                    it.application,
+                    call.argument("apiKey"),
+                    call.argument("localConfigurationPath"),
+                    call.argument("remoteConfigurationURL"),
+                    call.argument("providerId"),
+                    call.argument("disableDidomiRemoteConfig"),
+                    call.argument("languageCode"),
+                    call.argument("noticeId")
+            )
+            result.success(null)
+        } ?: run {
+            result.error("no_activity", "No activity available", null)
         }
     }
 
