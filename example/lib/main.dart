@@ -56,11 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
   String _platformVersion = 'Unknown';
   String _messageFromNative = '--';
 
-  TextEditingController _apiKeyController = TextEditingController(
-      text: "b5c8560d-77c7-4b1e-9200-954c0693ae1a");
+  TextEditingController _apiKeyController =
+      TextEditingController(text: "b5c8560d-77c7-4b1e-9200-954c0693ae1a");
 
-  TextEditingController _noticeIdController = TextEditingController(
-      text: "NDQxnJbk");
+  TextEditingController _noticeIdController =
+      TextEditingController(text: "NDQxnJbk");
 
   TextEditingController _languageController = TextEditingController();
 
@@ -101,12 +101,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _initialize() async {
     String messageFromNative;
     try {
-      await DidomiSdk.initialize(
-          _apiKeyController.text,
+      await DidomiSdk.initialize(_apiKeyController.text,
           disableDidomiRemoteConfig: _disableRemoteConfigValue,
           languageCode: _languageController.text,
-          noticeId: _noticeIdController.text
-      );
+          noticeId: _noticeIdController.text);
       messageFromNative = 'Response from native: OK';
     } on PlatformException catch (e) {
       messageFromNative = "Failed: '${e.message}'.";
@@ -164,67 +162,60 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text('Running on: $_platformVersion\n'),
-            Text('Native message: $_messageFromNative\n'),
-            ElevatedButton(
-              child: Text('Initialize SDK'),
-              onPressed: _initialize,
-            ),
-            Text('With parameters: \n'),
-            TextFormField(
-                controller: _apiKeyController,
-                decoration: InputDecoration(
-                    labelText: 'API Key'
-                )
-            ),
-            TextFormField(
-                controller: _noticeIdController,
-                decoration: InputDecoration(
-                    labelText: 'Notice id'
-                )
-            ),
-            TextFormField(
-                controller: _languageController,
-                decoration: InputDecoration(
-                    labelText: 'Language code'
-                )
-            ),
-            CheckboxListTile(
-              title: Text("Disable remote config"),
-              value: _disableRemoteConfigValue,
-              onChanged: (newValue) {
-                if (newValue != null) {
-                  setState(() {
-                    _disableRemoteConfigValue = newValue;
-                  });
-                }
-              },
-              controlAffinity: ListTileControlAffinity
-                  .leading, //  <-- leading Checkbox
-            ),
-            ElevatedButton(
-              child: Text('Setup UI'),
-              onPressed: _setupUI,
-            ),
-            ElevatedButton(
-              child: Text('Should Consent be collected?'),
-              onPressed: _getShouldConsentBeCollected,
-            ),
-            Text(_shouldConsentBeCollected),
-            ElevatedButton(
-              child: Text('Reset Didomi'),
-              onPressed: _resetDidomi,
-            ),
-            ElevatedButton(
-              child: Text('Show Preferences'),
-              onPressed: _showPreferences,
-            ),
-          ],
+    return SafeArea(
+      child: Material(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text('Running on: $_platformVersion\n'),
+              Text('Native message: $_messageFromNative\n'),
+              ElevatedButton(
+                child: Text('Initialize SDK'),
+                onPressed: _initialize,
+              ),
+              Text('With parameters: \n'),
+              TextFormField(
+                  controller: _apiKeyController,
+                  decoration: InputDecoration(labelText: 'API Key')),
+              TextFormField(
+                  controller: _noticeIdController,
+                  decoration: InputDecoration(labelText: 'Notice id')),
+              TextFormField(
+                  controller: _languageController,
+                  decoration: InputDecoration(labelText: 'Language code')),
+              CheckboxListTile(
+                title: Text("Disable remote config"),
+                value: _disableRemoteConfigValue,
+                onChanged: (newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      _disableRemoteConfigValue = newValue;
+                    });
+                  }
+                },
+                controlAffinity:
+                    ListTileControlAffinity.leading, //  <-- leading Checkbox
+              ),
+              ElevatedButton(
+                child: Text('Setup UI'),
+                onPressed: _setupUI,
+              ),
+              ElevatedButton(
+                child: Text('Should Consent be collected?'),
+                onPressed: _getShouldConsentBeCollected,
+              ),
+              Text(_shouldConsentBeCollected),
+              ElevatedButton(
+                child: Text('Reset Didomi'),
+                onPressed: _resetDidomi,
+              ),
+              ElevatedButton(
+                child: Text('Show Preferences'),
+                onPressed: _showPreferences,
+              ),
+            ],
+          ),
         ),
       ),
     );
