@@ -19,6 +19,11 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             result(Didomi.shared.shouldConsentBeCollected())
         case "setupUI":
             setupUI(result: result)
+        case "reset":
+            Didomi.shared.reset()
+            result(nil)
+        case "showPreferences":
+            showPreferences(result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -38,13 +43,20 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             disableDidomiRemoteConfig: args["disableDidomiRemoteConfig"] as! Bool,
             languageCode: args["languageCode"] as? String ?? nil,
             noticeId: args["noticeId"] as? String ?? nil)
-        result(1)
+        result(nil)
     }
     
     func setupUI(result: @escaping FlutterResult) {
         let viewController: UIViewController =
-            (UIApplication.shared.delegate?.window??.rootViewController)!;
+            (UIApplication.shared.delegate?.window??.rootViewController)!
         Didomi.shared.setupUI(containerController: viewController)
-        result(1)
+        result(nil)
+    }
+    
+    func showPreferences(result: @escaping FlutterResult) {
+        let viewController: UIViewController =
+            (UIApplication.shared.delegate?.window??.rootViewController)!
+        Didomi.shared.showPreferences(controller: viewController)
+        result(nil)
     }
 }
