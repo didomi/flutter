@@ -1,4 +1,4 @@
-package io.didomi.didomi_sdk_example
+package io.didomi.sample
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 
