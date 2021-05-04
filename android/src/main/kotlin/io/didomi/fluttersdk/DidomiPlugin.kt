@@ -1,4 +1,4 @@
-package io.didomi.didomi_sdk
+package io.didomi.fluttersdk
 
 import android.app.Activity
 import android.content.Intent
@@ -16,7 +16,7 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import androidx.fragment.app.FragmentActivity
 
 /** DidomiSdkPlugin */
-class DidomiSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
+class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it

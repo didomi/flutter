@@ -28,8 +28,8 @@ flutter:
   plugin:
     platforms:
       android:
-        package: io.didomi.didomi_sdk
-        pluginClass: DidomiSdkPlugin
+        package: io.didomi.fluttersdk
+        pluginClass: DidomiPlugin
       ios:
         pluginClass: DidomiSdkPlugin
 

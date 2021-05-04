@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.didomi.didomi_sdk_example">
+    package="io.didomi.sample">
    <application
-        android:label="didomi_sdk_example"
+        android:label="didomi_sample"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

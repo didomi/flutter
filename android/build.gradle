@@ -1,4 +1,4 @@
-group 'io.didomi.didomi_sdk'
+group 'io.didomi.fluttersdk'
 version '1.0-SNAPSHOT'
 
 buildscript {
