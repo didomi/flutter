@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 
 import 'package:didomi_sdk/didomi_sdk.dart';
 
+// @dart=2.9
 void main() {
   runApp(MyApp());
 }
@@ -173,6 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 child: Text('Initialize SDK'),
                 onPressed: _initialize,
+                key: Key('initialize'),
               ),
               Text('With parameters: \n'),
               TextFormField(
@@ -186,6 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   decoration: InputDecoration(labelText: 'Language code')),
               CheckboxListTile(
                 title: Text("Disable remote config"),
+                key: Key('disableRemoteConfig'),
                 value: _disableRemoteConfigValue,
                 onChanged: (newValue) {
                   if (newValue != null) {
@@ -199,19 +202,23 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(
                 child: Text('Setup UI'),
+                key: Key('setupUI'),
                 onPressed: _setupUI,
               ),
               ElevatedButton(
                 child: Text('Should Consent be collected?'),
+                key: Key('checkConsent'),
                 onPressed: _getShouldConsentBeCollected,
               ),
               Text(_shouldConsentBeCollected),
               ElevatedButton(
                 child: Text('Reset Didomi'),
+                key: Key('reset'),
                 onPressed: _resetDidomi,
               ),
               ElevatedButton(
                 child: Text('Show Preferences'),
+                key: Key('preferences'),
                 onPressed: _showPreferences,
               ),
             ],

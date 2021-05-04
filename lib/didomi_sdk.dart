@@ -12,12 +12,12 @@ class DidomiSdk {
 
   static Future<void> initialize(
       String apiKey,
-      { String? localConfigurationPath = null,
-        String? remoteConfigurationURL = null,
-        String? providerId = null,
+      { String? localConfigurationPath,
+        String? remoteConfigurationURL,
+        String? providerId,
         bool disableDidomiRemoteConfig = false,
-        String? languageCode = null,
-        String? noticeId = null}
+        String? languageCode,
+        String? noticeId}
         ) async {
     return await _channel.invokeMethod('initialize', {
       "apiKey": apiKey,
