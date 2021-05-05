@@ -1,0 +1,71 @@
+{
+    "app": {
+        "name": "Didomi x Flutter",
+        "vendors": {
+            "iab": {
+                "all": true,
+                "enabled": true,
+                "exclude": [],
+                "include": [],
+                "version": 2
+            },
+            "didomi": [
+                "amazon",
+                "twitter",
+                "salesforce",
+                "google",
+                "facebook"
+            ]
+        },
+        "privacyPolicyURL": "https://didomi.io/",
+        "gdprAppliesGlobally": true,
+        "gdprAppliesWhenUnknown": false,
+        "consentDuration": 31622400
+    },
+    "user": {
+        "bots": {
+            "consentRequired": false
+        }
+    },
+    "theme": {
+        "css": "",
+        "font": "Arial, sans-serif",
+        "color": "#CECECE",
+        "linkColor": "#999999",
+        "buttons": {
+            "regularButtons": {
+                "textColor": "#000000",
+                "borderColor": "#222222",
+                "borderWidth": "1",
+                "borderRadius": "3",
+                "backgroundColor": "#eeeeee"
+            },
+            "highlightButtons": {
+                "textColor": "#000000",
+                "borderColor": "#222222",
+                "borderWidth": "1",
+                "borderRadius": "3",
+                "backgroundColor": "#eeeeee"
+            }
+        }
+    },
+    "notice": {
+        "position": "bottom",
+        "closeOnClick": false,
+        "closeOnScroll": false,
+        "showDataProcessing": true,
+        "closeOnScrollThreshold": 0,
+        "daysBeforeShowingAgain": 350,
+        "closeOnScrollThresholdType": "",
+        "closeOnClickNavigationDelay": 0,
+        "type": "optin",
+        "denyAsLink": true,
+        "denyAppliesToLI": true
+    },
+    "languages": {
+        "default": "fr",
+        "enabled": [
+            "fr"
+        ]
+    }
+}
