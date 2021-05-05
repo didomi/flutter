@@ -30,6 +30,11 @@ class DidomiSdk {
     });
   }
 
+  static Future<bool> get isReady async {
+    final bool result = await _channel.invokeMethod('isReady');
+    return result;
+  }
+
   static Future<bool> get shouldConsentBeCollected async {
     final bool result = await _channel.invokeMethod('shouldConsentBeCollected');
     return result;
