@@ -34,13 +34,21 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for initialize", details: nil))
             return
         }
+        guard let apiKey = args["apiKey"] as? String else {
+            result(FlutterError.init(code: "invalid_args", message: "Missing argument apiKey", details: nil))
+            return
+        }
+        guard let disableDidomiRemoteConfig = args["disableDidomiRemoteConfig"] as? Bool else {
+            result(FlutterError.init(code: "invalid_args", message: "Missing argument disableDidomiRemoteConfig", details: nil))
+            return
+        }
         let didomi = Didomi.shared
         didomi.initialize(
-            apiKey: args["apiKey"] as! String,
+            apiKey: apiKey,
             localConfigurationPath: args["localConfigurationPath"] as? String ?? nil,
             remoteConfigurationURL: args["remoteConfigurationURL"] as? String ?? nil,
             providerId: args["providerId"] as? String ?? nil,
-            disableDidomiRemoteConfig: args["disableDidomiRemoteConfig"] as! Bool,
+            disableDidomiRemoteConfig: disableDidomiRemoteConfig,
             languageCode: args["languageCode"] as? String ?? nil,
             noticeId: args["noticeId"] as? String ?? nil)
         result(nil)
