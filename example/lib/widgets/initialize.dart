@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:didomi_sdk/didomi_sdk.dart';
 
+/// Widget to call DidomiSdk.initialize
+class Initialize extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _InitializeState();
+  }
+}
+
 class _InitializeState extends BaseSampleWidgetState<Initialize> {
 
   @override
@@ -68,12 +76,5 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
       ),
       buildResponseText(getActionId())
     ]);
-  }
-}
-
-class Initialize extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _InitializeState();
   }
 }

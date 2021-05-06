@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:didomi_sdk/didomi_sdk.dart';
 
+/// Widget to call DidomiSdk.shouldConsentBeCollected
+class CheckConsent extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _CheckConsentState();
+  }
+}
+
 class _CheckConsentState extends BaseSampleWidgetState<CheckConsent> {
 
   @override
@@ -19,12 +27,5 @@ class _CheckConsentState extends BaseSampleWidgetState<CheckConsent> {
   Future<String> callDidomiPlugin() async {
     final bool result = await DidomiSdk.shouldConsentBeCollected;
     return 'Result = $result';
-  }
-}
-
-class CheckConsent extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _CheckConsentState();
   }
 }

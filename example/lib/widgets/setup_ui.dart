@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:didomi_sdk/didomi_sdk.dart';
 
+/// Widget to call DidomiSdk.setupUI
+class SetupUI extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _SetupUIState();
+  }
+}
+
 class _SetupUIState extends BaseSampleWidgetState<SetupUI> {
 
   @override
@@ -19,12 +27,5 @@ class _SetupUIState extends BaseSampleWidgetState<SetupUI> {
   Future<String> callDidomiPlugin() async {
     await DidomiSdk.setupUI();
     return 'OK';
-  }
-}
-
-class SetupUI extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _SetupUIState();
   }
 }

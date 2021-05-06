@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:didomi_sdk/didomi_sdk.dart';
 
+/// Widget to call DidomiSdk.isReady
+class IsReady extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _IsReadyState();
+  }
+}
+
 class _IsReadyState extends BaseSampleWidgetState<IsReady> {
 
   @override
@@ -19,12 +27,5 @@ class _IsReadyState extends BaseSampleWidgetState<IsReady> {
   Future<String> callDidomiPlugin() async {
     final bool result = await DidomiSdk.isReady;
     return 'Result = $result';
-  }
-}
-
-class IsReady extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _IsReadyState();
   }
 }

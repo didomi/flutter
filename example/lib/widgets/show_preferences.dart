@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:didomi_sdk/didomi_sdk.dart';
 
+/// Widget to call DidomiSdk.showPreferences
+class ShowPreferences extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _ShowPreferencesState();
+  }
+}
+
 class _ShowPreferencesState extends BaseSampleWidgetState<ShowPreferences> {
 
   @override
@@ -19,12 +27,5 @@ class _ShowPreferencesState extends BaseSampleWidgetState<ShowPreferences> {
   Future<String> callDidomiPlugin() async {
     await DidomiSdk.showPreferences();
     return 'OK';
-  }
-}
-
-class ShowPreferences extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _ShowPreferencesState();
   }
 }

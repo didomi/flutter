@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:didomi_sdk/didomi_sdk.dart';
 
+/// Widget to call DidomiSdk.reset
+class Reset extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _ResetState();
+  }
+}
+
 class _ResetState extends BaseSampleWidgetState<Reset> {
 
   @override
@@ -19,12 +27,5 @@ class _ResetState extends BaseSampleWidgetState<Reset> {
   Future<String> callDidomiPlugin() async {
     await DidomiSdk.reset();
     return 'OK';
-  }
-}
-
-class Reset extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _ResetState();
   }
 }
