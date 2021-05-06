@@ -47,5 +47,15 @@ void main() {
       // Check SDK is ready at startup
       expect(await driver.getText(find.byValueKey("nativeResponse_isReady")), "Native message: Result = true\n");
     });
+
+    test('Setup UI', () async {
+      await driver.tap(setupUIBtnFinder);
+      // Check SDK is not ready at startup
+      expect(await driver.getText(find.byValueKey("nativeResponse_setupUI")), "Native message: OK\n");
+
+      await driver.tap(initializeBtnFinder);
+      await Future.delayed(Duration(seconds: 20), () {});
+      // TODO Check noticeDisplayed event
+    });
   });
 }

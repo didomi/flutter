@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 class DidomiSdk {
   static const MethodChannel _channel = const MethodChannel('didomi_sdk');
 
+  // TODO To remove
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
