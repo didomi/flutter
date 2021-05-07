@@ -2,6 +2,7 @@ import 'package:didomi_sdk_example/widgets/check_consent.dart';
 import 'package:didomi_sdk_example/widgets/initialize.dart';
 import 'package:didomi_sdk_example/widgets/is_ready.dart';
 import 'package:didomi_sdk_example/widgets/reset.dart';
+import 'package:didomi_sdk_example/widgets/sdk_events_logger.dart';
 import 'package:didomi_sdk_example/widgets/setup_ui.dart';
 import 'package:didomi_sdk_example/widgets/show_preferences.dart';
 import 'package:flutter/material.dart';
@@ -63,8 +64,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Material(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Didomi Flutter Demo'),
+      ),
+      body: Material(
         child: Center(
           child: ListView(
             children: [
@@ -75,6 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
               CheckConsent(),
               Reset(),
               ShowPreferences(),
+              SdkEventsLogger(),
             ],
           ),
         ),

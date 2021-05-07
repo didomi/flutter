@@ -1,9 +1,13 @@
 import 'dart:async';
 
+import 'package:didomi_sdk/events/events_handler.dart';
 import 'package:flutter/services.dart';
+
+import 'events/event_listener.dart';
 
 class DidomiSdk {
   static const MethodChannel _channel = const MethodChannel('didomi_sdk');
+  static EventsHandler _eventsHandler = EventsHandler();
 
   // TODO To remove
   static Future<String> get platformVersion async {
@@ -31,25 +35,40 @@ class DidomiSdk {
     });
   }
 
+  /// Check if Didomi SDK was successfully initialized
   static Future<bool> get isReady async {
     final bool result = await _channel.invokeMethod('isReady');
     return result;
   }
 
+  /// Check if user consent are partial or not set
   static Future<bool> get shouldConsentBeCollected async {
     final bool result = await _channel.invokeMethod('shouldConsentBeCollected');
     return result;
   }
 
+  /// Reset user consents
   static Future<void> reset() async {
     await _channel.invokeMethod('reset');
   }
 
+  /// Show the preferences screen
   static Future<void> showPreferences() async {
     await _channel.invokeMethod('showPreferences');
   }
 
+  /// Setup the UI and show the notice if needed
   static Future<void> setupUI() async {
     return await _channel.invokeMethod('setupUI');
+  }
+
+  /// Add listener to SDK events
+  static addEventListener(EventListener listener) {
+    _eventsHandler.addEventListener(listener);
+  }
+
+  /// Remove listener to SDK events
+  static removeEventListener(EventListener listener) {
+    _eventsHandler.removeEventListener(listener);
   }
 }

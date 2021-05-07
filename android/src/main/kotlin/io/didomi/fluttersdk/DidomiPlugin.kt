@@ -1,27 +1,27 @@
 package io.didomi.fluttersdk
 
 import android.app.Activity
-import android.content.Intent
 import androidx.annotation.NonNull
 import io.didomi.sdk.Didomi
 import io.didomi.sdk.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
+import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.PluginRegistry.Registrar
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import androidx.fragment.app.FragmentActivity
 
-/** DidomiSdkPlugin */
+/** 
+ * Didomi SDK Plugin
+ * */
 class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
-    /// The MethodChannel that will the communication between Flutter and native Android
-    ///
-    /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-    /// when the Flutter Engine is detached from the Activity
+
     private lateinit var channel: MethodChannel
+    private lateinit var eventChannel: EventChannel
+    private val eventStreamHandler = DidomiEventStreamHandler()
 
     /// The Activity used to interact with the Didomi SDK.
     ///
@@ -29,21 +29,25 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private var currentActivity: Activity? = null
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "didomi_sdk")
+        // TODO Remove this / Expose log methods
         Log.level = android.util.Log.VERBOSE
 
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "didomi_sdk")
+        eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "didomi_sdk/events")
+        eventChannel.setStreamHandler(eventStreamHandler)
         channel.setMethodCallHandler(this)
+
+        Didomi.getInstance().addEventListener(eventStreamHandler)
     }
 
     override fun onAttachedToActivity(activityPluginBinding: ActivityPluginBinding) {
         // Update the current activity
-        activityPluginBinding.activity?.also {
-            currentActivity = it
-        }
+        currentActivity = activityPluginBinding.activity
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
+        // TODO Release eventChannel.
     }
 
     override fun onDetachedFromActivity() {
@@ -97,7 +101,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
     }
 
-    fun initializeSdk(call: MethodCall, result: Result) {
+    private fun initializeSdk(call: MethodCall, result: Result) {
         currentActivity?.also {
             Didomi.getInstance().initialize(
                     it.application,
@@ -115,8 +119,10 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
     }
 
-    /// Get the current activity as FragmentActivity, or raise an error
-    fun getFragmentActivity(@NonNull result: Result): FragmentActivity? = currentActivity?.let {
+    /**
+     * Get the current activity as FragmentActivity, or raise an error
+     */
+    private fun getFragmentActivity(@NonNull result: Result): FragmentActivity? = currentActivity?.let {
         if (it is FragmentActivity) {
             it
         } else {
