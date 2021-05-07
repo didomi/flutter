@@ -7,6 +7,12 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         let channel = FlutterMethodChannel(name: "didomi_sdk", binaryMessenger: registrar.messenger())
         let instance = SwiftDidomiSdkPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
+        
+        let handler = DidomiEventStreamHandler()
+        Didomi.shared.addEventListener(listener: handler.eventListener)
+
+        let eventChannel = FlutterEventChannel(name: "didomi_sdk/events", binaryMessenger: registrar.messenger())
+        eventChannel.setStreamHandler(handler)
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
