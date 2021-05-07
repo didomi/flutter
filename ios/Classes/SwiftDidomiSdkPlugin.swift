@@ -15,6 +15,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             result("iOS " + UIDevice.current.systemVersion)
         case "initialize":
             initialize(call, result: result)
+        case "isReady":
+            result(Didomi.shared.isReady())
         case "shouldConsentBeCollected":
             result(Didomi.shared.shouldConsentBeCollected())
         case "setupUI":

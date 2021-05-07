@@ -74,6 +74,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     }
                 }
 
+                "isReady" -> result.success(Didomi.getInstance().isReady())
+
                 "shouldConsentBeCollected" -> result.success(Didomi.getInstance().shouldConsentBeCollected())
 
                 "reset" -> {
