@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:flutter/services.dart';
@@ -9,16 +8,14 @@ import 'package:didomi_sdk/constants.dart';
 class EventsHandler {
   static const EventChannel _eventChannel = EventChannel(eventsChannelName);
   List<EventListener> listeners = [];
+  List<Function()> onReadyCallbacks = [];
+  List<Function()> onErrorCallbacks = [];
 
   EventsHandler() {
     _eventChannel.receiveBroadcastStream().listen(handleDidomiEvent, onError: handleDidomiErrorEvent);
   }
 
   handleDidomiEvent(dynamic event) {
-    if (listeners.isEmpty) {
-      return;
-    }
-
     try {
       handleDecodedEvent(json.decode(event));
     } on FormatException catch(e) {
@@ -28,11 +25,24 @@ class EventsHandler {
 
   handleDecodedEvent(Map jsonEvent) {
     final String eventType = jsonEvent["type"].toString();
+    print("Received event : $eventType");
 
     switch(eventType) {
       case "onReady":
         for (var listener in listeners) {
           listener.onReady();
+        }
+        break;
+
+      case "onReadyCallback":
+        List<Function()> called = [];
+        for (var listenerFunction in onReadyCallbacks) {
+          listenerFunction();
+          called.add(listenerFunction);
+        }
+        // Make sure callbacks are only called once
+        for (var function in called) {
+          onReadyCallbacks.remove(function);
         }
         break;
 

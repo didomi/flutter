@@ -72,4 +72,9 @@ class DidomiSdk {
   static removeEventListener(EventListener listener) {
     _eventsHandler.removeEventListener(listener);
   }
+
+  static onReady(Function() callback) {
+    _eventsHandler.onReadyCallbacks.add(callback);
+    _channel.invokeMethod('onReady');
+  }
 }

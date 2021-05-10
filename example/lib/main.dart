@@ -1,6 +1,7 @@
 import 'package:didomi_sdk_example/widgets/check_consent.dart';
 import 'package:didomi_sdk_example/widgets/initialize.dart';
 import 'package:didomi_sdk_example/widgets/is_ready.dart';
+import 'package:didomi_sdk_example/widgets/on_ready.dart';
 import 'package:didomi_sdk_example/widgets/reset.dart';
 import 'package:didomi_sdk_example/widgets/sdk_events_logger.dart';
 import 'package:didomi_sdk_example/widgets/setup_ui.dart';
@@ -74,6 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Text('Running on: $_platformVersion\n'),
               IsReady(),
+              OnReady(),
               Initialize(),
               SetupUI(),
               CheckConsent(),

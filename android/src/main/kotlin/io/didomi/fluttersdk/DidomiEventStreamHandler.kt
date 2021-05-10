@@ -34,6 +34,10 @@ class DidomiEventStreamHandler: EventChannel.StreamHandler, EventListener() {
         sendEvent("onError", message = event.errorMessage)
     }
 
+    fun onReadyCallback() {
+        sendEvent("onReadyCallback")
+    }
+
     private fun sendEvent(eventType: String, message: String? = null) {
         val jsonEvent = JSONObject()
         jsonEvent.put("type", eventType)
