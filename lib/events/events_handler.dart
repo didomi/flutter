@@ -1,11 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:flutter/services.dart';
+import 'package:didomi_sdk/constants.dart';
 
 /// Handler for events emitted by native SDK
 class EventsHandler {
-  static const EventChannel _eventChannel = EventChannel("didomi_sdk/events");
+  static const EventChannel _eventChannel = EventChannel(eventsChannelName);
   List<EventListener> listeners = [];
 
   EventsHandler() {
@@ -16,8 +18,15 @@ class EventsHandler {
     if (listeners.isEmpty) {
       return;
     }
-    Map jsonEvent = json.decode(event);
 
+    try {
+      handleDecodedEvent(json.decode(event));
+    } on FormatException catch(e) {
+      print("Error while decoding event : $e");
+    }
+  }
+
+  handleDecodedEvent(Map jsonEvent) {
     final String eventType = jsonEvent["type"].toString();
 
     switch(eventType) {
@@ -26,11 +35,20 @@ class EventsHandler {
           listener.onReady();
         }
         break;
+
+      case "onError":
+        final String message = jsonEvent["message"].toString();
+        for (var listener in listeners) {
+          listener.onError(message);
+        }
+        break;
+
       case "onShowNotice":
         for (var listener in listeners) {
           listener.onShowNotice();
         }
         break;
+
       case "onHideNotice":
         for (var listener in listeners) {
           listener.onHideNotice();

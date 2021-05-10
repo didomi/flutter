@@ -4,9 +4,10 @@ import 'package:didomi_sdk/events/events_handler.dart';
 import 'package:flutter/services.dart';
 
 import 'events/event_listener.dart';
+import 'constants.dart';
 
 class DidomiSdk {
-  static const MethodChannel _channel = const MethodChannel('didomi_sdk');
+  static const MethodChannel _channel = const MethodChannel(methodsChannelName);
   static EventsHandler _eventsHandler = EventsHandler();
 
   // TODO To remove

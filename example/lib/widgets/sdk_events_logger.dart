@@ -19,6 +19,9 @@ class _SdkEventsLoggerState extends State<SdkEventsLogger> {
     listener.onReady = () {
       onEvent("SDK Ready");
     };
+    listener.onError = (message) {
+      onEvent("Error : $message");
+    };
     listener.onShowNotice = () {
       onEvent("Notice displayed");
     };
@@ -40,5 +43,11 @@ class _SdkEventsLoggerState extends State<SdkEventsLogger> {
   @override
   Widget build(BuildContext context) {
     return Text('SDK Events:\n$_sdkEvents\n');
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    DidomiSdk.removeEventListener(listener);
   }
 }

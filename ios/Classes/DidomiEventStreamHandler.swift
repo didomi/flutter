@@ -26,6 +26,9 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
         eventListener.onReady = { [unowned self] event in
             self.sendEvent(eventType: "onReady")
         }
+        eventListener.onError = { [unowned self] event in
+            self.sendEvent(eventType: "onError", message: event.descriptionText)
+        }
     }
         
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
@@ -38,7 +41,15 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
         return nil
     }
     
-    func sendEvent(eventType: String) {
-        eventSink?("{\"type\":\"\(eventType)\"}")
+    func sendEvent(eventType: String, message: String? = nil) {
+        let eventDictionary: NSMutableDictionary = NSMutableDictionary()
+        eventDictionary.setValue(eventType, forKey: "type")
+        if let message = message {
+            eventDictionary.setValue(message, forKey: "message")
+        }
+        if let jsonEvent = try? JSONSerialization.data(withJSONObject: eventDictionary) {
+            let jsonString = String(data: jsonEvent, encoding: String.Encoding.utf8)
+            eventSink?(jsonString)
+        }
     }
 }

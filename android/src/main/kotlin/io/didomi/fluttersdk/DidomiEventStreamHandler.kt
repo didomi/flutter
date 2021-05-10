@@ -1,10 +1,8 @@
 package io.didomi.fluttersdk
 
-import io.didomi.sdk.events.EventListener
-import io.didomi.sdk.events.HideNoticeEvent
-import io.didomi.sdk.events.ReadyEvent
-import io.didomi.sdk.events.ShowNoticeEvent
+import io.didomi.sdk.events.*
 import io.flutter.plugin.common.EventChannel
+import org.json.JSONObject
 
 /**
  * Handler for SDK events
@@ -28,11 +26,19 @@ class DidomiEventStreamHandler: EventChannel.StreamHandler, EventListener() {
         sendEvent("onHideNotice")
     }
 
-    override fun ready(event: ReadyEvent?) {
+    override fun ready(event: ReadyEvent) {
         sendEvent("onReady");
     }
 
-    private fun sendEvent(eventType: String) {
-        this.eventSink?.success("{\"type\":\"$eventType\"}")
+    override fun error(event: ErrorEvent) {
+        sendEvent("onError", message = event.errorMessage)
+    }
+
+    private fun sendEvent(eventType: String, message: String? = null) {
+        val jsonEvent = JSONObject()
+        jsonEvent.put("type", eventType)
+        message?.also { jsonEvent.put("message", it) }
+        val toString = jsonEvent.toString()
+        this.eventSink?.success(toString)
     }
 }

@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentActivity
 
 /** 
  * Didomi SDK Plugin
- * */
+ */
 class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private lateinit var channel: MethodChannel
@@ -47,7 +47,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
-        // TODO Release eventChannel.
+        eventChannel.setStreamHandler(null)
     }
 
     override fun onDetachedFromActivity() {
