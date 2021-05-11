@@ -42,7 +42,8 @@ class _SdkEventsLoggerState extends State<SdkEventsLogger> {
 
   @override
   Widget build(BuildContext context) {
-    return Text('SDK Events:\n$_sdkEvents\n');
+    return Text('SDK Events:\n$_sdkEvents\n',
+        key: Key("sdk_events_logger"));
   }
 
   @override
