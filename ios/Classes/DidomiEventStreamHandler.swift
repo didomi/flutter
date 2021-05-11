@@ -41,6 +41,10 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
         return nil
     }
     
+    func onReadyCallback() {
+        self.sendEvent(eventType: "onReadyCallback")
+    }
+    
     func sendEvent(eventType: String, message: String? = nil) {
         let eventDictionary: NSMutableDictionary = NSMutableDictionary()
         eventDictionary.setValue(eventType, forKey: "type")
