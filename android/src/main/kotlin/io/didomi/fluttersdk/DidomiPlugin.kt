@@ -98,6 +98,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     }
                 }
 
+                "hideNotice" -> Didomi.getInstance().hideNotice()
+
                 else -> result.notImplemented()
             }
         } catch(e: Exception) {

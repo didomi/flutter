@@ -12,10 +12,24 @@ import 'package:flutter/services.dart';
 import 'package:didomi_sdk/didomi_sdk.dart';
 
 void main() {
-  runApp(MyApp());
+  _startApp();
+}
+
+void _startApp() {
+  runApp(
+    MyApp(
+      // Start app with unique key so app is restarted after tests
+      key: UniqueKey(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
+
+  MyApp({
+    required Key key
+  })  : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -72,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Material(
         child: Center(
           child: ListView(
+            key: Key("components_list"),
             children: [
               Text('Running on: $_platformVersion\n'),
               IsReady(),

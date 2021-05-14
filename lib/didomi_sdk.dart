@@ -60,7 +60,12 @@ class DidomiSdk {
 
   /// Setup the UI and show the notice if needed
   static Future<void> setupUI() async {
-    return await _channel.invokeMethod('setupUI');
+    await _channel.invokeMethod('setupUI');
+  }
+
+  /// Hide the notice
+  static Future<void> hideNotice() async {
+    await _channel.invokeMethod('hideNotice');
   }
 
   /// Add listener to SDK events
