@@ -40,6 +40,9 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             result(nil)
         case "showPreferences":
             showPreferences(result: result)
+        case "hideNotice":
+            Didomi.shared.hideNotice()
+            result(nil)
         default:
             result(FlutterMethodNotImplemented)
         }

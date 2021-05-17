@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 
 void main() {
 
-  group('Didomi plugin', () {
+  group('Initialize', () {
     final componentsListFinder = find.byValueKey('components_list');
     final isReadyBtnFinder = find.byValueKey('isReady');
     final onReadyBtnFinder = find.byValueKey('onReady');
@@ -27,17 +27,13 @@ void main() {
       }
     });
 
-    test('Initialize SDK', () async {
-      await driver.tap(initializeBtnFinder);
-      expect(await driver.getText(find.byValueKey("nativeResponse_initialize")),
-          contains("Native message: OK"));
-    });
-
     test('Is ready', () async {
       await driver.tap(isReadyBtnFinder);
       // Check SDK is not ready at startup
-      expect(await driver.getText(find.byValueKey("nativeResponse_isReady")),
-          contains("Native message: Result = false"));
+      expect(
+          driver.getText(find.byValueKey("nativeResponse_isReady")).then((field) =>
+              expect(field, contains("Native message: Result = false"))),
+          completes);
 
       await driver.tap(initializeBtnFinder);
 
@@ -45,8 +41,10 @@ void main() {
 
       await driver.tap(isReadyBtnFinder);
       // Check SDK is ready afterwards
-      expect(await driver.getText(find.byValueKey("nativeResponse_isReady")),
-          contains("Native message: Result = true"));
+      expect(
+          driver.getText(find.byValueKey("nativeResponse_isReady")).then((field) =>
+            expect(field, contains("Native message: Result = true"))),
+          completes);
     });
   });
 
@@ -78,11 +76,16 @@ void main() {
       assert(noticeDisplayed == 'false');
 
       await driver.tap(setupUIBtnFinder);
-      expect(await driver.getText(find.byValueKey("nativeResponse_setupUI")), contains("Native message: OK"));
+      expect(
+          driver.getText(find.byValueKey("nativeResponse_setupUI")).then((field) =>
+              expect(field, contains("Native message: OK"))),
+          completes);
 
       await driver.tap(initializeBtnFinder);
       waitForSdkReady(driver, onReadyBtnFinder);
 
+      // We let some time for notice to be hidden
+      await Future.delayed(Duration(seconds: 2), () {});
       noticeDisplayed = await driver.requestData('isNoticeDisplayed');
       assert(noticeDisplayed == 'true');
     });
@@ -92,5 +95,8 @@ void main() {
 Future waitForSdkReady(FlutterDriver driver, SerializableFinder onReadyBtnFinder) async {
   await driver.tap(onReadyBtnFinder);
   await driver.waitFor(find.text("Native message: SDK is ready!\n"), timeout: Duration(seconds: 20));
-  expect(await driver.getText(find.byValueKey("nativeResponse_onReady")), contains("Native message: SDK is ready!"));
+  expect(
+      driver.getText(find.byValueKey("nativeResponse_onReady")).then((field) =>
+          expect(field, contains("Native message: SDK is ready!"))),
+      completes);
 }

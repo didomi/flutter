@@ -18,9 +18,10 @@ void main() {
 
   EventListener listener = EventListener();
   listener.onShowNotice = () {
-    // Flutter UI tests can not interact with native components
-    DidomiSdk.hideNotice();
     noticeDisplayed = true;
+    // Flutter UI tests can not interact with native components
+    // so we hide notice just after it is displayed
+    Future.delayed(const Duration(seconds: 1), () => DidomiSdk.hideNotice());
   };
   DidomiSdk.addEventListener(listener);
 
