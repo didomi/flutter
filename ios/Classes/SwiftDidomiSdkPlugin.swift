@@ -3,12 +3,22 @@ import UIKit
 import Didomi
 
 public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
+    
+    static var eventStreamHandler: DidomiEventStreamHandler? = nil
+    
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "didomi_sdk", binaryMessenger: registrar.messenger())
+        let channel = FlutterMethodChannel(name: Constants.methodsChannelName, binaryMessenger: registrar.messenger())
         let instance = SwiftDidomiSdkPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
-    }
+        
+        let eventStreamHandler = DidomiEventStreamHandler()
+        SwiftDidomiSdkPlugin.eventStreamHandler = eventStreamHandler
+        Didomi.shared.addEventListener(listener: eventStreamHandler.eventListener)
 
+        let eventChannel = FlutterEventChannel(name: Constants.eventsChannelName, binaryMessenger: registrar.messenger())
+        eventChannel.setStreamHandler(eventStreamHandler)
+    }
+    
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch(call.method) {
         case "getPlatformVersion":
@@ -17,6 +27,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             initialize(call, result: result)
         case "isReady":
             result(Didomi.shared.isReady())
+        case "onReady":
+            Didomi.shared.onReady {
+                SwiftDidomiSdkPlugin.eventStreamHandler?.onReadyCallback()
+            }
         case "shouldConsentBeCollected":
             result(Didomi.shared.shouldConsentBeCollected())
         case "setupUI":
@@ -26,6 +40,9 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             result(nil)
         case "showPreferences":
             showPreferences(result: result)
+        case "hideNotice":
+            Didomi.shared.hideNotice()
+            result(nil)
         default:
             result(FlutterMethodNotImplemented)
         }
