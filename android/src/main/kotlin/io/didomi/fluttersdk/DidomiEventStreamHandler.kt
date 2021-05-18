@@ -30,12 +30,16 @@ class DidomiEventStreamHandler: EventChannel.StreamHandler, EventListener() {
         sendEvent("onReady");
     }
 
+    fun onReadyCallback() {
+        sendEvent("onReadyCallback")
+    }
+
     override fun error(event: ErrorEvent) {
         sendEvent("onError", message = event.errorMessage)
     }
 
-    fun onReadyCallback() {
-        sendEvent("onReadyCallback")
+    fun onErrorCallback() {
+        sendEvent("onErrorCallback")
     }
 
     private fun sendEvent(eventType: String, message: String? = null) {

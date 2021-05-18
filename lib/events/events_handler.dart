@@ -40,7 +40,7 @@ class EventsHandler {
           listenerFunction();
           called.add(listenerFunction);
         }
-        // Make sure callbacks are only called once
+        // Make sure callbacks are called only once
         for (var function in called) {
           onReadyCallbacks.remove(function);
         }
@@ -50,6 +50,18 @@ class EventsHandler {
         final String message = jsonEvent["message"].toString();
         for (var listener in listeners) {
           listener.onError(message);
+        }
+        break;
+
+      case "onErrorCallback":
+        List<Function()> called = [];
+        for (var listenerFunction in onErrorCallbacks) {
+          listenerFunction();
+          called.add(listenerFunction);
+        }
+        // Make sure callbacks are called only once
+        for (var function in called) {
+          onErrorCallbacks.remove(function);
         }
         break;
 

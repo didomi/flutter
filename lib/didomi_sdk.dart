@@ -78,8 +78,16 @@ class DidomiSdk {
     _eventsHandler.removeEventListener(listener);
   }
 
+  /// Provide a function to be called once SDK is ready.
+  /// Automatically calls the function if SDK is already ready.
   static onReady(Function() callback) {
     _eventsHandler.onReadyCallbacks.add(callback);
     _channel.invokeMethod('onReady');
+  }
+
+  /// Provide a function to be called if SDK encounters an error
+  static onError(Function() callback) {
+    _eventsHandler.onErrorCallbacks.add(callback);
+    _channel.invokeMethod('onError');
   }
 }

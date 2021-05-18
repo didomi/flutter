@@ -1,15 +1,17 @@
-import 'package:didomi_sdk_example/widgets/check_consent.dart';
-import 'package:didomi_sdk_example/widgets/initialize.dart';
-import 'package:didomi_sdk_example/widgets/is_ready.dart';
-import 'package:didomi_sdk_example/widgets/on_ready.dart';
-import 'package:didomi_sdk_example/widgets/reset.dart';
-import 'package:didomi_sdk_example/widgets/sdk_events_logger.dart';
-import 'package:didomi_sdk_example/widgets/setup_ui.dart';
-import 'package:didomi_sdk_example/widgets/show_preferences.dart';
+import 'widgets/check_consent.dart';
+import 'widgets/initialize.dart';
+import 'widgets/is_ready.dart';
+import 'widgets/on_ready.dart';
+import 'widgets/reset.dart';
+import 'widgets/sdk_events_logger.dart';
+import 'widgets/setup_ui.dart';
+import 'widgets/show_preferences.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:didomi_sdk/didomi_sdk.dart';
+
+import 'widgets/on_error.dart';
 
 void main() {
   _startApp();
@@ -91,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Text('Running on: $_platformVersion\n'),
               IsReady(),
               OnReady(),
+              OnError(),
               Initialize(),
               SetupUI(),
               CheckConsent(),

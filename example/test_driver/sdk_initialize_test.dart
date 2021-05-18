@@ -70,7 +70,6 @@ void main() {
       }
     });
 
-
     test('Setup UI', () async {
       String noticeDisplayed = await driver.requestData('isNoticeDisplayed');
       assert(noticeDisplayed == 'false');

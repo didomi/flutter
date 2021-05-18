@@ -84,6 +84,10 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     eventStreamHandler.onReadyCallback()
                 }
 
+                "onError" -> Didomi.getInstance().onError {
+                    eventStreamHandler.onErrorCallback()
+                }
+
                 "shouldConsentBeCollected" -> result.success(Didomi.getInstance().shouldConsentBeCollected())
 
                 "reset" -> {
@@ -98,7 +102,10 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     }
                 }
 
-                "hideNotice" -> Didomi.getInstance().hideNotice()
+                "hideNotice" -> {
+                    Didomi.getInstance().hideNotice()
+                    result.success(null)
+                }
 
                 else -> result.notImplemented()
             }
