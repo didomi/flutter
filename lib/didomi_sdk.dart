@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'events/events_handler.dart';
-import 'package:didomi_sdk/type.dart';
+import 'package:didomi_sdk/log_level.dart';
 import 'package:flutter/services.dart';
 
 import 'events/event_listener.dart';
