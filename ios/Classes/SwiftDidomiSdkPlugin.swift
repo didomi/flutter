@@ -167,4 +167,20 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         Didomi.shared.setLogLevel(minLevel: args["minLevel"] as? UInt8 ?? 1)
         result(nil)
     }
+
+    /**
+     Method that allows to enable consent and legitimate interest for all the required purposes.
+     - Returns: **true** if consent status has been updated, **false** otherwise.
+     */
+    func setUserAgreeToAll(result: @escaping FlutterResult) {
+        result(Didomi.shared.setUserAgreeToAll())
+    }
+
+    /**
+     Method that allows to disable consent and legitimate interest for all the required purposes and vendors.
+     - Returns: **true** if consent status has been updated, **false** otherwise.
+     */
+    func setUserDisagreeToAll(result: @escaping FlutterResult) {
+        result(Didomi.shared.setUserDisagreeToAll())
+    }
 }

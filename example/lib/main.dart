@@ -1,18 +1,26 @@
 import 'dart:async';
 
 import 'package:didomi_sdk/didomi_sdk.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'widgets/check_consent.dart';
+import 'widgets/get_disabled_purpose_ids.dart';
+import 'widgets/get_disabled_vendor_ids.dart';
+import 'widgets/get_enabled_purpose_ids.dart';
+import 'widgets/get_enabled_vendor_ids.dart';
+import 'widgets/get_required_purpose_ids.dart';
+import 'widgets/get_required_vendor_ids.dart';
 import 'widgets/initialize.dart';
 import 'widgets/is_ready.dart';
 import 'widgets/on_ready.dart';
 import 'widgets/reset.dart';
 import 'widgets/sdk_events_logger.dart';
+import 'widgets/set_log_level.dart';
+import 'widgets/set_user_agree_to_all.dart';
+import 'widgets/set_user_disagree_to_all.dart';
 import 'widgets/setup_ui.dart';
 import 'widgets/show_preferences.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-import 'widgets/set_log_level.dart';
 
 import 'widgets/on_error.dart';
 
@@ -91,7 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             key: Key("components_list"),
             children: [
-              Text('Running on: $_platformVersion\n', textAlign: TextAlign.center),
+              Text('Running on: $_platformVersion\n',
+                  textAlign: TextAlign.center),
               IsReady(),
               OnReady(),
               OnError(),
@@ -101,6 +110,8 @@ class _MyHomePageState extends State<MyHomePage> {
               Reset(),
               ShowPreferences(),
               SetLogLevel(),
+              SetUserAgreeToAll(),
+              SetUserDisagreeToAll(),
               // Purposes
               Text('Purposes:'),
               GetDisabledPurposeIds(),

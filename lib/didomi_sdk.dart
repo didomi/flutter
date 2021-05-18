@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'events/events_handler.dart';
 import 'package:didomi_sdk/log_level.dart';
 import 'package:flutter/services.dart';
 
-import 'events/event_listener.dart';
 import 'constants.dart';
+import 'events/event_listener.dart';
 
 class DidomiSdk {
   static const MethodChannel _channel = const MethodChannel(methodsChannelName);
@@ -18,15 +17,13 @@ class DidomiSdk {
     return version;
   }
 
-  static Future<void> initialize(
-      String apiKey,
-      { String? localConfigurationPath,
-        String? remoteConfigurationURL,
-        String? providerId,
-        bool disableDidomiRemoteConfig = false,
-        String? languageCode,
-        String? noticeId}
-        ) async {
+  static Future<void> initialize(String apiKey,
+      {String? localConfigurationPath,
+      String? remoteConfigurationURL,
+      String? providerId,
+      bool disableDidomiRemoteConfig = false,
+      String? languageCode,
+      String? noticeId}) async {
     return await _channel.invokeMethod('initialize', {
       "apiKey": apiKey,
       "localConfigurationPath": localConfigurationPath,
@@ -125,12 +122,24 @@ class DidomiSdk {
 
   /// Get the IDs of the required vendors
   static Future<List<String>> get requiredVendorIds async {
-    final List<dynamic> result = await  _channel.invokeMethod('getRequiredVendorIds');
+    final List<dynamic> result = await _channel.invokeMethod('getRequiredVendorIds');
     return result.cast();
   }
 
   /// Set the minimum level of messages to log
   static setLogLevel(LogLevel minLevel) {
-    _channel.invokeMethod('setLogLevel', { "minLevel": minLevel.platformLevel });
+    _channel.invokeMethod('setLogLevel', {"minLevel": minLevel.platformLevel});
+  }
+
+  /// Enable all purposes and vendors for the user.
+  static Future<bool> setUserAgreeToAll() async {
+    final bool result = await _channel.invokeMethod('setUserAgreeToAll');
+    return result;
+  }
+
+  /// Update user status to disagree : disable consent and legitimate interest purposes, disable consent vendors, but still enable legitimate interest vendors.
+  static Future<bool> setUserDisagreeToAll() async {
+    final bool result = await _channel.invokeMethod('setUserDisagreeToAll');
+    return result;
   }
 }

@@ -125,6 +125,10 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "setLogLevel" -> setLogLevel(call, result)
 
+                "setUserAgreeToAll" -> setUserAgreeToAll(result)
+
+                "setUserDisagreeToAll" -> setUserDisagreeToAll(result)
+
                 else -> result.notImplemented()
             }
         } catch (e: Exception) {
@@ -253,5 +257,31 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun setLogLevel(@NonNull call: MethodCall, @NonNull result: Result) {
         Didomi.getInstance().setLogLevel(call.argument("minLevel") as? Int ?: 2)
         result.success(null)
+    }
+
+    /**
+     * Enable all purposes and vendors for the user.
+     * @return true if user consent status was updated, false otherwise.
+     */
+    private fun setUserAgreeToAll(@NonNull result: Result) {
+        try {
+            val consentHasBeenUpdated = Didomi.getInstance().setUserAgreeToAll()
+            result.success(consentHasBeenUpdated)
+        } catch (e: DidomiNotReadyException) {
+            result.error("setUserAgreeToAll", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Update user status to disagree : disable consent and legitimate interest purposes, disable consent vendors, but still enable legitimate interest vendors.
+     * @return true if user status was updated, false otherwise.
+     */
+    private fun setUserDisagreeToAll(@NonNull result: Result) {
+        try {
+            val consentHasBeenUpdated = Didomi.getInstance().setUserDisagreeToAll()
+            result.success(consentHasBeenUpdated)
+        } catch (e: DidomiNotReadyException) {
+            result.error("setUserDisagreeToAll", e.message.orEmpty(), e)
+        }
     }
 }
