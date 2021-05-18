@@ -1,10 +1,14 @@
 package io.didomi.fluttersdk
 
 import android.app.Activity
+
 import androidx.annotation.NonNull
+import androidx.fragment.app.FragmentActivity
+
 import io.didomi.sdk.Didomi
+import io.didomi.sdk.exceptions.DidomiNotReadyException
 import io.didomi.sdk.Log
-import io.flutter.embedding.engine.plugins.FlutterPlugin
+
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.EventChannel
@@ -12,9 +16,9 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import androidx.fragment.app.FragmentActivity
+import io.flutter.embedding.engine.plugins.FlutterPlugin
 
-/** 
+/**
  * Didomi SDK Plugin
  */
 class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -107,11 +111,23 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     result.success(null)
                 }
 
+                "getDisabledPurposeIds" -> getDisabledPurposeIds(result)
+
+                "getDisabledVendorIds" -> getDisabledVendorIds(result)
+
+                "getEnabledPurposeIds" -> getEnabledPurposeIds(result)
+
+                "getEnabledVendorIds" -> getEnabledVendorIds(result)
+
+                "getRequiredPurposeIds" -> getRequiredPurposeIds(result)
+
+                "getRequiredVendorIds" -> getRequiredVendorIds(result)
+
                 "setLogLevel" -> setLogLevel(call, result)
 
                 else -> result.notImplemented()
             }
-        } catch(e: Exception) {
+        } catch (e: Exception) {
             result.error("didomi_exception", "An error occured: ${e.message}", e)
         }
     }
@@ -119,14 +135,14 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun initializeSdk(call: MethodCall, result: Result) {
         currentActivity?.also {
             Didomi.getInstance().initialize(
-                    it.application,
-                    call.argument("apiKey"),
-                    call.argument("localConfigurationPath"),
-                    call.argument("remoteConfigurationURL"),
-                    call.argument("providerId"),
-                    call.argument("disableDidomiRemoteConfig"),
-                    call.argument("languageCode"),
-                    call.argument("noticeId")
+                it.application,
+                call.argument("apiKey"),
+                call.argument("localConfigurationPath"),
+                call.argument("remoteConfigurationURL"),
+                call.argument("providerId"),
+                call.argument("disableDidomiRemoteConfig"),
+                call.argument("languageCode"),
+                call.argument("noticeId")
             )
             result.success(null)
         } ?: run {
@@ -147,6 +163,78 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     } ?: run {
         result.error("no_activity", "No activity available", null)
         null
+    }
+
+    /**
+     * Get the IDs of the disabled purposes
+     */
+    private fun getDisabledPurposeIds(@NonNull result: Result) {
+        try {
+            val idSet = Didomi.getInstance().disabledPurposeIds
+            result.success(idSet.toList())
+        } catch (e: DidomiNotReadyException) {
+            result.error("getDisabledPurposeIds", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the IDs of the disabled vendors
+     */
+    private fun getDisabledVendorIds(@NonNull result: Result) {
+        try {
+            val idSet = Didomi.getInstance().disabledVendorIds
+            result.success(idSet.toList())
+        } catch (e: DidomiNotReadyException) {
+            result.error("getDisabledVendorIds", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the IDs of the enabled purposes
+     */
+    private fun getEnabledPurposeIds(@NonNull result: Result) {
+        try {
+            val idSet = Didomi.getInstance().enabledPurposeIds
+            result.success(idSet.toList())
+        } catch (e: DidomiNotReadyException) {
+            result.error("getEnabledPurposeIds", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the IDs of the enabled vendors
+     */
+    private fun getEnabledVendorIds(@NonNull result: Result) {
+        try {
+            val idSet = Didomi.getInstance().enabledVendorIds
+            result.success(idSet.toList())
+        } catch (e: DidomiNotReadyException) {
+            result.error("getEnabledVendorIds", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the IDs of the required purposes
+     */
+    private fun getRequiredPurposeIds(@NonNull result: Result) {
+        try {
+            val idSet = Didomi.getInstance().requiredPurposeIds
+            result.success(idSet.toList())
+        } catch (e: DidomiNotReadyException) {
+            result.error("getRequiredPurposeIds", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the IDs of the required vendors
+     */
+    private fun getRequiredVendorIds(@NonNull result: Result) {
+        try {
+            val idSet = Didomi.getInstance().requiredVendorIds
+            result.success(idSet.toList())
+        } catch (e: DidomiNotReadyException) {
+            result.error("getRequiredVendorIds", e.message.orEmpty(), e)
+        }
     }
 
     /**

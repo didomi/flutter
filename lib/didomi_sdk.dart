@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'events/events_handler.dart';
 import 'package:didomi_sdk/log_level.dart';
@@ -90,6 +91,42 @@ class DidomiSdk {
   static onError(Function() callback) {
     _eventsHandler.onErrorCallbacks.add(callback);
     _channel.invokeMethod('onError');
+  }
+
+  /// Get the IDs of the disabled purposes
+  static Future<List<String>> get disabledPurposeIds async {
+    final List<dynamic> result = await _channel.invokeMethod('getDisabledPurposeIds');
+    return result.cast();
+  }
+
+  /// Get the IDs of the disabled vendors
+  static Future<List<String>> get disabledVendorIds async {
+    final List<dynamic> result = await _channel.invokeMethod('getDisabledVendorIds');
+    return result.cast();
+  }
+
+  /// Get the IDs of the enabled purposes
+  static Future<List<String>> get enabledPurposeIds async {
+    final List<dynamic> result = await _channel.invokeMethod('getEnabledPurposeIds');
+    return result.cast();
+  }
+
+  /// Get the IDs of the enabled vendors
+  static Future<List<String>> get enabledVendorIds async {
+    final List<dynamic> result = await _channel.invokeMethod('getEnabledVendorIds');
+    return result.cast();
+  }
+
+  /// Get the IDs of the required purposes
+  static Future<List<String>> get requiredPurposeIds async {
+    final List<dynamic> result = await _channel.invokeMethod('getRequiredPurposeIds');
+    return result.cast();
+  }
+
+  /// Get the IDs of the required vendors
+  static Future<List<String>> get requiredVendorIds async {
+    final List<dynamic> result = await  _channel.invokeMethod('getRequiredVendorIds');
+    return result.cast();
   }
 
   /// Set the minimum level of messages to log

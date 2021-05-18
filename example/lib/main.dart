@@ -88,9 +88,10 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Material(
         child: Center(
           child: ListView(
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             key: Key("components_list"),
             children: [
-              Text('Running on: $_platformVersion\n'),
+              Text('Running on: $_platformVersion\n', textAlign: TextAlign.center),
               IsReady(),
               OnReady(),
               OnError(),
@@ -99,8 +100,19 @@ class _MyHomePageState extends State<MyHomePage> {
               CheckConsent(),
               Reset(),
               ShowPreferences(),
-              SdkEventsLogger(),
               SetLogLevel(),
+              // Purposes
+              Text('Purposes:'),
+              GetDisabledPurposeIds(),
+              GetEnabledPurposeIds(),
+              GetRequiredPurposeIds(),
+              // Vendors
+              Text('Vendors:'),
+              GetDisabledVendorIds(),
+              GetEnabledVendorIds(),
+              GetRequiredVendorIds(),
+              // Events
+              SdkEventsLogger(),
             ],
           ),
         ),

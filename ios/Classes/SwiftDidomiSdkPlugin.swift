@@ -47,6 +47,18 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         case "hideNotice":
             Didomi.shared.hideNotice()
             result(nil)
+        case "getDisabledPurposeIds":
+            getDisabledPurposeIds(call, result: result)
+        case "getDisabledVendorIds":
+            getDisabledVendorIds(call, result: result)
+        case "getEnabledPurposeIds":
+            getEnabledPurposeIds(call, result: result)
+        case "getEnabledVendorIds":
+            getEnabledVendorIds(call, result: result)
+        case "getRequiredPurposeIds":
+            getRequiredPurposeIds(call, result: result)
+        case "getRequiredVendorIds":
+            getRequiredVendorIds(call, result: result)
         case "setLogLevel":
             setLogLevel(call, result: result)
         default:
@@ -91,6 +103,48 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             (UIApplication.shared.delegate?.window??.rootViewController)!
         Didomi.shared.showPreferences(controller: viewController)
         result(nil)
+    }
+
+    /**
+     * Get the disabled purpose IDs
+     */
+    func getDisabledPurposeIds(result: @escaping FlutterResult) {
+        result(Array(Didomi.shared.getDisabledPurposeIds))
+    }
+
+    /**
+     * Get the disabled vendor IDs
+     */
+    func getDisabledVendorIds(result: @escaping FlutterResult) {
+        result(Array(Didomi.shared.getDisabledVendorIds))
+    }
+
+    /**
+     * Get the enabled purpose IDs
+     */
+    func getEnabledPurposeIds(result: @escaping FlutterResult) {
+        result(Array(Didomi.shared.getEnabledPurposeIds))
+    }
+
+    /**
+     * Get the enabled vendor IDs
+     */
+    func getEnabledVendorIds(result: @escaping FlutterResult) {
+        result(Array(Didomi.shared.getEnabledVendorIds))
+    }
+
+    /**
+     * Get the required purpose IDs
+     */
+    func getRequiredPurposeIds(result: @escaping FlutterResult) {
+        result(Array(Didomi.shared.getRequiredPurposeIds))
+    }
+
+    /**
+     * Get the required vendor IDs
+     */
+    func getRequiredVendorIds(result: @escaping FlutterResult) {
+        result(Array(Didomi.shared.getRequiredVendorIds))
     }
 
     /**
