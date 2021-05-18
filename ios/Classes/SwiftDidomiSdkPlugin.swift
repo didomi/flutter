@@ -48,19 +48,23 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             Didomi.shared.hideNotice()
             result(nil)
         case "getDisabledPurposeIds":
-            getDisabledPurposeIds(call, result: result)
+            getDisabledPurposeIds(result: result)
         case "getDisabledVendorIds":
-            getDisabledVendorIds(call, result: result)
+            getDisabledVendorIds(result: result)
         case "getEnabledPurposeIds":
-            getEnabledPurposeIds(call, result: result)
+            getEnabledPurposeIds(result: result)
         case "getEnabledVendorIds":
-            getEnabledVendorIds(call, result: result)
+            getEnabledVendorIds(result: result)
         case "getRequiredPurposeIds":
-            getRequiredPurposeIds(call, result: result)
+            getRequiredPurposeIds(result: result)
         case "getRequiredVendorIds":
-            getRequiredVendorIds(call, result: result)
+            getRequiredVendorIds(result: result)
         case "setLogLevel":
             setLogLevel(call, result: result)
+        case "setUserAgreeToAll":
+            setUserAgreeToAll(result: result)
+        case "setUserDisagreeToAll":
+            setUserDisagreeToAll(result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -107,44 +111,50 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
 
     /**
      * Get the disabled purpose IDs
+     - Returns: Array of purpose ids
      */
     func getDisabledPurposeIds(result: @escaping FlutterResult) {
-        result(Array(Didomi.shared.getDisabledPurposeIds))
+        result(Array(Didomi.shared.getDisabledPurposeIds())
     }
 
     /**
      * Get the disabled vendor IDs
+     - Returns: Array of vendor ids
      */
     func getDisabledVendorIds(result: @escaping FlutterResult) {
-        result(Array(Didomi.shared.getDisabledVendorIds))
+        result(Array(Didomi.shared.getDisabledVendorIds()))
     }
 
     /**
      * Get the enabled purpose IDs
+     - Returns: Array of purpose ids
      */
     func getEnabledPurposeIds(result: @escaping FlutterResult) {
-        result(Array(Didomi.shared.getEnabledPurposeIds))
+        result(Array(Didomi.shared.getEnabledPurposeIds()))
     }
 
     /**
      * Get the enabled vendor IDs
+     - Returns: Array of vendor ids
      */
     func getEnabledVendorIds(result: @escaping FlutterResult) {
-        result(Array(Didomi.shared.getEnabledVendorIds))
+        result(Array(Didomi.shared.getEnabledVendorIds()))
     }
 
     /**
      * Get the required purpose IDs
+     - Returns: Array of purpose ids
      */
     func getRequiredPurposeIds(result: @escaping FlutterResult) {
-        result(Array(Didomi.shared.getRequiredPurposeIds))
+        result(Array(Didomi.shared.getRequiredPurposeIds()))
     }
 
     /**
      * Get the required vendor IDs
+     - Returns: Array of vendor ids
      */
     func getRequiredVendorIds(result: @escaping FlutterResult) {
-        result(Array(Didomi.shared.getRequiredVendorIds))
+        result(Array(Didomi.shared.getRequiredVendorIds()))
     }
 
     /**
@@ -160,11 +170,11 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      We recommend setting `OSLogType.error` (16) in production
      */
     func setLogLevel(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        guard let args = call.arguments as? Dictionary<String, Int> else {
+        guard let args = call.arguments as? Dictionary<String, UInt8> else {
                 result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setLogLevel", details: nil))
                 return
             }
-        Didomi.shared.setLogLevel(minLevel: args["minLevel"] as? UInt8 ?? 1)
+        Didomi.shared.setLogLevel(minLevel: args["minLevel"] ?? 1)
         result(nil)
     }
 
