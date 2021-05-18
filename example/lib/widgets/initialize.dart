@@ -53,6 +53,7 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
       Text('With parameters: \n'),
       TextFormField(
           controller: _apiKeyController,
+          key: Key("apiKey"),
           decoration: InputDecoration(labelText: 'API Key')),
       TextFormField(
           controller: _noticeIdController,

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:didomi_sdk/events/events_handler.dart';
+import 'events/events_handler.dart';
 import 'package:flutter/services.dart';
 
 import 'events/event_listener.dart';

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:didomi_sdk/events/event_listener.dart';
+import 'event_listener.dart';
 import 'package:flutter/services.dart';
 import 'package:didomi_sdk/constants.dart';
 

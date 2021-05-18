@@ -6,14 +6,9 @@ import 'package:test/test.dart';
 void main() {
 
   group('Initialize', () {
-    final componentsListFinder = find.byValueKey('components_list');
     final isReadyBtnFinder = find.byValueKey('isReady');
     final onReadyBtnFinder = find.byValueKey('onReady');
     final initializeBtnFinder = find.byValueKey('initialize');
-    final setupUIBtnFinder = find.byValueKey('setupUI');
-    final eventsLoggerFinder = find.byValueKey('sdk_events_logger');
-    final checkConsentBtnFinder = find.byValueKey('checkConsentBtn');
-    final checkConsentResultFinder = find.byValueKey('checkConsentResult');
 
     FlutterDriver driver;
 
@@ -28,6 +23,9 @@ void main() {
     });
 
     test('Is ready', () async {
+      String onReadyReceived = await driver.requestData('isOnReadyReceived');
+      assert(onReadyReceived == 'false');
+
       await driver.tap(isReadyBtnFinder);
       // Check SDK is not ready at startup
       expect(
@@ -45,18 +43,17 @@ void main() {
           driver.getText(find.byValueKey("nativeResponse_isReady")).then((field) =>
             expect(field, contains("Native message: Result = true"))),
           completes);
+
+      onReadyReceived = await driver.requestData('isOnReadyReceived');
+      assert(onReadyReceived == 'true');
     });
   });
 
   group('Open UI', () {
-    final componentsListFinder = find.byValueKey('components_list');
     final isReadyBtnFinder = find.byValueKey('isReady');
     final onReadyBtnFinder = find.byValueKey('onReady');
     final initializeBtnFinder = find.byValueKey('initialize');
     final setupUIBtnFinder = find.byValueKey('setupUI');
-    final eventsLoggerFinder = find.byValueKey('sdk_events_logger');
-    final checkConsentBtnFinder = find.byValueKey('checkConsentBtn');
-    final checkConsentResultFinder = find.byValueKey('checkConsentResult');
 
     FlutterDriver driver;
 
@@ -71,6 +68,15 @@ void main() {
     });
 
     test('Setup UI', () async {
+      await driver.tap(isReadyBtnFinder);
+      // Check SDK is not ready at startup
+      expect(
+          driver.getText(find.byValueKey("nativeResponse_isReady")).then((field) =>
+              expect(field, contains("Native message: Result = false"))),
+          completes);
+
+
+      // Check notice was not displayed before startup
       String noticeDisplayed = await driver.requestData('isNoticeDisplayed');
       assert(noticeDisplayed == 'false');
 
