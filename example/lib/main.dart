@@ -19,6 +19,7 @@ import 'widgets/sdk_events_logger.dart';
 import 'widgets/set_log_level.dart';
 import 'widgets/set_user_agree_to_all.dart';
 import 'widgets/set_user_disagree_to_all.dart';
+import 'widgets/set_user_status.dart';
 import 'widgets/setup_ui.dart';
 import 'widgets/show_preferences.dart';
 
@@ -112,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
               SetLogLevel(),
               SetUserAgreeToAll(),
               SetUserDisagreeToAll(),
+              SetUserStatus(),
               // Purposes
               Text('Purposes:'),
               GetDisabledPurposeIds(),

@@ -128,18 +128,34 @@ class DidomiSdk {
 
   /// Set the minimum level of messages to log
   static setLogLevel(LogLevel minLevel) {
-    _channel.invokeMethod('setLogLevel', {"minLevel": minLevel.platformLevel});
+    _channel.invokeMethod("setLogLevel", {"minLevel": minLevel.platformLevel});
   }
 
   /// Enable all purposes and vendors for the user.
   static Future<bool> setUserAgreeToAll() async {
-    final bool result = await _channel.invokeMethod('setUserAgreeToAll');
+    final bool result = await _channel.invokeMethod("setUserAgreeToAll");
     return result;
   }
 
   /// Update user status to disagree : disable consent and legitimate interest purposes, disable consent vendors, but still enable legitimate interest vendors.
   static Future<bool> setUserDisagreeToAll() async {
-    final bool result = await _channel.invokeMethod('setUserDisagreeToAll');
+    final bool result = await _channel.invokeMethod("setUserDisagreeToAll");
+    return result;
+  }
+
+  /// Set the user status globally
+  static Future<bool> setUserStatus(
+      bool purposesConsentStatus,
+      bool purposesLIStatus,
+      bool vendorsConsentStatus,
+      bool vendorsLIStatus
+      ) async {
+    final bool result = await _channel.invokeMethod("setUserStatus", {
+      "purposesConsentStatus": purposesConsentStatus,
+      "purposesLIStatus": purposesLIStatus,
+      "vendorsConsentStatus": vendorsConsentStatus,
+      "vendorsLIStatus": vendorsLIStatus
+    });
     return result;
   }
 }

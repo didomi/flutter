@@ -65,6 +65,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             setUserAgreeToAll(result: result)
         case "setUserDisagreeToAll":
             setUserDisagreeToAll(result: result)
+        case "setUserStatus":
+            setUserStatus(call, result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -192,5 +194,27 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      */
     func setUserDisagreeToAll(result: @escaping FlutterResult) {
         result(Didomi.shared.setUserDisagreeToAll())
+    }
+
+    /**
+     Set the user status for purposes and vendors for consent and legitimate interest.
+     - Parameters purposesConsentStatus: boolean used to determine if consent will be enabled or disabled for all purposes.
+     - Parameters purposesLIStatus: boolean used to determine if legitimate interest will be enabled or disabled for all purposes.
+     - Parameters vendorsConsentStatus: boolean used to determine if consent will be enabled or disabled for all vendors.
+     - Parameters vendorsLIStatus: boolean used to determine if legitimate interest will be enabled or disabled for all vendors.
+     - Returns: **true** if consent status has been updated, **false** otherwise.
+     */
+    func setUserStatus(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Bool> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserStatus", details: nil))
+                return
+            }
+
+        result(Didomi.shared.setUserStatus(
+            purposesConsentStatus: args["purposesConsentStatus"] ?? false,
+            purposesLIStatus: args["purposesLIStatus"] ?? false,
+            vendorsConsentStatus: args["vendorsConsentStatus"] ?? false,
+            vendorsLIStatus: args["vendorsLIStatus"] ?? false
+        ))
     }
 }

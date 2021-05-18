@@ -1,22 +1,19 @@
 package io.didomi.fluttersdk
 
 import android.app.Activity
-
 import androidx.annotation.NonNull
 import androidx.fragment.app.FragmentActivity
-
 import io.didomi.sdk.Didomi
-import io.didomi.sdk.exceptions.DidomiNotReadyException
 import io.didomi.sdk.Log
-
-import io.flutter.plugin.common.MethodCall
-import io.flutter.plugin.common.MethodChannel
-import io.flutter.plugin.common.EventChannel
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import io.flutter.plugin.common.MethodChannel.Result
+import io.didomi.sdk.exceptions.DidomiNotReadyException
+import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.plugin.common.EventChannel
+import io.flutter.plugin.common.MethodCall
+import io.flutter.plugin.common.MethodChannel
+import io.flutter.plugin.common.MethodChannel.MethodCallHandler
+import io.flutter.plugin.common.MethodChannel.Result
 
 /**
  * Didomi SDK Plugin
@@ -128,6 +125,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 "setUserAgreeToAll" -> setUserAgreeToAll(result)
 
                 "setUserDisagreeToAll" -> setUserDisagreeToAll(result)
+
+                "setUserStatus" -> setUserStatus(call, result)
 
                 else -> result.notImplemented()
             }
@@ -282,6 +281,24 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(consentHasBeenUpdated)
         } catch (e: DidomiNotReadyException) {
             result.error("setUserDisagreeToAll", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Set the user status globally
+     * @return true if user consent status was updated, false otherwise.
+     */
+    private fun setUserStatus(@NonNull call: MethodCall, @NonNull result: Result) {
+        try {
+            val consentHasBeenUpdated = Didomi.getInstance().setUserStatus(
+                call.argument("purposesConsentStatus") as? Boolean ?: false,
+                call.argument("purposesLIStatus") as? Boolean ?: false,
+                call.argument("vendorsConsentStatus") as? Boolean ?: false,
+                call.argument("vendorsLIStatus") as? Boolean ?: false
+            )
+            result.success(consentHasBeenUpdated)
+        } catch (e: DidomiNotReadyException) {
+            result.error("setUserStatus", e.message.orEmpty(), e)
         }
     }
 }
