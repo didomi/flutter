@@ -47,6 +47,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         case "hideNotice":
             Didomi.shared.hideNotice()
             result(nil)
+        case "setLogLevel":
+            setLogLevel(call, result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -88,6 +90,27 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         let viewController: UIViewController =
             (UIApplication.shared.delegate?.window??.rootViewController)!
         Didomi.shared.showPreferences(controller: viewController)
+        result(nil)
+    }
+
+    /**
+     Set the minimum level of messages to log
+
+     Messages with a level below `minLevel` will not be logged.
+     Levels are standard levels from `OSLogType` (https://developer.apple.com/documentation/os/logging/choosing_the_log_level_for_a_message):
+      - OSLogType.info (1)
+      - OSLogType.debug (2)
+      - OSLogType.error (16)
+      - OSLogType.fault (17)
+
+     We recommend setting `OSLogType.error` (16) in production
+     */
+    func setLogLevel(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Int> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setLogLevel", details: nil))
+                return
+            }
+        Didomi.shared.setLogLevel(minLevel: args["minLevel"] as? UInt8 ?? 1)
         result(nil)
     }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'events/events_handler.dart';
+import 'package:didomi_sdk/type.dart';
 import 'package:flutter/services.dart';
 
 import 'events/event_listener.dart';
@@ -89,5 +90,10 @@ class DidomiSdk {
   static onError(Function() callback) {
     _eventsHandler.onErrorCallbacks.add(callback);
     _channel.invokeMethod('onError');
+  }
+
+  /// Set the minimum level of messages to log
+  static setLogLevel(LogLevel minLevel) {
+    _channel.invokeMethod('setLogLevel', { "minLevel": minLevel.platformLevel });
   }
 }

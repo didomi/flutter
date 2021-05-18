@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:didomi_sdk/didomi_sdk.dart';
 import 'widgets/check_consent.dart';
 import 'widgets/initialize.dart';
 import 'widgets/is_ready.dart';
@@ -7,9 +10,9 @@ import 'widgets/sdk_events_logger.dart';
 import 'widgets/setup_ui.dart';
 import 'widgets/show_preferences.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:flutter/services.dart';
-import 'package:didomi_sdk/didomi_sdk.dart';
+
+import 'widgets/set_log_level.dart';
 
 import 'widgets/on_error.dart';
 
@@ -27,10 +30,7 @@ void _startApp() {
 }
 
 class MyApp extends StatelessWidget {
-
-  MyApp({
-    required Key key
-  })  : super(key: key);
+  MyApp({required Key key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -100,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Reset(),
               ShowPreferences(),
               SdkEventsLogger(),
+              SetLogLevel(),
             ],
           ),
         ),

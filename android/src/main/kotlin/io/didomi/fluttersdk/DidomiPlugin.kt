@@ -107,6 +107,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     result.success(null)
                 }
 
+                "setLogLevel" -> setLogLevel(call, result)
+
                 else -> result.notImplemented()
             }
         } catch(e: Exception) {
@@ -145,5 +147,23 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     } ?: run {
         result.error("no_activity", "No activity available", null)
         null
+    }
+
+    /**
+     * Set the minimum level of messages to log
+     * <p>
+     * Messages with a level below `minLevel` will not be logged.
+     * Levels are standard levels from `android.util.Log` (https://developer.android.com/reference/android/util/Log#constants_1):
+     * - android.util.Log.VERBOSE (2)
+     * - android.util.Log.DEBUG (3)
+     * - android.util.Log.INFO (4)
+     * - android.util.Log.WARN (5)
+     * - android.util.Log.ERROR (6)
+     * <p>
+     * We recommend setting `android.util.Log.WARN` in production
+     */
+    private fun setLogLevel(@NonNull call: MethodCall, @NonNull result: Result) {
+        Didomi.getInstance().setLogLevel(call.argument("minLevel") as? Int ?: 2)
+        result.success(null)
     }
 }
