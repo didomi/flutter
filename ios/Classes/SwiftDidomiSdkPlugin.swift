@@ -122,7 +122,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: Array of purpose ids
      */
     func getDisabledPurposeIds(result: @escaping FlutterResult) {
-        result(Array(Didomi.shared.getDisabledPurposeIds()))
+        let purposeIdList = Array(Didomi.shared.getDisabledPurposeIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        result(purposeIdList)
     }
 
     /**
@@ -130,7 +131,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: Array of vendor ids
      */
     func getDisabledVendorIds(result: @escaping FlutterResult) {
-        result(Array(Didomi.shared.getDisabledVendorIds()))
+        let vendorIdList = Array(Didomi.shared.getDisabledVendorIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        result(vendorIdList)
     }
 
     /**
@@ -138,7 +140,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: Array of purpose ids
      */
     func getEnabledPurposeIds(result: @escaping FlutterResult) {
-        result(Array(Didomi.shared.getEnabledPurposeIds()))
+        let purposeIdList = Array(Didomi.shared.getEnabledPurposeIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        result(purposeIdList)
     }
 
     /**
@@ -146,7 +149,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: Array of vendor ids
      */
     func getEnabledVendorIds(result: @escaping FlutterResult) {
-        result(Array(Didomi.shared.getEnabledVendorIds()))
+        let vendorIdList = Array(Didomi.shared.getEnabledVendorIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        result(vendorIdList)
     }
 
     /**
@@ -154,7 +158,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: Array of purpose ids
      */
     func getRequiredPurposeIds(result: @escaping FlutterResult) {
-        result(Array(Didomi.shared.getRequiredPurposeIds()))
+        let purposeIdList = Array(Didomi.shared.getRequiredPurposeIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        result(purposeIdList)
     }
 
     /**
@@ -162,7 +167,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: Array of vendor ids
      */
     func getRequiredVendorIds(result: @escaping FlutterResult) {
-        result(Array(Didomi.shared.getRequiredVendorIds()))
+        let vendorIdList = Array(Didomi.shared.getRequiredVendorIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        result(vendorIdList)
     }
 
     /**
