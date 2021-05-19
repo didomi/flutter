@@ -11,6 +11,7 @@ import 'widgets/get_enabled_purpose_ids.dart';
 import 'widgets/get_enabled_vendor_ids.dart';
 import 'widgets/get_required_purpose_ids.dart';
 import 'widgets/get_required_vendor_ids.dart';
+import 'widgets/get_user_consent_status_for_purpose.dart';
 import 'widgets/get_user_consent_status_for_vendor.dart';
 import 'widgets/initialize.dart';
 import 'widgets/is_ready.dart';
@@ -120,6 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
               GetDisabledPurposeIds(),
               GetEnabledPurposeIds(),
               GetRequiredPurposeIds(),
+              GetUserConsentStatusForPurpose(),
               // Vendors
               Text('Vendors:'),
               GetDisabledVendorIds(),

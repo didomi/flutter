@@ -65,6 +65,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             setUserAgreeToAll(result: result)
         case "setUserDisagreeToAll":
             setUserDisagreeToAll(result: result)
+        case "getUserConsentStatusForPurpose":
+            getUserConsentStatusForPurpose(call, result: result)
         case "getUserConsentStatusForVendor":
             getUserConsentStatusForVendor(call, result: result)
         case "setUserStatus":
@@ -196,6 +198,34 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      */
     func setUserDisagreeToAll(result: @escaping FlutterResult) {
         result(Didomi.shared.setUserDisagreeToAll())
+    }
+
+    /**
+     Get the user consent status for a specific purpose
+     - Parameter purposeId: The purpose ID to check consent for
+     - Returns: The user consent status for the specified purpose
+     */
+    func getUserConsentStatusForPurpose(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, String> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getUserConsentStatusForPurpose", details: nil))
+                return
+            }
+
+        let purposeId = args["purposeId"] ?? ""
+        if purposeId.isEmpty {
+            result(FlutterError.init(code: "invalid_args", message: "Missing purposeId argument for getUserConsentStatusForPurpose", details: nil))
+            return
+        }
+
+        let consentStatusForPurpose = Didomi.shared.getUserConsentStatusForPurpose(purposeId: purposeId)
+        switch consentStatusForPurpose {
+        case .disable:
+          result(0)
+        case .enable:
+          result(1)
+        default:
+          result(2)
+        }
     }
 
     /**
