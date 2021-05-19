@@ -47,6 +47,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         case "hideNotice":
             Didomi.shared.hideNotice()
             result(nil)
+        case "getJavaScriptForWebView":
+            result(Didomi.shared.getJavaScriptForWebView())
         default:
             result(FlutterMethodNotImplemented)
         }

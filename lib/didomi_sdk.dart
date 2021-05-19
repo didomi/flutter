@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'dart:async';
 
 import 'events/events_handler.dart';
@@ -89,5 +91,22 @@ class DidomiSdk {
   static onError(Function() callback) {
     _eventsHandler.onErrorCallbacks.add(callback);
     _channel.invokeMethod('onError');
+  }
+
+  static Future<String> getJavaScriptForWebView() async {
+    final String result = await _channel.invokeMethod("getJavaScriptForWebView");
+    return result;
+  }
+
+  static Future<String> getQueryStringForWebView() async {
+    final String result;
+    if (Platform.isAndroid) {
+      result = await _channel.invokeMethod(
+          "getQueryStringForWebView");
+    }  else {
+      // Not available on iOS
+      result = "";
+    }
+    return result;
   }
 }

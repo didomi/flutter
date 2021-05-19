@@ -28,7 +28,7 @@ abstract class BaseSampleWidgetState<T extends StatefulWidget> extends State<T> 
   String getActionId();
 
   /// Action to call the Didomi SDK.
-  /// Return descrition of the result, to display in Text component
+  /// Return description of the result, to display in Text component
   Future<String> callDidomiPlugin();
 
   /// Triggers the action linked to the component

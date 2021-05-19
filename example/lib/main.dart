@@ -1,3 +1,4 @@
+import 'widgets/webview_strings.dart';
 import 'widgets/check_consent.dart';
 import 'widgets/initialize.dart';
 import 'widgets/is_ready.dart';
@@ -99,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
               CheckConsent(),
               Reset(),
               ShowPreferences(),
+              WebviewStrings(),
               SdkEventsLogger(),
             ],
           ),

@@ -107,6 +107,10 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     result.success(null)
                 }
 
+                "getJavaScriptForWebView" -> result.success(Didomi.getInstance().javaScriptForWebView)
+
+                "getQueryStringForWebView" -> result.success(Didomi.getInstance().queryStringForWebView)
+
                 else -> result.notImplemented()
             }
         } catch(e: Exception) {
