@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:didomi_sdk/consent_status.dart';
 import 'events/events_handler.dart';
 import 'package:didomi_sdk/log_level.dart';
 import 'package:flutter/services.dart';
@@ -141,6 +142,12 @@ class DidomiSdk {
   static Future<bool> setUserDisagreeToAll() async {
     final bool result = await _channel.invokeMethod("setUserDisagreeToAll");
     return result;
+  }
+
+  /// Get the user consent status for a specific vendor
+  static Future<ConsentStatus> getUserConsentStatusForVendor(String vendorId) async {
+    final int result = await _channel.invokeMethod("getUserConsentStatusForVendor", {"vendorId": vendorId});
+    return ConsentStatus.values[result];
   }
 
   /// Set the user status globally

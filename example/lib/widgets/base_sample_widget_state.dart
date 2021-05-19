@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 /// Base state for Widgets testing Didomi SDK functionality
@@ -7,10 +8,7 @@ abstract class BaseSampleWidgetState<T extends StatefulWidget> extends State<T> 
   String _messageFromNative = "--";
 
   /// A Text displaying SDK response
-  Widget buildResponseText(String key) {
-    return Text('Native message: $_messageFromNative\n',
-        key: Key('nativeResponse_$key'));
-  }
+  Widget buildResponseText(String key) => Text("Native message: $_messageFromNative\n", key: Key("nativeResponse_$key"), textAlign: TextAlign.center);
 
   /// Update displayed SDK response
   Future<void> updateMessageFromNative(String messageFromNative) async {
@@ -44,14 +42,12 @@ abstract class BaseSampleWidgetState<T extends StatefulWidget> extends State<T> 
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-      ElevatedButton(
-        child: Text(getButtonName()),
-        key: Key(getActionId()),
-        onPressed: requestAction,
-      ),
-      buildResponseText(getActionId())
-    ]);
-  }
+  Widget build(BuildContext context) => Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        ElevatedButton(
+          child: Text(getButtonName(), textAlign: TextAlign.center),
+          key: Key(getActionId()),
+          onPressed: requestAction,
+        ),
+        buildResponseText(getActionId())
+      ]);
 }

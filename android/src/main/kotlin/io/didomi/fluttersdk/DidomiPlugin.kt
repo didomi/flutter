@@ -126,6 +126,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "setUserDisagreeToAll" -> setUserDisagreeToAll(result)
 
+                "getUserConsentStatusForVendor" -> getUserConsentStatusForVendor(call, result)
+
                 "setUserStatus" -> setUserStatus(call, result)
 
                 else -> result.notImplemented()
@@ -281,6 +283,31 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(consentHasBeenUpdated)
         } catch (e: DidomiNotReadyException) {
             result.error("setUserDisagreeToAll", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the user consent status for a specific vendor
+     * @param vendorId
+     * @return The user consent status for the specified vendor
+     */
+    private fun getUserConsentStatusForVendor(@NonNull call: MethodCall, @NonNull result: Result) {
+        val vendorId = call.argument("vendorId") as? String
+        if (vendorId.isNullOrBlank()) {
+            result.error("getUserConsentStatusForVendor", "vendorId is null or blank", null)
+            return
+        }
+        try {
+            val status = Didomi.getInstance().getUserConsentStatusForVendor(vendorId)
+            result.success(
+                when (status) {
+                    false -> 0
+                    true -> 1
+                    else -> 2
+                }
+            )
+        } catch (e: DidomiNotReadyException) {
+            result.error("getUserConsentStatusForVendor", e.message.orEmpty(), e)
         }
     }
 
