@@ -31,6 +31,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             Didomi.shared.onReady {
                 SwiftDidomiSdkPlugin.eventStreamHandler?.onReadyCallback()
             }
+        case "onError":
+            Didomi.shared.onError { _ in
+                SwiftDidomiSdkPlugin.eventStreamHandler?.onErrorCallback()
+            }
         case "shouldConsentBeCollected":
             result(Didomi.shared.shouldConsentBeCollected())
         case "setupUI":
