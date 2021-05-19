@@ -116,7 +116,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: Array of purpose ids
      */
     func getDisabledPurposeIds(result: @escaping FlutterResult) {
-        result(Array(Didomi.shared.getDisabledPurposeIds())
+        result(Array(Didomi.shared.getDisabledPurposeIds()))
     }
 
     /**
