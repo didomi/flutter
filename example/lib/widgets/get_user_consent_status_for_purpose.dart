@@ -12,7 +12,6 @@ class GetUserConsentStatusForPurpose extends StatefulWidget {
 }
 
 class _GetUserConsentStatusForPurpose extends BaseSampleWidgetState<GetUserConsentStatusForPurpose> {
-
   // Purpose id for sample
   final String purposeId = "cookies";
 
@@ -21,8 +20,6 @@ class _GetUserConsentStatusForPurpose extends BaseSampleWidgetState<GetUserConse
 
   @override
   String getActionId() => "getUserConsentStatusForPurpose";
-
-
 
   @override
   Future<String> callDidomiPlugin() async {

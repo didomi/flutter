@@ -130,6 +130,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "getUserConsentStatusForVendor" -> getUserConsentStatusForVendor(call, result)
 
+                "getUserConsentStatusForVendorAndRequiredPurposes" -> getUserConsentStatusForVendorAndRequiredPurposes(call, result)
+
                 "setUserStatus" -> setUserStatus(call, result)
 
                 else -> result.notImplemented()
@@ -290,7 +292,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     /**
      * Get the user consent status for a specific purpose
-     * @param vendorId
+     * @param purposeId
      * @return The user consent status for the specified purpose
      */
     private fun getUserConsentStatusForPurpose(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -335,6 +337,31 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             )
         } catch (e: DidomiNotReadyException) {
             result.error("getUserConsentStatusForVendor", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Check if a vendor has consent for all the purposes that it requires
+     * @param vendorId
+     * @return The user consent status for all the purposes that it requires for the specified vendor
+     */
+    private fun getUserConsentStatusForVendorAndRequiredPurposes(@NonNull call: MethodCall, @NonNull result: Result) {
+        val vendorId = call.argument("vendorId") as? String
+        if (vendorId.isNullOrBlank()) {
+            result.error("getUserConsentStatusForVendorAndRequiredPurposes", "vendorId is null or blank", null)
+            return
+        }
+        try {
+            val status = Didomi.getInstance().getUserConsentStatusForVendorAndRequiredPurposes(vendorId)
+            result.success(
+                when (status) {
+                    false -> 0
+                    true -> 1
+                    else -> 2
+                }
+            )
+        } catch (e: DidomiNotReadyException) {
+            result.error("getUserConsentStatusForVendorAndRequiredPurposes", e.message.orEmpty(), e)
         }
     }
 

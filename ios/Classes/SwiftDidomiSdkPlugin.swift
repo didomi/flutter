@@ -69,6 +69,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             getUserConsentStatusForPurpose(call, result: result)
         case "getUserConsentStatusForVendor":
             getUserConsentStatusForVendor(call, result: result)
+        case "getUserConsentStatusForVendorAndRequiredPurposes":
+            getUserConsentStatusForVendorAndRequiredPurposes(call, result: result)
         case "setUserStatus":
             setUserStatus(call, result: result)
         default:
@@ -246,6 +248,34 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         }
 
         let consentStatusForVendor = Didomi.shared.getUserConsentStatusForVendor(vendorId: vendorId)
+        switch consentStatusForVendor {
+        case .disable:
+          result(0)
+        case .enable:
+          result(1)
+        default:
+          result(2)
+        }
+    }
+
+    /**
+     Get the user consent status for a specific vendor and all its purposes
+     - Parameter vendorId: The ID of the vendor
+     - Returns: The user consent status corresponding to the specified vendor and all its required purposes
+     */
+    func getUserConsentStatusForVendorAndRequiredPurposes(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, String> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getUserConsentStatusForVendorAndRequiredPurposes", details: nil))
+                return
+            }
+
+        let vendorId = args["vendorId"] ?? ""
+        if vendorId.isEmpty {
+            result(FlutterError.init(code: "invalid_args", message: "Missing vendorId argument for getUserConsentStatusForVendorAndRequiredPurposes", details: nil))
+            return
+        }
+
+        let consentStatusForVendor = Didomi.shared.getUserConsentStatusForVendorAndRequiredPurposes(vendorId: vendorId)
         switch consentStatusForVendor {
         case .disable:
           result(0)

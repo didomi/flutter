@@ -156,6 +156,12 @@ class DidomiSdk {
     return ConsentStatus.values[result];
   }
 
+  /// Get the user consent status for a specific vendor and all its purposes
+  static Future<ConsentStatus> getUserConsentStatusForVendorAndRequiredPurposes(String vendorId) async {
+    final int result = await _channel.invokeMethod("getUserConsentStatusForVendorAndRequiredPurposes", {"vendorId": vendorId});
+    return ConsentStatus.values[result];
+  }
+
   /// Set the user status globally
   static Future<bool> setUserStatus(
       bool purposesConsentStatus,

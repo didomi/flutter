@@ -13,6 +13,7 @@ import 'widgets/get_required_purpose_ids.dart';
 import 'widgets/get_required_vendor_ids.dart';
 import 'widgets/get_user_consent_status_for_purpose.dart';
 import 'widgets/get_user_consent_status_for_vendor.dart';
+import 'widgets/get_user_consent_status_for_vendor_and_required_purposes.dart';
 import 'widgets/initialize.dart';
 import 'widgets/is_ready.dart';
 import 'widgets/on_ready.dart';
@@ -102,8 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             key: Key("components_list"),
             children: [
-              Text('Running on: $_platformVersion\n',
-                  textAlign: TextAlign.center),
+              Text('Running on: $_platformVersion\n', textAlign: TextAlign.center),
               IsReady(),
               OnReady(),
               OnError(),
@@ -128,6 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
               GetEnabledVendorIds(),
               GetRequiredVendorIds(),
               GetUserConsentStatusForVendor(),
+              GetUserConsentStatusForVendorAndRequiredPurposes(),
               // Events
               SdkEventsLogger(),
             ],

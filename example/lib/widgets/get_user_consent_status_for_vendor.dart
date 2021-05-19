@@ -12,7 +12,6 @@ class GetUserConsentStatusForVendor extends StatefulWidget {
 }
 
 class _GetUserConsentStatusForVendor extends BaseSampleWidgetState<GetUserConsentStatusForVendor> {
-
   // Vendor id for sample
   final String vendorId = "c:pinterest";
 
@@ -21,8 +20,6 @@ class _GetUserConsentStatusForVendor extends BaseSampleWidgetState<GetUserConsen
 
   @override
   String getActionId() => "getUserConsentStatusForVendor";
-
-
 
   @override
   Future<String> callDidomiPlugin() async {
