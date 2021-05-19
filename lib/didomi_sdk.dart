@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:didomi_sdk/consent_status.dart';
-import 'events/events_handler.dart';
 import 'package:didomi_sdk/log_level.dart';
 import 'package:flutter/services.dart';
 
 import 'constants.dart';
 import 'events/event_listener.dart';
+import 'events/events_handler.dart';
 
 class DidomiSdk {
   static const MethodChannel _channel = const MethodChannel(methodsChannelName);
@@ -14,7 +14,7 @@ class DidomiSdk {
 
   // TODO To remove
   static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
+    final String version = await _channel.invokeMethod("getPlatformVersion");
     return version;
   }
 
@@ -25,7 +25,7 @@ class DidomiSdk {
       bool disableDidomiRemoteConfig = false,
       String? languageCode,
       String? noticeId}) async {
-    return await _channel.invokeMethod('initialize', {
+    return await _channel.invokeMethod("initialize", {
       "apiKey": apiKey,
       "localConfigurationPath": localConfigurationPath,
       "remoteConfigurationURL": remoteConfigurationURL,
@@ -163,12 +163,7 @@ class DidomiSdk {
   }
 
   /// Set the user status globally
-  static Future<bool> setUserStatus(
-      bool purposesConsentStatus,
-      bool purposesLIStatus,
-      bool vendorsConsentStatus,
-      bool vendorsLIStatus
-      ) async {
+  static Future<bool> setUserStatus(bool purposesConsentStatus, bool purposesLIStatus, bool vendorsConsentStatus, bool vendorsLIStatus) async {
     final bool result = await _channel.invokeMethod("setUserStatus", {
       "purposesConsentStatus": purposesConsentStatus,
       "purposesLIStatus": purposesLIStatus,

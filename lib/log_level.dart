@@ -1,9 +1,8 @@
-import 'dart:io';
+import "dart:io";
 
 enum LogLevel { verbose, debug, info, warn, error }
 
 extension LogLevelExtension on LogLevel {
-
   /// Get Platform specific level value
   int get platformLevel {
     if (Platform.isAndroid) {

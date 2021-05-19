@@ -16,6 +16,7 @@ import 'widgets/get_user_consent_status_for_vendor.dart';
 import 'widgets/get_user_consent_status_for_vendor_and_required_purposes.dart';
 import 'widgets/initialize.dart';
 import 'widgets/is_ready.dart';
+import 'widgets/on_error.dart';
 import 'widgets/on_ready.dart';
 import 'widgets/reset.dart';
 import 'widgets/sdk_events_logger.dart';
@@ -25,8 +26,6 @@ import 'widgets/set_user_disagree_to_all.dart';
 import 'widgets/set_user_status.dart';
 import 'widgets/setup_ui.dart';
 import 'widgets/show_preferences.dart';
-
-import 'widgets/on_error.dart';
 
 void main() {
   _startApp();

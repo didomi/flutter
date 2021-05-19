@@ -1,3 +1,4 @@
+
 enum ConsentStatus { disable, enable, unknown }
 
 extension ConsentStatusExtension on ConsentStatus {
