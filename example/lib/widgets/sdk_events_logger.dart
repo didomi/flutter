@@ -1,54 +1,48 @@
-import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:flutter/material.dart';
-import 'package:didomi_sdk/didomi_sdk.dart';
+import 'base_sample_widget_state.dart';
 
 /// Widget displaying incoming SDK events
 class SdkEventsLogger extends StatefulWidget {
+  final String sdkEvents;
+
+  SdkEventsLogger(this.sdkEvents);
+
   @override
   State<StatefulWidget> createState() {
-    return _SdkEventsLoggerState();
+    return _SdkEventsLoggerState(sdkEvents);
   }
 }
 
-class _SdkEventsLoggerState extends State<SdkEventsLogger> {
+class _SdkEventsLoggerState extends BaseSampleWidgetState<SdkEventsLogger> {
+  String _sdkEvents = "";
 
-  String _sdkEvents = '';
-  EventListener listener = EventListener();
+  @override
+  bool get wantKeepAlive => false;
 
-  _SdkEventsLoggerState() {
-    listener.onReady = () {
-      onEvent("SDK Ready");
-    };
-    listener.onError = (message) {
-      onEvent("Error : $message");
-    };
-    listener.onShowNotice = () {
-      onEvent("Notice displayed");
-    };
-    listener.onHideNotice = () {
-      onEvent("Notice hidden");
-    };
-
-    DidomiSdk.addEventListener(listener);
-  }
-
-  void onEvent(String eventDescription) {
-    final snackBar = SnackBar(content: Text(eventDescription));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    setState(() {
-      _sdkEvents += "\n- $eventDescription";
-    });
+  _SdkEventsLoggerState(String sdkEvents) {
+    _sdkEvents = sdkEvents;
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Text('SDK Events:\n$_sdkEvents\n',
-        key: Key("sdk_events_logger"));
+  List<Widget> buildWidgets() {
+    return [
+      Text('SDK Events:\n$_sdkEvents\n',
+          key: Key("sdk_events_logger"))
+    ];
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    DidomiSdk.removeEventListener(listener);
+  Future<String> callDidomiPlugin() async {
+    return ""; // Not used
+  }
+
+  @override
+  String getActionId() {
+    return ""; // Not used
+  }
+
+  @override
+  String getButtonName() {
+    return ""; // Not used
   }
 }
