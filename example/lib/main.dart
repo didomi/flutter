@@ -83,7 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     initPlatformState();
 
-    print("Create Logger");
     listener.onReady = () {
       onEvent("SDK Ready");
     };
@@ -101,7 +100,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void onEvent(String eventDescription) {
-    print("Received an event -- $eventDescription");
     final snackBar = SnackBar(content: Text(eventDescription));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
     setState(() {
@@ -139,15 +137,21 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Text('Running on: $_platformVersion\n',
                   textAlign: TextAlign.center),
+              // SDK setup
+              Text('Setup:'),
               IsReady(),
               OnReady(),
               OnError(),
+              SetLogLevel(),
               Initialize(),
+              // UI related features
+              Text('UI:'),
               SetupUI(),
+              ShowPreferences(),
+              // Consents
+              Text('Consents:'),
               CheckConsent(),
               Reset(),
-              ShowPreferences(),
-              SetLogLevel(),
               SetUserAgreeToAll(),
               SetUserDisagreeToAll(),
               SetUserStatus(),
