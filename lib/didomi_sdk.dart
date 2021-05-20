@@ -93,11 +93,16 @@ class DidomiSdk {
     _channel.invokeMethod('onError');
   }
 
+  /// Get JavaScript to embed into a WebView to pass the consent status
+  /// from the app to the Didomi Web SDK embedded into the WebView
   static Future<String> getJavaScriptForWebView() async {
     final String result = await _channel.invokeMethod("getJavaScriptForWebView");
     return result;
   }
 
+  /// Get a query-string to add to the URL of a WebView or Chrome Custom Tab to pass
+  /// the consent status from the app to the Didomi Web SDK embedded on the target URL.
+  /// Note: Available for Android only, will return an empty string if called from iOS
   static Future<String> getQueryStringForWebView() async {
     final String result;
     if (Platform.isAndroid) {
@@ -107,6 +112,39 @@ class DidomiSdk {
       // Not available on iOS
       result = "";
     }
+    return result;
+  }
+  /// Method used to update the selected language of the Didomi SDK and any property that depends on it.
+  ///
+  /// In most cases this method doesn't need to be called. It would only be required for those apps that allow language change on-the-fly,
+  /// i.e.: from within the app rather than from the device settings.
+  /// In order to update the language of the views displayed by the Didomi SDK, this method needs to be called before these views are displayed.
+  static Future<void> updateSelectedLanguage(String languageCode) async {
+    await _channel.invokeMethod("updateSelectedLanguage", {
+      "languageCode": languageCode
+    });
+  }
+
+  /// Get a dictionary/map for a given key in the form of { en: "Value in English", fr: "Value in French" }
+  /// from the didomi_config.json file containing translations in different languages.
+  ///
+  /// The keys and values considered come from different places in the didomi_config.json file such as { notice: ... },
+  /// { preferences: ... } and { texts: ... }, giving the latter the highest priority in case of duplicates.
+  static Future<Map<String, String>?> getText(String key) async {
+    Map<String, String>? result = await _channel.invokeMapMethod("getText", {
+      "key": key
+    });
+    return result;
+  }
+
+  /// Get a translated string for a given key from the didomi_config.json file based on the currently selected language.
+  /// 
+  /// The keys and values considered come from different places in the didomi_config.json file such as { notice: ... },
+  /// { preferences: ... } and { texts: ... }, giving the latter the highest priority in case of duplicates.
+  static Future<String> getTranslatedText(String key) async {
+    String result = await _channel.invokeMethod("getTranslatedText", {
+      "key": key
+    });
     return result;
   }
 }

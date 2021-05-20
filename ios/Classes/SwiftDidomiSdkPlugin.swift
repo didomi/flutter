@@ -49,6 +49,13 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             result(nil)
         case "getJavaScriptForWebView":
             result(Didomi.shared.getJavaScriptForWebView())
+        case "updateSelectedLanguage":
+            updateSelectedLanguage(call, result: result)
+        case "getText":
+            getText(call, result: result)
+            updateSelectedLanguage(call, result: result)
+        case "getTranslatedText":
+            getTranslatedText(call, result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -60,11 +67,11 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             return
         }
         guard let apiKey = args["apiKey"] as? String else {
-            result(FlutterError.init(code: "invalid_args", message: "Missing argument apiKey", details: nil))
+            result(FlutterError.init(code: "invalid_args", message: "initialize: Missing argument apiKey", details: nil))
             return
         }
         guard let disableDidomiRemoteConfig = args["disableDidomiRemoteConfig"] as? Bool else {
-            result(FlutterError.init(code: "invalid_args", message: "Missing argument disableDidomiRemoteConfig", details: nil))
+            result(FlutterError.init(code: "invalid_args", message: "initialize: Missing argument disableDidomiRemoteConfig", details: nil))
             return
         }
         let didomi = Didomi.shared
@@ -91,5 +98,42 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             (UIApplication.shared.delegate?.window??.rootViewController)!
         Didomi.shared.showPreferences(controller: viewController)
         result(nil)
+    }
+    
+    func updateSelectedLanguage(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for updateSelectedLanguage", details: nil))
+            return
+        }
+        guard let languageCode = args["languageCode"] as? String else {
+            result(FlutterError.init(code: "invalid_args", message: "updateSelectedLanguage: Missing argument languageCode", details: nil))
+            return
+        }
+        Didomi.shared.updateSelectedLanguage(languageCode: languageCode)
+        result(nil)
+    }
+    
+    func getText(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getText", details: nil))
+            return
+        }
+        guard let key = args["key"] as? String else {
+            result(FlutterError.init(code: "invalid_args", message: "getText: Missing argument key", details: nil))
+            return
+        }
+        result(Didomi.shared.getText(key: key))
+    }
+    
+    func getTranslatedText(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getTranslatedText", details: nil))
+            return
+        }
+        guard let key = args["key"] as? String else {
+            result(FlutterError.init(code: "invalid_args", message: "getTranslatedText: Missing argument key", details: nil))
+            return
+        }
+        result(Didomi.shared.getTranslatedText(key: key))
     }
 }

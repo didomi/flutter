@@ -43,8 +43,8 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
   bool _disableRemoteConfigValue = false;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+  List<Widget> buildWidgets() {
+    return [
       ElevatedButton(
         child: Text(getButtonName()),
         onPressed: requestAction,
@@ -76,6 +76,6 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
         ListTileControlAffinity.leading, //  <-- leading Checkbox
       ),
       buildResponseText(getActionId())
-    ]);
+    ];
   }
 }

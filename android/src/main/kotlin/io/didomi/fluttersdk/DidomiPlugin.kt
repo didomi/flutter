@@ -111,6 +111,12 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "getQueryStringForWebView" -> result.success(Didomi.getInstance().queryStringForWebView)
 
+                "updateSelectedLanguage" -> updateSelectedLanguage(call, result)
+
+                "getText" -> getText(call, result)
+
+                "getTranslatedText" -> getTranslatedText(call, result)
+
                 else -> result.notImplemented()
             }
         } catch(e: Exception) {
@@ -149,5 +155,20 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     } ?: run {
         result.error("no_activity", "No activity available", null)
         null
+    }
+
+    private fun updateSelectedLanguage(call: MethodCall, result: Result) {
+        Didomi.getInstance().updateSelectedLanguage(call.argument("languageCode"))
+        result.success(null)
+    }
+
+    private fun getText(call: MethodCall, result: Result) {
+        val textMap = Didomi.getInstance().getText(call.argument("key"))
+        result.success(textMap)
+    }
+
+    private fun getTranslatedText(call: MethodCall, result: Result) {
+        val text = Didomi.getInstance().getTranslatedText(call.argument("key"))
+        result.success(text)
     }
 }

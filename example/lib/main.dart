@@ -1,3 +1,8 @@
+import 'package:didomi_sdk/events/event_listener.dart';
+import 'package:didomi_sdk_example/widgets/get_text.dart';
+import 'package:didomi_sdk_example/widgets/get_translated_text.dart';
+import 'package:didomi_sdk_example/widgets/update_selected_language.dart';
+
 import 'widgets/webview_strings.dart';
 import 'widgets/check_consent.dart';
 import 'widgets/initialize.dart';
@@ -58,10 +63,39 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String _platformVersion = 'Unknown';
 
+  String _sdkEvents = "";
+
+  EventListener listener = EventListener();
+
   @override
   void initState() {
     super.initState();
     initPlatformState();
+
+    print("Create Logger");
+    listener.onReady = () {
+      onEvent("SDK Ready");
+    };
+    listener.onError = (message) {
+      onEvent("Error : $message");
+    };
+    listener.onShowNotice = () {
+      onEvent("Notice displayed");
+    };
+    listener.onHideNotice = () {
+      onEvent("Notice hidden");
+    };
+
+    DidomiSdk.addEventListener(listener);
+  }
+
+  void onEvent(String eventDescription) {
+    print("Received an event -- $eventDescription");
+    final snackBar = SnackBar(content: Text(eventDescription));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    setState(() {
+      _sdkEvents += "\n- $eventDescription";
+    });
   }
 
   // TODO Remove this when dev is complete
@@ -100,8 +134,11 @@ class _MyHomePageState extends State<MyHomePage> {
               CheckConsent(),
               Reset(),
               ShowPreferences(),
+              UpdateSelectedLanguage(),
+              GetText(),
+              GetTranslatedText(),
               WebviewStrings(),
-              SdkEventsLogger(),
+              SdkEventsLogger(_sdkEvents),
             ],
           ),
         ),
