@@ -53,7 +53,6 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             updateSelectedLanguage(call, result: result)
         case "getText":
             getText(call, result: result)
-            updateSelectedLanguage(call, result: result)
         case "getTranslatedText":
             getTranslatedText(call, result: result)
         case "getDisabledPurposeIds":

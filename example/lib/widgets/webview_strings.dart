@@ -24,8 +24,8 @@ class _WebviewStringsState extends BaseSampleWidgetState<WebviewStrings> {
 
   @override
   Future<String> callDidomiPlugin() async {
-    String javascriptString = await DidomiSdk.getJavaScriptForWebView();
-    String queryString = await DidomiSdk.getQueryStringForWebView();
+    String javascriptString = await DidomiSdk.javaScriptForWebView;
+    String queryString = await DidomiSdk.queryStringForWebView;
 
     await showDialog<void>(
       context: context,

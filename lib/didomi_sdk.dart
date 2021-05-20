@@ -95,7 +95,7 @@ class DidomiSdk {
 
   /// Get JavaScript to embed into a WebView to pass the consent status
   /// from the app to the Didomi Web SDK embedded into the WebView
-  static Future<String> getJavaScriptForWebView() async {
+  static Future<String> get javaScriptForWebView async {
     final String result = await _channel.invokeMethod(
         "getJavaScriptForWebView");
     return result;
@@ -104,7 +104,7 @@ class DidomiSdk {
   /// Get a query-string to add to the URL of a WebView or Chrome Custom Tab to pass
   /// the consent status from the app to the Didomi Web SDK embedded on the target URL.
   /// Note: Available for Android only, will return an empty string if called from iOS
-  static Future<String> getQueryStringForWebView() async {
+  static Future<String> get queryStringForWebView async {
     final String result;
     if (Platform.isAndroid) {
       result = await _channel.invokeMethod(
