@@ -68,14 +68,6 @@ void main() {
     });
 
     test('Setup UI', () async {
-      await driver.tap(isReadyBtnFinder);
-      // Check SDK is not ready at startup
-      expect(
-          driver.getText(find.byValueKey("nativeResponse_isReady")).then((field) =>
-              expect(field, contains("Native message: Result = false"))),
-          completes);
-
-
       // Check notice was not displayed before startup
       String noticeDisplayed = await driver.requestData('isNoticeDisplayed');
       assert(noticeDisplayed == 'false');
