@@ -13,14 +13,14 @@ class SetLogLevel extends StatefulWidget {
 
 class _ShowSetLogLevelState extends BaseSampleWidgetState<SetLogLevel> {
   @override
-  String getButtonName() => 'Set Log Level (error)';
+  String getButtonName() => "Set Log Level (error)";
 
   @override
-  String getActionId() => 'setLogLevel';
+  String getActionId() => "setLogLevel";
 
   @override
   Future<String> callDidomiPlugin() async {
     await DidomiSdk.setLogLevel(LogLevel.error);
-    return "Level is error(${LogLevel.error.platformLevel})";
+    return "Level is error (${LogLevel.error.platformLevel}).";
   }
 }

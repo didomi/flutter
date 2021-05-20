@@ -12,14 +12,14 @@ class SetUserDisagreeToAll extends StatefulWidget {
 
 class _SetUserDisagreeToAll extends BaseSampleWidgetState<SetUserDisagreeToAll> {
   @override
-  String getButtonName() => 'Disagree to all';
+  String getButtonName() => "Disagree to all";
 
   @override
-  String getActionId() => 'setUserDisagreeToAll';
+  String getActionId() => "setUserDisagreeToAll";
 
   @override
   Future<String> callDidomiPlugin() async {
     final bool result = await DidomiSdk.setUserDisagreeToAll();
-    return 'Consent updated: $result';
+    return "Consent updated: $result.";
   }
 }

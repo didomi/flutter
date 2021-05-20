@@ -12,14 +12,14 @@ class SetUserStatus extends StatefulWidget {
 
 class _SetUserStatus extends BaseSampleWidgetState<SetUserStatus> {
   @override
-  String getButtonName() => 'Set User Status (LI only)';
+  String getButtonName() => "Set User Status (LI only)";
 
   @override
-  String getActionId() => 'SetUserStatus';
+  String getActionId() => "setUserStatus";
 
   @override
   Future<String> callDidomiPlugin() async {
     final bool result = await DidomiSdk.setUserStatus(false, true, false, true);
-    return 'Consent updated: $result';
+    return "Consent updated: $result.";
   }
 }

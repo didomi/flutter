@@ -21,10 +21,11 @@ class _GetDisabledPurposeIds
   @override
   Future<String> callDidomiPlugin() async {
     final List<String> result = await DidomiSdk.disabledPurposeIds;
+    result.sort(); // Required for UI tests
     if (result.isEmpty) {
-      return "Disabled Purposes list is empty";
+      return "Disabled Purposes list is empty.";
     } else {
-      return "Disabled Purposes: ${result.join(",")}";
+      return "Disabled Purposes: ${result.join(",")}.";
     }
   }
 }

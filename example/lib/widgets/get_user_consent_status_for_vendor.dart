@@ -25,9 +25,9 @@ class _GetUserConsentStatusForVendor extends BaseSampleWidgetState<GetUserConsen
   Future<String> callDidomiPlugin() async {
     final ConsentStatus result = await DidomiSdk.getUserConsentStatusForVendor(vendorId);
     if (result.isUnknown) {
-      return "No user status for vendor $vendorId";
+      return "No user status for vendor '$vendorId'.";
     } else {
-      return "User status is ${result.string} for vendor $vendorId";
+      return "User status is '${result.string}' for vendor '$vendorId'.";
     }
   }
 }

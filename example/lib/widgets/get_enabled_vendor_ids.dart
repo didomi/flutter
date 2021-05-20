@@ -10,21 +10,21 @@ class GetEnabledVendorIds extends StatefulWidget {
   State<StatefulWidget> createState() => _GetEnabledVendorIds();
 }
 
-class _GetEnabledVendorIds
-    extends BaseSampleWidgetState<GetEnabledVendorIds> {
+class _GetEnabledVendorIds extends BaseSampleWidgetState<GetEnabledVendorIds> {
   @override
-  String getButtonName() => 'GetEnabledVendorIds';
+  String getButtonName() => "GetEnabledVendorIds";
 
   @override
-  String getActionId() => 'getEnabledVendorIds';
+  String getActionId() => "getEnabledVendorIds";
 
   @override
   Future<String> callDidomiPlugin() async {
     final List<String> result = await DidomiSdk.enabledVendorIds;
+    result.sort(); // Required for UI tests
     if (result.isEmpty) {
-      return "Enabled Vendors list is empty";
+      return "Enabled Vendors list is empty.";
     } else {
-      return "Enabled Vendors: ${result.join(",")}";
+      return "Enabled Vendors: ${result.join(",")}.";
     }
   }
 }

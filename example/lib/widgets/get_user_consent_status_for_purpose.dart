@@ -25,9 +25,9 @@ class _GetUserConsentStatusForPurpose extends BaseSampleWidgetState<GetUserConse
   Future<String> callDidomiPlugin() async {
     final ConsentStatus result = await DidomiSdk.getUserConsentStatusForPurpose(purposeId);
     if (result.isUnknown) {
-      return "No user status for purpose $purposeId";
+      return "No user status for purpose '$purposeId'.";
     } else {
-      return "User status is ${result.string} for purpose $purposeId";
+      return "User status is '${result.string}' for purpose '$purposeId'.";
     }
   }
 }
