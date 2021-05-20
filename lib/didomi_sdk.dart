@@ -96,8 +96,7 @@ class DidomiSdk {
   /// Get JavaScript to embed into a WebView to pass the consent status
   /// from the app to the Didomi Web SDK embedded into the WebView
   static Future<String> get javaScriptForWebView async {
-    final String result = await _channel.invokeMethod(
-        "getJavaScriptForWebView");
+    final String result = await _channel.invokeMethod("getJavaScriptForWebView");
     return result;
   }
 
@@ -107,8 +106,7 @@ class DidomiSdk {
   static Future<String> get queryStringForWebView async {
     final String result;
     if (Platform.isAndroid) {
-      result = await _channel.invokeMethod(
-          "getQueryStringForWebView");
+      result = await _channel.invokeMethod("getQueryStringForWebView");
     } else {
       // Not available on iOS
       result = "";
@@ -122,9 +120,7 @@ class DidomiSdk {
   /// i.e.: from within the app rather than from the device settings.
   /// In order to update the language of the views displayed by the Didomi SDK, this method needs to be called before these views are displayed.
   static Future<void> updateSelectedLanguage(String languageCode) async {
-    await _channel.invokeMethod("updateSelectedLanguage", {
-      "languageCode": languageCode
-    });
+    await _channel.invokeMethod("updateSelectedLanguage", {"languageCode": languageCode});
   }
 
   /// Get a dictionary/map for a given key in the form of { en: "Value in English", fr: "Value in French" }
@@ -133,9 +129,7 @@ class DidomiSdk {
   /// The keys and values considered come from different places in the didomi_config.json file such as { notice: ... },
   /// { preferences: ... } and { texts: ... }, giving the latter the highest priority in case of duplicates.
   static Future<Map<String, String>?> getText(String key) async {
-    Map<String, String>? result = await _channel.invokeMapMethod("getText", {
-      "key": key
-    });
+    Map<String, String>? result = await _channel.invokeMapMethod("getText", {"key": key});
     return result;
   }
 
@@ -144,51 +138,43 @@ class DidomiSdk {
   /// The keys and values considered come from different places in the didomi_config.json file such as { notice: ... },
   /// { preferences: ... } and { texts: ... }, giving the latter the highest priority in case of duplicates.
   static Future<String> getTranslatedText(String key) async {
-    String result = await _channel.invokeMethod("getTranslatedText", {
-      "key": key
-    });
+    String result = await _channel.invokeMethod("getTranslatedText", {"key": key});
     return result;
   }
 
   /// Get the IDs of the disabled purposes
   static Future<List<String>> get disabledPurposeIds async {
-    final List<dynamic> result = await _channel.invokeMethod(
-        'getDisabledPurposeIds');
+    final List<dynamic> result = await _channel.invokeMethod('getDisabledPurposeIds');
     return result.cast();
   }
 
   /// Get the IDs of the disabled vendors
   static Future<List<String>> get disabledVendorIds async {
-    final List<dynamic> result = await _channel.invokeMethod(
-        'getDisabledVendorIds');
+    final List<dynamic> result = await _channel.invokeMethod('getDisabledVendorIds');
     return result.cast();
   }
 
   /// Get the IDs of the enabled purposes
   static Future<List<String>> get enabledPurposeIds async {
-    final List<dynamic> result = await _channel.invokeMethod(
-        'getEnabledPurposeIds');
+    final List<dynamic> result = await _channel.invokeMethod('getEnabledPurposeIds');
     return result.cast();
   }
 
   /// Get the IDs of the enabled vendors
   static Future<List<String>> get enabledVendorIds async {
-    final List<dynamic> result = await _channel.invokeMethod(
-        'getEnabledVendorIds');
+    final List<dynamic> result = await _channel.invokeMethod('getEnabledVendorIds');
     return result.cast();
   }
 
   /// Get the IDs of the required purposes
   static Future<List<String>> get requiredPurposeIds async {
-    final List<dynamic> result = await _channel.invokeMethod(
-        'getRequiredPurposeIds');
+    final List<dynamic> result = await _channel.invokeMethod('getRequiredPurposeIds');
     return result.cast();
   }
 
   /// Get the IDs of the required vendors
   static Future<List<String>> get requiredVendorIds async {
-    final List<dynamic> result = await _channel.invokeMethod(
-        'getRequiredVendorIds');
+    final List<dynamic> result = await _channel.invokeMethod('getRequiredVendorIds');
     return result.cast();
   }
 
@@ -210,34 +196,25 @@ class DidomiSdk {
   }
 
   /// Get the user consent status for a specific purpose
-  static Future<ConsentStatus> getUserConsentStatusForPurpose(
-      String purposeId) async {
-    final int result = await _channel.invokeMethod(
-        "getUserConsentStatusForPurpose", {"purposeId": purposeId});
+  static Future<ConsentStatus> getUserConsentStatusForPurpose(String purposeId) async {
+    final int result = await _channel.invokeMethod("getUserConsentStatusForPurpose", {"purposeId": purposeId});
     return ConsentStatus.values[result];
   }
 
   /// Get the user consent status for a specific vendor
-  static Future<ConsentStatus> getUserConsentStatusForVendor(
-      String vendorId) async {
-    final int result = await _channel.invokeMethod(
-        "getUserConsentStatusForVendor", {"vendorId": vendorId});
+  static Future<ConsentStatus> getUserConsentStatusForVendor(String vendorId) async {
+    final int result = await _channel.invokeMethod("getUserConsentStatusForVendor", {"vendorId": vendorId});
     return ConsentStatus.values[result];
   }
 
   /// Get the user consent status for a specific vendor and all its purposes
-  static Future<ConsentStatus> getUserConsentStatusForVendorAndRequiredPurposes(
-      String vendorId) async {
-    final int result = await _channel.invokeMethod(
-        "getUserConsentStatusForVendorAndRequiredPurposes",
-        {"vendorId": vendorId});
+  static Future<ConsentStatus> getUserConsentStatusForVendorAndRequiredPurposes(String vendorId) async {
+    final int result = await _channel.invokeMethod("getUserConsentStatusForVendorAndRequiredPurposes", {"vendorId": vendorId});
     return ConsentStatus.values[result];
   }
 
   /// Set the user status globally
-  static Future<bool> setUserStatus(bool purposesConsentStatus,
-      bool purposesLIStatus, bool vendorsConsentStatus,
-      bool vendorsLIStatus) async {
+  static Future<bool> setUserStatus(bool purposesConsentStatus, bool purposesLIStatus, bool vendorsConsentStatus, bool vendorsLIStatus) async {
     final bool result = await _channel.invokeMethod("setUserStatus", {
       "purposesConsentStatus": purposesConsentStatus,
       "purposesLIStatus": purposesLIStatus,
