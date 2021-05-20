@@ -47,6 +47,32 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         case "hideNotice":
             Didomi.shared.hideNotice()
             result(nil)
+        case "getDisabledPurposeIds":
+            getDisabledPurposeIds(result: result)
+        case "getDisabledVendorIds":
+            getDisabledVendorIds(result: result)
+        case "getEnabledPurposeIds":
+            getEnabledPurposeIds(result: result)
+        case "getEnabledVendorIds":
+            getEnabledVendorIds(result: result)
+        case "getRequiredPurposeIds":
+            getRequiredPurposeIds(result: result)
+        case "getRequiredVendorIds":
+            getRequiredVendorIds(result: result)
+        case "setLogLevel":
+            setLogLevel(call, result: result)
+        case "setUserAgreeToAll":
+            setUserAgreeToAll(result: result)
+        case "setUserDisagreeToAll":
+            setUserDisagreeToAll(result: result)
+        case "getUserConsentStatusForPurpose":
+            getUserConsentStatusForPurpose(call, result: result)
+        case "getUserConsentStatusForVendor":
+            getUserConsentStatusForVendor(call, result: result)
+        case "getUserConsentStatusForVendorAndRequiredPurposes":
+            getUserConsentStatusForVendorAndRequiredPurposes(call, result: result)
+        case "setUserStatus":
+            setUserStatus(call, result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -89,5 +115,202 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             (UIApplication.shared.delegate?.window??.rootViewController)!
         Didomi.shared.showPreferences(controller: viewController)
         result(nil)
+    }
+
+    /**
+     * Get the disabled purpose IDs
+     - Returns: Array of purpose ids
+     */
+    func getDisabledPurposeIds(result: @escaping FlutterResult) {
+        let purposeIdList = Array(Didomi.shared.getDisabledPurposeIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        result(purposeIdList)
+    }
+
+    /**
+     * Get the disabled vendor IDs
+     - Returns: Array of vendor ids
+     */
+    func getDisabledVendorIds(result: @escaping FlutterResult) {
+        let vendorIdList = Array(Didomi.shared.getDisabledVendorIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        result(vendorIdList)
+    }
+
+    /**
+     * Get the enabled purpose IDs
+     - Returns: Array of purpose ids
+     */
+    func getEnabledPurposeIds(result: @escaping FlutterResult) {
+        let purposeIdList = Array(Didomi.shared.getEnabledPurposeIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        result(purposeIdList)
+    }
+
+    /**
+     * Get the enabled vendor IDs
+     - Returns: Array of vendor ids
+     */
+    func getEnabledVendorIds(result: @escaping FlutterResult) {
+        let vendorIdList = Array(Didomi.shared.getEnabledVendorIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        result(vendorIdList)
+    }
+
+    /**
+     * Get the required purpose IDs
+     - Returns: Array of purpose ids
+     */
+    func getRequiredPurposeIds(result: @escaping FlutterResult) {
+        let purposeIdList = Array(Didomi.shared.getRequiredPurposeIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        result(purposeIdList)
+    }
+
+    /**
+     * Get the required vendor IDs
+     - Returns: Array of vendor ids
+     */
+    func getRequiredVendorIds(result: @escaping FlutterResult) {
+        let vendorIdList = Array(Didomi.shared.getRequiredVendorIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        result(vendorIdList)
+    }
+
+    /**
+     Set the minimum level of messages to log
+
+     Messages with a level below `minLevel` will not be logged.
+     Levels are standard levels from `OSLogType` (https://developer.apple.com/documentation/os/logging/choosing_the_log_level_for_a_message):
+      - OSLogType.info (1)
+      - OSLogType.debug (2)
+      - OSLogType.error (16)
+      - OSLogType.fault (17)
+
+     We recommend setting `OSLogType.error` (16) in production
+     */
+    func setLogLevel(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, UInt8> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setLogLevel", details: nil))
+                return
+            }
+        Didomi.shared.setLogLevel(minLevel: args["minLevel"] ?? 1)
+        result(nil)
+    }
+
+    /**
+     Method that allows to enable consent and legitimate interest for all the required purposes.
+     - Returns: **true** if consent status has been updated, **false** otherwise.
+     */
+    func setUserAgreeToAll(result: @escaping FlutterResult) {
+        result(Didomi.shared.setUserAgreeToAll())
+    }
+
+    /**
+     Method that allows to disable consent and legitimate interest for all the required purposes and vendors.
+     - Returns: **true** if consent status has been updated, **false** otherwise.
+     */
+    func setUserDisagreeToAll(result: @escaping FlutterResult) {
+        result(Didomi.shared.setUserDisagreeToAll())
+    }
+
+    /**
+     Get the user consent status for a specific purpose
+     - Parameter purposeId: The purpose ID to check consent for
+     - Returns: The user consent status for the specified purpose
+     */
+    func getUserConsentStatusForPurpose(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, String> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getUserConsentStatusForPurpose", details: nil))
+                return
+            }
+
+        let purposeId = args["purposeId"] ?? ""
+        if purposeId.isEmpty {
+            result(FlutterError.init(code: "invalid_args", message: "Missing purposeId argument for getUserConsentStatusForPurpose", details: nil))
+            return
+        }
+
+        let consentStatusForPurpose = Didomi.shared.getUserConsentStatusForPurpose(purposeId: purposeId)
+        switch consentStatusForPurpose {
+        case .disable:
+          result(0)
+        case .enable:
+          result(1)
+        default:
+          result(2)
+        }
+    }
+
+    /**
+     Get the user consent status for a specific vendor
+     - Parameter vendorId: The vendor ID to check consent for
+     - Returns: The user consent status for the specified vendor
+     */
+    func getUserConsentStatusForVendor(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, String> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getUserStatusForVendor", details: nil))
+                return
+            }
+
+        let vendorId = args["vendorId"] ?? ""
+        if vendorId.isEmpty {
+            result(FlutterError.init(code: "invalid_args", message: "Missing vendorId argument for getUserStatusForVendor", details: nil))
+            return
+        }
+
+        let consentStatusForVendor = Didomi.shared.getUserConsentStatusForVendor(vendorId: vendorId)
+        switch consentStatusForVendor {
+        case .disable:
+          result(0)
+        case .enable:
+          result(1)
+        default:
+          result(2)
+        }
+    }
+
+    /**
+     Get the user consent status for a specific vendor and all its purposes
+     - Parameter vendorId: The ID of the vendor
+     - Returns: The user consent status corresponding to the specified vendor and all its required purposes
+     */
+    func getUserConsentStatusForVendorAndRequiredPurposes(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, String> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getUserConsentStatusForVendorAndRequiredPurposes", details: nil))
+                return
+            }
+
+        let vendorId = args["vendorId"] ?? ""
+        if vendorId.isEmpty {
+            result(FlutterError.init(code: "invalid_args", message: "Missing vendorId argument for getUserConsentStatusForVendorAndRequiredPurposes", details: nil))
+            return
+        }
+
+        let consentStatusForVendor = Didomi.shared.getUserConsentStatusForVendorAndRequiredPurposes(vendorId: vendorId)
+        switch consentStatusForVendor {
+        case .disable:
+          result(0)
+        case .enable:
+          result(1)
+        default:
+          result(2)
+        }
+    }
+
+    /**
+     Set the user status for purposes and vendors for consent and legitimate interest.
+     - Parameters purposesConsentStatus: boolean used to determine if consent will be enabled or disabled for all purposes.
+     - Parameters purposesLIStatus: boolean used to determine if legitimate interest will be enabled or disabled for all purposes.
+     - Parameters vendorsConsentStatus: boolean used to determine if consent will be enabled or disabled for all vendors.
+     - Parameters vendorsLIStatus: boolean used to determine if legitimate interest will be enabled or disabled for all vendors.
+     - Returns: **true** if consent status has been updated, **false** otherwise.
+     */
+    func setUserStatus(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Bool> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserStatus", details: nil))
+                return
+            }
+
+        result(Didomi.shared.setUserStatus(
+            purposesConsentStatus: args["purposesConsentStatus"] ?? false,
+            purposesLIStatus: args["purposesLIStatus"] ?? false,
+            vendorsConsentStatus: args["vendorsConsentStatus"] ?? false,
+            vendorsLIStatus: args["vendorsLIStatus"] ?? false
+        ))
     }
 }
