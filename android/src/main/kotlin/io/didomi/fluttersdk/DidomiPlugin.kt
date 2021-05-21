@@ -65,6 +65,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+        val didomi = Didomi.getInstance()
         try {
             when (call.method) {
 
@@ -72,32 +73,32 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "initialize" -> initialize(call, result)
 
-                "isReady" -> result.success(Didomi.getInstance().isReady)
+                "isReady" -> result.success(didomi.isReady)
 
-                "onReady" -> Didomi.getInstance().onReady {
+                "onReady" -> didomi.onReady {
                     eventStreamHandler.onReadyCallback()
                 }
 
-                "onError" -> Didomi.getInstance().onError {
+                "onError" -> didomi.onError {
                     eventStreamHandler.onErrorCallback()
                 }
 
-                "shouldConsentBeCollected" -> result.success(Didomi.getInstance().shouldConsentBeCollected())
+                "shouldConsentBeCollected" -> result.success(didomi.shouldConsentBeCollected())
 
-                "isConsentRequired" -> result.success(Didomi.getInstance().isConsentRequired)
+                "isConsentRequired" -> result.success(didomi.isConsentRequired)
 
-                "isUserConsentStatusPartial" -> result.success(Didomi.getInstance().isUserConsentStatusPartial)
+                "isUserConsentStatusPartial" -> result.success(didomi.isUserConsentStatusPartial)
 
-                "isUserLegitimateInterestStatusPartial" -> result.success(Didomi.getInstance().isUserLegitimateInterestStatusPartial)
+                "isUserLegitimateInterestStatusPartial" -> result.success(didomi.isUserLegitimateInterestStatusPartial)
 
                 "reset" -> {
-                    Didomi.getInstance().reset()
+                    didomi.reset()
                     result.success(null)
                 }
 
                 "setupUI" -> {
                     getFragmentActivity(result)?.also {
-                        Didomi.getInstance().setupUI(it)
+                        didomi.setupUI(it)
                         result.success(null)
                     }
                 }
@@ -105,28 +106,28 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 "showNotice" -> showNotice(result)
 
                 "hideNotice" -> {
-                    Didomi.getInstance().hideNotice()
+                    didomi.hideNotice()
                     result.success(null)
                 }
 
                 "isNoticeVisible" -> {
-                    result.success(Didomi.getInstance().isNoticeVisible)
+                    result.success(didomi.isNoticeVisible)
                 }
 
                 "showPreferences" -> showPreferences(call, result)
 
                 "hidePreferences" -> {
-                    Didomi.getInstance().hidePreferences()
+                    didomi.hidePreferences()
                     result.success(null)
                 }
 
                 "isPreferencesVisible" -> {
-                    result.success(Didomi.getInstance().isPreferencesVisible)
+                    result.success(didomi.isPreferencesVisible)
                 }
 
-                "getJavaScriptForWebView" -> result.success(Didomi.getInstance().javaScriptForWebView)
+                "getJavaScriptForWebView" -> result.success(didomi.javaScriptForWebView)
 
-                "getQueryStringForWebView" -> result.success(Didomi.getInstance().queryStringForWebView)
+                "getQueryStringForWebView" -> result.success(didomi.queryStringForWebView)
 
                 "updateSelectedLanguage" -> updateSelectedLanguage(call, result)
 
