@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 /// Widget to call DidomiSdk.SetUserStatus()
 class SetUserStatus extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _SetUserStatus();
+  State<StatefulWidget> createState() => _SetUserStatusState();
 }
 
-class _SetUserStatus extends BaseSampleWidgetState<SetUserStatus> {
+class _SetUserStatusState extends BaseSampleWidgetState<SetUserStatus> {
   @override
   String getButtonName() => "Set User Status (LI only)";
 

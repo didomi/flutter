@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 /// Widget to call DidomiSdk.GetUserConsentStatusForPurpose
 class GetUserConsentStatusForPurpose extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _GetUserConsentStatusForPurpose();
+  State<StatefulWidget> createState() => _GetUserConsentStatusForPurposeState();
 }
 
-class _GetUserConsentStatusForPurpose extends BaseSampleWidgetState<GetUserConsentStatusForPurpose> {
+class _GetUserConsentStatusForPurposeState extends BaseSampleWidgetState<GetUserConsentStatusForPurpose> {
   // Purpose id for sample
   final String purposeId = "cookies";
 

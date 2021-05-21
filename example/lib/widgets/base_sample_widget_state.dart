@@ -13,7 +13,11 @@ abstract class BaseSampleWidgetState<T extends StatefulWidget>
   bool get wantKeepAlive => true;
 
   /// A Text displaying SDK response
-  Widget buildResponseText(String key) => Text("Native message: $_messageFromNative\n", key: Key("nativeResponse_$key"), textAlign: TextAlign.center);
+  Widget buildResponseText(String key) =>
+      Text("Native message: $_messageFromNative\n",
+          key: Key("nativeResponse_$key"),
+          textAlign: TextAlign.left
+      );
 
   /// Update displayed SDK response
   Future<void> updateMessageFromNative(String messageFromNative) async {

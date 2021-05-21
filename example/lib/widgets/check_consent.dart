@@ -15,17 +15,22 @@ class _CheckConsentState extends BaseSampleWidgetState<CheckConsent> {
 
   @override
   String getButtonName() {
-    return 'Should consent be collected?';
+    return 'Check consent state';
   }
 
   @override
   String getActionId() {
-    return 'shoudConsentBeCollected';
+    return 'checkConsentState';
   }
 
   @override
   Future<String> callDidomiPlugin() async {
-    final bool result = await DidomiSdk.shouldConsentBeCollected;
-    return 'Result = $result';
+    final bool consentRequired = await DidomiSdk.isConsentRequired;
+    final bool shouldConsentBeCollected = await DidomiSdk.shouldConsentBeCollected;
+    final bool consentStatusPartial = await DidomiSdk.isUserConsentStatusPartial;
+    final bool liStatusPartial = await DidomiSdk.isUserLegitimateInterestStatusPartial;
+    return '\n- Is user consent required? $consentRequired\n'
+        '- Should consent be collected? $shouldConsentBeCollected\n'
+        '- Is status partial? consent => $consentStatusPartial, LI => $liStatusPartial';
   }
 }

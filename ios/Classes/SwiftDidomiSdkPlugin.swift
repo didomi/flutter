@@ -40,16 +40,32 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             }
         case "shouldConsentBeCollected":
             result(Didomi.shared.shouldConsentBeCollected())
-        case "setupUI":
-            setupUI(result: result)
+        case "isConsentRequired":
+            result(Didomi.shared.isConsentRequired())
+        case "isUserConsentStatusPartial":
+            result(Didomi.shared.isUserConsentStatusPartial())
+        case "isUserLegitimateInterestStatusPartial":
+            result(Didomi.shared.isUserLegitimateInterestStatusPartial())
         case "reset":
             Didomi.shared.reset()
             result(nil)
-        case "showPreferences":
-            showPreferences(result: result)
+        case "setupUI":
+            setupUI(result: result)
+        case "showNotice":
+            Didomi.shared.showNotice()
+            result(nil)
         case "hideNotice":
             Didomi.shared.hideNotice()
             result(nil)
+        case "isNoticeVisible":
+            result(Didomi.shared.isNoticeVisible())
+        case "showPreferences":
+            showPreferences(call, result: result)
+        case "hidePreferences":
+            Didomi.shared.hidePreferences()
+            result(nil)
+        case "isPreferencesVisible":
+            result(Didomi.shared.isPreferencesVisible())
         case "getJavaScriptForWebView":
             result(Didomi.shared.getJavaScriptForWebView())
         case "updateSelectedLanguage":
@@ -84,6 +100,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             getUserConsentStatusForVendorAndRequiredPurposes(call, result: result)
         case "setUserStatus":
             setUserStatus(call, result: result)
+        case "setUser":
+            setUser(call, result: result)
+        case "setUserWithAuthentication":
+            setUserWithAuthentication(call, result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -105,12 +125,12 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         let didomi = Didomi.shared
         didomi.initialize(
             apiKey: apiKey,
-            localConfigurationPath: args["localConfigurationPath"] as? String ?? nil,
-            remoteConfigurationURL: args["remoteConfigurationURL"] as? String ?? nil,
-            providerId: args["providerId"] as? String ?? nil,
+            localConfigurationPath: args["localConfigurationPath"] as? String,
+            remoteConfigurationURL: args["remoteConfigurationURL"] as? String,
+            providerId: args["providerId"] as? String,
             disableDidomiRemoteConfig: disableDidomiRemoteConfig,
-            languageCode: args["languageCode"] as? String ?? nil,
-            noticeId: args["noticeId"] as? String ?? nil)
+            languageCode: args["languageCode"] as? String,
+            noticeId: args["noticeId"] as? String)
         result(nil)
     }
     
@@ -121,10 +141,20 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(nil)
     }
     
-    func showPreferences(result: @escaping FlutterResult) {
+    func showPreferences(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         let viewController: UIViewController =
             (UIApplication.shared.delegate?.window??.rootViewController)!
-        Didomi.shared.showPreferences(controller: viewController)
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for initialize", details: nil))
+            return
+        }
+        let view: Didomi.Views
+        if let viewArgument = args["view"] as? String, viewArgument == "vendors" {
+            view = .vendors
+        } else {
+            view = .purposes
+        }
+        Didomi.shared.showPreferences(controller: viewController, view: view)
         result(nil)
     }
     
@@ -408,5 +438,55 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             vendorsConsentStatus: args["vendorsConsentStatus"] ?? false,
             vendorsLIStatus: args["vendorsLIStatus"] ?? false
         ))
+    }
+    
+    func setUser(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUser", details: nil))
+                return
+            }
+
+        guard let userId = argumentOrError(argumentName: "organizationUserId", methodName: "setUser", args: args, result: result) else {
+            return
+        }
+        Didomi.shared.setUser(id: userId)
+        result(nil)
+    }
+    
+    func setUserWithAuthentication(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserWithAuthentication", details: nil))
+                return
+            }
+
+        guard let userId = argumentOrError(argumentName: "organizationUserId", methodName: "setUserWithAuthentication", args: args, result: result) else {
+            return
+        }
+        guard let organizationUserIdAuthAlgorithm = argumentOrError(argumentName: "organizationUserIdAuthAlgorithm", methodName: "setUserWithAuthentication", args: args, result: result) else {
+            return
+        }
+        guard let organizationUserIdAuthSid = argumentOrError(argumentName: "organizationUserIdAuthSid", methodName: "setUserWithAuthentication", args: args, result: result) else {
+            return
+        }
+        guard let organizationUserIdAuthDigest = argumentOrError(argumentName: "organizationUserIdAuthDigest", methodName: "setUserWithAuthentication", args: args, result: result) else {
+            return
+        }
+        Didomi.shared.setUser(
+            id: userId,
+            algorithm: organizationUserIdAuthAlgorithm,
+            secretId: organizationUserIdAuthSid,
+            salt: args["organizationUserIdAuthSalt"] as? String,
+            digest: organizationUserIdAuthDigest)
+        result(nil)
+    }
+    
+    /// Return the requested argument as non-empty String, or raise an error in result and return null
+    private func argumentOrError(argumentName: String, methodName: String, args: Dictionary<String, Any>, result: FlutterResult) -> String? {
+        let argument = args[argumentName] as? String ?? ""
+        if argument.isEmpty {
+            result(FlutterError.init(code: "invalid_args", message: "Missing \(argumentName) argument for \(methodName)", details: nil))
+            return nil
+        }
+        return argument
     }
 }
