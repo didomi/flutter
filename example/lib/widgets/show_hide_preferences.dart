@@ -14,10 +14,12 @@ class ShowHidePreferences extends StatefulWidget {
 
 class _ShowHidePreferencesState extends BaseSampleWidgetState<ShowHidePreferences> {
 
-  static const HIDE_DELAY_SECONDS = 5;
+  static const HIDE_DELAY_SECONDS = 3;
+  static const CHECK_DELAY_SECONDS = 5;
 
   PreferencesView? _requestedView = PreferencesView.purposes;
   bool _hideAfterAWhile = false;
+  bool _checkVisibilityAfterAWhile = true;
 
   @override
   String getButtonName() {
@@ -36,9 +38,36 @@ class _ShowHidePreferencesState extends BaseSampleWidgetState<ShowHidePreference
       if (_hideAfterAWhile) {
         Future.delayed(const Duration(seconds: HIDE_DELAY_SECONDS), () => DidomiSdk.hidePreferences());
       }
+      if (_checkVisibilityAfterAWhile) {
+        Future.delayed(const Duration(seconds: CHECK_DELAY_SECONDS), () => checkVisibility());
+      }
       await DidomiSdk.showPreferences(view: requestedView);
     }
     return 'OK';
+  }
+
+  Future<void> checkVisibility() async {
+    bool visible = await DidomiSdk.isPreferencesVisible;
+    String text = visible ? "Yes, Preferences screen is visible" : "No, Preferences screen is not visible";
+
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Check Preferences screen visibility'),
+          content: Text(text),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -81,6 +110,20 @@ class _ShowHidePreferencesState extends BaseSampleWidgetState<ShowHidePreference
           if (newValue != null) {
             setState(() {
               _hideAfterAWhile = newValue;
+            });
+          }
+        },
+        controlAffinity:
+        ListTileControlAffinity.leading, //  <-- leading Checkbox
+      ),
+      CheckboxListTile(
+        title: Text("Check visibility after $CHECK_DELAY_SECONDS seconds"),
+        key: Key('isPreferencesVisible'),
+        value: _checkVisibilityAfterAWhile,
+        onChanged: (newValue) {
+          if (newValue != null) {
+            setState(() {
+              _checkVisibilityAfterAWhile = newValue;
             });
           }
         },

@@ -14,9 +14,11 @@ class ShowHideNotice extends StatefulWidget {
 
 class _ShowHideNoticeState extends BaseSampleWidgetState<ShowHideNotice> {
 
-  static const HIDE_DELAY_SECONDS = 5;
+  static const HIDE_DELAY_SECONDS = 3;
+  static const CHECK_DELAY_SECONDS = 5;
 
   bool _hideAfterAWhile = false;
+  bool _checkVisibilityAfterAWhile = true;
 
   @override
   String getButtonName() {
@@ -33,8 +35,35 @@ class _ShowHideNoticeState extends BaseSampleWidgetState<ShowHideNotice> {
     if (_hideAfterAWhile) {
       Future.delayed(const Duration(seconds: HIDE_DELAY_SECONDS), () => DidomiSdk.hideNotice());
     }
+    if (_checkVisibilityAfterAWhile) {
+      Future.delayed(const Duration(seconds: CHECK_DELAY_SECONDS), () => checkVisibility());
+    }
     await DidomiSdk.showNotice();
     return 'OK';
+  }
+
+  Future<void> checkVisibility() async {
+    bool visible = await DidomiSdk.isNoticeVisible;
+    String text = visible ? "Yes, notice is visible" : "No, Notice is not visible";
+
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Check notice visibility'),
+          content: Text(text),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -47,12 +76,26 @@ class _ShowHideNoticeState extends BaseSampleWidgetState<ShowHideNotice> {
       ),
       CheckboxListTile(
         title: Text("Hide after $HIDE_DELAY_SECONDS seconds"),
-        key: Key('disableRemoteConfig'),
+        key: Key('hideNotice'),
         value: _hideAfterAWhile,
         onChanged: (newValue) {
           if (newValue != null) {
             setState(() {
               _hideAfterAWhile = newValue;
+            });
+          }
+        },
+        controlAffinity:
+        ListTileControlAffinity.leading, //  <-- leading Checkbox
+      ),
+      CheckboxListTile(
+        title: Text("Check visibility after $CHECK_DELAY_SECONDS seconds"),
+        key: Key('isNoticeVisible'),
+        value: _checkVisibilityAfterAWhile,
+        onChanged: (newValue) {
+          if (newValue != null) {
+            setState(() {
+              _checkVisibilityAfterAWhile = newValue;
             });
           }
         },

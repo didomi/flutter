@@ -48,11 +48,15 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         case "hideNotice":
             Didomi.shared.hideNotice()
             result(nil)
+        case "isNoticeVisible":
+            result(Didomi.shared.isNoticeVisible())
         case "showPreferences":
             showPreferences(call, result: result)
         case "hidePreferences":
             Didomi.shared.hidePreferences()
             result(nil)
+        case "isPreferencesVisible":
+            result(Didomi.shared.isPreferencesVisible())
         case "getJavaScriptForWebView":
             result(Didomi.shared.getJavaScriptForWebView())
         case "updateSelectedLanguage":

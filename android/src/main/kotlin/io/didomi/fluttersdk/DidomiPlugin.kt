@@ -103,11 +103,19 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     result.success(null)
                 }
 
+                "isNoticeVisible" -> {
+                    result.success(Didomi.getInstance().isNoticeVisible)
+                }
+
                 "showPreferences" -> showPreferences(call, result)
 
                 "hidePreferences" -> {
                     Didomi.getInstance().hidePreferences()
                     result.success(null)
+                }
+
+                "isPreferencesVisible" -> {
+                    result.success(Didomi.getInstance().isPreferencesVisible)
                 }
 
                 "getJavaScriptForWebView" -> result.success(Didomi.getInstance().javaScriptForWebView)
