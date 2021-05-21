@@ -122,12 +122,12 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         let didomi = Didomi.shared
         didomi.initialize(
             apiKey: apiKey,
-            localConfigurationPath: args["localConfigurationPath"] as? String ?? nil,
-            remoteConfigurationURL: args["remoteConfigurationURL"] as? String ?? nil,
-            providerId: args["providerId"] as? String ?? nil,
+            localConfigurationPath: args["localConfigurationPath"] as? String,
+            remoteConfigurationURL: args["remoteConfigurationURL"] as? String,
+            providerId: args["providerId"] as? String,
             disableDidomiRemoteConfig: disableDidomiRemoteConfig,
-            languageCode: args["languageCode"] as? String ?? nil,
-            noticeId: args["noticeId"] as? String ?? nil)
+            languageCode: args["languageCode"] as? String,
+            noticeId: args["noticeId"] as? String)
         result(nil)
     }
     
@@ -424,7 +424,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             id: userId,
             algorithm: organizationUserIdAuthAlgorithm,
             secretId: organizationUserIdAuthSid,
-            salt: args["organizationUserIdAuthSalt"] as? String ?? nil,
+            salt: args["organizationUserIdAuthSalt"] as? String,
             digest: organizationUserIdAuthDigest)
         result(nil)
     }
