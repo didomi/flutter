@@ -53,11 +53,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Didomi Flutter Demo',
+      title: "Didomi Flutter Demo",
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: "Flutter Demo Home Page"),
     );
   }
 }
@@ -72,7 +72,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _platformVersion = 'Unknown';
+  String _platformVersion = "Unknown";
 
   String _sdkEvents = "";
 
@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
     try {
       platformVersion = await DidomiSdk.platformVersion;
     } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+      platformVersion = "Failed to get platform version.";
     }
 
     if (!mounted) return;
@@ -127,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Didomi Flutter Demo'),
+        title: Text("Didomi Flutter Demo"),
       ),
       body: Material(
         child: Center(
@@ -135,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             key: Key("components_list"),
             children: [
-              Text('Running on: $_platformVersion\n',
+              Text("Running on: $_platformVersion\n",
                   textAlign: TextAlign.center),
               // SDK setup
               Text('Setup:'),
@@ -156,13 +156,13 @@ class _MyHomePageState extends State<MyHomePage> {
               SetUserDisagreeToAll(),
               SetUserStatus(),
               // Purposes
-              Text('Purposes:'),
+              Text("Purposes:"),
               GetDisabledPurposeIds(),
               GetEnabledPurposeIds(),
               GetRequiredPurposeIds(),
               GetUserConsentStatusForPurpose(),
               // Vendors
-              Text('Vendors:'),
+              Text("Vendors:"),
               GetDisabledVendorIds(),
               GetEnabledVendorIds(),
               GetRequiredVendorIds(),

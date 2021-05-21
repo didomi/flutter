@@ -3,6 +3,9 @@ import UIKit
 import Didomi
 
 public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
+
+    /// Default message if SDK is not ready
+    private static let didomiNotReadyException: String = "Didomi SDK is not ready. Use the onReady callback to access this method."
     
     static var eventStreamHandler: DidomiEventStreamHandler? = nil
     
@@ -167,7 +170,11 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: Array of purpose ids
      */
     func getDisabledPurposeIds(result: @escaping FlutterResult) {
-        let purposeIdList = Array(Didomi.shared.getDisabledPurposeIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let purposeIdList = Array(Didomi.shared.getDisabledPurposeIds())
         result(purposeIdList)
     }
 
@@ -176,7 +183,11 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: Array of vendor ids
      */
     func getDisabledVendorIds(result: @escaping FlutterResult) {
-        let vendorIdList = Array(Didomi.shared.getDisabledVendorIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let vendorIdList = Array(Didomi.shared.getDisabledVendorIds())
         result(vendorIdList)
     }
 
@@ -185,7 +196,11 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: Array of purpose ids
      */
     func getEnabledPurposeIds(result: @escaping FlutterResult) {
-        let purposeIdList = Array(Didomi.shared.getEnabledPurposeIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let purposeIdList = Array(Didomi.shared.getEnabledPurposeIds())
         result(purposeIdList)
     }
 
@@ -194,7 +209,11 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: Array of vendor ids
      */
     func getEnabledVendorIds(result: @escaping FlutterResult) {
-        let vendorIdList = Array(Didomi.shared.getEnabledVendorIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let vendorIdList = Array(Didomi.shared.getEnabledVendorIds())
         result(vendorIdList)
     }
 
@@ -203,7 +222,11 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: Array of purpose ids
      */
     func getRequiredPurposeIds(result: @escaping FlutterResult) {
-        let purposeIdList = Array(Didomi.shared.getRequiredPurposeIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let purposeIdList = Array(Didomi.shared.getRequiredPurposeIds())
         result(purposeIdList)
     }
 
@@ -212,7 +235,11 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: Array of vendor ids
      */
     func getRequiredVendorIds(result: @escaping FlutterResult) {
-        let vendorIdList = Array(Didomi.shared.getRequiredVendorIds()).sorted{ $0.compare($1, options: .caseInsensitive) == .orderedAscending }
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let vendorIdList = Array(Didomi.shared.getRequiredVendorIds())
         result(vendorIdList)
     }
 
@@ -242,6 +269,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: **true** if consent status has been updated, **false** otherwise.
      */
     func setUserAgreeToAll(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
         result(Didomi.shared.setUserAgreeToAll())
     }
 
@@ -250,6 +281,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: **true** if consent status has been updated, **false** otherwise.
      */
     func setUserDisagreeToAll(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
         result(Didomi.shared.setUserDisagreeToAll())
     }
 
@@ -259,6 +294,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: The user consent status for the specified purpose
      */
     func getUserConsentStatusForPurpose(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
         guard let args = call.arguments as? Dictionary<String, String> else {
                 result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getUserConsentStatusForPurpose", details: nil))
                 return
@@ -287,6 +326,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: The user consent status for the specified vendor
      */
     func getUserConsentStatusForVendor(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
         guard let args = call.arguments as? Dictionary<String, String> else {
                 result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getUserStatusForVendor", details: nil))
                 return
@@ -315,6 +358,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: The user consent status corresponding to the specified vendor and all its required purposes
      */
     func getUserConsentStatusForVendorAndRequiredPurposes(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
         guard let args = call.arguments as? Dictionary<String, String> else {
                 result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getUserConsentStatusForVendorAndRequiredPurposes", details: nil))
                 return
@@ -346,6 +393,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
      - Returns: **true** if consent status has been updated, **false** otherwise.
      */
     func setUserStatus(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
         guard let args = call.arguments as? Dictionary<String, Bool> else {
                 result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserStatus", details: nil))
                 return
