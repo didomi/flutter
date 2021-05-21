@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 /// Widget to call DidomiSdk.getDisabledVendorIds
 class GetDisabledVendorIds extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _GetDisabledVendorIds();
+  State<StatefulWidget> createState() => _GetDisabledVendorIdsState();
 }
 
-class _GetDisabledVendorIds extends BaseSampleWidgetState<GetDisabledVendorIds> {
+class _GetDisabledVendorIdsState extends BaseSampleWidgetState<GetDisabledVendorIds> {
   @override
   String getButtonName() => "GetDisabledVendorIds";
 

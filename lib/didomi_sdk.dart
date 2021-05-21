@@ -30,23 +30,19 @@ class DidomiSdk {
         String? providerId,
         bool disableDidomiRemoteConfig = false,
         String? languageCode,
-        String? noticeId}) async {
-    return await _channel.invokeMethod("initialize", {
-      "apiKey": apiKey,
-      "localConfigurationPath": localConfigurationPath,
-      "remoteConfigurationURL": remoteConfigurationURL,
-      "providerId": providerId,
-      "disableDidomiRemoteConfig": disableDidomiRemoteConfig,
-      "languageCode": languageCode,
-      "noticeId": noticeId
-    });
-  }
+        String? noticeId}) async =>
+      await _channel.invokeMethod("initialize", {
+        "apiKey": apiKey,
+        "localConfigurationPath": localConfigurationPath,
+        "remoteConfigurationURL": remoteConfigurationURL,
+        "providerId": providerId,
+        "disableDidomiRemoteConfig": disableDidomiRemoteConfig,
+        "languageCode": languageCode,
+        "noticeId": noticeId
+      });
 
   /// Check if Didomi SDK was successfully initialized
-  static Future<bool> get isReady async {
-    final bool result = await _channel.invokeMethod('isReady');
-    return result;
-  }
+  static Future<bool> get isReady async => await _channel.invokeMethod('isReady');
 
   /// Check if user consent are partial or not set
   static Future<bool> get shouldConsentBeCollected async {
@@ -110,15 +106,11 @@ class DidomiSdk {
   }
 
   /// Hide the preferences screen
-  static Future<void> hidePreferences() async {
-    await _channel.invokeMethod("hidePreferences");
-  }
+  static Future<void> hidePreferences() async => await _channel.invokeMethod("hidePreferences");
 
   /// Check if preferences screen is visible
-  static Future<bool> get isPreferencesVisible async {
-    final bool result = await _channel.invokeMethod('isPreferencesVisible');
-    return result;
-  }
+  static Future<bool> get isPreferencesVisible async =>
+    await _channel.invokeMethod('isPreferencesVisible');
 
   /// Add listener to SDK events
   static addEventListener(EventListener listener) {
@@ -145,10 +137,8 @@ class DidomiSdk {
 
   /// Get JavaScript to embed into a WebView to pass the consent status
   /// from the app to the Didomi Web SDK embedded into the WebView
-  static Future<String> get javaScriptForWebView async {
-    final String result = await _channel.invokeMethod("getJavaScriptForWebView");
-    return result;
-  }
+  static Future<String> get javaScriptForWebView async =>
+    await _channel.invokeMethod("getJavaScriptForWebView");
 
   /// Get a query-string to add to the URL of a WebView or Chrome Custom Tab to pass
   /// the consent status from the app to the Didomi Web SDK embedded on the target URL.
@@ -169,28 +159,24 @@ class DidomiSdk {
   /// In most cases this method doesn't need to be called. It would only be required for those apps that allow language change on-the-fly,
   /// i.e.: from within the app rather than from the device settings.
   /// In order to update the language of the views displayed by the Didomi SDK, this method needs to be called before these views are displayed.
-  static Future<void> updateSelectedLanguage(String languageCode) async {
+  static Future<void> updateSelectedLanguage(String languageCode) async =>
     await _channel.invokeMethod("updateSelectedLanguage", {"languageCode": languageCode});
-  }
 
   /// Get a dictionary/map for a given key in the form of { en: "Value in English", fr: "Value in French" }
   /// from the didomi_config.json file containing translations in different languages.
   ///
   /// The keys and values considered come from different places in the didomi_config.json file such as { notice: ... },
   /// { preferences: ... } and { texts: ... }, giving the latter the highest priority in case of duplicates.
-  static Future<Map<String, String>?> getText(String key) async {
-    Map<String, String>? result = await _channel.invokeMapMethod("getText", {"key": key});
-    return result;
-  }
+  static Future<Map<String, String>?> getText(String key) async =>
+      await _channel.invokeMapMethod("getText", {"key": key});
 
   /// Get a translated string for a given key from the didomi_config.json file based on the currently selected language.
   /// 
   /// The keys and values considered come from different places in the didomi_config.json file such as { notice: ... },
   /// { preferences: ... } and { texts: ... }, giving the latter the highest priority in case of duplicates.
-  static Future<String> getTranslatedText(String key) async {
-    String result = await _channel.invokeMethod("getTranslatedText", {"key": key});
-    return result;
-  }
+  static Future<String> getTranslatedText(String key) async =>
+      await _channel.invokeMethod("getTranslatedText", {"key": key});
+
 
   /// Get the IDs of the disabled purposes
   static Future<List<String>> get disabledPurposeIds async {
@@ -264,14 +250,34 @@ class DidomiSdk {
   }
 
   /// Set the user status globally
-  static Future<bool> setUserStatus(bool purposesConsentStatus, bool purposesLIStatus, bool vendorsConsentStatus, bool vendorsLIStatus) async {
-    final bool result = await _channel.invokeMethod("setUserStatus", {
+  static Future<bool> setUserStatus(bool purposesConsentStatus, bool purposesLIStatus, bool vendorsConsentStatus, bool vendorsLIStatus) async =>
+    await _channel.invokeMethod("setUserStatus", {
       "purposesConsentStatus": purposesConsentStatus,
       "purposesLIStatus": purposesLIStatus,
       "vendorsConsentStatus": vendorsConsentStatus,
       "vendorsLIStatus": vendorsLIStatus
     });
-    return result;
-  }
+
+  /// Set user information
+  static Future<void> setUser(String organizationUserId) async =>
+    await _channel.invokeMethod("setUser", {
+      "organizationUserId": organizationUserId
+    });
+
+  /// Set user information with authentication
+  static Future<void> setUserWithAuthentication(
+      String organizationUserId,
+      String organizationUserIdAuthAlgorithm,
+      String organizationUserIdAuthSid,
+      String? organizationUserIdAuthSalt,
+      String organizationUserIdAuthDigest
+      ) async =>
+    await _channel.invokeMethod("setUserWithAuthentication", {
+      "organizationUserId": organizationUserId,
+      "organizationUserIdAuthAlgorithm": organizationUserIdAuthAlgorithm,
+      "organizationUserIdAuthSid": organizationUserIdAuthSid,
+      "organizationUserIdAuthSalt": organizationUserIdAuthSalt,
+      "organizationUserIdAuthDigest": organizationUserIdAuthDigest
+    });
 
 }

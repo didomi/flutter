@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 /// Widget to call DidomiSdk.GetUserConsentStatusForVendor
 class GetUserConsentStatusForVendor extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _GetUserConsentStatusForVendor();
+  State<StatefulWidget> createState() => _GetUserConsentStatusForVendorState();
 }
 
-class _GetUserConsentStatusForVendor extends BaseSampleWidgetState<GetUserConsentStatusForVendor> {
+class _GetUserConsentStatusForVendorState extends BaseSampleWidgetState<GetUserConsentStatusForVendor> {
   // Vendor id for sample
   final String vendorId = "c:pinterest";
 

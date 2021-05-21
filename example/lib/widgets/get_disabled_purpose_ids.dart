@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 /// Widget to call DidomiSdk.getDisabledPurposeIds
 class GetDisabledPurposeIds extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _GetDisabledPurposeIds();
+  State<StatefulWidget> createState() => _GetDisabledPurposeIdsState();
 }
 
-class _GetDisabledPurposeIds
+class _GetDisabledPurposeIdsState
     extends BaseSampleWidgetState<GetDisabledPurposeIds> {
   @override
   String getButtonName() => 'GetDisabledPurposeIds';

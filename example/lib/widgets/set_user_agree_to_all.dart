@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 /// Widget to call DidomiSdk.setUserAgreeToAll()
 class SetUserAgreeToAll extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _SetUserAgreeToAll();
+  State<StatefulWidget> createState() => _SetUserAgreeToAllState();
 }
 
-class _SetUserAgreeToAll extends BaseSampleWidgetState<SetUserAgreeToAll> {
+class _SetUserAgreeToAllState extends BaseSampleWidgetState<SetUserAgreeToAll> {
   @override
   String getButtonName() => "Agree to all";
 

@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 /// Widget to call DidomiSdk.setUserDisagreeToAll()
 class SetUserDisagreeToAll extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _SetUserDisagreeToAll();
+  State<StatefulWidget> createState() => _SetUserDisagreeToAllState();
 }
 
-class _SetUserDisagreeToAll extends BaseSampleWidgetState<SetUserDisagreeToAll> {
+class _SetUserDisagreeToAllState extends BaseSampleWidgetState<SetUserDisagreeToAll> {
   @override
   String getButtonName() => "Disagree to all";
 

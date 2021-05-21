@@ -97,6 +97,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             getUserConsentStatusForVendorAndRequiredPurposes(call, result: result)
         case "setUserStatus":
             setUserStatus(call, result: result)
+        case "setUser":
+            setUser(call, result: result)
+        case "setUserWithAuthentication":
+            setUserWithAuthentication(call, result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -383,5 +387,55 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             vendorsConsentStatus: args["vendorsConsentStatus"] ?? false,
             vendorsLIStatus: args["vendorsLIStatus"] ?? false
         ))
+    }
+    
+    func setUser(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUser", details: nil))
+                return
+            }
+
+        guard let userId = argumentOrError(argumentName: "organizationUserId", methodName: "setUser", args: args, result: result) else {
+            return
+        }
+        Didomi.shared.setUser(id: userId)
+        result(nil)
+    }
+    
+    func setUserWithAuthentication(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserWithAuthentication", details: nil))
+                return
+            }
+
+        guard let userId = argumentOrError(argumentName: "organizationUserId", methodName: "setUserWithAuthentication", args: args, result: result) else {
+            return
+        }
+        guard let organizationUserIdAuthAlgorithm = argumentOrError(argumentName: "organizationUserIdAuthAlgorithm", methodName: "setUserWithAuthentication", args: args, result: result) else {
+            return
+        }
+        guard let organizationUserIdAuthSid = argumentOrError(argumentName: "organizationUserIdAuthSid", methodName: "setUserWithAuthentication", args: args, result: result) else {
+            return
+        }
+        guard let organizationUserIdAuthDigest = argumentOrError(argumentName: "organizationUserIdAuthDigest", methodName: "setUserWithAuthentication", args: args, result: result) else {
+            return
+        }
+        Didomi.shared.setUser(
+            id: userId,
+            algorithm: organizationUserIdAuthAlgorithm,
+            secretId: organizationUserIdAuthSid,
+            salt: args["organizationUserIdAuthSalt"] as? String ?? nil,
+            digest: organizationUserIdAuthDigest)
+        result(nil)
+    }
+    
+    /// Return the requested argument as non-empty String, or raise an error in result and return null
+    private func argumentOrError(argumentName: String, methodName: String, args: Dictionary<String, Any>, result: FlutterResult) -> String? {
+        let argument = args[argumentName] as? String ?? ""
+        if argument.isEmpty {
+            result(FlutterError.init(code: "invalid_args", message: "Missing \(argumentName) argument for \(methodName)", details: nil))
+            return nil
+        }
+        return argument
     }
 }

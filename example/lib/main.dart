@@ -1,6 +1,7 @@
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk_example/widgets/get_text.dart';
 import 'package:didomi_sdk_example/widgets/get_translated_text.dart';
+import 'package:didomi_sdk_example/widgets/set_user.dart';
 import 'package:didomi_sdk_example/widgets/update_selected_language.dart';
 
 import 'widgets/show_hide_notice.dart';
@@ -145,6 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
               OnError(),
               SetLogLevel(),
               Initialize(),
+              SetUser(),
               // UI related features
               Text('UI:'),
               SetupUI(),
