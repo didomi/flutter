@@ -2,14 +2,17 @@ import 'dart:io';
 
 import 'dart:async';
 
-import 'package:didomi_sdk/consent_status.dart';
-import 'package:didomi_sdk/log_level.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+import 'consent_status.dart';
+import 'log_level.dart';
+import 'preferences_view.dart';
 import 'constants.dart';
 import 'events/event_listener.dart';
 import 'events/events_handler.dart';
 
+/// Didomi SDK Plugin
 class DidomiSdk {
   static const MethodChannel _channel = const MethodChannel(methodsChannelName);
   static EventsHandler _eventsHandler = EventsHandler();
@@ -20,6 +23,7 @@ class DidomiSdk {
     return version;
   }
 
+  /// Initialize the SDK
   static Future<void> initialize(String apiKey,
       {String? localConfigurationPath,
         String? remoteConfigurationURL,
@@ -56,8 +60,10 @@ class DidomiSdk {
   }
 
   /// Show the preferences screen
-  static Future<void> showPreferences() async {
-    await _channel.invokeMethod('showPreferences');
+  static Future<void> showPreferences({PreferencesView view = PreferencesView.purposes}) async {
+    await _channel.invokeMethod("showPreferences", {
+      "view": describeEnum(view)
+    });
   }
 
   /// Setup the UI and show the notice if needed

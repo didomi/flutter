@@ -96,12 +96,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     result.success(null)
                 }
 
-                "showPreferences" -> {
-                    getFragmentActivity(result)?.also {
-                        Didomi.getInstance().showPreferences(it)
-                        result.success(null)
-                    }
-                }
+                "showPreferences" -> showPreferences(call, result)
 
                 "hideNotice" -> {
                     Didomi.getInstance().hideNotice()
@@ -166,6 +161,14 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(null)
         } ?: run {
             result.error("no_activity", "No activity available", null)
+        }
+    }
+
+    private fun showPreferences(call: MethodCall, result: Result) {
+        getFragmentActivity(result)?.also {
+            val view = (call.argument("view") as String?) ?: Didomi.VIEW_PURPOSES
+            Didomi.getInstance().showPreferences(it, view)
+            result.success(null)
         }
     }
 

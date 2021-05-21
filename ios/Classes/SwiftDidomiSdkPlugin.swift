@@ -43,7 +43,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             Didomi.shared.reset()
             result(nil)
         case "showPreferences":
-            showPreferences(result: result)
+            showPreferences(call, result: result)
         case "hideNotice":
             Didomi.shared.hideNotice()
             result(nil)
@@ -118,10 +118,20 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(nil)
     }
     
-    func showPreferences(result: @escaping FlutterResult) {
+    func showPreferences(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         let viewController: UIViewController =
             (UIApplication.shared.delegate?.window??.rootViewController)!
-        Didomi.shared.showPreferences(controller: viewController)
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for initialize", details: nil))
+            return
+        }
+        let view: Didomi.Views
+        if let viewArgument = args["view"] as? String, viewArgument == "vendors" {
+            view = .vendors
+        } else {
+            view = .purposes
+        }
+        Didomi.shared.showPreferences(controller: viewController, view: view)
         result(nil)
     }
     
