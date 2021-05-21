@@ -18,7 +18,7 @@ class _ShowHideNoticeState extends BaseSampleWidgetState<ShowHideNotice> {
   static const CHECK_DELAY_SECONDS = 5;
 
   bool _hideAfterAWhile = false;
-  bool _checkVisibilityAfterAWhile = true;
+  bool _checkVisibilityAfterAWhile = false;
 
   @override
   String getButtonName() {

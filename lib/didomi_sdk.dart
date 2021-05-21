@@ -54,6 +54,27 @@ class DidomiSdk {
     return result;
   }
 
+  /// Determine if consent is required for the user. The rules are (OR):
+  /// - The user country is in the EU
+  /// - The company is from the EU
+  /// - The user country is unknown and the app has chosen to collect consent when unknown
+  static Future<bool> get isConsentRequired async {
+    final bool result = await _channel.invokeMethod('isConsentRequired');
+    return result;
+  }
+
+  /// Determine if consent information is available for all purposes and vendors that are required
+  static Future<bool> get isUserConsentStatusPartial async {
+    final bool result = await _channel.invokeMethod('isUserConsentStatusPartial');
+    return result;
+  }
+
+  /// Determine if legitimate interest information is available for all purposes and vendors that are required
+  static Future<bool> get isUserLegitimateInterestStatusPartial async {
+    final bool result = await _channel.invokeMethod('isUserLegitimateInterestStatusPartial');
+    return result;
+  }
+
   /// Reset user consents
   static Future<void> reset() async {
     await _channel.invokeMethod('reset');

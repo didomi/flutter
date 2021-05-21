@@ -19,7 +19,7 @@ class _ShowHidePreferencesState extends BaseSampleWidgetState<ShowHidePreference
 
   PreferencesView? _requestedView = PreferencesView.purposes;
   bool _hideAfterAWhile = false;
-  bool _checkVisibilityAfterAWhile = true;
+  bool _checkVisibilityAfterAWhile = false;
 
   @override
   String getButtonName() {
