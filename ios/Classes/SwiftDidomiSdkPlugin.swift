@@ -37,15 +37,21 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             }
         case "shouldConsentBeCollected":
             result(Didomi.shared.shouldConsentBeCollected())
-        case "setupUI":
-            setupUI(result: result)
         case "reset":
             Didomi.shared.reset()
             result(nil)
-        case "showPreferences":
-            showPreferences(call, result: result)
+        case "setupUI":
+            setupUI(result: result)
+        case "showNotice":
+            Didomi.shared.showNotice()
+            result(nil)
         case "hideNotice":
             Didomi.shared.hideNotice()
+            result(nil)
+        case "showPreferences":
+            showPreferences(call, result: result)
+        case "hidePreferences":
+            Didomi.shared.hidePreferences()
             result(nil)
         case "getJavaScriptForWebView":
             result(Didomi.shared.getJavaScriptForWebView())

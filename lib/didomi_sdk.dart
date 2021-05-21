@@ -59,6 +59,28 @@ class DidomiSdk {
     await _channel.invokeMethod('reset');
   }
 
+  /// Setup the UI and show the notice if needed
+  static Future<void> setupUI() async {
+    await _channel.invokeMethod('setupUI');
+  }
+
+  /// Show the notice screen if user consent is needed.
+  /// Note: When calling from iOS, setupUI must have been called before.
+  static Future<void> showNotice() async {
+    await _channel.invokeMethod("showNotice");
+  }
+
+  /// Hide the notice
+  static Future<void> hideNotice() async {
+    await _channel.invokeMethod('hideNotice');
+  }
+
+  /// Check if notice is visible
+  static Future<bool> get isNoticeVisible async {
+    final bool result = await _channel.invokeMethod('isNoticeVisible');
+    return result;
+  }
+
   /// Show the preferences screen
   static Future<void> showPreferences({PreferencesView view = PreferencesView.purposes}) async {
     await _channel.invokeMethod("showPreferences", {
@@ -66,14 +88,15 @@ class DidomiSdk {
     });
   }
 
-  /// Setup the UI and show the notice if needed
-  static Future<void> setupUI() async {
-    await _channel.invokeMethod('setupUI');
+  /// Hide the preferences screen
+  static Future<void> hidePreferences() async {
+    await _channel.invokeMethod("hidePreferences");
   }
 
-  /// Hide the notice
-  static Future<void> hideNotice() async {
-    await _channel.invokeMethod('hideNotice');
+  /// Check if preferences screen is visible
+  static Future<bool> get isPreferencesVisible async {
+    final bool result = await _channel.invokeMethod('isPreferencesVisible');
+    return result;
   }
 
   /// Add listener to SDK events

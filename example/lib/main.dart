@@ -3,6 +3,7 @@ import 'package:didomi_sdk_example/widgets/get_text.dart';
 import 'package:didomi_sdk_example/widgets/get_translated_text.dart';
 import 'package:didomi_sdk_example/widgets/update_selected_language.dart';
 
+import 'widgets/show_hide_notice.dart';
 import 'widgets/webview_strings.dart';
 import 'dart:async';
 
@@ -31,7 +32,7 @@ import 'widgets/set_user_agree_to_all.dart';
 import 'widgets/set_user_disagree_to_all.dart';
 import 'widgets/set_user_status.dart';
 import 'widgets/setup_ui.dart';
-import 'widgets/show_preferences.dart';
+import 'widgets/show_hide_preferences.dart';
 
 void main() {
   _startApp();
@@ -147,7 +148,8 @@ class _MyHomePageState extends State<MyHomePage> {
               // UI related features
               Text('UI:'),
               SetupUI(),
-              ShowPreferences(),
+              ShowHideNotice(),
+              ShowHidePreferences(),
               // Consents
               Text('Consents:'),
               CheckConsent(),

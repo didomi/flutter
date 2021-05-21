@@ -72,13 +72,6 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "initialize" -> initializeSdk(call, result)
 
-                "setupUI" -> {
-                    getFragmentActivity(result)?.also {
-                        Didomi.getInstance().setupUI(it)
-                        result.success(null)
-                    }
-                }
-
                 "isReady" -> result.success(Didomi.getInstance().isReady)
 
                 "onReady" -> Didomi.getInstance().onReady {
@@ -96,10 +89,24 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     result.success(null)
                 }
 
-                "showPreferences" -> showPreferences(call, result)
+                "setupUI" -> {
+                    getFragmentActivity(result)?.also {
+                        Didomi.getInstance().setupUI(it)
+                        result.success(null)
+                    }
+                }
+
+                "showNotice" -> showNotice(result)
 
                 "hideNotice" -> {
                     Didomi.getInstance().hideNotice()
+                    result.success(null)
+                }
+
+                "showPreferences" -> showPreferences(call, result)
+
+                "hidePreferences" -> {
+                    Didomi.getInstance().hidePreferences()
                     result.success(null)
                 }
 
@@ -161,6 +168,13 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(null)
         } ?: run {
             result.error("no_activity", "No activity available", null)
+        }
+    }
+
+    private fun showNotice(result: Result) {
+        getFragmentActivity(result)?.also {
+            Didomi.getInstance().showNotice(it)
+            result.success(null)
         }
     }
 
