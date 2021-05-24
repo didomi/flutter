@@ -21,8 +21,9 @@ class _GetEnabledVendorIdsState extends BaseSampleWidgetState<GetEnabledVendorId
   Future<String> callDidomiPlugin() async {
     final List<String> result = await DidomiSdk.enabledVendorIds;
     result.sort(); // Required for UI tests
+    print(result.join(","));
     if (result.isEmpty) {
-      return "Enabled Vendors list is empty.";
+      return "Enabled Vendor list is empty.";
     } else {
       return "Enabled Vendors: ${result.join(",")}.";
     }

@@ -16,7 +16,7 @@ class _GetUserConsentStatusForPurposeState extends BaseSampleWidgetState<GetUser
   final String purposeId = "cookies";
 
   @override
-  String getButtonName() => "GetUserConsentStatusForPurpose\nfor $purposeId";
+  String getButtonName() => "GetUserConsentStatusForPurpose\n$purposeId";
 
   @override
   String getActionId() => "getUserConsentStatusForPurpose";

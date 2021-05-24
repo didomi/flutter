@@ -11,30 +11,26 @@ class SampleForInitializeTestsApp extends StatelessWidget {
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Initialize Tests',
-      home: HomePage(),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+        title: "Initialize Tests",
+        home: HomePage(),
+      );
 }
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Material(
-      child: ListView(
-        key: Key("components_list"),
-        children: [
-          IsReady(),
-          OnReady(),
-          OnError(),
-          Initialize(),
-          SetupUI(),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Material(
+        child: ListView(
+          key: Key("components_list"),
+          children: [
+            IsReady(),
+            OnReady(),
+            OnError(),
+            Initialize(),
+            SetupUI(),
+          ],
+        ),
+      );
 }

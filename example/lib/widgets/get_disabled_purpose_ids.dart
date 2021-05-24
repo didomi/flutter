@@ -22,8 +22,9 @@ class _GetDisabledPurposeIdsState
   Future<String> callDidomiPlugin() async {
     final List<String> result = await DidomiSdk.disabledPurposeIds;
     result.sort(); // Required for UI tests
+    print(result.join(","));
     if (result.isEmpty) {
-      return "Disabled Purposes list is empty.";
+      return "Disabled Purpose list is empty.";
     } else {
       return "Disabled Purposes: ${result.join(",")}.";
     }

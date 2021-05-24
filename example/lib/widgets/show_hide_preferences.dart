@@ -1,19 +1,17 @@
-import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
-import 'package:flutter/material.dart';
 import 'dart:async';
+
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/preferences_view.dart';
+import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
+import 'package:flutter/material.dart';
 
 /// Widget to call DidomiSdk.showPreferences
 class ShowHidePreferences extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return _ShowHidePreferencesState();
-  }
+  State<StatefulWidget> createState() => _ShowHidePreferencesState();
 }
 
 class _ShowHidePreferencesState extends BaseSampleWidgetState<ShowHidePreferences> {
-
   static const HIDE_DELAY_SECONDS = 3;
   static const CHECK_DELAY_SECONDS = 5;
 
@@ -22,14 +20,10 @@ class _ShowHidePreferencesState extends BaseSampleWidgetState<ShowHidePreference
   bool _checkVisibilityAfterAWhile = false;
 
   @override
-  String getButtonName() {
-    return 'Show preferences';
-  }
+  String getButtonName() => "Show preferences";
 
   @override
-  String getActionId() {
-    return 'showPreferences';
-  }
+  String getActionId() => "showPreferences";
 
   @override
   Future<String> callDidomiPlugin() async {
@@ -43,7 +37,7 @@ class _ShowHidePreferencesState extends BaseSampleWidgetState<ShowHidePreference
       }
       await DidomiSdk.showPreferences(view: requestedView);
     }
-    return 'OK';
+    return "OK";
   }
 
   Future<void> checkVisibility() async {
@@ -55,11 +49,11 @@ class _ShowHidePreferencesState extends BaseSampleWidgetState<ShowHidePreference
       barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Check Preferences screen visibility'),
+          title: const Text("Check Preferences screen visibility"),
           content: Text(text),
           actions: <Widget>[
             TextButton(
-              child: const Text('OK'),
+              child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -71,66 +65,64 @@ class _ShowHidePreferencesState extends BaseSampleWidgetState<ShowHidePreference
   }
 
   @override
-  List<Widget> buildWidgets() {
-    return [
-      ElevatedButton(
-        child: Text(getButtonName()),
-        onPressed: requestAction,
-        key: Key(getActionId()),
-      ),
-      Column(
-        children: <Widget>[
-          RadioListTile<PreferencesView>(
-            title: const Text('Purposes'),
-            value: PreferencesView.purposes,
-            groupValue: _requestedView,
-            onChanged: (PreferencesView? value) {
+  List<Widget> buildWidgets() => [
+        ElevatedButton(
+          child: Text(getButtonName()),
+          onPressed: requestAction,
+          key: Key(getActionId()),
+        ),
+        Column(
+          children: <Widget>[
+            RadioListTile<PreferencesView>(
+              key: Key("PreferencesForPurposes"),
+              title: const Text("Purposes"),
+              value: PreferencesView.purposes,
+              groupValue: _requestedView,
+              onChanged: (PreferencesView? value) {
+                setState(() {
+                  _requestedView = value;
+                });
+              },
+            ),
+            RadioListTile<PreferencesView>(
+              key: Key("PreferencesForVendors"),
+              title: const Text("Vendors"),
+              value: PreferencesView.vendors,
+              groupValue: _requestedView,
+              onChanged: (PreferencesView? value) {
+                setState(() {
+                  _requestedView = value;
+                });
+              },
+            ),
+          ],
+        ),
+        CheckboxListTile(
+          title: Text("Hide after $HIDE_DELAY_SECONDS seconds"),
+          key: Key("hidePreferencesAfterAWhile"),
+          value: _hideAfterAWhile,
+          onChanged: (newValue) {
+            if (newValue != null) {
               setState(() {
-                _requestedView = value;
+                _hideAfterAWhile = newValue;
               });
-            },
-          ),
-          RadioListTile<PreferencesView>(
-            title: const Text('Vendors'),
-            value: PreferencesView.vendors,
-            groupValue: _requestedView,
-            onChanged: (PreferencesView? value) {
+            }
+          },
+          controlAffinity: ListTileControlAffinity.leading, //  <-- leading Checkbox
+        ),
+        CheckboxListTile(
+          title: Text("Check visibility after $CHECK_DELAY_SECONDS seconds"),
+          key: Key("isPreferencesVisible"),
+          value: _checkVisibilityAfterAWhile,
+          onChanged: (newValue) {
+            if (newValue != null) {
               setState(() {
-                _requestedView = value;
+                _checkVisibilityAfterAWhile = newValue;
               });
-            },
-          ),
-        ],
-      ),
-      CheckboxListTile(
-        title: Text("Hide after $HIDE_DELAY_SECONDS seconds"),
-        key: Key('disableRemoteConfig'),
-        value: _hideAfterAWhile,
-        onChanged: (newValue) {
-          if (newValue != null) {
-            setState(() {
-              _hideAfterAWhile = newValue;
-            });
-          }
-        },
-        controlAffinity:
-        ListTileControlAffinity.leading, //  <-- leading Checkbox
-      ),
-      CheckboxListTile(
-        title: Text("Check visibility after $CHECK_DELAY_SECONDS seconds"),
-        key: Key('isPreferencesVisible'),
-        value: _checkVisibilityAfterAWhile,
-        onChanged: (newValue) {
-          if (newValue != null) {
-            setState(() {
-              _checkVisibilityAfterAWhile = newValue;
-            });
-          }
-        },
-        controlAffinity:
-        ListTileControlAffinity.leading, //  <-- leading Checkbox
-      ),
-      buildResponseText(getActionId())
-    ];
-  }
+            }
+          },
+          controlAffinity: ListTileControlAffinity.leading, //  <-- leading Checkbox
+        ),
+        buildResponseText(getActionId())
+      ];
 }

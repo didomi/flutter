@@ -168,7 +168,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 else -> result.notImplemented()
             }
         } catch (e: Exception) {
-            result.error("didomi_exception", "An error occured: ${e.message}", e)
+            result.error("didomi_exception", "An error occurred: ${e.message}", e)
         }
     }
 
