@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 /// Widget to call DidomiSdk.initialize
 class InitializeSmall extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return _InitializeSmallState();
-  }
+  State<StatefulWidget> createState() => _InitializeSmallState();
 }
 
 class _InitializeSmallState extends BaseSampleWidgetState<InitializeSmall> {
@@ -21,7 +19,7 @@ class _InitializeSmallState extends BaseSampleWidgetState<InitializeSmall> {
 
   @override
   Future<String> callDidomiPlugin() async {
-    await DidomiSdk.initialize("b5c8560d-77c7-4b1e-9200-954c0693ae1a", disableDidomiRemoteConfig: false, languageCode: null, noticeId: "NDQxnJbk");
+    await DidomiSdk.initialize("c3cd5b46-bf36-4700-bbdc-4ee9176045aa", disableDidomiRemoteConfig: false, languageCode: null, noticeId: "KfwVrwCy");
     return "OK";
   }
 }

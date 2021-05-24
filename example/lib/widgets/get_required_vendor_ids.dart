@@ -21,8 +21,9 @@ class _GetRequiredVendorIdsState extends BaseSampleWidgetState<GetRequiredVendor
   Future<String> callDidomiPlugin() async {
     final List<String> result = await DidomiSdk.requiredVendorIds;
     result.sort(); // Required for UI tests
+    print(result.join(","));
     if (result.isEmpty) {
-      return "Required Vendors list is empty.";
+      return "Required Vendor list is empty.";
     } else {
       return "Required Vendors: ${result.join(",")}.";
     }

@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 /// Base state for Widgets testing Didomi SDK functionality
-abstract class BaseSampleWidgetState<T extends StatefulWidget>
-    extends State<T> with AutomaticKeepAliveClientMixin {
-
+abstract class BaseSampleWidgetState<T extends StatefulWidget> extends State<T> with AutomaticKeepAliveClientMixin {
   String _messageFromNative = "--";
 
   @override
@@ -14,10 +12,7 @@ abstract class BaseSampleWidgetState<T extends StatefulWidget>
 
   /// A Text displaying SDK response
   Widget buildResponseText(String key) =>
-      Text("Native message: $_messageFromNative\n",
-          key: Key("nativeResponse_$key"),
-          textAlign: TextAlign.left
-      );
+      Text("Native message: $_messageFromNative\n", key: Key("nativeResponse_$key"), textAlign: TextAlign.center, maxLines: 3, overflow: TextOverflow.ellipsis);
 
   /// Update displayed SDK response
   Future<void> updateMessageFromNative(String messageFromNative) async {
@@ -56,25 +51,16 @@ abstract class BaseSampleWidgetState<T extends StatefulWidget>
     return Card(
         elevation: 10,
         margin: EdgeInsets.only(left: 8.0, bottom: 8.0, right: 8.0),
-        child: Padding(
-            padding: EdgeInsets.all(7.0),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: buildWidgets()
-            )
-        )
-    );
+        child: Padding(padding: EdgeInsets.all(7.0), child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: buildWidgets())));
   }
 
   /// Define the widgets used to control this functionality
-  List<Widget> buildWidgets() {
-    return [
-      ElevatedButton(
-        child: Text(getButtonName(), textAlign: TextAlign.center),
-        key: Key(getActionId()),
-        onPressed: requestAction,
-      ),
-      buildResponseText(getActionId())
-    ];
-  }
+  List<Widget> buildWidgets() => [
+        ElevatedButton(
+          child: Text(getButtonName(), textAlign: TextAlign.center),
+          key: Key(getActionId()),
+          onPressed: requestAction,
+        ),
+        buildResponseText(getActionId())
+      ];
 }
