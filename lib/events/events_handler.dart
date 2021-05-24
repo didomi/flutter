@@ -76,6 +76,157 @@ class EventsHandler {
           listener.onHideNotice();
         }
         break;
+
+      case "onNoticeClickAgree":
+        for (var listener in listeners) {
+          listener.onNoticeClickAgree();
+        }
+        break;
+
+      case "onNoticeClickDisagree":
+        for (var listener in listeners) {
+          listener.onNoticeClickDisagree();
+        }
+        break;
+
+      case "onNoticeClickViewVendors":
+        for (var listener in listeners) {
+          listener.onNoticeClickViewVendors();
+        }
+        break;
+
+      case "onNoticeClickMoreInfo":
+        for (var listener in listeners) {
+          listener.onNoticeClickMoreInfo();
+        }
+        break;
+
+      case "onNoticeClickPrivacyPolicy":
+        for (var listener in listeners) {
+          listener.onNoticeClickPrivacyPolicy();
+        }
+        break;
+
+      case "onPreferencesClickAgreeToAll":
+        for (var listener in listeners) {
+          listener.onPreferencesClickAgreeToAll();
+        }
+        break;
+
+      case "onPreferencesClickDisagreeToAll":
+        for (var listener in listeners) {
+          listener.onPreferencesClickAgreeToAll();
+        }
+        break;
+
+      case "onPreferencesClickPurposeAgree":
+        final String purposeId = jsonEvent["purposeId"].toString();
+        for (var listener in listeners) {
+          listener.onPreferencesClickPurposeAgree(purposeId);
+        }
+        break;
+
+      case "onPreferencesClickPurposeDisagree":
+        final String purposeId = jsonEvent["purposeId"].toString();
+        for (var listener in listeners) {
+          listener.onPreferencesClickPurposeDisagree(purposeId);
+        }
+        break;
+
+      case "onPreferencesClickCategoryAgree":
+        final String categoryId = jsonEvent["categoryId"].toString();
+        for (var listener in listeners) {
+          listener.onPreferencesClickCategoryAgree(categoryId);
+        }
+        break;
+
+      case "onPreferencesClickCategoryDisagree":
+        final String categoryId = jsonEvent["categoryId"].toString();
+        for (var listener in listeners) {
+          listener.onPreferencesClickCategoryDisagree(categoryId);
+        }
+        break;
+
+      case "onPreferencesClickViewVendors":
+        for (var listener in listeners) {
+          listener.onPreferencesClickViewVendors();
+        }
+        break;
+
+      case "onPreferencesClickSaveChoices":
+        for (var listener in listeners) {
+          listener.onPreferencesClickSaveChoices();
+        }
+        break;
+
+      case "onPreferencesClickVendorAgree":
+        final String vendorId = jsonEvent["vendorId"].toString();
+        for (var listener in listeners) {
+          listener.onPreferencesClickVendorAgree(vendorId);
+        }
+        break;
+
+      case "onPreferencesClickVendorDisagree":
+        final String vendorId = jsonEvent["vendorId"].toString();
+        for (var listener in listeners) {
+          listener.onPreferencesClickVendorDisagree(vendorId);
+        }
+        break;
+
+      case "onPreferencesClickVendorSaveChoices":
+        for (var listener in listeners) {
+          listener.onPreferencesClickVendorSaveChoices();
+        }
+        break;
+
+      case "onPreferencesClickViewPurposes":
+        for (var listener in listeners) {
+          listener.onPreferencesClickViewPurposes();
+        }
+        break;
+
+      case "onConsentChanged":
+        for (var listener in listeners) {
+          listener.onConsentChanged();
+        }
+        break;
+
+      case "onPreferencesClickAgreeToAllPurposes":
+        for (var listener in listeners) {
+          listener.onPreferencesClickAgreeToAllPurposes();
+        }
+        break;
+
+      case "onPreferencesClickDisagreeToAllPurposes":
+        for (var listener in listeners) {
+          listener.onPreferencesClickDisagreeToAllPurposes();
+        }
+        break;
+
+      case "onPreferencesClickResetAllPurposes":
+        for (var listener in listeners) {
+          listener.onPreferencesClickResetAllPurposes();
+        }
+        break;
+
+      case "onPreferencesClickAgreeToAllVendors":
+        for (var listener in listeners) {
+          listener.onPreferencesClickAgreeToAllVendors();
+        }
+        break;
+
+      case "onPreferencesClickDisagreeToAllVendors":
+        for (var listener in listeners) {
+          listener.onPreferencesClickDisagreeToAllVendors();
+        }
+        break;
+
+      case "onSyncDone":
+        final String organizationUserId = jsonEvent["organizationUserId"].toString();
+        for (var listener in listeners) {
+          listener.onSyncDone(organizationUserId);
+        }
+        break;
     }
   }
 

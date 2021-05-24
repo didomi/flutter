@@ -1,4 +1,5 @@
 import 'package:didomi_sdk/events/event_listener.dart';
+import 'package:didomi_sdk_example/events_helper.dart';
 import 'package:didomi_sdk_example/widgets/get_text.dart';
 import 'package:didomi_sdk_example/widgets/get_translated_text.dart';
 import 'package:didomi_sdk_example/widgets/set_user.dart';
@@ -77,28 +78,14 @@ class _MyHomePageState extends State<MyHomePage> {
   String _platformVersion = 'Unknown';
 
   String _sdkEvents = "";
-
-  EventListener listener = EventListener();
+  EventsHelper eventsHelper = EventsHelper();
 
   @override
   void initState() {
     super.initState();
     initPlatformState();
 
-    listener.onReady = () {
-      onEvent("SDK Ready");
-    };
-    listener.onError = (message) {
-      onEvent("Error : $message");
-    };
-    listener.onShowNotice = () {
-      onEvent("Notice displayed");
-    };
-    listener.onHideNotice = () {
-      onEvent("Notice hidden");
-    };
-
-    DidomiSdk.addEventListener(listener);
+    eventsHelper.uiCallback = (eventDescription) => onEvent(eventDescription);
   }
 
   void onEvent(String eventDescription) {
