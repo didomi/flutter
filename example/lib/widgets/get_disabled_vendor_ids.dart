@@ -21,8 +21,9 @@ class _GetDisabledVendorIdsState extends BaseSampleWidgetState<GetDisabledVendor
   Future<String> callDidomiPlugin() async {
     final List<String> result = await DidomiSdk.disabledVendorIds;
     result.sort(); // Required for UI tests
+    print(result.join(","));
     if (result.isEmpty) {
-      return "Disabled Vendors list is empty.";
+      return "Disabled Vendor list is empty.";
     } else {
       return "Disabled Vendors: ${result.join(",")}.";
     }

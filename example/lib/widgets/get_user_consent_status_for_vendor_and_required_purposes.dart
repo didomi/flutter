@@ -13,10 +13,10 @@ class GetUserConsentStatusForVendorAndRequiredPurposes extends StatefulWidget {
 
 class _GetUserConsentStatusForVendorAndRequiredPurposesState extends BaseSampleWidgetState<GetUserConsentStatusForVendorAndRequiredPurposes> {
   // Vendor id for sample
-  final String vendorId = "c:pinterest";
+  final String vendorId = "1";
 
   @override
-  String getButtonName() => "getUserConsentStatusForVendorAndRequiredPurposes\nfor $vendorId";
+  String getButtonName() => "getUserConsentStatusForVendorAndRequiredPurposes\n$vendorId";
 
   @override
   String getActionId() => "getUserConsentStatusForVendorAndRequiredPurposes";

@@ -22,8 +22,9 @@ class _GetRequiredPurposeIdsState
   Future<String> callDidomiPlugin() async {
     final List<String> result = await DidomiSdk.requiredPurposeIds;
     result.sort(); // Required for UI tests
+    print(result.join(","));
     if (result.isEmpty) {
-      return "Required Purposes list is empty.";
+      return "Required Purpose list is empty.";
     } else {
       return "Required Purposes: ${result.join(",")}.";
     }

@@ -22,8 +22,9 @@ class _GetEnabledPurposeIdsState
   Future<String> callDidomiPlugin() async {
     final List<String> result = await DidomiSdk.enabledPurposeIds;
     result.sort(); // Required for UI tests
+    print(result.join(","));
     if (result.isEmpty) {
-      return "Enabled Purposes list is empty.";
+      return "Enabled Purpose list is empty.";
     } else {
       return "Enabled Purposes: ${result.join(",")}.";
     }
