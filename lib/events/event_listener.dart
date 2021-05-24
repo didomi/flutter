@@ -1,10 +1,16 @@
 
 /// Listener to events sent by the Didomi SDK
 class EventListener {
+  /*
+   * SDK lifecycle events
+   */
   /// SDK is ready
   dynamic Function() onReady = () {};
   /// SDK encountered an error
   dynamic Function(String message) onError = (message) {};
+  /*
+   * Notice events
+   */
   /// Notice was displayed
   dynamic Function() onShowNotice = () {};
   /// Notice was hidden
@@ -19,6 +25,9 @@ class EventListener {
   dynamic Function() onNoticeClickMoreInfo = () {};
   /// Privacy policy was opened from the notice (TV)
   dynamic Function() onNoticeClickPrivacyPolicy = () {};
+  /*
+   * Preferences screen events
+   */
   /// Agree to all was clicked from the preferences screen
   dynamic Function() onPreferencesClickAgreeToAll = () {};
   /// Disagree to all was clicked from the preferences screen
@@ -35,6 +44,15 @@ class EventListener {
   dynamic Function() onPreferencesClickViewVendors = () {};
   /// Save button was clicked from preferences screen
   dynamic Function() onPreferencesClickSaveChoices = () {};
+  /// Purposes bulk action was switched to Agree
+  dynamic Function() onPreferencesClickAgreeToAllPurposes = () {};
+  /// Purposes bulk action was switched to Disagree
+  dynamic Function() onPreferencesClickDisagreeToAllPurposes = () {};
+  /// Purposes bulk action was switched to neutral
+  dynamic Function() onPreferencesClickResetAllPurposes = () {};
+  /*
+   * Vendors screen events
+   */
   /// User switched a vendor status to Agree
   dynamic Function(String vendorId) onPreferencesClickVendorAgree = (vendorId) {};
   /// User switched a vendor status to Disagree
@@ -43,19 +61,16 @@ class EventListener {
   dynamic Function() onPreferencesClickVendorSaveChoices = () {};
   /// Purposes tab was opened on preferences screen (TV)
   dynamic Function() onPreferencesClickViewPurposes = () {};
-  /// User consent was updated
-  dynamic Function() onConsentChanged = () {};
-  /// Purposes bulk action was switched to Agree
-  dynamic Function() onPreferencesClickAgreeToAllPurposes = () {};
-  /// Purposes bulk action was switched to Disagree
-  dynamic Function() onPreferencesClickDisagreeToAllPurposes = () {};
-  /// Purposes bulk action was switched to neutral
-  dynamic Function() onPreferencesClickResetAllPurposes = () {};
   /// Vendors bulk action was switched to Agree
   dynamic Function() onPreferencesClickAgreeToAllVendors = () {};
   /// Vendors bulk action was switched to Disagree
   dynamic Function() onPreferencesClickDisagreeToAllVendors = () {};
-  /// User consents synchronization was done
+  /*
+   * Consent events
+   */
+  /// User consent was updated
+  dynamic Function() onConsentChanged = () {};
+  /// User consent synchronization was done
   dynamic Function(String organizationUserId) onSyncDone = (organizationUserId) {};
 
 }

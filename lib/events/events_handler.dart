@@ -19,7 +19,7 @@ class EventsHandler {
     try {
       handleDecodedEvent(json.decode(event));
     } on FormatException catch(e) {
-      print("Error while decoding event $event : $e");
+      print("Error while decoding event $event: $e");
     }
   }
 
@@ -228,7 +228,7 @@ class EventsHandler {
         break;
 
       default:
-        print("Received invalid event : $eventType");
+        print("Received invalid event: $eventType");
         break;
     }
   }
