@@ -1,14 +1,11 @@
+import 'dart:async';
+
+import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk_example/events_helper.dart';
 import 'package:didomi_sdk_example/widgets/get_text.dart';
 import 'package:didomi_sdk_example/widgets/get_translated_text.dart';
 import 'package:didomi_sdk_example/widgets/set_user.dart';
 import 'package:didomi_sdk_example/widgets/update_selected_language.dart';
-
-import 'widgets/show_hide_notice.dart';
-import 'widgets/webview_strings.dart';
-import 'dart:async';
-
-import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -33,7 +30,9 @@ import 'widgets/set_user_agree_to_all.dart';
 import 'widgets/set_user_disagree_to_all.dart';
 import 'widgets/set_user_status.dart';
 import 'widgets/setup_ui.dart';
+import 'widgets/show_hide_notice.dart';
 import 'widgets/show_hide_preferences.dart';
+import 'widgets/webview_strings.dart';
 
 void main() {
   _startApp();
@@ -79,6 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
   String _sdkEvents = "";
   EventsHelper eventsHelper = EventsHelper();
 
+  ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -120,11 +121,11 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Material(
         child: Center(
           child: ListView(
-            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             key: Key("components_list"),
+            controller: scrollController,
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             children: [
-              Text("Running on: $_platformVersion\n",
-                  textAlign: TextAlign.center),
+              Text("Running on: $_platformVersion\n", textAlign: TextAlign.center),
               // SDK setup
               Text('Setup:'),
               IsReady(),

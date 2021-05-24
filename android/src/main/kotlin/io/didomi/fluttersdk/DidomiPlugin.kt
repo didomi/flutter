@@ -91,10 +91,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "isUserLegitimateInterestStatusPartial" -> result.success(didomi.isUserLegitimateInterestStatusPartial)
 
-                "reset" -> {
-                    didomi.reset()
-                    result.success(null)
-                }
+                "reset" -> reset(result)
 
                 "setupUI" -> {
                     getFragmentActivity(result)?.also {
@@ -189,6 +186,15 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(null)
         } ?: run {
             result.error("no_activity", "No activity available", null)
+        }
+    }
+
+    private fun reset(result: Result) {
+        try {
+            Didomi.getInstance().reset()
+            result.success(null)
+        } catch (e: DidomiNotReadyException) {
+            result.error("reset", e.message.orEmpty(), e)
         }
     }
 
