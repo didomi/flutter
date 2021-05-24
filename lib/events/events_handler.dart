@@ -19,13 +19,12 @@ class EventsHandler {
     try {
       handleDecodedEvent(json.decode(event));
     } on FormatException catch(e) {
-      print("Error while decoding event : $e");
+      print("Error while decoding event $event : $e");
     }
   }
 
   handleDecodedEvent(Map jsonEvent) {
     final String eventType = jsonEvent["type"].toString();
-    print("Received event : $eventType");
 
     switch(eventType) {
       case "onReady":
@@ -226,6 +225,10 @@ class EventsHandler {
         for (var listener in listeners) {
           listener.onSyncDone(organizationUserId);
         }
+        break;
+
+      default:
+        print("Received invalid event : $eventType");
         break;
     }
   }

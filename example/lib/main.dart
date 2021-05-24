@@ -1,4 +1,3 @@
-import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk_example/events_helper.dart';
 import 'package:didomi_sdk_example/widgets/get_text.dart';
 import 'package:didomi_sdk_example/widgets/get_translated_text.dart';
