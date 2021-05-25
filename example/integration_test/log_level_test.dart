@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/log_level.dart';
 import 'package:didomi_sdk_example/test/sample_for_log_level_tests.dart' as logLevelApp;
@@ -27,12 +29,19 @@ void main() {
       await tester.tap(setLogLevelBtnFinder);
       await tester.pumpAndSettle();
 
+      String message = "";
+      if (Platform.isAndroid) {
+        message = "Native message: Level is error (6).";
+      } else if (Platform.isIOS) {
+        message = "Native message: Level is error (17).";
+      }
+
       expect(
         find.byWidgetPredicate(
           (Widget widget) =>
               widget is Text &&
               widget.key.toString().contains("setLogLevel") &&
-              widget.data?.contains("Native message: Level is error (${LogLevel.error.platformLevel}).") == true,
+              widget.data?.contains(message) == true,
         ),
         findsOneWidget,
       );
