@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'util/initializeHelper.dart';
+import 'util/initialize_helper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
