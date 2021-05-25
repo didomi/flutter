@@ -15,7 +15,7 @@ A new flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'Didomi-XCFramework', '1.49.3'
+  s.dependency 'Didomi-XCFramework', '1.52.1'
   s.platform = :ios, '8.0'
 
   # Flutter.framework does not contain a i386 slice.
