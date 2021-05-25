@@ -1,9 +1,11 @@
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
-import 'package:didomi_sdk_example/test/sample_for_notice_tests.dart' as noticeApp;
+import 'package:didomi_sdk_example/test/sample_for_notice_tests.dart' as app;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+
+import 'util/initializeHelper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -31,28 +33,12 @@ void main() {
     noticeWasShown = true;
   };
 
+  DidomiSdk.addEventListener(listener);
+
   group("Show Notice", () {
-    testWidgets("Reset SDK for bulk action", (WidgetTester tester) async {
-      try {
-        DidomiSdk.reset();
-      } catch (ignored) {}
-
-      isError = false;
-      isReady = false;
-      noticeWasHidden = false;
-      noticeWasShown = false;
-
-      DidomiSdk.addEventListener(listener);
-
-      assert(isError == false);
-      assert(isReady == false);
-      assert(noticeWasHidden == false);
-      assert(noticeWasShown == false);
-    });
-
     testWidgets("Show Notice without initialization", (WidgetTester tester) async {
-      // Start noticeApp
-      noticeApp.main();
+      // Start app
+      app.main();
       await tester.pumpAndSettle();
 
       assert(isError == false);
@@ -61,21 +47,6 @@ void main() {
       assert(noticeWasShown == false);
 
       await tester.tap(showNoticeBtnFinder);
-      await tester.pumpAndSettle();
-
-      expect(
-        find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
-              widget.key.toString().contains("showNotice") &&
-              widget.data
-                      ?.contains("Native message: Failed: \'An error occurred: Didomi SDK is not ready. Use the onReady callback to access this method.\'.") ==
-                  true,
-        ),
-        findsOneWidget,
-      );
-
-      await tester.tap(initializeBtnFinder);
       await tester.pumpAndSettle();
 
       // Check for NO dialog
@@ -83,29 +54,12 @@ void main() {
       assert(noticeWasShown == false);
     });
 
-    testWidgets("Initialize for following scenarios", (WidgetTester tester) async {
-      // Start noticeApp
-      noticeApp.main();
-      await tester.pumpAndSettle();
-
-      assert(isError == false);
-      assert(isReady == false);
-      assert(noticeWasHidden == false);
-      assert(noticeWasShown == false);
-
-      await tester.tap(initializeBtnFinder);
-      await tester.pumpAndSettle();
-
-      assert(isError == false);
-      assert(isReady == true);
-      assert(noticeWasHidden == false);
-      assert(noticeWasShown == false);
-    });
-
     testWidgets("Show Notice with initialization", (WidgetTester tester) async {
-      // Start noticeApp
-      noticeApp.main();
+      // Start app
+      app.main();
       await tester.pumpAndSettle();
+
+      InitializeHelper.initialize(tester, initializeBtnFinder);
 
       assert(isError == false);
       assert(isReady == true);
@@ -114,13 +68,6 @@ void main() {
 
       await tester.tap(showNoticeBtnFinder);
       await tester.pumpAndSettle();
-
-      expect(
-        find.byWidgetPredicate(
-          (Widget widget) => widget is Text && widget.key.toString().contains("showNotice") && widget.data?.contains("Native message: OK") == true,
-        ),
-        findsOneWidget,
-      );
 
       // Check for dialog
       assert(isError == false);
@@ -130,8 +77,8 @@ void main() {
     });
 
     testWidgets("Show Notice with initialization then close it", (WidgetTester tester) async {
-      // Start noticeApp
-      noticeApp.main();
+      // Start app
+      app.main();
       await tester.pumpAndSettle();
 
       assert(isError == false);
@@ -145,13 +92,6 @@ void main() {
       await tester.tap(showNoticeBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-          (Widget widget) => widget is Text && widget.key.toString().contains("showNotice") && widget.data?.contains("Native message: OK") == true,
-        ),
-        findsOneWidget,
-      );
-
       // Check for dialog
       assert(isError == false);
       assert(isReady == true);
@@ -160,7 +100,7 @@ void main() {
 
       await Future.delayed(Duration(seconds: 4));
 
-      // Check for dialog
+      // Check for dialog auto close
       assert(isError == false);
       assert(isReady == true);
       assert(noticeWasHidden == true);

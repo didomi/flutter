@@ -41,8 +41,8 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
         ),
         Text('With parameters: \n'),
         TextFormField(controller: _apiKeyController, key: Key("apiKey"), decoration: InputDecoration(labelText: 'API Key')),
-        TextFormField(controller: _noticeIdController, decoration: InputDecoration(labelText: 'Notice id')),
-        TextFormField(controller: _languageController, decoration: InputDecoration(labelText: 'Language code')),
+        TextFormField(controller: _noticeIdController, key: Key("noticeId"), decoration: InputDecoration(labelText: 'Notice id')),
+        TextFormField(controller: _languageController, key: Key("languageCode"), decoration: InputDecoration(labelText: 'Language code')),
         CheckboxListTile(
           title: Text("Disable remote config"),
           key: Key('disableRemoteConfig'),
