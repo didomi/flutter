@@ -19,7 +19,7 @@ class _InitializeSmallState extends BaseSampleWidgetState<InitializeSmall> {
 
   @override
   Future<String> callDidomiPlugin() async {
-    await DidomiSdk.initialize("c3cd5b46-bf36-4700-bbdc-4ee9176045aa", disableDidomiRemoteConfig: false, languageCode: null, noticeId: "KfwVrwCy");
+    await DidomiSdk.initialize("9bf8a7e4-db9a-4ff2-a45c-ab7d2b6eadba", disableDidomiRemoteConfig: false, languageCode: null, noticeId: "Ar7NPQ72");
     return "OK";
   }
 }
