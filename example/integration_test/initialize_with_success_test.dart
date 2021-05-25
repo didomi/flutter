@@ -1,6 +1,6 @@
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
-import 'package:didomi_sdk_example/test/sample_for_initialize_custom_tests.dart' as initializeWithSuccessApp;
+import 'package:didomi_sdk_example/test/sample_for_initialize_custom_tests.dart' as app;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -23,24 +23,12 @@ void main() {
     isReady = true;
   };
 
+  DidomiSdk.addEventListener(listener);
+
   group("Initialize Success", () {
-    testWidgets("Reset SDK for bulk action", (WidgetTester tester) async {
-      try {
-        DidomiSdk.reset();
-      } catch (ignored) {}
-
-      isError = false;
-      isReady = false;
-
-      DidomiSdk.addEventListener(listener);
-
-      assert(isError == false);
-      assert(isReady == false);
-    });
-
     testWidgets("Initialize with default parameters", (WidgetTester tester) async {
-      // Start initializeWithSuccessApp
-      initializeWithSuccessApp.main();
+      // Start app
+      app.main();
       await tester.pumpAndSettle();
 
       assert(isError == false);

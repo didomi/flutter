@@ -1,9 +1,11 @@
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
-import 'package:didomi_sdk_example/test/sample_for_user_consent_for_purpose_tests.dart' as useConsentForPurpose;
+import 'package:didomi_sdk_example/test/sample_for_user_consent_for_purpose_tests.dart' as app;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+
+import 'util/initializeHelper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -24,28 +26,16 @@ void main() {
     isReady = true;
   };
 
+  DidomiSdk.addEventListener(listener);
+
   group("User Consent for Purpose", () {
-    testWidgets("Reset SDK for bulk action", (WidgetTester tester) async {
-      try {
-        DidomiSdk.reset();
-      } catch (ignored) {}
-
-      isError = false;
-      isReady = false;
-
-      DidomiSdk.addEventListener(listener);
-
-      assert(isError == false);
-      assert(isReady == false);
-    });
-
     /*
      * Without initialization
      */
 
     testWidgets("Click get user consent for purpose 'cookies' without initialization", (WidgetTester tester) async {
-      // Start useConsentForPurpose
-      useConsentForPurpose.main();
+      // Start app
+      app.main();
       await tester.pumpAndSettle();
 
       assert(isError == false);
@@ -72,27 +62,12 @@ void main() {
      * With initialization
      */
 
-    testWidgets("Initialize for following scenarios", (WidgetTester tester) async {
-      // Start noticeApp
-      useConsentForPurpose.main();
-      await tester.pumpAndSettle();
-
-      assert(isError == false);
-      assert(isReady == false);
-
-      await tester.tap(initializeBtnFinder);
-      await tester.pumpAndSettle();
-
-      await Future.delayed(Duration(seconds: 2));
-
-      assert(isError == false);
-      assert(isReady == true);
-    });
-
     testWidgets("Click get user consent for purpose 'cookies' with initialization", (WidgetTester tester) async {
-      // Start useConsentForPurpose
-      useConsentForPurpose.main();
+      // Start app
+      app.main();
       await tester.pumpAndSettle();
+
+      InitializeHelper.initialize(tester, initializeBtnFinder);
 
       assert(isError == false);
       assert(isReady == true);
@@ -119,8 +94,8 @@ void main() {
      */
 
     testWidgets("Click get user consent for purpose 'cookies' with initialization after agree", (WidgetTester tester) async {
-      // Start useConsentForPurpose
-      useConsentForPurpose.main();
+      // Start app
+      app.main();
       await tester.pumpAndSettle();
 
       assert(isError == false);
@@ -151,8 +126,8 @@ void main() {
      */
 
     testWidgets("Click get user consent for purpose 'cookies' with initialization after disagree", (WidgetTester tester) async {
-      // Start useConsentForPurpose
-      useConsentForPurpose.main();
+      // Start app
+      app.main();
       await tester.pumpAndSettle();
 
       assert(isError == false);

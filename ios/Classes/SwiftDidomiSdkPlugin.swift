@@ -47,13 +47,11 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         case "isUserLegitimateInterestStatusPartial":
             result(Didomi.shared.isUserLegitimateInterestStatusPartial())
         case "reset":
-            Didomi.shared.reset()
-            result(nil)
+            reset(result: result)
         case "setupUI":
             setupUI(result: result)
         case "showNotice":
-            Didomi.shared.showNotice()
-            result(nil)
+            showNotice(result: result)
         case "hideNotice":
             Didomi.shared.hideNotice()
             result(nil)
@@ -148,8 +146,30 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         Didomi.shared.setupUI(containerController: viewController)
         result(nil)
     }
+
+    func reset(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        Didomi.shared.reset()
+        result(nil)
+    }
+
+    func showNotice(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        Didomi.shared.showNotice()
+        result(nil)
+    }
     
     func showPreferences(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
         let viewController: UIViewController =
             (UIApplication.shared.delegate?.window??.rootViewController)!
         guard let args = call.arguments as? Dictionary<String, Any> else {
@@ -167,6 +187,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     }
     
     func updateSelectedLanguage(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
         guard let args = call.arguments as? Dictionary<String, Any> else {
             result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for updateSelectedLanguage", details: nil))
             return
@@ -180,6 +204,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     }
     
     func getText(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
         guard let args = call.arguments as? Dictionary<String, Any> else {
             result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getText", details: nil))
             return
@@ -192,6 +220,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     }
     
     func getTranslatedText(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
         guard let args = call.arguments as? Dictionary<String, Any> else {
             result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getTranslatedText", details: nil))
             return
@@ -577,6 +609,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     }
     
     func setUser(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
         guard let args = call.arguments as? Dictionary<String, Any> else {
                 result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUser", details: nil))
                 return
@@ -590,6 +626,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     }
     
     func setUserWithAuthentication(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
         guard let args = call.arguments as? Dictionary<String, Any> else {
                 result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserWithAuthentication", details: nil))
                 return

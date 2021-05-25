@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:didomi_sdk_example/test/sample_for_log_level_tests.dart' as app;
+import 'package:didomi_sdk_example/main.dart' as app;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -10,10 +10,11 @@ void main() {
 
   final Finder setLogLevelBtnFinder = find.byKey(Key("setLogLevel"));
 
-  group("Log Level", () {
+  // TODO('Meant to be removed - this is a test for espresso')
+  group("Main App test", () {
     /// Log level change
     testWidgets("Set Log Level", (WidgetTester tester) async {
-      // Start app
+      // Start App
       app.main();
       await tester.pumpAndSettle();
 
@@ -30,10 +31,7 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
-              widget.key.toString().contains("setLogLevel") &&
-              widget.data?.contains(message) == true,
+          (Widget widget) => widget is Text && widget.key.toString().contains("setLogLevel") && widget.data?.contains(message) == true,
         ),
         findsOneWidget,
       );
