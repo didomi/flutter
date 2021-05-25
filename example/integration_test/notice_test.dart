@@ -59,7 +59,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      InitializeHelper.initialize(tester, initializeBtnFinder);
+      await InitializeHelper.initialize(tester, initializeBtnFinder);
 
       assert(isError == false);
       assert(isReady == true);
