@@ -44,7 +44,7 @@ void main() {
       assert(isError == false);
       assert(isReady == false);
 
-      // TODO('Check for NO dialog')
+      // Don't check DidomiSdk.isPreferencesVisible (SDK not initialized)
     });
 
     testWidgets("Show Preferences with initialization for purpose", (WidgetTester tester) async {
@@ -69,10 +69,14 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      // TODO('Check for dialogs')
+      // Preferences dialog is visible
+      assert(await DidomiSdk.isPreferencesVisible == true);
 
       // Wait for dialog to close
       await Future.delayed(Duration(seconds: 4));
+
+      // Preferences dialog is NOT visible anymore
+      assert(await DidomiSdk.isPreferencesVisible == false);
     });
 
     testWidgets("Show Preferences with initialization for vendors", (WidgetTester tester) async {
@@ -95,10 +99,14 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      // TODO('Check for dialogs')
+      // Preferences dialog is visible
+      assert(await DidomiSdk.isPreferencesVisible == true);
 
       // Wait for dialog to close
       await Future.delayed(Duration(seconds: 4));
+
+      // Preferences dialog is NOT visible anymore
+      assert(await DidomiSdk.isPreferencesVisible == false);
     });
   });
 }
