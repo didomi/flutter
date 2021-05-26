@@ -22,5 +22,5 @@ FILE_NAME_WIHOUT_EXTENSION=${FILE_NAME%".dart"}
 ZIP_FILE="ios_tests_$FILE_NAME_WIHOUT_EXTENSION.zip"
 echo "Will zip $ZIP_FILE"
 pushd $PRODUCT
-zip -r $ZIP_FILE "Release-iphoneos" $"Runner_iphoneos*.xctestrun"
+zip -r $ZIP_FILE "Release-iphoneos" Runner_iphoneos*.xctestrun
 popd
