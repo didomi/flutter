@@ -176,13 +176,14 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         currentActivity?.also {
             val apiKey = argumentOrError("apiKey", "initialize", call, result)
                     ?: return
+            val disableDidomiRemoteConfig: Boolean = call.argument("disableDidomiRemoteConfig") ?: false
             Didomi.getInstance().initialize(
                 it.application,
                 apiKey,
                 call.argument("localConfigurationPath"),
                 call.argument("remoteConfigurationURL"),
                 call.argument("providerId"),
-                call.argument("disableDidomiRemoteConfig"),
+                disableDidomiRemoteConfig,
                 call.argument("languageCode"),
                 call.argument("noticeId")
             )
