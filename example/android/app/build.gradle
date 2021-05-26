@@ -75,3 +75,20 @@ dependencies {
     androidTestImplementation("androidx.test:runner:1.2.0") // Must match flutter dependencies
     androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0") // Must match flutter dependencies
 }
+
+/**
+ * Gradle task for running all integration tests sequentially (with espresso)
+ */
+tasks.register("bulk") {
+    doLast {
+        file("../../integration_test").eachFileMatch(groovy.io.FileType.FILES, ~/^.+\.dart$/, { file ->
+            exec {
+                commandLine(
+                        "../gradlew",
+                        "connectedAndroidTest",
+                        "-Ptarget=$file"
+                )
+            }
+        })
+    }
+}
