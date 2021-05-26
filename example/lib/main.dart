@@ -1,17 +1,20 @@
-import 'package:didomi_sdk_example/events_helper.dart';
-import 'package:didomi_sdk_example/widgets/get_text.dart';
-import 'package:didomi_sdk_example/widgets/get_translated_text.dart';
-import 'package:didomi_sdk_example/widgets/set_user.dart';
-import 'package:didomi_sdk_example/widgets/update_selected_language.dart';
-
-import 'widgets/show_hide_notice.dart';
-import 'widgets/webview_strings.dart';
 import 'dart:async';
 
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'events_helper.dart';
+import 'widgets/show_hide_notice.dart';
+import 'widgets/webview_strings.dart';
+import 'widgets/get_text.dart';
+import 'widgets/get_translated_text.dart';
+import 'widgets/get_user_legitimate_interest_status_for_purpose.dart';
+import 'widgets/get_user_legitimate_interest_status_for_vendor.dart';
+import 'widgets/get_user_legitimate_interest_status_for_vendor_and_required_purposes.dart';
+import 'widgets/get_user_status_for_vendor.dart';
+import 'widgets/set_user.dart';
+import 'widgets/update_selected_language.dart';
 import 'widgets/check_consent.dart';
 import 'widgets/get_disabled_purpose_ids.dart';
 import 'widgets/get_disabled_vendor_ids.dart';
@@ -151,6 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
               GetEnabledPurposeIds(),
               GetRequiredPurposeIds(),
               GetUserConsentStatusForPurpose(),
+              GetUserLegitimateInterestStatusForPurpose(),
               // Vendors
               Text("Vendors:"),
               GetDisabledVendorIds(),
@@ -158,6 +162,9 @@ class _MyHomePageState extends State<MyHomePage> {
               GetRequiredVendorIds(),
               GetUserConsentStatusForVendor(),
               GetUserConsentStatusForVendorAndRequiredPurposes(),
+              GetUserLegitimateInterestStatusForVendor(),
+              GetUserLegitimateInterestStatusForVendorAndRequiredPurposes(),
+              GetUserStatusForVendor(),
               // Languages,
               Text('Languages:'),
               UpdateSelectedLanguage(),

@@ -249,6 +249,31 @@ class DidomiSdk {
     return ConsentStatus.values[result];
   }
 
+
+  /// Get the user legitimate interest status for a specific purpose
+  static Future<ConsentStatus> getUserLegitimateInterestStatusForPurpose(String purposeId) async {
+    final int result = await _channel.invokeMethod("getUserLegitimateInterestStatusForPurpose", {"purposeId": purposeId});
+    return ConsentStatus.values[result];
+  }
+
+  /// Get the user legitimate interest status for a specific vendor
+  static Future<ConsentStatus> getUserLegitimateInterestStatusForVendor(String vendorId) async {
+    final int result = await _channel.invokeMethod("getUserLegitimateInterestStatusForVendor", {"vendorId": vendorId});
+    return ConsentStatus.values[result];
+  }
+
+  /// Get the user legitimate interest status for a specific vendor and all its purposes
+  static Future<ConsentStatus> getUserLegitimateInterestStatusForVendorAndRequiredPurposes(String vendorId) async {
+    final int result = await _channel.invokeMethod("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", {"vendorId": vendorId});
+    return ConsentStatus.values[result];
+  }
+
+  /// Get the user consent and legitimate interest status for a specific vendor
+  static Future<ConsentStatus> getUserStatusForVendor(String vendorId) async {
+    final int result = await _channel.invokeMethod("getUserStatusForVendor", {"vendorId": vendorId});
+    return ConsentStatus.values[result];
+  }
+
   /// Set the user status globally
   static Future<bool> setUserStatus(bool purposesConsentStatus, bool purposesLIStatus, bool vendorsConsentStatus, bool vendorsLIStatus) async =>
     await _channel.invokeMethod("setUserStatus", {

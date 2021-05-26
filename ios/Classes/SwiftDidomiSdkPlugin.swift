@@ -98,6 +98,14 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             getUserConsentStatusForVendor(call, result: result)
         case "getUserConsentStatusForVendorAndRequiredPurposes":
             getUserConsentStatusForVendorAndRequiredPurposes(call, result: result)
+        case "getUserLegitimateInterestStatusForPurpose":
+            getUserLegitimateInterestStatusForPurpose(call, result: result)
+        case "getUserLegitimateInterestStatusForVendor":
+            getUserLegitimateInterestStatusForVendor(call, result: result)
+        case "getUserLegitimateInterestStatusForVendorAndRequiredPurposes":
+            getUserLegitimateInterestStatusForVendorAndRequiredPurposes(call, result: result)
+        case "getUserStatusForVendor":
+            getUserStatusForVendor(call, result: result)
         case "setUserStatus":
             setUserStatus(call, result: result)
         case "setUser":
@@ -405,6 +413,134 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
 
         let consentStatusForVendor = Didomi.shared.getUserConsentStatusForVendorAndRequiredPurposes(vendorId: vendorId)
         switch consentStatusForVendor {
+        case .disable:
+          result(0)
+        case .enable:
+          result(1)
+        default:
+          result(2)
+        }
+    }
+    
+    /**
+     Get the user legitimate interest status for a specific purpose
+     - Parameter purposeId: The purpose ID to check consent for
+     - Returns: The user legitimate interest status for the specified purpose
+     */
+    func getUserLegitimateInterestStatusForPurpose(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        guard let args = call.arguments as? Dictionary<String, String> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getUserLegitimateInterestStatusForPurpose", details: nil))
+                return
+            }
+
+        let purposeId = args["purposeId"] ?? ""
+        if purposeId.isEmpty {
+            result(FlutterError.init(code: "invalid_args", message: "Missing purposeId argument for getUserLegitimateInterestStatusForPurpose", details: nil))
+            return
+        }
+
+        let legitimateInterestStatusForPurpose = Didomi.shared.getUserLegitimateInterestStatusForPurpose(purposeId: purposeId)
+        switch legitimateInterestStatusForPurpose {
+        case .disable:
+          result(0)
+        case .enable:
+          result(1)
+        default:
+          result(2)
+        }
+    }
+
+    /**
+     Get the user legitimate interest status for a specific vendor
+     - Parameter vendorId: The vendor ID to check consent for
+     - Returns: The user consent status for the specified vendor
+     */
+    func getUserLegitimateInterestStatusForVendor(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        guard let args = call.arguments as? Dictionary<String, String> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getUserLegitimateInterestStatusForVendor", details: nil))
+                return
+            }
+
+        let vendorId = args["vendorId"] ?? ""
+        if vendorId.isEmpty {
+            result(FlutterError.init(code: "invalid_args", message: "Missing vendorId argument for getUserLegitimateInterestStatusForVendor", details: nil))
+            return
+        }
+
+        let legitimateInterestStatusForVendor = Didomi.shared.getUserLegitimateInterestStatusForVendor(vendorId: vendorId)
+        switch legitimateInterestStatusForVendor {
+        case .disable:
+          result(0)
+        case .enable:
+          result(1)
+        default:
+          result(2)
+        }
+    }
+    
+    /**
+     Get the user status (consent and legitimate interest) for a specific vendor
+     - Parameter vendorId: The vendor ID to check consent for
+     - Returns: The user status for the specified vendor
+     */
+    func getUserStatusForVendor(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        guard let args = call.arguments as? Dictionary<String, String> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getUserStatusForVendor", details: nil))
+                return
+            }
+
+        let vendorId = args["vendorId"] ?? ""
+        if vendorId.isEmpty {
+            result(FlutterError.init(code: "invalid_args", message: "Missing vendorId argument for getUserStatusForVendor", details: nil))
+            return
+        }
+
+        let statusForVendor = Didomi.shared.getUserStatusForVendor(vendorId: vendorId)
+        switch statusForVendor {
+        case .disable:
+          result(0)
+        case .enable:
+          result(1)
+        default:
+          result(2)
+        }
+    }
+
+    /**
+     Get the user legitimate interest status for a specific vendor and all its purposes
+     - Parameter vendorId: The ID of the vendor
+     - Returns: The user legitimate interest status corresponding to the specified vendor and all its required purposes
+     */
+    func getUserLegitimateInterestStatusForVendorAndRequiredPurposes(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        guard let args = call.arguments as? Dictionary<String, String> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getUserLegitimateInterestStatusForVendorAndRequiredPurposes", details: nil))
+                return
+            }
+
+        let vendorId = args["vendorId"] ?? ""
+        if vendorId.isEmpty {
+            result(FlutterError.init(code: "invalid_args", message: "Missing vendorId argument for getUserLegitimateInterestStatusForVendorAndRequiredPurposes", details: nil))
+            return
+        }
+
+        let legitimateInterestStatusForVendor = Didomi.shared.getUserLegitimateInterestStatusForVendorAndRequiredPurposes(vendorId: vendorId)
+        switch legitimateInterestStatusForVendor {
         case .disable:
           result(0)
         case .enable:
