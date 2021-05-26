@@ -159,6 +159,14 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "getUserConsentStatusForVendorAndRequiredPurposes" -> getUserConsentStatusForVendorAndRequiredPurposes(call, result)
 
+                "getUserLegitimateInterestStatusForPurpose" -> getUserLegitimateInterestStatusForPurpose(call, result)
+
+                "getUserLegitimateInterestStatusForVendor" -> getUserLegitimateInterestStatusForVendor(call, result)
+
+                "getUserLegitimateInterestStatusForVendorAndRequiredPurposes" -> getUserLegitimateInterestStatusForVendorAndRequiredPurposes(call, result)
+
+                "getUserStatusForVendor" -> getUserStatusForVendor(call, result)
+
                 "setUserStatus" -> setUserStatus(call, result)
 
                 "setUser" -> setUser(call, result)
@@ -426,6 +434,104 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             )
         } catch (e: DidomiNotReadyException) {
             result.error("getUserConsentStatusForVendorAndRequiredPurposes", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the user legitimate interest status for a specific purpose
+     * @param purposeId
+     * @return The user legitimate interest status for the specified purpose
+     */
+    private fun getUserLegitimateInterestStatusForPurpose(@NonNull call: MethodCall, @NonNull result: Result) {
+        val purposeId = call.argument("purposeId") as? String
+        if (purposeId.isNullOrBlank()) {
+            result.error("getUserLegitimateInterestStatusForPurpose", "purposeId is null or blank", null)
+            return
+        }
+        try {
+            val status = Didomi.getInstance().getUserLegitimateInterestStatusForPurpose(purposeId)
+            result.success(
+                    when (status) {
+                        false -> 0
+                        true -> 1
+                        else -> 2
+                    }
+            )
+        } catch (e: DidomiNotReadyException) {
+            result.error("getUserLegitimateInterestStatusForPurpose", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the user legitimate interest status for a specific vendor
+     * @param vendorId
+     * @return The user legitimate interest status for the specified vendor
+     */
+    private fun getUserLegitimateInterestStatusForVendor(@NonNull call: MethodCall, @NonNull result: Result) {
+        val vendorId = call.argument("vendorId") as? String
+        if (vendorId.isNullOrBlank()) {
+            result.error("getUserLegitimateInterestStatusForVendor", "vendorId is null or blank", null)
+            return
+        }
+        try {
+            val status = Didomi.getInstance().getUserLegitimateInterestStatusForVendor(vendorId)
+            result.success(
+                    when (status) {
+                        false -> 0
+                        true -> 1
+                        else -> 2
+                    }
+            )
+        } catch (e: DidomiNotReadyException) {
+            result.error("getUserLegitimateInterestStatusForVendor", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Check if a vendor has legitimate interest for all the purposes that it requires
+     * @param vendorId
+     * @return The user legitimate interest status for all the purposes that it requires for the specified vendor
+     */
+    private fun getUserLegitimateInterestStatusForVendorAndRequiredPurposes(@NonNull call: MethodCall, @NonNull result: Result) {
+        val vendorId = call.argument("vendorId") as? String
+        if (vendorId.isNullOrBlank()) {
+            result.error("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", "vendorId is null or blank", null)
+            return
+        }
+        try {
+            val status = Didomi.getInstance().getUserLegitimateInterestStatusForVendorAndRequiredPurposes(vendorId)
+            result.success(
+                    when (status) {
+                        false -> 0
+                        true -> 1
+                    }
+            )
+        } catch (e: DidomiNotReadyException) {
+            result.error("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the user consent and legitimate interest status for a specific vendor
+     * @param vendorId
+     * @return The user consent and legitimate interest status for the specified vendor
+     */
+    private fun getUserStatusForVendor(@NonNull call: MethodCall, @NonNull result: Result) {
+        val vendorId = call.argument("vendorId") as? String
+        if (vendorId.isNullOrBlank()) {
+            result.error("getUserStatusForVendor", "vendorId is null or blank", null)
+            return
+        }
+        try {
+            val status = Didomi.getInstance().getUserStatusForVendor(vendorId)
+            result.success(
+                    when (status) {
+                        false -> 0
+                        true -> 1
+                    }
+            )
+        } catch (e: DidomiNotReadyException) {
+            result.error("getUserStatusForVendor", e.message.orEmpty(), e)
         }
     }
 
