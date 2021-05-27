@@ -1,0 +1,185 @@
+{
+    "app": {
+        "name": "Privacy preferences (local)",
+        "vendors": {
+            "iab": {
+                "all": true,
+                "stacks": {
+                    "ids": null,
+                    "auto": true
+                },
+                "enabled": true,
+                "exclude": [],
+                "include": [],
+                "version": 2
+            },
+            "didomi": [
+                "amazon",
+                "twitter",
+                "salesforce",
+                "google",
+                "facebook"
+            ],
+            "google": {
+                "fullATP": false
+            }
+        },
+        "privacyPolicyURL": "https://www.bfmtv.com/cookies/",
+        "essentialPurposes": [
+            "essentiels-KAwN9cAD"
+        ],
+        "gdprAppliesGlobally": true,
+        "gdprAppliesWhenUnknown": false,
+        "apiKey": "c774e98d-961e-45ba-811a-db867a14f034",
+        "consentDuration": 31622400
+    },
+    "user": {
+        "bots": {
+            "consentRequired": false
+        }
+    },
+    "theme": {
+        "color": "#d8e1ff",
+        "linkColor": "#EE964B",
+        "buttons": {
+            "regularButtons": {
+                "backgroundColor": "#1F271B",
+                "textColor": "#28AFB0",
+                "borderColor": "#28AFB0",
+                "borderWidth": "2",
+                "borderRadius": "5"
+            },
+            "highlightButtons": {
+                "backgroundColor": "#19647E",
+                "borderWidth": "2",
+                "borderColor": "#28AFB0",
+                "borderRadius": "5"
+            }
+        }
+    },
+    "notice": {
+        "content": {
+            "notice": {
+                "fr": "Nous et <a href=\"javascript:Didomi.preferences.show('vendors')\">nos partenaires</a> pouvons stocker et/ou accéder à des informations stockées sur votre terminal (telles que données d'identification, de navigation, de géolocalisation) au moyen de cookies ou technologies similaires.</br>Avec votre accord, nous et nos partenaires utilisons des traceurs afin de produire des statistiques d'usage ou personnaliser votre expérience (identification par analyse du terminal, publicités et contenus personnalisés, mesure de performance des publicités et contenus, production de données d'audience et développement de produit) sur internet ou par communication directe (email, sms...).</br>Vous pouvez consentir à ces utilisations en cliquant sur le bouton «Accepter & Fermer», «Continuer sans accepter» dans le cas contraire, ou obtenir plus de détails et/ou en refuser tout ou partie en cliquant sur «En savoir plus →».</br>En cas de refus, vous continuerez à recevoir des publicités mais ces dernières ne seront pas personnalisées en fonction de vos centres d'intérêts.</br>Vos choix seront appliqués sur l'ensemble du portail BFMTV (*.bfmtv.com) et conservés au maximum pendant 13 mois. Vous pouvez à tout moment modifier vos choix en utilisant le lien \"cookies\" figurant en bas de page sur ce site.</br>Pour en savoir plus, vous pouvez également consulter notre <a href=\"https://www.bfmtv.com/politique-donnees-personnelles/\"> politique de protection des données personnelles</a>.Nous et <a href=\"javascript:Didomi.preferences.show('vendors')\">nos partenaires</a> pouvons stocker et/ou accéder à des informations stockées sur votre terminal (telles que données d'identification, de navigation, de géolocalisation) au moyen de cookies ou technologies similaires.</br>Avec votre accord, nous et nos partenaires utilisons des traceurs afin de produire des statistiques d'usage ou personnaliser votre expérience (identification par analyse du terminal, publicités et contenus personnalisés, mesure de performance des publicités et contenus, production de données d'audience et développement de produit) sur internet ou par communication directe (email, sms...).</br>Vous pouvez consentir à ces utilisations en cliquant sur le bouton «Accepter & Fermer», «Continuer sans accepter» dans le cas contraire, ou obtenir plus de détails et/ou en refuser tout ou partie en cliquant sur «En savoir plus →».</br>En cas de refus, vous continuerez à recevoir des publicités mais ces dernières ne seront pas personnalisées en fonction de vos centres d'intérêts.</br>Vos choix seront appliqués sur l'ensemble du portail BFMTV (*.bfmtv.com) et conservés au maximum pendant 13 mois. Vous pouvez à tout moment modifier vos choix en utilisant le lien \"cookies\" figurant en bas de page sur ce site.</br>Pour en savoir plus, vous pouvez également consulter notre <a href=\"https://www.bfmtv.com/politique-donnees-personnelles/\"> politique de protection des données personnelles</a>."
+            }
+        },
+        "position": "popup",
+        "closeOnClick": false,
+        "closeOnScroll": false,
+        "showDataProcessing": true,
+        "closeOnScrollThreshold": 0,
+        "daysBeforeShowingAgain": 350,
+        "closeOnScrollThresholdType": "",
+        "closeOnClickNavigationDelay": 0,
+        "type": "optin",
+        "denyAsLink": true,
+        "denyAppliesToLI": true
+    },
+    "languages": {
+        "default": "en",
+        "enabled": [
+            "fr", "en"
+        ]
+    },
+    "preferences": {
+        "content": {
+            "text": {
+                "fr": "Nos partenaires et nous déposons des cookies et utilisons des informations strictement nécessaires de votre appareil pour améliorer nos produits et afficher des publicités et contenus personnalisés. Vous pouvez accepter ou refuser ces différentes opérations. Certains de nos partenaires peuvent traiter les données sur une autre base légale que le consentement en retenant l’intérêt légitime auquel vous pouvez vous opposer en cliquant sur « Refuser ». Pour en savoir plus sur les cookies, les données que nous utilisons, les traitements que nous réalisons et les partenaires avec qui nous travaillons, vous pouvez consulter notre <a href=\"https://www.bfmtv.com/politique-donnees-personnelles/\" target=\"_blank\">politique de confidentialité</a> et notre <a href=\"{privacyPolicyURL}\" target=\"_blank\">politique cookies</a>. Vos choix seront appliqués sur l'ensemble du portail BFMTV.com et conservés au maximum pendant 13 mois."
+            },
+            "title": {
+                "fr": "Vos choix en matière de cookies"
+            },
+            "textVendors": {
+                "fr": "Vous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'informations sur ce qu'il fait, les données qu'il récolte et comment il les utilise.\nVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'informationVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'informationVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'informationVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'information\nVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'informationVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'informationVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'informationVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'informationVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'information"
+            }
+        },
+        "categories": [
+            {
+                "id": "id_category1",
+                "type": "category",
+                "name": {
+                    "en": "Category 1"
+                },
+                "description": {
+                    "en": "Category 1 Description"
+                },
+                "children": [
+                    {
+                        "type": "purpose",
+                        "purposeId": "cookies"
+                    },
+                    {
+                        "type": "purpose",
+                        "purposeId": "measure_ad_performance"
+                    }
+                ]
+            },
+            {
+                "id": "id_category2",
+                "type": "category",
+                "name": {
+                    "en": "Category 2"
+                },
+                "description": {
+                    "en": "Category 2 Description"
+                },
+                "children": [
+                    {
+                        "type": "purpose",
+                        "purposeId": "create_ads_profile"
+                    },
+                    {
+                        "type": "purpose",
+                        "purposeId": "select_personalized_ads"
+                    },
+                    {
+                        "type": "purpose",
+                        "purposeId": "select_personalized_content"
+                    }
+                ]
+            },
+            {
+                "id": "id_category3",
+                "type": "category",
+                "name": {
+                    "en": "Category 3"
+                },
+                "description": {
+                    "en": "Category 3 Description"
+                },
+                "children": [
+                    {
+                        "type": "purpose",
+                        "purposeId": "select_basic_ads"
+                    },
+                    {
+                        "type": "purpose",
+                        "purposeId": "market_research"
+                    },
+                    {
+                        "type": "purpose",
+                        "purposeId": "improve_products"
+                    }
+                ]
+            }
+        ],
+        "showWhenConsentIsMissing": false,
+        "denyAppliesToLI": true
+    },
+    "regulations": {},
+    "integrations": {
+        "vendors": {
+            "google": {
+                "enable": false,
+                "refresh": true,
+                "eprivacy": false,
+                "passTargetingVariables": false
+            },
+            "salesforce-dmp": {
+                "enable": false,
+                "namespace": null
+            },
+            "refreshOnConsent": false
+        }
+    }
+}
