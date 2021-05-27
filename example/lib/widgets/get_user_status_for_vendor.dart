@@ -5,25 +5,25 @@ import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
 import 'package:flutter/material.dart';
 
-/// Widget to call DidomiSdk.GetUserConsentStatusForVendor
-class GetUserConsentStatusForVendor extends StatefulWidget {
+/// Widget to call DidomiSdk.GetUserStatusForVendor
+class GetUserStatusForVendor extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _GetUserConsentStatusForVendorState();
+  State<StatefulWidget> createState() => _GetUserStatusForVendorState();
 }
 
-class _GetUserConsentStatusForVendorState extends BaseSampleWidgetState<GetUserConsentStatusForVendor> {
+class _GetUserStatusForVendorState extends BaseSampleWidgetState<GetUserStatusForVendor> {
   // Vendor id for sample
   final String vendorId = "738";  // Adbility Media
 
   @override
-  String getButtonName() => "GetUserConsentStatusForVendor\n$vendorId";
+  String getButtonName() => "GetUserStatusForVendor\n$vendorId";
 
   @override
-  String getActionId() => "getUserConsentStatusForVendor";
+  String getActionId() => "getUserStatusForVendor";
 
   @override
   Future<String> callDidomiPlugin() async {
-    final ConsentStatus result = await DidomiSdk.getUserConsentStatusForVendor(vendorId);
+    final ConsentStatus result = await DidomiSdk.getUserStatusForVendor(vendorId);
     if (result.isUnknown) {
       return "No user status for vendor '$vendorId'.";
     } else {

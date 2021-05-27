@@ -1,4 +1,6 @@
 
+/// Status of user consent
+/// for consent based or legitimate interest based data processing
 enum ConsentStatus { disable, enable, unknown }
 
 extension ConsentStatusExtension on ConsentStatus {

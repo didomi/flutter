@@ -13,7 +13,7 @@ class GetUserConsentStatusForVendorAndRequiredPurposes extends StatefulWidget {
 
 class _GetUserConsentStatusForVendorAndRequiredPurposesState extends BaseSampleWidgetState<GetUserConsentStatusForVendorAndRequiredPurposes> {
   // Vendor id for sample
-  final String vendorId = "1";
+  final String vendorId = "738";  // Adbility Media
 
   @override
   String getButtonName() => "getUserConsentStatusForVendorAndRequiredPurposes\n$vendorId";

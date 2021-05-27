@@ -19,14 +19,21 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
 
   @override
   Future<String> callDidomiPlugin() async {
-    await DidomiSdk.initialize(_apiKeyController.text,
-        disableDidomiRemoteConfig: _disableRemoteConfigValue, languageCode: _languageController.text, noticeId: _noticeIdController.text);
+    String languageCodeText = _languageController.text;
+    String? languageCode = languageCodeText.isEmpty ? null : languageCodeText;
+    String noticeIdText = _noticeIdController.text;
+    String? noticeId = noticeIdText.isEmpty ? null : noticeIdText;
+    await DidomiSdk.initialize(
+        _apiKeyController.text,
+        disableDidomiRemoteConfig: _disableRemoteConfigValue,
+        languageCode: languageCode,
+        noticeId: noticeId);
     return "OK";
   }
 
-  TextEditingController _apiKeyController = TextEditingController(text: "c3cd5b46-bf36-4700-bbdc-4ee9176045aa");
+  TextEditingController _apiKeyController = TextEditingController(text: "9bf8a7e4-db9a-4ff2-a45c-ab7d2b6eadba");
 
-  TextEditingController _noticeIdController = TextEditingController(text: "KfwVrwCy");
+  TextEditingController _noticeIdController = TextEditingController(text: "Ar7NPQ72");
 
   TextEditingController _languageController = TextEditingController();
 

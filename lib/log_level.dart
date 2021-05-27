@@ -1,5 +1,6 @@
 import "dart:io";
 
+/// Log level in the native sdk
 enum LogLevel { verbose, debug, info, warn, error }
 
 extension LogLevelExtension on LogLevel {
