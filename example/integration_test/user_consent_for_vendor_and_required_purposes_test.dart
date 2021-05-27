@@ -13,6 +13,7 @@ void main() {
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final agreeToAllBtnFinder = find.byKey(Key("setUserAgreeToAll"));
   final disagreeToAllBtnFinder = find.byKey(Key("setUserDisagreeToAll"));
+  final resetBtnFinder = find.byKey(Key("reset"));
   final getUserConsentStatusForVendorAndRequiredPurposeBtnFinder = find.byKey(Key("getUserConsentStatusForVendorAndRequiredPurposes"));
 
   bool isError = false;
@@ -33,7 +34,7 @@ void main() {
      * Without initialization
      */
 
-    testWidgets("Click get user consent for vendor '1' and required purpose without initialization", (WidgetTester tester) async {
+    testWidgets("Click get user consent for vendor '738' and required purpose without initialization", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -62,7 +63,7 @@ void main() {
      * With initialization
      */
 
-    testWidgets("Click get user consent for vendor '1' and required purpose with initialization", (WidgetTester tester) async {
+    testWidgets("Click get user consent for vendor '738' and required purpose with initialization", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -80,7 +81,7 @@ void main() {
           (Widget widget) =>
               widget is Text &&
               widget.key.toString().contains("getUserConsentStatusForVendorAndRequiredPurposes") &&
-              widget.data?.contains("Native message: User status is 'Disabled' for vendor '1'.") == true,
+              widget.data?.contains("Native message: User status is 'Disabled' for vendor '738'.") == true,
         ),
         findsOneWidget,
       );
@@ -90,10 +91,10 @@ void main() {
     });
 
     /*
-     * With initialization + agree
+     * With initialization + agree then reset
      */
 
-    testWidgets("Click get user consent for vendor '1' and required purpose with initialization after agree", (WidgetTester tester) async {
+    testWidgets("Click get user consent for vendor '738' and required purpose with initialization after agree then reset", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -112,7 +113,27 @@ void main() {
           (Widget widget) =>
               widget is Text &&
               widget.key.toString().contains("getUserConsentStatusForVendorAndRequiredPurposes") &&
-              widget.data?.contains("Native message: User status is 'Enabled' for vendor '1'.") == true,
+              widget.data?.contains("Native message: User status is 'Enabled' for vendor '738'.") == true,
+        ),
+        findsOneWidget,
+      );
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      // Reset user consent
+      await tester.tap(resetBtnFinder);
+      await tester.pumpAndSettle();
+
+      await tester.tap(getUserConsentStatusForVendorAndRequiredPurposeBtnFinder);
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byWidgetPredicate(
+              (Widget widget) =>
+          widget is Text &&
+              widget.key.toString().contains("getUserConsentStatusForVendorAndRequiredPurposes") &&
+              widget.data?.contains("Native message: User status is 'Disabled' for vendor '738'.") == true,
         ),
         findsOneWidget,
       );
@@ -122,10 +143,10 @@ void main() {
     });
 
     /*
-     * With initialization + disagree
+     * With initialization + disagree then reset
      */
 
-    testWidgets("Click get user consent for vendor '1' and required purpose with initialization after disagree", (WidgetTester tester) async {
+    testWidgets("Click get user consent for vendor '738' and required purpose with initialization after disagree then reset", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -144,7 +165,27 @@ void main() {
           (Widget widget) =>
               widget is Text &&
               widget.key.toString().contains("getUserConsentStatusForVendorAndRequiredPurposes") &&
-              widget.data?.contains("Native message: User status is 'Disabled' for vendor '1'.") == true,
+              widget.data?.contains("Native message: User status is 'Disabled' for vendor '738'.") == true,
+        ),
+        findsOneWidget,
+      );
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      // Reset user consent
+      await tester.tap(resetBtnFinder);
+      await tester.pumpAndSettle();
+
+      await tester.tap(getUserConsentStatusForVendorAndRequiredPurposeBtnFinder);
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byWidgetPredicate(
+              (Widget widget) =>
+          widget is Text &&
+              widget.key.toString().contains("getUserConsentStatusForVendorAndRequiredPurposes") &&
+              widget.data?.contains("Native message: User status is 'Disabled' for vendor '738'.") == true,
         ),
         findsOneWidget,
       );

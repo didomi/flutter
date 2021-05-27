@@ -13,6 +13,7 @@ void main() {
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final agreeToAllBtnFinder = find.byKey(Key("setUserAgreeToAll"));
   final disagreeToAllBtnFinder = find.byKey(Key("setUserDisagreeToAll"));
+  final resetBtnFinder = find.byKey(Key("reset"));
   final getUserConsentStatusForPurposeBtnFinder = find.byKey(Key("getUserConsentStatusForPurpose"));
 
   bool isError = false;
@@ -90,10 +91,10 @@ void main() {
     });
 
     /*
-     * With initialization + agree
+     * With initialization + agree then reset
      */
 
-    testWidgets("Click get user consent for purpose 'cookies' with initialization after agree", (WidgetTester tester) async {
+    testWidgets("Click get user consent for purpose 'cookies' with initialization after agree then reset", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -119,13 +120,33 @@ void main() {
 
       assert(isError == false);
       assert(isReady == true);
+
+      // Reset user consent
+      await tester.tap(resetBtnFinder);
+      await tester.pumpAndSettle();
+
+      await tester.tap(getUserConsentStatusForPurposeBtnFinder);
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byWidgetPredicate(
+              (Widget widget) =>
+          widget is Text &&
+              widget.key.toString().contains("getUserConsentStatusForPurpose") &&
+              widget.data?.contains("Native message: No user status for purpose 'cookies'.") == true,
+        ),
+        findsOneWidget,
+      );
+
+      assert(isError == false);
+      assert(isReady == true);
     });
 
     /*
-     * With initialization + disagree
+     * With initialization + disagree then reset
      */
 
-    testWidgets("Click get user consent for purpose 'cookies' with initialization after disagree", (WidgetTester tester) async {
+    testWidgets("Click get user consent for purpose 'cookies' with initialization after disagree then reset", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -145,6 +166,26 @@ void main() {
               widget is Text &&
               widget.key.toString().contains("getUserConsentStatusForPurpose") &&
               widget.data?.contains("Native message: User status is 'Disabled' for purpose 'cookies'.") == true,
+        ),
+        findsOneWidget,
+      );
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      // Reset user consent
+      await tester.tap(resetBtnFinder);
+      await tester.pumpAndSettle();
+
+      await tester.tap(getUserConsentStatusForPurposeBtnFinder);
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byWidgetPredicate(
+              (Widget widget) =>
+          widget is Text &&
+              widget.key.toString().contains("getUserConsentStatusForPurpose") &&
+              widget.data?.contains("Native message: No user status for purpose 'cookies'.") == true,
         ),
         findsOneWidget,
       );

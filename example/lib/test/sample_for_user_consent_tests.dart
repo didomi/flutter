@@ -1,4 +1,5 @@
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
+import 'package:didomi_sdk_example/widgets/reset.dart';
 import 'package:didomi_sdk_example/widgets/set_user_agree_to_all.dart';
 import 'package:didomi_sdk_example/widgets/set_user_disagree_to_all.dart';
 import 'package:didomi_sdk_example/widgets/set_user_status.dart';
@@ -36,6 +37,7 @@ class HomePage extends StatelessWidget {
             SetUserAgreeToAll(),
             SetUserDisagreeToAll(),
             SetUserStatus(),
+            Reset(),
           ],
         ),
       );
