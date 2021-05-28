@@ -1,3 +1,3 @@
-## 0.0.1
+0.0.1-dev.1
 
-* TODO: Describe initial release.
+This release contains most methods of the iOS and Android Didomi SDKs.
