@@ -81,7 +81,7 @@ void main() {
           (Widget widget) =>
               widget is Text &&
               widget.key.toString().contains("getUserConsentStatusForVendorAndRequiredPurposes") &&
-              widget.data?.contains("Native message: User status is 'Disabled' for vendor '738'.") == true,
+              widget.data?.contains("Native message: User status is 'Disabled' for vendor '738' and required purposes.") == true,
         ),
         findsOneWidget,
       );
@@ -113,7 +113,7 @@ void main() {
           (Widget widget) =>
               widget is Text &&
               widget.key.toString().contains("getUserConsentStatusForVendorAndRequiredPurposes") &&
-              widget.data?.contains("Native message: User status is 'Enabled' for vendor '738'.") == true,
+              widget.data?.contains("Native message: User status is 'Enabled' for vendor '738' and required purposes.") == true,
         ),
         findsOneWidget,
       );
@@ -133,7 +133,7 @@ void main() {
               (Widget widget) =>
           widget is Text &&
               widget.key.toString().contains("getUserConsentStatusForVendorAndRequiredPurposes") &&
-              widget.data?.contains("Native message: User status is 'Disabled' for vendor '738'.") == true,
+              widget.data?.contains("Native message: User status is 'Disabled' for vendor '738' and required purposes.") == true,
         ),
         findsOneWidget,
       );
@@ -165,7 +165,7 @@ void main() {
           (Widget widget) =>
               widget is Text &&
               widget.key.toString().contains("getUserConsentStatusForVendorAndRequiredPurposes") &&
-              widget.data?.contains("Native message: User status is 'Disabled' for vendor '738'.") == true,
+              widget.data?.contains("Native message: User status is 'Disabled' for vendor '738' and required purposes.") == true,
         ),
         findsOneWidget,
       );
@@ -185,7 +185,7 @@ void main() {
               (Widget widget) =>
           widget is Text &&
               widget.key.toString().contains("getUserConsentStatusForVendorAndRequiredPurposes") &&
-              widget.data?.contains("Native message: User status is 'Disabled' for vendor '738'.") == true,
+              widget.data?.contains("Native message: User status is 'Disabled' for vendor '738' and required purposes.") == true,
         ),
         findsOneWidget,
       );

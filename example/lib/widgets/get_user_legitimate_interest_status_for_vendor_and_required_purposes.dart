@@ -27,7 +27,7 @@ class _GetUserLegitimateInterestStatusForVendorAndRequiredPurposesState extends 
     if (result.isUnknown) {
       return "No user status for vendor '$vendorId'.";
     } else {
-      return "User status is '${result.string}' for vendor '$vendorId'.";
+      return "User status is '${result.string}' for vendor '$vendorId' and required purposes.";
     }
   }
 }

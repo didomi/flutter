@@ -1,6 +1,4 @@
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
-import 'package:didomi_sdk_example/widgets/setup_ui.dart';
-import 'package:didomi_sdk_example/widgets/show_hide_notice.dart';
 import 'package:didomi_sdk_example/widgets/show_hide_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
