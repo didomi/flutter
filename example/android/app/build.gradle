@@ -38,7 +38,7 @@ android {
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
 
-        applicationId "io.didomi.sample"
+        applicationId "io.didomi.flutter.sample"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
