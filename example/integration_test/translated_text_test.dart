@@ -109,7 +109,6 @@ void main() {
       );
     });
 
-    // TODO('Use configuration with multiple languages!')
     testWidgets("Get Translated Texts after valid language update", (WidgetTester tester) async {
       // Start app
       app.main();
@@ -135,7 +134,7 @@ void main() {
               (Widget widget) =>
           widget is Text &&
               widget.key.toString().contains("getTranslatedText") &&
-              widget.data?.startsWith("Native message: With your agreement, we") == true,
+              widget.data?.startsWith("Native message: Avec votre consentement, nous") == true,
         ),
         findsOneWidget,
       );
