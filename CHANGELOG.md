@@ -1,3 +1,3 @@
 0.0.1-dev.1
 
-This release contains most methods of the iOS and Android Didomi SDKs.
+Initial release that contains essential methods required for implementing the Didomi Flutter SDK on a Flutter app.
