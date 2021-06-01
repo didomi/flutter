@@ -130,6 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Material(
         child: Center(
           child: ListView(
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             key: Key("components_list"),
             controller: scrollController,
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),

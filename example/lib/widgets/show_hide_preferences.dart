@@ -30,13 +30,7 @@ class _ShowHidePreferencesState extends BaseSampleWidgetState<ShowHidePreference
     PreferencesView? requestedView = _requestedView;
     if (requestedView != null) {
       if (_hideAfterAWhile) {
-        Future.delayed(const Duration(seconds: HIDE_DELAY_SECONDS), () {
-          // TODO('Does the SDK should manage this?')
-          if (_requestedView == PreferencesView.vendors) {
-            DidomiSdk.hidePreferences();
-          }
-          return DidomiSdk.hidePreferences();
-        });
+        Future.delayed(const Duration(seconds: HIDE_DELAY_SECONDS), () => DidomiSdk.hidePreferences());
       }
       if (_checkVisibilityAfterAWhile) {
         Future.delayed(const Duration(seconds: CHECK_DELAY_SECONDS), () => checkVisibility());

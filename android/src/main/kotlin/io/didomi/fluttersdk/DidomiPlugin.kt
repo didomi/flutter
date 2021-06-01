@@ -91,7 +91,10 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "isUserLegitimateInterestStatusPartial" -> result.success(didomi.isUserLegitimateInterestStatusPartial)
 
-                "reset" -> reset(result)
+                "reset" -> {
+                    didomi.reset()
+                    result.success(null)
+                }
 
                 "setupUI" -> {
                     getFragmentActivity(result)?.also {
@@ -180,7 +183,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun initialize(call: MethodCall, result: Result) {
         currentActivity?.also {
             val apiKey = argumentOrError("apiKey", "initialize", call, result)
-                ?: return
+                    ?: return
             val disableDidomiRemoteConfig: Boolean = call.argument("disableDidomiRemoteConfig") ?: false
             Didomi.getInstance().initialize(
                 it.application,
@@ -195,15 +198,6 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(null)
         } ?: run {
             result.error("no_activity", "No activity available", null)
-        }
-    }
-
-    private fun reset(result: Result) {
-        try {
-            Didomi.getInstance().reset()
-            result.success(null)
-        } catch (e: DidomiNotReadyException) {
-            result.error("reset", e.message.orEmpty(), e)
         }
     }
 
@@ -238,30 +232,18 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun updateSelectedLanguage(call: MethodCall, result: Result) {
-        try {
-            Didomi.getInstance().updateSelectedLanguage(call.argument("languageCode"))
-            result.success(null)
-        } catch (e: DidomiNotReadyException) {
-            result.error("getDisabledPurposeIds", e.message.orEmpty(), e)
-        }
+        Didomi.getInstance().updateSelectedLanguage(call.argument("languageCode"))
+        result.success(null)
     }
 
     private fun getText(call: MethodCall, result: Result) {
-        try {
-            val textMap = Didomi.getInstance().getText(call.argument("key"))
-            result.success(textMap)
-        } catch (e: DidomiNotReadyException) {
-            result.error("getDisabledPurposeIds", e.message.orEmpty(), e)
-        }
+        val textMap = Didomi.getInstance().getText(call.argument("key"))
+        result.success(textMap)
     }
 
     private fun getTranslatedText(call: MethodCall, result: Result) {
-        try {
-            val text = Didomi.getInstance().getTranslatedText(call.argument("key"))
-            result.success(text)
-        } catch (e: DidomiNotReadyException) {
-            result.error("getDisabledPurposeIds", e.message.orEmpty(), e)
-        }
+        val text = Didomi.getInstance().getTranslatedText(call.argument("key"))
+        result.success(text)
     }
 
     /**
@@ -573,7 +555,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private fun setUser(call: MethodCall, result: Result) {
         val userId = argumentOrError("organizationUserId", "setUser", call, result)
-            ?: return
+                ?: return
         Didomi.getInstance().setUser(userId)
         result.success(null)
     }
@@ -581,19 +563,18 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun setUserWithAuthentication(call: MethodCall, result: Result) {
         val methodName = "setUserWithAuthentication"
         val userId = argumentOrError("organizationUserId", methodName, call, result)
-            ?: return
+                ?: return
         val organizationUserIdAuthAlgorithm = argumentOrError("organizationUserIdAuthAlgorithm", methodName, call, result)
-            ?: return
+                ?: return
         val organizationUserIdAuthSid = argumentOrError("organizationUserIdAuthSid", methodName, call, result)
-            ?: return
+                ?: return
         val organizationUserIdAuthDigest = argumentOrError("organizationUserIdAuthDigest", methodName, call, result)
-            ?: return
-        Didomi.getInstance().setUser(
-            userId,
-            organizationUserIdAuthAlgorithm,
-            organizationUserIdAuthSid,
-            call.argument("organizationUserIdAuthSalt") as? String,
-            organizationUserIdAuthDigest
+                ?: return
+        Didomi.getInstance().setUser(userId,
+                organizationUserIdAuthAlgorithm,
+                organizationUserIdAuthSid,
+                call.argument("organizationUserIdAuthSalt") as? String,
+                organizationUserIdAuthDigest
         )
         result.success(null)
     }

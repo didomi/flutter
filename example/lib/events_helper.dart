@@ -13,7 +13,7 @@ class EventsHelper {
       onEvent("SDK Ready");
     };
     didomiListener.onError = (message) {
-      onEvent("Error: $message");
+      onEvent("Error : $message");
     };
     didomiListener.onShowNotice = () {
       onEvent("Notice displayed");

@@ -168,6 +168,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		D2836436265D536D00612DA4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D2836437265D53BC00612DA4 /* didomi_config.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		F66BEAD9265D5365002ACF58 /* RunnerTests */ = {
 			isa = PBXGroup;
 			children = (
