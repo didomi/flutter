@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:didomi_sdk_example/test/sample_for_log_level_tests.dart' as app;
+import 'package:didomi_sdk_example/testapps/sample_for_log_level_tests.dart' as app;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';

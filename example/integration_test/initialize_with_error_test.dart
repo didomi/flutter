@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
-import 'package:didomi_sdk_example/test/sample_for_initialize_custom_tests.dart' as app;
+import 'package:didomi_sdk_example/testapps/sample_for_initialize_custom_tests.dart' as app;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
