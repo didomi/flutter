@@ -53,9 +53,7 @@ void main() {
       await tester.tap(initializeBtnFinder);
       await tester.pumpAndSettle();
 
-      // TODO('Check for dialog')
-
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 4));
 
       assert(isError == false);
       assert(isReady == true);

@@ -5,6 +5,6 @@ class InitializeHelper {
     await tester.tap(finder);
     await tester.pumpAndSettle();
 
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 4));
   }
 }
