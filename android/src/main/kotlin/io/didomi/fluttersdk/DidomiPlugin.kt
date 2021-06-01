@@ -91,10 +91,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "isUserLegitimateInterestStatusPartial" -> result.success(didomi.isUserLegitimateInterestStatusPartial)
 
-                "reset" -> {
-                    didomi.reset()
-                    result.success(null)
-                }
+                "reset" -> reset(result)
 
                 "setupUI" -> {
                     getFragmentActivity(result)?.also {
@@ -201,6 +198,15 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
     }
 
+    private fun reset(result: Result) {
+        try {
+            Didomi.getInstance().reset()
+            result.success(null)
+        } catch (e: DidomiNotReadyException) {
+            result.error("reset", e.message.orEmpty(), e)
+        }
+    }
+
     private fun showNotice(result: Result) {
         getFragmentActivity(result)?.also {
             Didomi.getInstance().showNotice(it)
@@ -232,18 +238,30 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun updateSelectedLanguage(call: MethodCall, result: Result) {
-        Didomi.getInstance().updateSelectedLanguage(call.argument("languageCode"))
-        result.success(null)
+        try {
+            Didomi.getInstance().updateSelectedLanguage(call.argument("languageCode"))
+            result.success(null)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getDisabledPurposeIds", e.message.orEmpty(), e)
+        }
     }
 
     private fun getText(call: MethodCall, result: Result) {
-        val textMap = Didomi.getInstance().getText(call.argument("key"))
-        result.success(textMap)
+        try {
+            val textMap = Didomi.getInstance().getText(call.argument("key"))
+            result.success(textMap)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getDisabledPurposeIds", e.message.orEmpty(), e)
+        }
     }
 
     private fun getTranslatedText(call: MethodCall, result: Result) {
-        val text = Didomi.getInstance().getTranslatedText(call.argument("key"))
-        result.success(text)
+        try {
+            val text = Didomi.getInstance().getTranslatedText(call.argument("key"))
+            result.success(text)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getDisabledPurposeIds", e.message.orEmpty(), e)
+        }
     }
 
     /**

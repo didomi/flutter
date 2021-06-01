@@ -47,13 +47,11 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         case "isUserLegitimateInterestStatusPartial":
             result(Didomi.shared.isUserLegitimateInterestStatusPartial())
         case "reset":
-            Didomi.shared.reset()
-            result(nil)
+            reset(result: result)
         case "setupUI":
             setupUI(result: result)
         case "showNotice":
-            Didomi.shared.showNotice()
-            result(nil)
+            showNotice(result: result)
         case "hideNotice":
             Didomi.shared.hideNotice()
             result(nil)
@@ -610,6 +608,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     }
 
     func setUser(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
         guard let args = call.arguments as? Dictionary<String, Any> else {
                 result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUser", details: nil))
                 return
@@ -623,6 +625,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     }
 
     func setUserWithAuthentication(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
         guard let args = call.arguments as? Dictionary<String, Any> else {
                 result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserWithAuthentication", details: nil))
                 return
