@@ -7,7 +7,8 @@ import 'package:didomi_sdk_example/widgets/set_user_disagree_to_all.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(
+void main() =>
+    runApp(
       SampleForVendorTestsApp(
         // Start app with unique key so app is restarted after tests
         key: UniqueKey(),
@@ -19,7 +20,8 @@ class SampleForVendorTestsApp extends StatelessWidget {
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(BuildContext context) =>
+      MaterialApp(
         title: "Vendor Tests",
         home: HomePage(key: key as Key),
       );
@@ -31,7 +33,8 @@ class HomePage extends StatelessWidget {
   final ScrollController scrollController = ScrollController();
 
   @override
-  Widget build(BuildContext context) => Material(
+  Widget build(BuildContext context) =>
+      Material(
         child: ListView(
           key: Key("components_list"),
           controller: scrollController,

@@ -51,8 +51,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
               widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
         ),
@@ -65,8 +65,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getUserLegitimateInterestStatusForVendorAndRequiredPurposes") &&
               widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
         ),
@@ -98,8 +98,8 @@ void main() {
       if (Platform.isAndroid) {
         expect(
           find.byWidgetPredicate(
-            (Widget widget) =>
-                widget is Text &&
+                (Widget widget) =>
+            widget is Text &&
                 widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
                 widget.data?.contains("Native message: User status is 'Enabled' for vendor '738'.") == true,
           ),
@@ -108,8 +108,8 @@ void main() {
       } else if (Platform.isIOS) {
         expect(
           find.byWidgetPredicate(
-            (Widget widget) =>
-                widget is Text &&
+                (Widget widget) =>
+            widget is Text &&
                 widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
                 widget.data?.contains("Native message: No user status for vendor '738'.") == true,
           ),
@@ -122,8 +122,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getUserLegitimateInterestStatusForVendorAndRequiredPurposes") &&
               widget.data?.contains("Native message: User status is 'Enabled' for vendor '738' and required purposes.") == true,
         ),
@@ -145,8 +145,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text && widget.key.toString().contains("setUserAgreeToAll") && widget.data?.contains("Native message: Consent updated: true.") == true,
+              (Widget widget) =>
+          widget is Text && widget.key.toString().contains("setUserAgreeToAll") && widget.data?.contains("Native message: Consent updated: true.") == true,
         ),
         findsOneWidget,
       );
@@ -157,8 +157,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
               widget.data?.contains("Native message: User status is 'Enabled' for vendor '738'.") == true,
         ),
@@ -170,8 +170,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getUserLegitimateInterestStatusForVendorAndRequiredPurposes") &&
               widget.data?.contains("Native message: User status is 'Enabled' for vendor '738' and required purposes.") == true,
         ),
@@ -196,8 +196,8 @@ void main() {
       if (Platform.isAndroid) {
         expect(
           find.byWidgetPredicate(
-            (Widget widget) =>
-                widget is Text &&
+                (Widget widget) =>
+            widget is Text &&
                 widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
                 widget.data?.contains("Native message: User status is 'Enabled' for vendor '738'.") == true,
           ),
@@ -206,8 +206,8 @@ void main() {
       } else if (Platform.isIOS) {
         expect(
           find.byWidgetPredicate(
-            (Widget widget) =>
-                widget is Text &&
+                (Widget widget) =>
+            widget is Text &&
                 widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
                 widget.data?.contains("Native message: No user status for vendor '738'.") == true,
           ),
@@ -220,8 +220,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getUserLegitimateInterestStatusForVendorAndRequiredPurposes") &&
               widget.data?.contains("Native message: User status is 'Enabled' for vendor '738' and required purposes.") == true,
         ),
@@ -243,8 +243,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("setUserDisagreeToAll") &&
               widget.data?.contains("Native message: Consent updated: true.") == true,
         ),
@@ -257,8 +257,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
               widget.data?.contains("Native message: User status is 'Disabled' for vendor '738'.") == true,
         ),
@@ -270,8 +270,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getUserLegitimateInterestStatusForVendorAndRequiredPurposes") &&
               widget.data?.contains("Native message: User status is 'Disabled' for vendor '738' and required purposes.") == true,
         ),
@@ -296,8 +296,8 @@ void main() {
       if (Platform.isAndroid) {
         expect(
           find.byWidgetPredicate(
-            (Widget widget) =>
-                widget is Text &&
+                (Widget widget) =>
+            widget is Text &&
                 widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
                 widget.data?.contains("Native message: User status is 'Enabled' for vendor '738'.") == true,
           ),
@@ -306,8 +306,8 @@ void main() {
       } else if (Platform.isIOS) {
         expect(
           find.byWidgetPredicate(
-            (Widget widget) =>
-                widget is Text &&
+                (Widget widget) =>
+            widget is Text &&
                 widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
                 widget.data?.contains("Native message: No user status for vendor '738'.") == true,
           ),
@@ -320,8 +320,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getUserLegitimateInterestStatusForVendorAndRequiredPurposes") &&
               widget.data?.contains("Native message: User status is 'Enabled' for vendor '738' and required purposes.") == true,
         ),

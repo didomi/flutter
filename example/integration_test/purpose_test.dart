@@ -48,8 +48,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getDisabledPurposeIds") &&
               widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
         ),
@@ -73,8 +73,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getEnabledPurposeIds") &&
               widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
         ),
@@ -98,8 +98,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getRequiredPurposeIds") &&
               widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
         ),
@@ -129,8 +129,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getDisabledPurposeIds") &&
               widget.data?.contains("Native message: Disabled Purpose list is empty.") == true,
         ),
@@ -154,8 +154,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getEnabledPurposeIds") &&
               widget.data?.contains("Native message: Enabled Purpose list is empty.") == true,
         ),
@@ -179,8 +179,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getRequiredPurposeIds") &&
               widget.data?.startsWith("Native message: Required Purposes: cookies,create_ads_profile,create_content_profile,") == true,
         ),
@@ -211,8 +211,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getDisabledPurposeIds") &&
               widget.data?.contains("Native message: Disabled Purpose list is empty.") == true,
         ),
@@ -236,8 +236,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getEnabledPurposeIds") &&
               widget.data?.startsWith("Native message: Enabled Purposes: cookies,create_ads_profile,create_content_profile,") == true,
         ),
@@ -261,8 +261,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getRequiredPurposeIds") &&
               widget.data?.startsWith("Native message: Required Purposes: cookies,create_ads_profile,create_content_profile,") == true,
         ),
@@ -293,8 +293,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getDisabledPurposeIds") &&
               widget.data?.startsWith("Native message: Disabled Purposes: cookies,create_ads_profile,create_content_profile,") == true,
         ),
@@ -318,8 +318,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getEnabledPurposeIds") &&
               widget.data?.contains("Native message: Enabled Purpose list is empty.") == true,
         ),
@@ -343,8 +343,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getRequiredPurposeIds") &&
               widget.data?.startsWith("Native message: Required Purposes: cookies,create_ads_profile,create_content_profile,") == true,
         ),

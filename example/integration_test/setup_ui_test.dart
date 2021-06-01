@@ -45,7 +45,7 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) => widget is Text && widget.key.toString().contains("setupUI") && widget.data?.contains("Native message: OK") == true,
+              (Widget widget) => widget is Text && widget.key.toString().contains("setupUI") && widget.data?.contains("Native message: OK") == true,
         ),
         findsOneWidget,
       );

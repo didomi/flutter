@@ -40,7 +40,7 @@ void main() {
       // SDK is not ready at startup
       expect(
         find.byWidgetPredicate(
-          (Widget widget) => widget is Text && widget.key.toString().contains("isReady") && widget.data?.contains("Native message: Result = false") == true,
+              (Widget widget) => widget is Text && widget.key.toString().contains("isReady") && widget.data?.contains("Native message: Result = false") == true,
         ),
         findsOneWidget,
       );
@@ -50,8 +50,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text && widget.key.toString().contains("onReady") && widget.data?.contains("Native message: Waiting for onReady callback") == true,
+              (Widget widget) =>
+          widget is Text && widget.key.toString().contains("onReady") && widget.data?.contains("Native message: Waiting for onReady callback") == true,
         ),
         findsOneWidget,
       );
@@ -63,7 +63,7 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) => widget is Text && widget.key.toString().contains("initialize") && widget.data?.contains("Native message: OK") == true,
+              (Widget widget) => widget is Text && widget.key.toString().contains("initialize") && widget.data?.contains("Native message: OK") == true,
         ),
         findsOneWidget,
       );
@@ -74,14 +74,14 @@ void main() {
       // SDK is ready
       expect(
         find.byWidgetPredicate(
-          (Widget widget) => widget is Text && widget.key.toString().contains("isReady") && widget.data?.contains("Native message: Result = true") == true,
+              (Widget widget) => widget is Text && widget.key.toString().contains("isReady") && widget.data?.contains("Native message: Result = true") == true,
         ),
         findsOneWidget,
       );
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) => widget is Text && widget.key.toString().contains("onReady") && widget.data?.contains("Native message: SDK is ready!") == true,
+              (Widget widget) => widget is Text && widget.key.toString().contains("onReady") && widget.data?.contains("Native message: SDK is ready!") == true,
         ),
         findsOneWidget,
       );

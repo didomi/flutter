@@ -46,7 +46,7 @@ void main() {
       // SDK is not ready at startup
       expect(
         find.byWidgetPredicate(
-          (Widget widget) => widget is Text && widget.key.toString().contains("isReady") && widget.data?.contains("Native message: Result = false") == true,
+              (Widget widget) => widget is Text && widget.key.toString().contains("isReady") && widget.data?.contains("Native message: Result = false") == true,
         ),
         findsOneWidget,
       );
@@ -56,8 +56,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text && widget.key.toString().contains("onReady") && widget.data?.contains("Native message: Waiting for onReady callback") == true,
+              (Widget widget) =>
+          widget is Text && widget.key.toString().contains("onReady") && widget.data?.contains("Native message: Waiting for onReady callback") == true,
         ),
         findsOneWidget,
       );
@@ -85,7 +85,7 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) => widget is Text && widget.key.toString().contains("isReady") && widget.data?.contains("Native message: Result = false") == true,
+              (Widget widget) => widget is Text && widget.key.toString().contains("isReady") && widget.data?.contains("Native message: Result = false") == true,
         ),
         findsOneWidget,
       );

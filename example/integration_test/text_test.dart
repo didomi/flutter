@@ -42,8 +42,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getText") &&
               widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
         ),

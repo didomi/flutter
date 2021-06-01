@@ -48,8 +48,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("setUserAgreeToAll") &&
               widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
         ),
@@ -74,8 +74,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("setUserDisagreeToAll") &&
               widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
         ),
@@ -100,8 +100,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("setUserStatus") &&
               widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
         ),
@@ -132,8 +132,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text && widget.key.toString().contains("setUserAgreeToAll") && widget.data?.contains("Native message: Consent updated: true.") == true,
+              (Widget widget) =>
+          widget is Text && widget.key.toString().contains("setUserAgreeToAll") && widget.data?.contains("Native message: Consent updated: true.") == true,
         ),
         findsOneWidget,
       );
@@ -147,8 +147,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text && widget.key.toString().contains("setUserAgreeToAll") && widget.data?.contains("Native message: Consent updated: false.") == true,
+              (Widget widget) =>
+          widget is Text && widget.key.toString().contains("setUserAgreeToAll") && widget.data?.contains("Native message: Consent updated: false.") == true,
         ),
         findsOneWidget,
       );
@@ -171,8 +171,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text && widget.key.toString().contains("setUserAgreeToAll") && widget.data?.contains("Native message: Consent updated: false.") == true,
+              (Widget widget) =>
+          widget is Text && widget.key.toString().contains("setUserAgreeToAll") && widget.data?.contains("Native message: Consent updated: false.") == true,
         ),
         findsOneWidget,
       );
@@ -190,8 +190,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text && widget.key.toString().contains("setUserAgreeToAll") && widget.data?.contains("Native message: Consent updated: true.") == true,
+              (Widget widget) =>
+          widget is Text && widget.key.toString().contains("setUserAgreeToAll") && widget.data?.contains("Native message: Consent updated: true.") == true,
         ),
         findsOneWidget,
       );
@@ -214,8 +214,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("setUserDisagreeToAll") &&
               widget.data?.contains("Native message: Consent updated: true.") == true,
         ),
@@ -231,8 +231,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("setUserDisagreeToAll") &&
               widget.data?.contains("Native message: Consent updated: false.") == true,
         ),
@@ -257,8 +257,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("setUserDisagreeToAll") &&
               widget.data?.contains("Native message: Consent updated: false.") == true,
         ),
@@ -278,8 +278,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("setUserDisagreeToAll") &&
               widget.data?.contains("Native message: Consent updated: true.") == true,
         ),
@@ -304,8 +304,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text && widget.key.toString().contains("setUserStatus") && widget.data?.contains("Native message: Consent updated: true.") == true,
+              (Widget widget) =>
+          widget is Text && widget.key.toString().contains("setUserStatus") && widget.data?.contains("Native message: Consent updated: true.") == true,
         ),
         findsOneWidget,
       );
@@ -319,8 +319,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text && widget.key.toString().contains("setUserStatus") && widget.data?.contains("Native message: Consent updated: false.") == true,
+              (Widget widget) =>
+          widget is Text && widget.key.toString().contains("setUserStatus") && widget.data?.contains("Native message: Consent updated: false.") == true,
         ),
         findsOneWidget,
       );
@@ -343,8 +343,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text && widget.key.toString().contains("setUserStatus") && widget.data?.contains("Native message: Consent updated: false.") == true,
+              (Widget widget) =>
+          widget is Text && widget.key.toString().contains("setUserStatus") && widget.data?.contains("Native message: Consent updated: false.") == true,
         ),
         findsOneWidget,
       );
@@ -362,8 +362,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text && widget.key.toString().contains("setUserStatus") && widget.data?.contains("Native message: Consent updated: true.") == true,
+              (Widget widget) =>
+          widget is Text && widget.key.toString().contains("setUserStatus") && widget.data?.contains("Native message: Consent updated: true.") == true,
         ),
         findsOneWidget,
       );

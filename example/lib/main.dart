@@ -43,37 +43,29 @@ import 'widgets/show_hide_preferences.dart';
 import 'widgets/update_selected_language.dart';
 import 'widgets/webview_strings.dart';
 
-void main() {
-  _startApp();
-}
-
-void _startApp() {
-  runApp(
-    MyApp(
-      // Start app with unique key so app is restarted after tests
-      key: UniqueKey(),
-    ),
-  );
-}
+void main() => runApp(
+      MyApp(
+        // Start app with unique key so app is restarted after tests
+        key: UniqueKey(),
+      ),
+    );
 
 class MyApp extends StatelessWidget {
   MyApp({required Key key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Didomi Flutter Demo",
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: "Flutter Demo Home Page"),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+        title: "Didomi Flutter Demo",
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MyHomePage(key: UniqueKey(), title: "Flutter Demo Home Page"),
+      );
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({required Key key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -133,11 +125,10 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             key: Key("components_list"),
             controller: scrollController,
-            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             children: [
               Text("Running on: $_platformVersion\n", textAlign: TextAlign.center),
               // SDK setup
-              Text('Setup:'),
+              Text("Setup:"),
               IsReady(),
               OnReady(),
               OnError(),
@@ -145,12 +136,12 @@ class _MyHomePageState extends State<MyHomePage> {
               Initialize(),
               SetUser(),
               // UI related features
-              Text('UI:'),
+              Text("UI:"),
               SetupUI(),
               ShowHideNotice(),
               ShowHidePreferences(),
               // Consents
-              Text('Consents:'),
+              Text("Consents:"),
               CheckConsent(),
               Reset(),
               SetUserAgreeToAll(),
@@ -174,12 +165,12 @@ class _MyHomePageState extends State<MyHomePage> {
               GetUserLegitimateInterestStatusForVendorAndRequiredPurposes(),
               GetUserStatusForVendor(),
               // Languages,
-              Text('Languages:'),
+              Text("Languages:"),
               UpdateSelectedLanguage(),
               GetText(),
               GetTranslatedText(),
               // Webviews
-              Text('Webviews:'),
+              Text("Webviews:"),
               WebviewStrings(),
               // Events
               SdkEventsLogger(_sdkEvents),

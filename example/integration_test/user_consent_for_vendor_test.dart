@@ -47,8 +47,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getUserConsentStatusForVendor") &&
               widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
         ),
@@ -78,8 +78,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getUserConsentStatusForVendor") &&
               widget.data?.contains("Native message: No user status for vendor '738'.") == true,
         ),
@@ -110,8 +110,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getUserConsentStatusForVendor") &&
               widget.data?.contains("Native message: User status is 'Enabled' for vendor '738'.") == true,
         ),
@@ -162,8 +162,8 @@ void main() {
 
       expect(
         find.byWidgetPredicate(
-          (Widget widget) =>
-              widget is Text &&
+              (Widget widget) =>
+          widget is Text &&
               widget.key.toString().contains("getUserConsentStatusForVendor") &&
               widget.data?.contains("Native message: User status is 'Disabled' for vendor '738'.") == true,
         ),
