@@ -1,6 +1,14 @@
 import 'dart:async';
 
 import 'package:didomi_sdk/didomi_sdk.dart';
+import 'package:didomi_sdk_example/widgets/get_disabled_purposes.dart';
+import 'package:didomi_sdk_example/widgets/get_disabled_vendors.dart';
+import 'package:didomi_sdk_example/widgets/get_enabled_purposes.dart';
+import 'package:didomi_sdk_example/widgets/get_enabled_vendors.dart';
+import 'package:didomi_sdk_example/widgets/get_purpose.dart';
+import 'package:didomi_sdk_example/widgets/get_required_purposes.dart';
+import 'package:didomi_sdk_example/widgets/get_required_vendors.dart';
+import 'package:didomi_sdk_example/widgets/get_vendor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -160,6 +168,14 @@ class _MyHomePageState extends State<MyHomePage> {
               GetDisabledVendorIds(),
               GetEnabledVendorIds(),
               GetRequiredVendorIds(),
+              GetEnabledPurposes(),
+              GetDisabledPurposes(),
+              GetEnabledVendors(),
+              GetDisabledVendors(),
+              GetRequiredPurposes(),
+              GetRequiredVendors(),
+              GetPurpose(),
+              GetVendor(),
               GetUserConsentStatusForVendor(),
               GetUserConsentStatusForVendorAndRequiredPurposes(),
               GetUserLegitimateInterestStatusForVendor(),
