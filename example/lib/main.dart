@@ -43,16 +43,9 @@ import 'widgets/show_hide_preferences.dart';
 import 'widgets/update_selected_language.dart';
 import 'widgets/webview_strings.dart';
 
-void main() => runApp(
-      MyApp(
-        // Start app with unique key so app is restarted after tests
-        key: UniqueKey(),
-      ),
-    );
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  MyApp({required Key key}) : super(key: key);
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -60,12 +53,12 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MyHomePage(key: UniqueKey(), title: "Flutter Demo Home Page"),
+        home: MyHomePage(title: "Flutter Demo Home Page"),
       );
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({required Key key, required this.title}) : super(key: key);
+  MyHomePage({required this.title}) : super();
 
   final String title;
 

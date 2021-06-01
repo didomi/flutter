@@ -6,32 +6,19 @@ import 'package:didomi_sdk_example/widgets/set_user_disagree_to_all.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void main() =>
-    runApp(
-      SampleForUserConsentForVendorTestsApp(
-        // Start app with unique key so app is restarted after tests
-        key: UniqueKey(),
-      ),
-    );
+void main() => runApp(SampleForUserConsentForVendorTestsApp());
 
 class SampleForUserConsentForVendorTestsApp extends StatelessWidget {
-  SampleForUserConsentForVendorTestsApp({required Key key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) =>
-      MaterialApp(
+  Widget build(BuildContext context) => MaterialApp(
         title: "User Consent for Vendor Tests",
-        home: HomePage(key: key as Key),
+        home: HomePage(),
       );
 }
 
 class HomePage extends StatelessWidget {
-  HomePage({required Key key}) : super(key: key);
-
   @override
-  Widget build(BuildContext context) =>
-      Material(
+  Widget build(BuildContext context) => Material(
         child: ListView(
           key: Key("components_list"),
           children: [

@@ -4,37 +4,21 @@ import 'package:didomi_sdk_example/widgets/webview_strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void main() =>
-    runApp(
-      SampleForTextTestsApp(
-        // Start app with unique key so app is restarted after tests
-        key: UniqueKey(),
-      ),
-    );
+void main() => runApp(SampleForTextTestsApp());
 
 class SampleForTextTestsApp extends StatelessWidget {
-  SampleForTextTestsApp({required Key key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) =>
-      MaterialApp(
+  Widget build(BuildContext context) => MaterialApp(
         title: "Text Tests",
-        home: HomePage(key: key as Key),
+        home: HomePage(),
       );
 }
 
 class HomePage extends StatelessWidget {
-  HomePage({required Key key}) : super(key: key);
-
-  final ScrollController scrollController = ScrollController();
-
   @override
-  Widget build(BuildContext context) =>
-      Material(
+  Widget build(BuildContext context) => Material(
         child: ListView(
           key: Key("components_list"),
-          controller: scrollController,
           children: [
             InitializeSmall(),
             // Get text
