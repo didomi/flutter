@@ -242,7 +242,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             Didomi.getInstance().updateSelectedLanguage(call.argument("languageCode"))
             result.success(null)
         } catch (e: DidomiNotReadyException) {
-            result.error("getDisabledPurposeIds", e.message.orEmpty(), e)
+            result.error("updateSelectedLanguage", e.message.orEmpty(), e)
         }
     }
 
@@ -251,7 +251,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val textMap = Didomi.getInstance().getText(call.argument("key"))
             result.success(textMap)
         } catch (e: DidomiNotReadyException) {
-            result.error("getDisabledPurposeIds", e.message.orEmpty(), e)
+            result.error("getText", e.message.orEmpty(), e)
         }
     }
 
@@ -260,7 +260,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val text = Didomi.getInstance().getTranslatedText(call.argument("key"))
             result.success(text)
         } catch (e: DidomiNotReadyException) {
-            result.error("getDisabledPurposeIds", e.message.orEmpty(), e)
+            result.error("getTranslatedText", e.message.orEmpty(), e)
         }
     }
 
