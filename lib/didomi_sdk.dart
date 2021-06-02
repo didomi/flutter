@@ -17,12 +17,6 @@ class DidomiSdk {
   static const MethodChannel _channel = const MethodChannel(methodsChannelName);
   static EventsHandler _eventsHandler = EventsHandler();
 
-  // TODO To remove
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod("getPlatformVersion");
-    return version;
-  }
-
   /// Initialize the SDK
   static Future<void> initialize(String apiKey,
       {String? localConfigurationPath,
