@@ -69,33 +69,33 @@ jobs:
       - name: Run UI tests
         run: sh ./scripts/uitests_for_android.sh
 
-#  test_ios:
-#    name: Testing iOS
-#    needs: analyse
-#    runs-on: macos-11
-#
-#    steps:
-#      - uses: actions/checkout@v2
-#      - uses: actions/setup-java@v1
-#        with:
-#          java-version: "12.x"
-#      - uses: subosito/flutter-action@v1
-#        with:
-#          channel: "stable"
-#
-#      - name: Install dependencies
-#        run: flutter pub get
-#
-#      # Connect to GCloud
-#      - name: Login to Google Cloud
-#        uses: google-github-actions/setup-gcloud@master
-#        with:
-#          version: "342.0.0"
-#          service_account_key: ${{ secrets.GCLOUD_AUTH }}
-#
-#      - name: Set current project
-#        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
-#
-#      # Build and upload each scenarios to firebase
-#      - name: Run UI tests
-#        run: sh ./scripts/uitests_for_ios.sh
+  test_ios:
+    name: Testing iOS
+    needs: analyse
+    runs-on: macos-11
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Connect to GCloud
+      - name: Login to Google Cloud
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          version: "342.0.0"
+          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+
+      - name: Set current project
+        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
+
+      # Build and upload each scenarios to firebase
+      - name: Run UI tests
+        run: sh ./scripts/uitests_for_ios.sh
