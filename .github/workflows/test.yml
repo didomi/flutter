@@ -48,9 +48,9 @@ jobs:
       # Connect to GCloud
       - name: Login to Google Cloud
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-          with:
-            version: `342.0.0`
-            service_account_key: ${{ secrets.GCLOUD_AUTH }}
+        with:
+          version: `342.0.0`
+          service_account_key: ${{ secrets.GCLOUD_AUTH }}
 
       - name: Set current project
         run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
