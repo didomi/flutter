@@ -1,4 +1,4 @@
-name: Test
+name: Build
 
 on:
   push:
@@ -25,16 +25,12 @@ jobs:
       - name: Analyze project source
         run: flutter analyze
 
-      # Connect to GCloud
-      - name: Login to Google Cloud
-        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-        with:
-          version: "342.0.0"
-          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+      # Android APK
+      - name: Build Android Sample
+        working-directory: ./example
+        run: flutter build apk -t lib/main.dart
 
-      - name: Set current project
-        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
-
-      # Build and upload each scenario to firebase
-      - name: Run UI tests
-        run: sh ./scripts/uitests.sh
+      # iOS Runner
+      - name: Build iOS Sample
+        working-directory: ./example
+        run: flutter build ios lib/main.dart --release
