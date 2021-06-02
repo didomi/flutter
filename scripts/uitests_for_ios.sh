@@ -22,39 +22,14 @@ for file in $(find integration_test -maxdepth 1 -type f); do
   echo "--------------------------------------------------------"
 
   echo "--------------------------------------------------------"
-  echo "| Building $fileName Test App for Android"
-  echo "--------------------------------------------------------"
-
-  # Build apk file for Android
-  pushd android
-  # flutter build generates files in android/ for building the app
-  flutter build apk
-  ./gradlew app:assembleAndroidTest
-  ./gradlew app:assembleDebug -Ptarget="$file"
-  popd
-
-  echo "--------------------------------------------------------"
-  echo "| Publishing $fileName to Firebase  for Android"
-  echo "--------------------------------------------------------"
-
-  # Upload apk to firebase
-  gcloud firebase test android run --type instrumentation \
-    --app build/app/outputs/apk/debug/app-debug.apk \
-    --test build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
-    --use-orchestrator \
-    --timeout 30m \
-    --num-flaky-test-attempts 3 \
-    --results-history-name "${branchName}_and_${fileName%%_test.dart}"
-
-  echo "--------------------------------------------------------"
   echo "| Building $fileName Test App for iOS"
   echo "--------------------------------------------------------"
 
   # Build zip file for iOS
-  flutter build ios "$file" --release
+  flutter build ios "$file" --release || exit 1
 
   pushd ios
-  xcodebuild -workspace Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath $output -sdk iphoneos build-for-testing
+  xcodebuild -workspace Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath $output -sdk iphoneos build-for-testing || exit 1
   popd
 
   pushd $product
@@ -70,8 +45,5 @@ for file in $(find integration_test -maxdepth 1 -type f); do
     --device model=iphone8,version=14.1,locale=fr_FR,orientation=portrait \
     --timeout 30m \
     --num-flaky-test-attempts 3 \
-    --results-history-name "${branchName}_ios_${fileName%%_test.dart}"
-
-  # TODO - Remove this
-  exit 0
+    --results-history-name "${branchName}_ios_${fileName%%_test.dart}" || exit 1
 done

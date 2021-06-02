@@ -9,6 +9,7 @@ concurrency:
 
 jobs:
   analyse:
+    name: Analyse Flutter
     runs-on: ubuntu-latest
 
     steps:
@@ -32,6 +33,7 @@ jobs:
         run: flutter analyze
 
   build_android:
+    name: Build for Android
     needs: analyse
     runs-on: ubuntu-latest
 
@@ -61,6 +63,7 @@ jobs:
           retention-days: 5
 
   build_ios:
+    name: Build for iOS
     needs: analyse
     runs-on: macos-latest
 
