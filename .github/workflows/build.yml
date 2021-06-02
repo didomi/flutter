@@ -3,13 +3,13 @@ name: Build
 # Triggered when code is pushed to any branch in a repository
 on: push
 
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: macos-latest
-
-    concurrency:
-      group: ${{ github.head_ref }}
-      cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v2
