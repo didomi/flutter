@@ -35,10 +35,10 @@ jobs:
       # Archive Android APK
       - name: Archive Android artifacts
         uses: actions/upload-artifact@v2
-        working-directory: ./example
         with:
           name: android-app
-          path: build/app/outputs/flutter-apk/*.apk
+          path: example/build/app/outputs/flutter-apk/*.apk
+          retention-days: 5
 
       # iOS IPA
       - name: Build iOS Sample
@@ -55,7 +55,7 @@ jobs:
       # Archive iOS IPA
       - name: Archive iOS artifacts
         uses: actions/upload-artifact@v2
-        working-directory: ./example
         with:
           name: ios-app
-          path: build/ios/iphoneos/*.ipa
+          path: example/build/ios/iphoneos/*.ipa
+          retention-days: 5
