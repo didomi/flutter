@@ -1,9 +1,9 @@
 name: Test
 
 on:
-  push:
-    branches:
-      - "939-*"
+#  push:
+#    branches:
+#      - "939-*"
   pull_request:
     branches: [ main ]
   # Allows you to run this workflow manually from the Actions tab

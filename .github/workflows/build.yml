@@ -8,8 +8,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on: macos-latest
+  analyse:
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -31,6 +31,22 @@ jobs:
       - name: Analyze project source
         run: flutter analyze
 
+  build_android:
+    needs: analyse
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
       # Android APK
       - name: Build Android Sample
         working-directory: ./example
@@ -43,6 +59,22 @@ jobs:
           name: android-app
           path: example/build/app/outputs/flutter-apk/*.apk
           retention-days: 5
+
+  build_ios:
+    needs: analyse
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
 
       # iOS IPA
       - name: Build iOS Sample
