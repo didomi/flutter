@@ -5,7 +5,8 @@ on: push
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    #    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -32,7 +33,15 @@ jobs:
         working-directory: ./example
         run: flutter build apk -t lib/main.dart
 
-      # iOS Runner
-#      - name: Build iOS Sample
-#        working-directory: ./example
-#        run: flutter build ios lib/main.dart --release
+      # iOS IPA
+      #  run: flutter build ios lib/main.dart --release
+      - name: Build iOS Sample
+        working-directory: ./example
+        run: |
+          flutter build ios --no-codesign
+          cd build/ios/iphoneos
+          mkdir Payload
+          cd Payload
+          ln -s ../Runner.app
+          cd ..
+          zip -r app.ipa Payload
