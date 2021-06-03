@@ -1,7 +1,7 @@
 Didomi Flutter Plugin
 ==============================
 
-[Didomi](https://www.didomi.io) is a leading Consent Management Platform that allows companies to collect, store, and leverage user consent under GDPR, CCPA, and other data privacy regulations. This plugin enables Flutterxs developers to get in compliance and optimize their consent rate and monetization on native mobile apps.
+[Didomi](https://www.didomi.io) is a leading Consent Management Platform that allows companies to collect, store, and leverage user consent under GDPR, CCPA, and other data privacy regulations. This plugin enables Flutter developers to get in compliance and optimize their consent rate and monetization on native mobile apps.
 
 This repository contains the source code and a sample app for the [Didomi](https://www.didomi.io) Flutter
 plugin. This plugin enables Flutter developers to easily use [Didomi](https://www.didomi.io)'s Consent Management Platform on Android and iOS apps.  
