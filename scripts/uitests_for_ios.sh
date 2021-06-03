@@ -28,9 +28,17 @@ for file in $(find integration_test -maxdepth 1 -type f); do
   # Build zip file for iOS
   flutter build ios "$file" --release --no-codesign --allowProvisioningUpdates || exit 1
 
+  echo "--------------------------------------------------------"
+  echo "| Xcodebuild $fileName Test App for iOS"
+  echo "--------------------------------------------------------"
+
   pushd ios
   xcodebuild -workspace Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath $output -sdk iphoneos build-for-testing || exit 1
   popd
+
+  echo "--------------------------------------------------------"
+  echo "| Building $fileName zip file for iOS"
+  echo "--------------------------------------------------------"
 
   pushd $product
   zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos$dev_target-arm64-armv7.xctestrun"
