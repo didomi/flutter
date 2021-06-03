@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Project settings
 branchName=$(git rev-parse --abbrev-ref HEAD)
@@ -24,8 +24,8 @@ for file in $(find integration_test -maxdepth 1 -type f); do
   pushd android
   # flutter build generates files in android/ for building the app
   flutter build apk
-  gradlew app:assembleAndroidTest || exit 1
-  gradlew app:assembleDebug -Ptarget="$file" || exit 1
+  ./gradlew app:assembleAndroidTest || exit 1
+  ./gradlew app:assembleDebug -Ptarget="$file" || exit 1
   popd
 
 #  echo "--------------------------------------------------------"

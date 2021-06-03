@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Project settings
 branchName=$(git rev-parse --abbrev-ref HEAD)
