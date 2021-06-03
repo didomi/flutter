@@ -1,7 +1,7 @@
 name: Build
 
-# Triggered when code is pushed to any branch in a repository
-on: push
+# Triggered when code is pushed to any branch in a repository or manually
+on: [push, workflow_dispatch]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

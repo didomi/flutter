@@ -1,11 +1,13 @@
 name: Test
 
+# Triggered on pull request or manually
 on:
   push:
     branches:
       - "939-*"
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
