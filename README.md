@@ -31,5 +31,5 @@ please use [Github's issue tracker](https:////github.com/didomi/flutter/issues).
 
 # License
 
-This plugin is [released under the LGPL 3.0 license](LICENSE).
+This plugin is [released under the LGPL 3.0 license](LICENSE.md).
 
