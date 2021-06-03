@@ -13,10 +13,10 @@ class GetEnabledPurposeIds extends StatefulWidget {
 class _GetEnabledPurposeIdsState
     extends BaseSampleWidgetState<GetEnabledPurposeIds> {
   @override
-  String getButtonName() => 'GetEnabledPurposeIds';
+  String getButtonName() => "GetEnabledPurposeIds";
 
   @override
-  String getActionId() => 'getEnabledPurposeIds';
+  String getActionId() => "getEnabledPurposeIds";
 
   @override
   Future<String> callDidomiPlugin() async {

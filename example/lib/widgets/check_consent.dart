@@ -15,12 +15,12 @@ class _CheckConsentState extends BaseSampleWidgetState<CheckConsent> {
 
   @override
   String getButtonName() {
-    return 'Check consent state';
+    return "Check consent state";
   }
 
   @override
   String getActionId() {
-    return 'checkConsentState';
+    return "checkConsentState";
   }
 
   @override

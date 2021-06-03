@@ -14,10 +14,10 @@ class GetVendor extends StatefulWidget {
 class _GetVendorState
     extends BaseSampleWidgetState<GetVendor> {
   @override
-  String getButtonName() => 'GetVendor';
+  String getButtonName() => "GetVendor";
 
   @override
-  String getActionId() => 'getVendor';
+  String getActionId() => "getVendor";
 
   @override
   Future<String> callDidomiPlugin() async {

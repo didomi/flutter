@@ -17,12 +17,12 @@ class _GetTextState extends BaseSampleWidgetState<GetText> {
 
   @override
   String getButtonName() {
-    return 'Get text';
+    return "Get text";
   }
 
   @override
   String getActionId() {
-    return 'getText';
+    return "getText";
   }
 
   @override

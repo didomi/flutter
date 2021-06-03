@@ -17,12 +17,12 @@ class _GetTranslatedTextState extends BaseSampleWidgetState<GetTranslatedText> {
 
   @override
   String getButtonName() {
-    return 'Get translated text';
+    return "Get translated text";
   }
 
   @override
   String getActionId() {
-    return 'getTranslatedText';
+    return "getTranslatedText";
   }
 
   @override

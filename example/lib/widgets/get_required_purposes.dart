@@ -14,10 +14,10 @@ class GetRequiredPurposes extends StatefulWidget {
 class _GetRequiredPurposesState
     extends BaseSampleWidgetState<GetRequiredPurposes> {
   @override
-  String getButtonName() => 'GetRequiredPurposes';
+  String getButtonName() => "GetRequiredPurposes";
 
   @override
-  String getActionId() => 'getRequiredPurposes';
+  String getActionId() => "getRequiredPurposes";
 
   @override
   Future<String> callDidomiPlugin() async {
