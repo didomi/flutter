@@ -26,7 +26,7 @@ for file in $(find integration_test -maxdepth 1 -type f); do
   echo "--------------------------------------------------------"
 
   # Build zip file for iOS
-  flutter build ios "$file" --no-codesign || exit 1
+  flutter build ios "$file" --debug --no-codesign || exit 1
 
   pushd ios
   xcodebuild -workspace Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath $output -sdk iphoneos build-for-testing || exit 1
