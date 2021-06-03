@@ -87,6 +87,13 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # Add provisioning for iOS build
+      - name: Add provisionning for iOS build
+        uses: apple-actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
+          p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
+
       # Connect to GCloud
       - name: Login to Google Cloud
         uses: google-github-actions/setup-gcloud@master
