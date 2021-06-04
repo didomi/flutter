@@ -8,26 +8,29 @@ import java.util.*
 class EntitiesHelper {
     companion object {
         private val gson = Gson()
+        
         // Convert a set of purposes into a list of maps.
-        fun toListOfPurposes(purposes: Set<Purpose>): List<*> {
+        @kotlin.jvm.JvmName("toListOfPurposes")
+        fun toList(purposes: Set<Purpose>): List<*> {
             val json = gson.toJsonTree(purposes)
             return gson.fromJson(json, List::class.java)
         }
 
         // Convert a set of vendors into a list of maps.
-        fun toListOfVendors(vendors: Set<Vendor>): List<*> {
+        @kotlin.jvm.JvmName("toListOfVendors")
+        fun toList(vendors: Set<Vendor>): List<*> {
             val json = gson.toJsonTree(vendors)
             return gson.fromJson(json, List::class.java)
         }
 
         // Convert a purpose into a map.
-        fun toPurposeMap(purpose: Purpose): HashMap<*, *> {
+        fun toMap(purpose: Purpose): HashMap<*, *> {
             val json = gson.toJsonTree(purpose)
             return gson.fromJson(json, HashMap::class.java)
         }
 
         // Convert a vendor into a map.
-        fun toVendorMap(vendor: Vendor): HashMap<*, *> {
+        fun toMap(vendor: Vendor): HashMap<*, *> {
             val json = gson.toJsonTree(vendor)
             return gson.fromJson(json, HashMap::class.java)
         }

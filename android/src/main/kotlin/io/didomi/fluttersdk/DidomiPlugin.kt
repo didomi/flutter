@@ -340,8 +340,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun getDisabledPurposes(@NonNull result: Result) {
         try {
             val purposes = Didomi.getInstance().disabledPurposes
-            val listOfMaps = EntitiesHelper.toListOfPurposes(purposes)
-            result.success(listOfMaps)
+            val list = EntitiesHelper.toList(purposes)
+            result.success(list)
         } catch (e: DidomiNotReadyException) {
             result.error("getDisabledPurposes", e.message.orEmpty(), e)
         }
@@ -353,8 +353,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun getDisabledVendors(@NonNull result: Result) {
         try {
             val vendors = Didomi.getInstance().disabledVendors
-            val listOfMaps = EntitiesHelper.toListOfVendors(vendors)
-            result.success(listOfMaps)
+            val list = EntitiesHelper.toList(vendors)
+            result.success(list)
         } catch (e: DidomiNotReadyException) {
             result.error("getDisabledVendors", e.message.orEmpty(), e)
         }
@@ -366,8 +366,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun getEnabledPurposes(@NonNull result: Result) {
         try {
             val purposes = Didomi.getInstance().enabledPurposes
-            val listOfMaps = EntitiesHelper.toListOfPurposes(purposes)
-            result.success(listOfMaps)
+            val list = EntitiesHelper.toList(purposes)
+            result.success(list)
         } catch (e: DidomiNotReadyException) {
             result.error("getEnabledPurposes", e.message.orEmpty(), e)
         }
@@ -379,8 +379,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun getEnabledVendors(@NonNull result: Result) {
         try {
             val vendors = Didomi.getInstance().enabledVendors
-            val listOfMaps = EntitiesHelper.toListOfVendors(vendors)
-            result.success(listOfMaps)
+            val list = EntitiesHelper.toList(vendors)
+            result.success(list)
         } catch (e: DidomiNotReadyException) {
             result.error("getEnabledVendors", e.message.orEmpty(), e)
         }
@@ -392,8 +392,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun getRequiredPurposes(@NonNull result: Result) {
         try {
             val purposes = Didomi.getInstance().requiredPurposes
-            val listOfMaps = EntitiesHelper.toListOfPurposes(purposes)
-            result.success(listOfMaps)
+            val list = EntitiesHelper.toList(purposes)
+            result.success(list)
         } catch (e: DidomiNotReadyException) {
             result.error("getRequiredPurposes", e.message.orEmpty(), e)
         }
@@ -405,8 +405,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun getRequiredVendors(@NonNull result: Result) {
         try {
             val vendors = Didomi.getInstance().requiredVendors
-            val listOfMaps = EntitiesHelper.toListOfVendors(vendors)
-            result.success(listOfMaps)
+            val list = EntitiesHelper.toList(vendors)
+            result.success(list)
         } catch (e: DidomiNotReadyException) {
             result.error("getRequiredVendors", e.message.orEmpty(), e)
         }
@@ -417,7 +417,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      */
     private fun getPurpose(call: MethodCall, result: Result) {
         val purpose = Didomi.getInstance().getPurpose(call.argument("purposeId"))
-        val map = EntitiesHelper.toPurposeMap(purpose)
+        val map = EntitiesHelper.toMap(purpose)
         result.success(map)
     }
 
@@ -426,7 +426,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      */
     private fun getVendor(call: MethodCall, result: Result) {
         val vendor = Didomi.getInstance().getVendor(call.argument("vendorId"))
-        val map = EntitiesHelper.toVendorMap(vendor)
+        val map = EntitiesHelper.toMap(vendor)
         result.success(map)
     }
 
