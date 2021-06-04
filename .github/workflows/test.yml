@@ -98,7 +98,7 @@ jobs:
       - name: Import provisioning profile
         env:
           PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
-        run: sh .github/scripts/import-profile.sh
+        run: sh .github/scripts/import_profile.sh
 
       # Connect to GCloud
       - name: Login to Google Cloud
