@@ -39,5 +39,5 @@ for file in $(find integration_test -maxdepth 1 -type f); do
 #    --use-orchestrator \
 #    --timeout 30m \
 #    --num-flaky-test-attempts 3 \
-#    --results-history-name "${branchName}_and_${fileName%%_test.dart}" || exit 1
+#    --results-history-name "${branchName}_${fileName%%_test.dart}" || exit 1
 done
