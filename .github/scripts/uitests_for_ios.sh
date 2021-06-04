@@ -26,7 +26,7 @@ for file in $(find integration_test -maxdepth 1 -type f); do
   echo "--------------------------------------------------------"
 
   # Build zip file for iOS
-  flutter build ios "$file" -release --no-codesign --allowProvisioningUpdates || exit 1
+  flutter build ios "$file" -release || exit 1
 
   echo "--------------------------------------------------------"
   echo "| Xcodebuild $fileName Test App for iOS"
@@ -47,10 +47,10 @@ for file in $(find integration_test -maxdepth 1 -type f); do
 #  echo "--------------------------------------------------------"
 #  echo "| Publishing $fileName to Firebase for iOS"
 #  echo "--------------------------------------------------------"
-#
-#  # Upload zip to firebase
+
+  # Upload zip to firebase
 #  gcloud firebase test ios run --test "$product/ios_tests.zip" \
-#    --device model=iphone8,version=14.1,locale=fr_FR,orientation=portrait \
+#    --device model=iphone8,version=13.6,locale=fr_FR,orientation=portrait \
 #    --timeout 30m \
 #    --num-flaky-test-attempts 3 \
 #    --results-history-name "${branchName}_ios_${fileName%%_test.dart}" || exit 1

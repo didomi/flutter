@@ -68,7 +68,7 @@ jobs:
 
       # Build and upload each scenarios to firebase
       - name: Run UI tests
-        run: sh ./scripts/uitests_for_android.sh
+        run: sh .github/scripts/uitests_for_android.sh
 
   test_ios:
     name: Testing iOS
@@ -87,12 +87,18 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Add provisioning for iOS build
+      # Add Code sign certificate for iOS build
       - name: Add provisionning for iOS build
         uses: apple-actions/import-codesign-certs@v1
         with:
           p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
           p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
+
+      # Add Provisioning profile for iOS build
+      - name: Import provisioning profile
+        env:
+          PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
+        run: sh .github/scripts/import-profile.sh
 
       # Connect to GCloud
       - name: Login to Google Cloud
@@ -106,4 +112,4 @@ jobs:
 
       # Build and upload each scenarios to firebase
       - name: Run UI tests
-        run: sh ./scripts/uitests_for_ios.sh
+        run: sh .github/scripts/uitests_for_ios.sh
