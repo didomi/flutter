@@ -25,17 +25,13 @@ for file in $(find integration_test -maxdepth 1 -type f); do
   # flutter build generates files in android/ for building the app
   flutter build apk
 
-  pwd
-  ls al
-
   if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    chmod -x gradlew
+    ./android/gradlew app:assembleAndroidTest || exit 1
+    ./android/gradlew app:assembleDebug -Ptarget="$file" || exit 1
+  else
+    ./gradlew app:assembleAndroidTest || exit 1
+    ./gradlew app:assembleDebug -Ptarget="$file" || exit 1
   fi
-  
-  ls al
-
-  ./gradlew app:assembleAndroidTest || exit 1
-  ./gradlew app:assembleDebug -Ptarget="$file" || exit 1
   popd
 
 #  echo "--------------------------------------------------------"
