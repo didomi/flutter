@@ -35,4 +35,5 @@ class EntitiesHelper {
             return gson.fromJson(json, HashMap::class.java)
         }
     }
+    
 }

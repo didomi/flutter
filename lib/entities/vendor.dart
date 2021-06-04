@@ -49,6 +49,8 @@ class Vendor implements Comparable<Vendor> {
       this.deviceStorageDisclosureUrl
       );
 
+  // When parsing a Vendor, we need to consider that some properties are parsed differently on Android and iOS,
+  // mainly because TCFv1 used properties such as purposeIds and TCFv2 uses properties such as purposes.
   Vendor.fromJson(dynamic json)
       : id = json["id"],
         iabId = json["iabId"],
