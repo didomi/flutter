@@ -25,7 +25,7 @@ class Vendor implements Comparable<Vendor> {
   // Set with IDs that represent Special Features. TCFv2 property.
   List<String> specialFeatureIds;
   // Cookie Max Age in Seconds.
-  int? cookieMaxAgeSeconds;
+  double? cookieMaxAgeSeconds;
   // If vendor uses other means of storage/access than cookies
   bool usesNonCookieAccess;
   // URL used to download Device Storage Disclosures (done post initialization).
@@ -56,13 +56,13 @@ class Vendor implements Comparable<Vendor> {
         privacyPolicyUrl = json["privacyPolicyUrl"],
         namespace = json["namespace"],
         namespaces = json["namespaces"]?.cast<String, String>(),
-        purposeIds = json["purposeIds"].cast<String>(),
-        legIntPurposeIds = json["legIntPurposeIds"].cast<String>(),
-        featureIds = json["featureIds"].cast<String>(),
-        flexiblePurposeIds = json["flexiblePurposeIds"].cast<String>(),
-        specialPurposeIds = json["specialPurposeIds"].cast<String>(),
-        specialFeatureIds = json["specialFeatureIds"].cast<String>(),
-        cookieMaxAgeSeconds = json["cookieMaxAgeSeconds"],
+        purposeIds = (json["purposeIds"] ?? json["purposes"]).cast<String>(),
+        legIntPurposeIds = (json["legIntPurposeIds"] ?? json["legIntPurposes"]).cast<String>(),
+        featureIds = (json["featureIds"] ?? json["features"]).cast<String>(),
+        flexiblePurposeIds = (json["flexiblePurposeIds"] ?? json["flexiblePurposes"]).cast<String>(),
+        specialPurposeIds = (json["specialPurposeIds"] ?? json["specialPurposes"]).cast<String>(),
+        specialFeatureIds = (json["specialFeatureIds"] ?? json["specialFeatures"]).cast<String>(),
+        cookieMaxAgeSeconds = json["cookieMaxAgeSeconds"]?.toDouble(),
         usesNonCookieAccess = json["usesNonCookieAccess"],
         deviceStorageDisclosureUrl = json["deviceStorageDisclosureUrl"];
 

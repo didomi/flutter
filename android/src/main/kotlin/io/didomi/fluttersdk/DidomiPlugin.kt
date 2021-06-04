@@ -147,6 +147,22 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "getRequiredVendorIds" -> getRequiredVendorIds(result)
 
+                "getDisabledPurposes" -> getDisabledPurposes(result)
+
+                "getDisabledVendors" -> getDisabledVendors(result)
+
+                "getEnabledPurposes" -> getEnabledPurposes(result)
+
+                "getEnabledVendors" -> getEnabledVendors(result)
+
+                "getRequiredPurposes" -> getRequiredPurposes(result)
+
+                "getRequiredVendors" -> getRequiredVendors(result)
+
+                "getPurpose" -> getPurpose(call, result)
+
+                "getVendor" -> getVendor(call, result)
+
                 "setLogLevel" -> setLogLevel(call, result)
 
                 "setUserAgreeToAll" -> setUserAgreeToAll(result)
@@ -316,6 +332,102 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         } catch (e: DidomiNotReadyException) {
             result.error("getRequiredVendorIds", e.message.orEmpty(), e)
         }
+    }
+
+    /**
+     * Get disabled purposes
+     */
+    private fun getDisabledPurposes(@NonNull result: Result) {
+        try {
+            val purposes = Didomi.getInstance().disabledPurposes
+            val listOfMaps = EntitiesHelper.toListOfPurposes(purposes)
+            result.success(listOfMaps)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getDisabledPurposes", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get disabled vendors
+     */
+    private fun getDisabledVendors(@NonNull result: Result) {
+        try {
+            val vendors = Didomi.getInstance().disabledVendors
+            val listOfMaps = EntitiesHelper.toListOfVendors(vendors)
+            result.success(listOfMaps)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getDisabledVendors", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get enabled purposes
+     */
+    private fun getEnabledPurposes(@NonNull result: Result) {
+        try {
+            val purposes = Didomi.getInstance().enabledPurposes
+            val listOfMaps = EntitiesHelper.toListOfPurposes(purposes)
+            result.success(listOfMaps)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getEnabledPurposes", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get enabled vendors
+     */
+    private fun getEnabledVendors(@NonNull result: Result) {
+        try {
+            val vendors = Didomi.getInstance().enabledVendors
+            val listOfMaps = EntitiesHelper.toListOfVendors(vendors)
+            result.success(listOfMaps)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getEnabledVendors", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get required purposes
+     */
+    private fun getRequiredPurposes(@NonNull result: Result) {
+        try {
+            val purposes = Didomi.getInstance().requiredPurposes
+            val listOfMaps = EntitiesHelper.toListOfPurposes(purposes)
+            result.success(listOfMaps)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getRequiredPurposes", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get required vendors
+     */
+    private fun getRequiredVendors(@NonNull result: Result) {
+        try {
+            val vendors = Didomi.getInstance().requiredVendors
+            val listOfMaps = EntitiesHelper.toListOfVendors(vendors)
+            result.success(listOfMaps)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getRequiredVendors", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get a purpose by ID.
+     */
+    private fun getPurpose(call: MethodCall, result: Result) {
+        val purpose = Didomi.getInstance().getPurpose(call.argument("purposeId"))
+        val map = EntitiesHelper.toPurposeMap(purpose)
+        result.success(map)
+    }
+
+    /**
+     * Get a vendor by ID.
+     */
+    private fun getVendor(call: MethodCall, result: Result) {
+        val vendor = Didomi.getInstance().getVendor(call.argument("vendorId"))
+        val map = EntitiesHelper.toVendorMap(vendor)
+        result.success(map)
     }
 
     /**
