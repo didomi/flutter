@@ -21,13 +21,13 @@ class _GetRequiredPurposesState
 
   @override
   Future<String> callDidomiPlugin() async {
-    final List<Purpose> result = await DidomiSdk.requiredPurposes;
-    result.sort(); // Required for UI tests
+    final List<Purpose>? result = await DidomiSdk.requiredPurposes;
+    result?.sort(); // Required for UI tests
 
-    final String printable = result.map((purpose) => purpose.name).join(", ");
+    final String? printable = result?.map((purpose) => purpose.name).join(", ");
     print(printable);
 
-    if (result.isEmpty) {
+    if (result == null || result.isEmpty) {
       return "Required Purpose list is empty.";
     } else {
       return "Required Purposes: $printable.";

@@ -21,13 +21,13 @@ class _GetEnabledPurposesState
 
   @override
   Future<String> callDidomiPlugin() async {
-    final List<Purpose> result = await DidomiSdk.enabledPurposes;
-    result.sort(); // Required for UI tests
+    final List<Purpose>? result = await DidomiSdk.enabledPurposes;
+    result?.sort(); // Required for UI tests
 
-    final String printable = result.map((purpose) => purpose.name).join(", ");
+    final String? printable = result?.map((purpose) => purpose.name).join(", ");
     print(printable);
 
-    if (result.isEmpty) {
+    if (result == null || result.isEmpty) {
       return "Enabled Purpose list is empty.";
     } else {
       return "Enabled Purposes: $printable.";
