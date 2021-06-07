@@ -39,36 +39,36 @@ jobs:
       - name: Analyze project source
         run: flutter analyze
 
-  test_android:
-    name: Testing Android
-    needs: analyse
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: "12.x"
-      - uses: subosito/flutter-action@v1
-        with:
-          channel: "stable"
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      # Connect to GCloud
-      - name: Login to Google Cloud
-        uses: google-github-actions/setup-gcloud@master
-        with:
-          version: "342.0.0"
-          service_account_key: ${{ secrets.GCLOUD_AUTH }}
-
-      - name: Set current project
-        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
-
-      # Build and upload each scenarios to firebase
-      - name: Run UI tests
-        run: bash .github/scripts/uitests_for_android.sh
+#  test_android:
+#    name: Testing Android
+#    needs: analyse
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: "12.x"
+#      - uses: subosito/flutter-action@v1
+#        with:
+#          channel: "stable"
+#
+#      - name: Install dependencies
+#        run: flutter pub get
+#
+#      # Connect to GCloud
+#      - name: Login to Google Cloud
+#        uses: google-github-actions/setup-gcloud@master
+#        with:
+#          version: "342.0.0"
+#          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+#
+#      - name: Set current project
+#        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
+#
+#      # Build and upload each scenarios to firebase
+#      - name: Run UI tests
+#        run: bash .github/scripts/uitests_for_android.sh
 
   test_ios:
     name: Testing iOS
@@ -86,19 +86,6 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
-
-      # Add Code sign certificate for iOS build
-#      - name: Add sign certificate for iOS build
-#        uses: apple-actions/import-codesign-certs@v1
-#        with:
-#          p12-file-base64: ${{ secrets.CERTIFICATES_P12 }}
-#          p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
-
-      # Add Provisioning profile for iOS build
-#      - name: Import provisioning profile for iOS build
-#        env:
-#          PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
-#        run: sh .github/scripts/import_profile.sh
 
       # Connect to GCloud
       - name: Login to Google Cloud
