@@ -28,17 +28,19 @@ for file in $(find integration_test -maxdepth 1 -type f); do
   ./gradlew app:assembleDebug -Ptarget="$file" || exit 1
   popd
 
-#  echo "--------------------------------------------------------"
-#  echo "| Publishing $fileName to Firebase  for Android"
-#  echo "--------------------------------------------------------"
+  echo "--------------------------------------------------------"
+  echo "| Publishing $fileName to Firebase  for Android"
+  echo "--------------------------------------------------------"
 
   # Upload apk to firebase
-#  gcloud firebase test android run --type instrumentation \
-#    --app build/app/outputs/apk/debug/app-debug.apk \
-#    --test build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
-#    --use-orchestrator \
-#    --timeout 30m \
-#    --num-flaky-test-attempts 3 \
-#    --results-history-name "${branchName}_${fileName%%_test.dart}" || exit 1
+  gcloud firebase test android run --type instrumentation \
+    --app build/app/outputs/apk/debug/app-debug.apk \
+    --test build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
+    --use-orchestrator \
+    --timeout 30m \
+    --num-flaky-test-attempts 3 \
+    --results-history-name "${branchName}_${fileName%%_test.dart}" || exit 1
+
+  # remove this
   exit 0
 done
