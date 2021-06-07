@@ -30,9 +30,6 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private var currentActivity: Activity? = null
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        // TODO Remove this / Expose log methods
-        Log.level = android.util.Log.VERBOSE
-
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "didomi_sdk")
         eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "didomi_sdk/events")
         eventChannel.setStreamHandler(eventStreamHandler)
@@ -68,8 +65,6 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val didomi = Didomi.getInstance()
         try {
             when (call.method) {
-
-                "getPlatformVersion" -> result.success("Android ${android.os.Build.VERSION.RELEASE}")
 
                 "initialize" -> initialize(call, result)
 

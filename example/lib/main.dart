@@ -1,13 +1,12 @@
-import 'dart:async';
-
 import 'package:didomi_sdk/didomi_sdk.dart';
+import 'package:didomi_sdk/log_level.dart';
 import 'package:didomi_sdk_example/events_helper.dart';
 import 'package:didomi_sdk_example/widgets/get_text.dart';
 import 'package:didomi_sdk_example/widgets/get_translated_text.dart';
 import 'package:didomi_sdk_example/widgets/set_user.dart';
 import 'package:didomi_sdk_example/widgets/update_selected_language.dart';
+import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'events_helper.dart';
 import 'widgets/check_consent.dart';
@@ -67,17 +66,28 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _platformVersion = "Unknown";
-
   String _sdkEvents = "";
   EventsHelper eventsHelper = EventsHelper();
+  EventListener noticeListener = EventListener();
+
+  // Keep track if notice is visible or not
+  bool didomiNoticeVisible = false;
 
   ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+
+    DidomiSdk.setLogLevel(LogLevel.verbose);
+
+    noticeListener.onShowNotice = () => setState(() {
+          didomiNoticeVisible = true;
+        });
+    noticeListener.onHideNotice = () => setState(() {
+          didomiNoticeVisible = false;
+        });
+    DidomiSdk.addEventListener(noticeListener);
 
     eventsHelper.uiCallback = (eventDescription) => onEvent(eventDescription);
   }
@@ -90,87 +100,74 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  // TODO Remove this when dev is complete
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    try {
-      platformVersion = await DidomiSdk.platformVersion;
-    } on PlatformException {
-      platformVersion = "Failed to get platform version.";
-    }
-
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Didomi Flutter Demo"),
       ),
-      body: Material(
-        child: Center(
-          child: ListView(
-            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-            key: Key("components_list"),
-            controller: scrollController,
-            children: [
-              Text("Running on: $_platformVersion\n", textAlign: TextAlign.center),
-              // SDK setup
-              Text("Setup:"),
-              IsReady(),
-              OnReady(),
-              OnError(),
-              SetLogLevel(),
-              Initialize(),
-              SetUser(),
-              // UI related features
-              Text("UI:"),
-              SetupUI(),
-              ShowHideNotice(),
-              ShowHidePreferences(),
-              // Consents
-              Text("Consents:"),
-              CheckConsent(),
-              Reset(),
-              SetUserAgreeToAll(),
-              SetUserDisagreeToAll(),
-              SetUserStatus(),
-              // Purposes
-              Text("Purposes:"),
-              GetDisabledPurposeIds(),
-              GetEnabledPurposeIds(),
-              GetRequiredPurposeIds(),
-              GetUserConsentStatusForPurpose(),
-              GetUserLegitimateInterestStatusForPurpose(),
-              // Vendors
-              Text("Vendors:"),
-              GetDisabledVendorIds(),
-              GetEnabledVendorIds(),
-              GetRequiredVendorIds(),
-              GetUserConsentStatusForVendor(),
-              GetUserConsentStatusForVendorAndRequiredPurposes(),
-              GetUserLegitimateInterestStatusForVendor(),
-              GetUserLegitimateInterestStatusForVendorAndRequiredPurposes(),
-              GetUserStatusForVendor(),
-              // Languages,
-              Text("Languages:"),
-              UpdateSelectedLanguage(),
-              GetText(),
-              GetTranslatedText(),
-              // Webviews
-              Text("Webviews:"),
-              WebviewStrings(),
-              // Events
-              SdkEventsLogger(_sdkEvents),
-            ],
+      body: AbsorbPointer(
+        // When notice is visible, prevent user from interacting with the rest of the application (iOS bug)
+        absorbing: didomiNoticeVisible,
+        child: Material(
+          child: Center(
+            child: ListView(
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+              key: Key("components_list"),
+              controller: scrollController,
+              children: [
+                // SDK setup
+                Text("Setup:"),
+                IsReady(),
+                OnReady(),
+                OnError(),
+                SetLogLevel(),
+                Initialize(),
+                SetUser(),
+                // UI related features
+                Text("UI:"),
+                SetupUI(),
+                ShowHideNotice(),
+                ShowHidePreferences(),
+                // Consents
+                Text("Consents:"),
+                CheckConsent(),
+                Reset(),
+                SetUserAgreeToAll(),
+                SetUserDisagreeToAll(),
+                SetUserStatus(),
+                // Purposes
+                Text("Purposes:"),
+                GetDisabledPurposeIds(),
+                GetEnabledPurposeIds(),
+                GetRequiredPurposeIds(),
+                GetUserConsentStatusForPurpose(),
+                GetUserLegitimateInterestStatusForPurpose(),
+                // Vendors
+                Text("Vendors:"),
+                GetDisabledVendorIds(),
+                GetEnabledVendorIds(),
+                GetRequiredVendorIds(),
+                GetUserConsentStatusForVendor(),
+                GetUserConsentStatusForVendorAndRequiredPurposes(),
+                GetUserLegitimateInterestStatusForVendor(),
+                GetUserLegitimateInterestStatusForVendorAndRequiredPurposes(),
+                GetUserStatusForVendor(),
+                // Languages,
+                Text("Languages:"),
+                UpdateSelectedLanguage(),
+                GetText(),
+                GetTranslatedText(),
+                // Webviews
+                Text("Webviews:"),
+                WebviewStrings(),
+                // Events
+                SdkEventsLogger(_sdkEvents),
+              ],
+            ),
           ),
         ),
-      ),
+      )
     );
   }
 }
