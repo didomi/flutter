@@ -416,7 +416,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      * Get a purpose by ID.
      */
     private fun getPurpose(call: MethodCall, result: Result) {
-        val purpose = Didomi.getInstance().getPurpose(call.argument("purposeId"))
+        val id: String? = call.argument("purposeId")
+        val purpose = Didomi.getInstance().getPurpose(id)
         val map = EntitiesHelper.toMap(purpose)
         result.success(map)
     }
@@ -425,7 +426,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      * Get a vendor by ID.
      */
     private fun getVendor(call: MethodCall, result: Result) {
-        val vendor = Didomi.getInstance().getVendor(call.argument("vendorId"))
+        val id: String? = call.argument("vendorId")
+        val vendor = Didomi.getInstance().getVendor(id)
         val map = EntitiesHelper.toMap(vendor)
         result.success(map)
     }
