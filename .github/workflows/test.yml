@@ -70,23 +70,23 @@ jobs:
       - name: Run UI tests
         run: bash .github/scripts/uitests_for_android.sh
 
-#  test_ios:
-#    name: Testing iOS
-#    needs: analyse
-#    runs-on: macos-latest
-#
-#    steps:
-#      - uses: actions/checkout@v2
-#      - uses: actions/setup-java@v1
-#        with:
-#          java-version: "12.x"
-#      - uses: subosito/flutter-action@v1
-#        with:
-#          channel: "stable"
-#
-#      - name: Install dependencies
-#        run: flutter pub get
-#
+  test_ios:
+    name: Testing iOS
+    needs: analyse
+    runs-on: test1
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
 #      # Add Code sign certificate for iOS build
 #      - name: Add sign certificate for iOS build
 #        uses: apple-actions/import-codesign-certs@v1
@@ -109,7 +109,7 @@ jobs:
 #
 #      - name: Set current project
 #        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
-#
-#      # Build and upload each scenarios to firebase
-#      - name: Run UI tests
-#        run: sh .github/scripts/uitests_for_ios.sh
+
+      # Build and upload each scenarios to firebase
+      - name: Run UI tests
+        run: sh .github/scripts/uitests_for_ios.sh
