@@ -6,7 +6,7 @@ branchName=$(git rev-parse --abbrev-ref HEAD)
 # iOS Settings
 output="../build/ios_integ"
 product="build/ios_integ/Build/Products"
-dev_target="14.5"
+dev_target="14.3"
 
 # Move to sample folder
 cd ./example || exit 1
