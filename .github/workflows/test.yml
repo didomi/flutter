@@ -73,7 +73,7 @@ jobs:
   test_ios:
     name: Testing iOS
     needs: analyse
-    runs-on: test1
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v2
@@ -95,10 +95,10 @@ jobs:
 #          p12-password: ${{ secrets.CERTIFICATES_P12_PASSWORD }}
 
       # Add Provisioning profile for iOS build
-      - name: Import provisioning profile for iOS build
-        env:
-          PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
-        run: sh .github/scripts/import_profile.sh
+#      - name: Import provisioning profile for iOS build
+#        env:
+#          PROVISIONING_PROFILE_DATA: ${{ secrets.PROVISIONING_PROFILE_DATA }}
+#        run: sh .github/scripts/import_profile.sh
 
       # Connect to GCloud
       - name: Login to Google Cloud
