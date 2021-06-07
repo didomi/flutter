@@ -21,13 +21,13 @@ class _GetRequiredVendorsState
 
   @override
   Future<String> callDidomiPlugin() async {
-    final List<Vendor>? result = await DidomiSdk.requiredVendors;
-    result?.sort(); // Required for UI tests
+    final List<Vendor> result = await DidomiSdk.requiredVendors;
+    result.sort(); // Required for UI tests
 
-    final String? printable = result?.map((vendor) => vendor.name).join(", ");
+    final String printable = result.map((vendor) => vendor.name).join(", ");
     print(printable);
 
-    if (result == null || result.isEmpty) {
+    if (result.isEmpty) {
       return "Required Vendor list is empty.";
     } else {
       return "Required Vendors: $printable.";

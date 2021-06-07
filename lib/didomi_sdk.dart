@@ -218,44 +218,38 @@ class DidomiSdk {
   }
 
   // Get enabled purposes.
-  static Future<List<Purpose>?> get enabledPurposes async {
-    final List<dynamic>? result = await _channel.invokeMethod("getEnabledPurposes");
-    if (result == null) return null;
+  static Future<List<Purpose>> get enabledPurposes async {
+    final List<dynamic> result = await _channel.invokeMethod("getEnabledPurposes");
     return EntitiesHelper.toPurposes(result);
   }
 
   // Get disabled purposes.
-  static Future<List<Purpose>?> get disabledPurposes async {
-    final List<dynamic>? result = await _channel.invokeMethod("getDisabledPurposes");
-    if (result == null) return null;
+  static Future<List<Purpose>> get disabledPurposes async {
+    final List<dynamic> result = await _channel.invokeMethod("getDisabledPurposes");
     return EntitiesHelper.toPurposes(result);
   }
 
   // Get enabled vendors.
-  static Future<List<Vendor>?> get enabledVendors async {
-    final List<dynamic>? result = await _channel.invokeMethod("getEnabledVendors");
-    if (result == null) return null;
+  static Future<List<Vendor>> get enabledVendors async {
+    final List<dynamic> result = await _channel.invokeMethod("getEnabledVendors");
     return EntitiesHelper.toVendors(result);
   }
 
   // Get disabled vendors.
-  static Future<List<Vendor>?> get disabledVendors async {
-    final List<dynamic>? result = await _channel.invokeMethod("getDisabledVendors");
-    if (result == null) return null;
+  static Future<List<Vendor>> get disabledVendors async {
+    final List<dynamic> result = await _channel.invokeMethod("getDisabledVendors");
     return EntitiesHelper.toVendors(result);
   }
 
   // Get required purposes.
-  static Future<List<Purpose>?> get requiredPurposes async {
-    final List<dynamic>? result = await _channel.invokeMethod("getRequiredPurposes");
-    if (result == null) return null;
+  static Future<List<Purpose>> get requiredPurposes async {
+    final List<dynamic> result = await _channel.invokeMethod("getRequiredPurposes");
     return EntitiesHelper.toPurposes(result);
   }
 
   // Get required vendors.
-  static Future<List<Vendor>?> get requiredVendors async {
-    final List<dynamic>? result = await _channel.invokeMethod("getRequiredVendors");
-    if (result == null) return null;
+  static Future<List<Vendor>> get requiredVendors async {
+    final List<dynamic> result = await _channel.invokeMethod("getRequiredVendors");
     return EntitiesHelper.toVendors(result);
   }
 
