@@ -11,27 +11,31 @@ class EntitiesHelper {
         
         // Convert a set of purposes into a list of maps.
         @kotlin.jvm.JvmName("toListOfPurposes")
-        fun toList(purposes: Set<Purpose>): List<*> {
-            val json = gson.toJsonTree(purposes)
+        fun toList(purposes: Set<Purpose>?): List<*>? {
+            val valid = purposes ?: return null
+            val json = gson.toJsonTree(valid)
             return gson.fromJson(json, List::class.java)
         }
 
         // Convert a set of vendors into a list of maps.
         @kotlin.jvm.JvmName("toListOfVendors")
-        fun toList(vendors: Set<Vendor>): List<*> {
-            val json = gson.toJsonTree(vendors)
+        fun toList(vendors: Set<Vendor>?): List<*>? {
+            val valid = vendors ?: return null
+            val json = gson.toJsonTree(valid)
             return gson.fromJson(json, List::class.java)
         }
 
         // Convert a purpose into a map.
-        fun toMap(purpose: Purpose): HashMap<*, *> {
-            val json = gson.toJsonTree(purpose)
+        fun toMap(purpose: Purpose?): HashMap<*, *>? {
+            val valid = purpose ?: return null
+            val json = gson.toJsonTree(valid)
             return gson.fromJson(json, HashMap::class.java)
         }
 
         // Convert a vendor into a map.
-        fun toMap(vendor: Vendor): HashMap<*, *> {
-            val json = gson.toJsonTree(vendor)
+        fun toMap(vendor: Vendor?): HashMap<*, *>? {
+            val valid = vendor ?: return null
+            val json = gson.toJsonTree(valid)
             return gson.fromJson(json, HashMap::class.java)
         }
     }
