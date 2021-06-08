@@ -21,7 +21,7 @@ class _GetPurposeState
 
   @override
   Future<String> callDidomiPlugin() async {
-    final Purpose result = await DidomiSdk.getPurpose("cookies");
+    final Purpose? result = await DidomiSdk.getPurpose("cookies");
 
     if (result == null) {
       return "Purpose does not exist.";

@@ -254,14 +254,16 @@ class DidomiSdk {
   }
 
   // Get a purpose by its id.
-  static Future<Purpose> getPurpose(String purposeId) async {
+  static Future<Purpose?> getPurpose(String purposeId) async {
     final dynamic result = await _channel.invokeMethod("getPurpose", { "purposeId": purposeId });
+    if (result == null) return null;
     return Purpose.fromJson(result);
   }
 
   // Get a vendor by its id.
-  static Future<Vendor> getVendor(String vendorId) async {
+  static Future<Vendor?> getVendor(String vendorId) async {
     final dynamic result = await _channel.invokeMethod("getVendor", { "vendorId": vendorId });
+    if (result == null) return null;
     return Vendor.fromJson(result);
   }
 
