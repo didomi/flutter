@@ -11,26 +11,22 @@
                 "enabled": true,
                 "exclude": [],
                 "include": [],
-                "version": 2
+                "version": 2,
+                "restrictions": []
             },
             "didomi": [
-                "amazon",
-                "twitter",
-                "salesforce",
-                "google",
-                "facebook"
+                "google"
             ],
             "google": {
-                "fullATP": false
+                "fullATP": true
             }
         },
-        "privacyPolicyURL": "https://www.bfmtv.com/cookies/",
-        "essentialPurposes": [
-            "essentiels-KAwN9cAD"
-        ],
+        "privacyPolicyURL": "",
+        "essentialPurposes": [],
         "gdprAppliesGlobally": true,
         "gdprAppliesWhenUnknown": false,
-        "apiKey": "c774e98d-961e-45ba-811a-db867a14f034",
+        "apiKey": "7685b6f7-3062-491b-ba50-207f440951dc",
+        "deploymentId": "N3Z6XDjj",
         "consentDuration": 31622400
     },
     "user": {
@@ -39,128 +35,102 @@
         }
     },
     "theme": {
-        "color": "#d8e1ff",
-        "linkColor": "#EE964B",
-        "buttons": {
-            "regularButtons": {
-                "backgroundColor": "#1F271B",
-                "textColor": "#28AFB0",
-                "borderColor": "#28AFB0",
-                "borderWidth": "2",
-                "borderRadius": "5"
-            },
-            "highlightButtons": {
-                "backgroundColor": "#19647E",
-                "borderWidth": "2",
-                "borderColor": "#28AFB0",
-                "borderRadius": "5"
-            }
-        }
+        "css": "",
+        "font": "Arial, sans-serif",
+        "color": "#ffee33",
+        "linkColor": "#33eeff"
     },
     "notice": {
         "content": {
-            "notice": {
-                "fr": "Nous et <a href=\"javascript:Didomi.preferences.show('vendors')\">nos partenaires</a> pouvons stocker et/ou accéder à des informations stockées sur votre terminal (telles que données d'identification, de navigation, de géolocalisation) au moyen de cookies ou technologies similaires.</br>Avec votre accord, nous et nos partenaires utilisons des traceurs afin de produire des statistiques d'usage ou personnaliser votre expérience (identification par analyse du terminal, publicités et contenus personnalisés, mesure de performance des publicités et contenus, production de données d'audience et développement de produit) sur internet ou par communication directe (email, sms...).</br>Vous pouvez consentir à ces utilisations en cliquant sur le bouton «Accepter & Fermer», «Continuer sans accepter» dans le cas contraire, ou obtenir plus de détails et/ou en refuser tout ou partie en cliquant sur «En savoir plus →».</br>En cas de refus, vous continuerez à recevoir des publicités mais ces dernières ne seront pas personnalisées en fonction de vos centres d'intérêts.</br>Vos choix seront appliqués sur l'ensemble du portail BFMTV (*.bfmtv.com) et conservés au maximum pendant 13 mois. Vous pouvez à tout moment modifier vos choix en utilisant le lien \"cookies\" figurant en bas de page sur ce site.</br>Pour en savoir plus, vous pouvez également consulter notre <a href=\"https://www.bfmtv.com/politique-donnees-personnelles/\"> politique de protection des données personnelles</a>.Nous et <a href=\"javascript:Didomi.preferences.show('vendors')\">nos partenaires</a> pouvons stocker et/ou accéder à des informations stockées sur votre terminal (telles que données d'identification, de navigation, de géolocalisation) au moyen de cookies ou technologies similaires.</br>Avec votre accord, nous et nos partenaires utilisons des traceurs afin de produire des statistiques d'usage ou personnaliser votre expérience (identification par analyse du terminal, publicités et contenus personnalisés, mesure de performance des publicités et contenus, production de données d'audience et développement de produit) sur internet ou par communication directe (email, sms...).</br>Vous pouvez consentir à ces utilisations en cliquant sur le bouton «Accepter & Fermer», «Continuer sans accepter» dans le cas contraire, ou obtenir plus de détails et/ou en refuser tout ou partie en cliquant sur «En savoir plus →».</br>En cas de refus, vous continuerez à recevoir des publicités mais ces dernières ne seront pas personnalisées en fonction de vos centres d'intérêts.</br>Vos choix seront appliqués sur l'ensemble du portail BFMTV (*.bfmtv.com) et conservés au maximum pendant 13 mois. Vous pouvez à tout moment modifier vos choix en utilisant le lien \"cookies\" figurant en bas de page sur ce site.</br>Pour en savoir plus, vous pouvez également consulter notre <a href=\"https://www.bfmtv.com/politique-donnees-personnelles/\"> politique de protection des données personnelles</a>."
-            }
+            "notice": {}
         },
-        "position": "popup",
+        "position": "bottom",
         "closeOnClick": false,
         "closeOnScroll": false,
         "showDataProcessing": true,
         "closeOnScrollThreshold": 0,
-        "daysBeforeShowingAgain": 350,
+        "daysBeforeShowingAgain": 30,
         "closeOnScrollThresholdType": "",
         "closeOnClickNavigationDelay": 0,
         "type": "optin",
-        "denyAsLink": true,
+        "denyAsPrimary": true,
         "denyAppliesToLI": true
     },
     "languages": {
-        "default": "en",
+        "default": "ko",
         "enabled": [
-            "fr", "en"
+            "zh-CN",
+            "zh-TW",
+            "ja",
+            "ko"
         ]
     },
     "preferences": {
         "content": {
             "text": {
-                "fr": "Nos partenaires et nous déposons des cookies et utilisons des informations strictement nécessaires de votre appareil pour améliorer nos produits et afficher des publicités et contenus personnalisés. Vous pouvez accepter ou refuser ces différentes opérations. Certains de nos partenaires peuvent traiter les données sur une autre base légale que le consentement en retenant l’intérêt légitime auquel vous pouvez vous opposer en cliquant sur « Refuser ». Pour en savoir plus sur les cookies, les données que nous utilisons, les traitements que nous réalisons et les partenaires avec qui nous travaillons, vous pouvez consulter notre <a href=\"https://www.bfmtv.com/politique-donnees-personnelles/\" target=\"_blank\">politique de confidentialité</a> et notre <a href=\"{privacyPolicyURL}\" target=\"_blank\">politique cookies</a>. Vos choix seront appliqués sur l'ensemble du portail BFMTV.com et conservés au maximum pendant 13 mois."
+                "ja": "弊社とパートナーは、あなたのデバイスからの機密性の低い情報を使用して、当製品を改善し、このアプリ全体で広告やその他のコンテンツをパーソナライズします。あなたはこれらの操作の全部または一部に同意することができます。データの使用方法の詳細、各パートナーのオプションまたはこれらの操作の確認については、<a href=\"{privacyPolicyURL}\" target=\"_blank\">プライバシーポリシー</a>にアクセスしてください。",
+                "ko": "당사와 파트너는 기기의 중요하지 않은 정보를 사용하여 제품을 개선하고 이 앱 전체에서 광고 및 기타 콘텐츠를 개인화합니다. 귀하는 작업의 전부 또는 일부를 수락할 수 있습니다. 데이터 사용 방법에 대해 자세히 알아보거나, 각 파트너에 대한 옵션 또는 작업을 검토하려면, <a href=\"{privacyPolicyURL}\" target=\"_blank\">개인정보 보호정책</a>을 방문하십시오.",
+                "zh-CN": "我们和我们的合作商使用来自您设备的非敏感性信息来优化我们的产品，以及这款应用的个性化广告和其他内容。您可以接受所有这些或部分操作。查看我们的<a href=\"{privacyPolicyURL}\" target=\"_blank\">隐私政策</a>，了解更多关于我们如何使用您的数据，检查您针对每个合作商的选项及这些操作。",
+                "zh-TW": "我們及我們的合作夥伴使用你的裝置中非敏感資訊以改善我們的產品及個人化程式中之廣告及其他內容。你可接受全部或部份操作。如欲了解我們如何使用資料、檢視你就每個合作夥伴之操作選項、請訪問：<a href=\"{privacyPolicyURL}\" target=\"_blank\">私隱條例</a>"
             },
             "title": {
-                "fr": "Vos choix en matière de cookies"
+                "en": "Didomi preferences for iOS"
             },
             "textVendors": {
-                "fr": "Vous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'informations sur ce qu'il fait, les données qu'il récolte et comment il les utilise.\nVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'informationVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'informationVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'informationVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'information\nVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'informationVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'informationVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'informationVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'informationVous pouvez définir vos préférences de consentement pour chaque partenaire listé ci-dessous individuellement. Cliquez sur le nom d'un partenaire pour obtenir plus d'information"
+                "ja": "以下にリストされているすべてのパートナーに対して、個別に同意設定を設定できます。パートナー名をクリックすると、パートナーの機能、収集しているデータ、およびデータの使用方法に関する詳細情報が表示されます。",
+                "ko": "아래에 나열된 모든 파트너에 대한 동의 환경설정을 개별적으로 설정할 수 있습니다. 파트너 이름을 클릭하면 파트너가 수행하는 작업, 수집하는 데이터 및 파트너가 사용하는 방법에 대한 자세한 정보를 볼 수 있습니다.",
+                "zh-CN": "您可以对下列各个合作商单独设置您的准许偏好。点击某个合作商的名称可以了解更多有关它做了些什么，收集了哪些数据并如何使用的信息。",
+                "zh-TW": "你可於下列設定對每個合作夥伴的個別意願偏好。點擊合作夥伴名字以取得更多關於該夥件的業務資訊、所收集的資料及使用方式。"
             }
         },
         "categories": [
             {
-                "id": "id_category1",
-                "type": "category",
-                "name": {
-                    "en": "Category 1"
-                },
-                "description": {
-                    "en": "Category 1 Description"
-                },
-                "children": [
-                    {
-                        "type": "purpose",
-                        "purposeId": "cookies"
-                    },
-                    {
-                        "type": "purpose",
-                        "purposeId": "measure_ad_performance"
-                    }
-                ]
+                "type": "purpose",
+                "purposeId": "improve_products"
             },
             {
-                "id": "id_category2",
-                "type": "category",
-                "name": {
-                    "en": "Category 2"
-                },
-                "description": {
-                    "en": "Category 2 Description"
-                },
-                "children": [
-                    {
-                        "type": "purpose",
-                        "purposeId": "create_ads_profile"
-                    },
-                    {
-                        "type": "purpose",
-                        "purposeId": "select_personalized_ads"
-                    },
-                    {
-                        "type": "purpose",
-                        "purposeId": "select_personalized_content"
-                    }
-                ]
+                "type": "purpose",
+                "purposeId": "market_research"
             },
             {
-                "id": "id_category3",
-                "type": "category",
-                "name": {
-                    "en": "Category 3"
-                },
-                "description": {
-                    "en": "Category 3 Description"
-                },
-                "children": [
-                    {
-                        "type": "purpose",
-                        "purposeId": "select_basic_ads"
-                    },
-                    {
-                        "type": "purpose",
-                        "purposeId": "market_research"
-                    },
-                    {
-                        "type": "purpose",
-                        "purposeId": "improve_products"
-                    }
-                ]
+                "type": "purpose",
+                "purposeId": "measure_ad_performance"
+            },
+            {
+                "type": "purpose",
+                "purposeId": "select_personalized_content"
+            },
+            {
+                "type": "purpose",
+                "purposeId": "create_content_profile"
+            },
+            {
+                "type": "purpose",
+                "purposeId": "select_basic_ads"
+            },
+            {
+                "type": "purpose",
+                "purposeId": "select_personalized_ads"
+            },
+            {
+                "type": "purpose",
+                "purposeId": "create_ads_profile"
+            },
+            {
+                "type": "purpose",
+                "purposeId": "cookies"
+            },
+            {
+                "type": "purpose",
+                "purposeId": "measure_content_performance"
+            },
+            {
+                "type": "purpose",
+                "purposeId": "device_characteristics"
+            },
+            {
+                "type": "purpose",
+                "purposeId": "geolocation_data"
             }
         ],
         "showWhenConsentIsMissing": false,
@@ -179,8 +149,16 @@
                 "enable": false,
                 "namespace": null
             },
-            "refreshOnConsent": false
+            "refreshOnConsent": false,
+            "gcm": {
+                "enable": true,
+                "setDefaultStatus": true,
+                "dataLayerName": null,
+                "defaultStatus": {
+                    "analytics": false,
+                    "ad": false
+                }
+            }
         }
     }
 }
-
