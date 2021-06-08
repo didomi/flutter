@@ -3,6 +3,7 @@ package io.didomi.fluttersdk
 import android.app.Activity
 import androidx.annotation.NonNull
 import androidx.fragment.app.FragmentActivity
+import com.google.gson.JsonParseException
 import io.didomi.sdk.Didomi
 import io.didomi.sdk.Log
 import io.didomi.sdk.exceptions.DidomiNotReadyException
@@ -344,6 +345,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(list)
         } catch (e: DidomiNotReadyException) {
             result.error("getDisabledPurposes", e.message.orEmpty(), e)
+        } catch (e: JsonParseException) {
+            result.error("getDisabledPurposes", e.message.orEmpty(), e)
         }
     }
 
@@ -356,6 +359,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val list = EntitiesHelper.toList(vendors)
             result.success(list)
         } catch (e: DidomiNotReadyException) {
+            result.error("getDisabledVendors", e.message.orEmpty(), e)
+        } catch (e: JsonParseException) {
             result.error("getDisabledVendors", e.message.orEmpty(), e)
         }
     }
@@ -370,6 +375,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(list)
         } catch (e: DidomiNotReadyException) {
             result.error("getEnabledPurposes", e.message.orEmpty(), e)
+        } catch (e: JsonParseException) {
+            result.error("getEnabledPurposes", e.message.orEmpty(), e)
         }
     }
 
@@ -382,6 +389,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val list = EntitiesHelper.toList(vendors)
             result.success(list)
         } catch (e: DidomiNotReadyException) {
+            result.error("getEnabledVendors", e.message.orEmpty(), e)
+        } catch (e: JsonParseException) {
             result.error("getEnabledVendors", e.message.orEmpty(), e)
         }
     }
@@ -396,6 +405,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(list)
         } catch (e: DidomiNotReadyException) {
             result.error("getRequiredPurposes", e.message.orEmpty(), e)
+        } catch (e: JsonParseException) {
+            result.error("getRequiredPurposes", e.message.orEmpty(), e)
         }
     }
 
@@ -408,6 +419,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val list = EntitiesHelper.toList(vendors)
             result.success(list)
         } catch (e: DidomiNotReadyException) {
+            result.error("getRequiredVendors", e.message.orEmpty(), e)
+        } catch (e: JsonParseException) {
             result.error("getRequiredVendors", e.message.orEmpty(), e)
         }
     }
@@ -423,6 +436,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(map)
         } catch (e: DidomiNotReadyException) {
             result.error("getPurpose", e.message.orEmpty(), e)
+        } catch (e: JsonParseException) {
+            result.error("getPurpose", e.message.orEmpty(), e)
         }
     }
 
@@ -436,6 +451,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val map = EntitiesHelper.toMap(vendor)
             result.success(map)
         } catch (e: DidomiNotReadyException) {
+            result.error("getVendor", e.message.orEmpty(), e)
+        } catch (e: JsonParseException) {
             result.error("getVendor", e.message.orEmpty(), e)
         }
     }
