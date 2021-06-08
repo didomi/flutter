@@ -338,7 +338,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /**
      * Get disabled purposes
      */
-    private fun getDisabledPurposes(@NonNull result: Result) {
+    private fun getDisabledPurposes(result: Result) {
         try {
             val purposes = Didomi.getInstance().disabledPurposes
             val list = EntitiesHelper.toList(purposes)
@@ -353,7 +353,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /**
      * Get disabled vendors
      */
-    private fun getDisabledVendors(@NonNull result: Result) {
+    private fun getDisabledVendors(result: Result) {
         try {
             val vendors = Didomi.getInstance().disabledVendors
             val list = EntitiesHelper.toList(vendors)
@@ -368,7 +368,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /**
      * Get enabled purposes
      */
-    private fun getEnabledPurposes(@NonNull result: Result) {
+    private fun getEnabledPurposes(result: Result) {
         try {
             val purposes = Didomi.getInstance().enabledPurposes
             val list = EntitiesHelper.toList(purposes)
@@ -383,7 +383,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /**
      * Get enabled vendors
      */
-    private fun getEnabledVendors(@NonNull result: Result) {
+    private fun getEnabledVendors(result: Result) {
         try {
             val vendors = Didomi.getInstance().enabledVendors
             val list = EntitiesHelper.toList(vendors)
@@ -398,7 +398,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /**
      * Get required purposes
      */
-    private fun getRequiredPurposes(@NonNull result: Result) {
+    private fun getRequiredPurposes(result: Result) {
         try {
             val purposes = Didomi.getInstance().requiredPurposes
             val list = EntitiesHelper.toList(purposes)
@@ -413,7 +413,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /**
      * Get required vendors
      */
-    private fun getRequiredVendors(@NonNull result: Result) {
+    private fun getRequiredVendors(result: Result) {
         try {
             val vendors = Didomi.getInstance().requiredVendors
             val list = EntitiesHelper.toList(vendors)
