@@ -343,10 +343,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val purposes = Didomi.getInstance().disabledPurposes
             val list = EntitiesHelper.toList(purposes)
             result.success(list)
-        } catch (e: DidomiNotReadyException) {
-            result.error("getDisabledPurposes", e.message.orEmpty(), e)
-        } catch (e: JsonParseException) {
-            result.error("getDisabledPurposes", e.message.orEmpty(), e)
+        } catch (e: Exception) {
+            result.error("getRequiredPurposes", e.message.orEmpty(), e)
         }
     }
 
@@ -358,9 +356,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val vendors = Didomi.getInstance().disabledVendors
             val list = EntitiesHelper.toList(vendors)
             result.success(list)
-        } catch (e: DidomiNotReadyException) {
-            result.error("getDisabledVendors", e.message.orEmpty(), e)
-        } catch (e: JsonParseException) {
+        } catch (e: Exception) {
             result.error("getDisabledVendors", e.message.orEmpty(), e)
         }
     }
@@ -373,9 +369,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val purposes = Didomi.getInstance().enabledPurposes
             val list = EntitiesHelper.toList(purposes)
             result.success(list)
-        } catch (e: DidomiNotReadyException) {
-            result.error("getEnabledPurposes", e.message.orEmpty(), e)
-        } catch (e: JsonParseException) {
+        } catch (e: Exception) {
             result.error("getEnabledPurposes", e.message.orEmpty(), e)
         }
     }
@@ -388,9 +382,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val vendors = Didomi.getInstance().enabledVendors
             val list = EntitiesHelper.toList(vendors)
             result.success(list)
-        } catch (e: DidomiNotReadyException) {
-            result.error("getEnabledVendors", e.message.orEmpty(), e)
-        } catch (e: JsonParseException) {
+        } catch (e: Exception) {
             result.error("getEnabledVendors", e.message.orEmpty(), e)
         }
     }
@@ -403,9 +395,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val purposes = Didomi.getInstance().requiredPurposes
             val list = EntitiesHelper.toList(purposes)
             result.success(list)
-        } catch (e: DidomiNotReadyException) {
-            result.error("getRequiredPurposes", e.message.orEmpty(), e)
-        } catch (e: JsonParseException) {
+        } catch (e: Exception) {
             result.error("getRequiredPurposes", e.message.orEmpty(), e)
         }
     }
@@ -418,9 +408,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val vendors = Didomi.getInstance().requiredVendors
             val list = EntitiesHelper.toList(vendors)
             result.success(list)
-        } catch (e: DidomiNotReadyException) {
-            result.error("getRequiredVendors", e.message.orEmpty(), e)
-        } catch (e: JsonParseException) {
+        } catch (e: Exception) {
             result.error("getRequiredVendors", e.message.orEmpty(), e)
         }
     }
@@ -434,9 +422,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val purpose = Didomi.getInstance().getPurpose(id)
             val map = EntitiesHelper.toMap(purpose)
             result.success(map)
-        } catch (e: DidomiNotReadyException) {
-            result.error("getPurpose", e.message.orEmpty(), e)
-        } catch (e: JsonParseException) {
+        } catch (e: Exception) {
             result.error("getPurpose", e.message.orEmpty(), e)
         }
     }
@@ -450,9 +436,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val vendor = Didomi.getInstance().getVendor(id)
             val map = EntitiesHelper.toMap(vendor)
             result.success(map)
-        } catch (e: DidomiNotReadyException) {
-            result.error("getVendor", e.message.orEmpty(), e)
-        } catch (e: JsonParseException) {
+        } catch (e: Exception) {
             result.error("getVendor", e.message.orEmpty(), e)
         }
     }
