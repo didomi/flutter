@@ -24,6 +24,37 @@ For instructions on installing and using the plugin, please read our documentati
 
 Clone this repository and open the `example/` folder.
 
+## Integration tests
+
+All test scenarios are located in `example/integration_test/`
+
+### Using Flutter Bridge
+```
+cd ./example
+
+flutter drive \
+    --driver=test_driver/integration_test.dart \
+    --target=integration_test/<FILENAME>.dart
+```
+
+### Using Espresso (Android)
+```
+cd ./example/android/
+
+// Single test
+./gradlew app:connectedAndroidTest -Ptarget=`pwd`/../integration_test/<FILENAME>.dart
+
+// Bulk test
+.gradlew bulk
+```
+
+### Using XCTest (iOS)
+```
+cd ./example/
+
+xcodebuild -workspace ios/Runner.xcworkspace -scheme "RunnerTests" -enableCodeCoverage YES -destination "platform=iOS Simulator,name=iPhone 8,OS=14.5" test
+```
+
 # Suggesting improvements
 
 To file bugs, make feature requests, or to suggest other improvements,
