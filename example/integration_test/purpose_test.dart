@@ -4,6 +4,7 @@ import 'package:didomi_sdk_example/testapps/sample_for_purpose_tests.dart' as ap
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'extensions/string_apis.dart';
 
 import 'util/initialize_helper.dart';
 
@@ -16,9 +17,14 @@ void main() {
   final disabledPurposeIdsBtnFinder = find.byKey(Key("getDisabledPurposeIds"));
   final enabledPurposeIdsBtnFinder = find.byKey(Key("getEnabledPurposeIds"));
   final requiredPurposeIdsBtnFinder = find.byKey(Key("getRequiredPurposeIds"));
+  final disabledPurposesBtnFinder = find.byKey(Key("getDisabledPurposes"));
+  final enabledPurposesBtnFinder = find.byKey(Key("getEnabledPurposes"));
+  final requiredPurposesBtnFinder = find.byKey(Key("getRequiredPurposes"));
 
   bool isError = false;
   bool isReady = false;
+
+  final purposeNames = "Native message: Required Purposes: purpose_1_name, purpose_3_name, purpose_5_name, special_feature_2_name, special_feature_1_name, purpose_10_name, purpose_9_name, purpose_7_name, purpose_8_name, purpose_2_name, purpose_4_name, purpose_6_name.";
 
   final listener = EventListener();
   listener.onError = (String message) {
@@ -350,6 +356,99 @@ void main() {
         ),
         findsOneWidget,
       );
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get disabled purpose names with initialization and user agreed", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await tester.tap(disabledPurposesBtnFinder);
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byWidgetPredicate(
+                (Widget widget) =>
+            widget is Text &&
+                widget.key.toString().contains("getDisabledPurposes")
+        ),
+        findsOneWidget,
+      );
+
+      const testKey = Key('nativeResponse_DisabledPurposes');
+      var finder = find.byKey(testKey);
+      var text = finder.evaluate().single.widget as Text;
+      var actual = text.data!.removeNewLines();
+      var expected = purposeNames;
+      assert(actual == expected, "Actual: $actual\nExpected: $expected");
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get enabled purpose names with initialization and user agreed", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await tester.tap(enabledPurposesBtnFinder);
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byWidgetPredicate(
+                (Widget widget) =>
+            widget is Text &&
+                widget.key.toString().contains("getEnabledPurposes")
+        ),
+        findsOneWidget,
+      );
+
+      const testKey = Key('nativeResponse_getEnabledPurposes');
+      var finder = find.byKey(testKey);
+      var text = finder.evaluate().single.widget as Text;
+      var actual = text.data!.removeNewLines();
+      var expected = purposeNames;
+      assert(actual == expected, "Actual: $actual\nExpected: $expected");
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get required purpose names with initialization and user agreed", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await tester.tap(requiredPurposesBtnFinder);
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byWidgetPredicate(
+                (Widget widget) =>
+            widget is Text &&
+                widget.key.toString().contains("getRequiredPurposes")
+        ),
+        findsOneWidget,
+      );
+
+      const testKey = Key('nativeResponse_getRequiredPurposes');
+      var finder = find.byKey(testKey);
+      var text = finder.evaluate().single.widget as Text;
+      var actual = text.data!.removeNewLines();
+      var expected = purposeNames;
+      assert(actual == expected, "Actual: $actual\nExpected: $expected");
 
       assert(isError == false);
       assert(isReady == true);
