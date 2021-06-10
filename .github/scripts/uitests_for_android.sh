@@ -1,7 +1,12 @@
 #!/bin/bash
 
 # Project settings
-branchName=$(git rev-parse --abbrev-ref HEAD)
+if [[ -z $1 ]]; then
+  # Doesn't work anymore on github action?
+  branchName=$(git rev-parse --abbrev-ref HEAD)
+else
+  branchName="$1"
+fi
 
 # Move to sample folder
 cd ./example || exit 1
