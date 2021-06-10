@@ -6,10 +6,13 @@ shopt -s nocasematch
 # Increment position (Patch is default)
 if [[ "$1" =~ ^major$ ]]; then
   position=0
+  message="major version"
 elif [[ "$1" =~ ^minor$ ]]; then
   position=1
+  message="minor version"
 else
   position=2
+  message="patch version"
 fi
 
 # unset nocasematch option
@@ -88,5 +91,5 @@ sed -i~ -e "s|version: [0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|version: $flutterv
 flutter pub get || exit 1
 
 # Commit and push
-git commit -m -a "Update dependencies and increment version name"
+git commit -a -m "Update dependencies and $message"
 #git push
