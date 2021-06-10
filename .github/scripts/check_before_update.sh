@@ -56,7 +56,9 @@ else
 fi
 
 if [[ $changes == 0 ]]; then
-  echo "No change, abort"
+  echo "--------------------"
+  echo "| No change, abort! |"
+  echo "--------------------"
   exit 1
 else
   # continue
