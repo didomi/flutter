@@ -2,11 +2,18 @@
 
 # Increment position (Patch is default)
 position=2
-if [ "$1" == "major" ]; then
+
+# set nocasematch option
+shopt -s nocasematch
+
+if [[ "$1" =~ "^major$" ]]; then
   position=0
-elif [ "$1" == "minor" ]; then
+elif [[ "$1" =~ "^minor$" ]]; then
   position=1
 fi
+
+# unset nocasematch option
+shopt -u nocasematch
 
 # Increment version: usage :: sh increment_version <VERSION> 0|1|2
 increment_version() {
