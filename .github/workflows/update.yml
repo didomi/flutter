@@ -39,11 +39,11 @@ jobs:
         run: flutter pub get
 
       - name: Reset Flutter SDK (for testing purpose)
-        if : github.event.inputs.reset == "true"
+        if : github.event.inputs.reset == 'true'
         run: bash .github/scripts/reset_versions.sh
 
       - name: Check if Flutter SDK requires update
-        if : github.event.inputs.force == "false"
+        if : github.event.inputs.force == 'false'
         run: bash .github/scripts/check_before_update.sh
 
       - name: Update Flutter SDK
