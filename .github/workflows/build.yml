@@ -1,6 +1,6 @@
 name: Build
 
-# Triggered when code is pushed to any branch in a repository or manually
+# Triggered when code is pushed to any branch except main in a repository or manually
 on:
   push:
     branches:

@@ -15,7 +15,10 @@ fi
 # unset nocasematch option
 shopt -u nocasematch
 
-# Increment version: usage :: sh increment_version <VERSION> 0|1|2
+# Increment version (eg `sh increment_version 1.2.3 1` returns `1.3.0`)
+# args:
+#   - version number (eg `0.32.4`)
+#   - increment number: `0` (major) | `1` (minor) | `2` (patch)
 increment_version() {
   local delimiter=.
   local array=($(echo "$1" | tr $delimiter '\n'))
