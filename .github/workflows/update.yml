@@ -12,6 +12,10 @@ on:
         description: "Force update (even if sdk is up to date)"
         required: false
         default: "false"
+      reset:
+        description: "Reset versions"
+        required: false
+        default: "false"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -33,6 +37,10 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
+
+      - name: Reset Flutter SDK (for testing purpose)
+        if : github.event.inputs.reset == 'true'
+        run: bash .github/scripts/reset_versions.sh
 
       - name: Check if Flutter SDK requires update
         if : github.event.inputs.force != 'true'
@@ -148,4 +156,4 @@ jobs:
         run: flutter pub get
 
       - name: Tag and push
-        run: sh .github/scripts/tag.sh
+        run: bash .github/scripts/tag.sh

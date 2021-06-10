@@ -7,8 +7,9 @@ if [[ -z $version ]]; then
 fi
 
 echo "Tag: $version"
+
 # Create tag from version
 git tag "$version" || exit 1
 
 # Push changes and tag
-#git push --follow-tags || exit 1
+git push origin "$version" || exit 1

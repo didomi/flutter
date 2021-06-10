@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Reset Flutter version
-version="0.0.1"
+version="0.0.0"
 
 pushd android >/dev/null
 sed -i~ -e "s|io.didomi.sdk:android:[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|io.didomi.sdk:android:$version|g" build.gradle || exit 1
