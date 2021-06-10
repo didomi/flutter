@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Increment position (Patch is default)
-position=2
-
 # set nocasematch option
 shopt -s nocasematch
 
-if [[ "$1" =~ "^major$" ]]; then
+# Increment position (Patch is default)
+if [[ "$1" =~ ^major$ ]]; then
   position=0
-elif [[ "$1" =~ "^minor$" ]]; then
+elif [[ "$1" =~ ^minor$ ]]; then
   position=1
+else
+  position=2
 fi
 
 # unset nocasematch option
@@ -88,5 +88,5 @@ sed -i~ -e "s|version: [0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|version: $flutterv
 flutter pub get || exit 1
 
 # Commit and push
-git commit -m "Update dependencies and increment version name"
+git commit -m -a "Update dependencies and increment version name"
 #git push
