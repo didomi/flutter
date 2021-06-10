@@ -1,4 +1,4 @@
-name: Updating
+name: Update
 
 # Triggered manually or on release creation
 on:
@@ -8,14 +8,14 @@ on:
         description: "Increment (major, minor, patch)"
         required: true
         default: "patch"
-    force:
-      description: "Force update (even if sdk is up to date)"
-      required: true
-      default: "false"
-    reset:
-      description: "Reset"
-      required: true
-      default: "false"
+      force:
+        description: "Force update (even if sdk is up to date)"
+        required: true
+        default: "false"
+      reset:
+        description: "Reset"
+        required: true
+        default: "false"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

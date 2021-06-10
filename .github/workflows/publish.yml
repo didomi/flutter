@@ -1,4 +1,4 @@
-name: Publishing
+name: Publish
 
 # Triggered manually or on release creation
 on:
