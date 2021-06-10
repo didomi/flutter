@@ -91,5 +91,5 @@ sed -i~ -e "s|version: [0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|version: $flutterv
 flutter pub get || exit 1
 
 # Commit and push
-git commit -a -m "Update dependencies and $message"
+#git commit -a -m "Update dependencies and $message"
 #git push
