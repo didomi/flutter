@@ -10,11 +10,7 @@ on:
         default: "patch"
       force:
         description: "Force update (even if sdk is up to date)"
-        required: true
-        default: "false"
-      reset:
-        description: "Reset"
-        required: true
+        required: false
         default: "false"
 
 concurrency:
@@ -38,12 +34,8 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Reset Flutter SDK (for testing purpose)
-        if : github.event.inputs.reset == 'true'
-        run: bash .github/scripts/reset_versions.sh
-
       - name: Check if Flutter SDK requires update
-        if : github.event.inputs.force == 'false'
+        if : github.event.inputs.force != 'true'
         run: bash .github/scripts/check_before_update.sh
 
       - name: Update Flutter SDK
