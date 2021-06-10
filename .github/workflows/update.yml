@@ -88,7 +88,7 @@ jobs:
 #
 #      # Build and upload each scenarios to firebase
 #      - name: Run UI tests
-#        run: bash .github/scripts/uitests_for_android.sh
+#        run: bash .github/scripts/uitests_for_android.sh ${GITHUB_REF##*/}
 #
 #  test_ios:
 #    name: Testing iOS
@@ -119,7 +119,7 @@ jobs:
 #
 #      # Build and upload each scenarios to firebase
 #      - name: Run UI tests
-#        run: sh .github/scripts/uitests_for_ios.sh
+#        run: sh .github/scripts/uitests_for_ios.sh ${GITHUB_REF##*/}
 #
 #  tag:
 #    name: Tag
