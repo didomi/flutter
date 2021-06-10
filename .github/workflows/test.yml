@@ -65,7 +65,7 @@ jobs:
 
       # Build and upload each scenarios to firebase
       - name: Run UI tests
-        run: bash .github/scripts/uitests_for_android.sh ${GITHUB_REF##*/}
+        run: bash .github/scripts/uitests_for_android.sh ${GITHUB_HEAD_REF}
 
   test_ios:
     name: Testing iOS
@@ -96,4 +96,4 @@ jobs:
 
       # Build and upload each scenarios to firebase
       - name: Run UI tests
-        run: sh .github/scripts/uitests_for_ios.sh ${GITHUB_REF##*/}
+        run: sh .github/scripts/uitests_for_ios.sh ${GITHUB_HEAD_REF}
