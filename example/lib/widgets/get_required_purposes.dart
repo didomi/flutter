@@ -7,6 +7,10 @@ import 'package:flutter/material.dart';
 
 /// Widget to call DidomiSdk.getRequiredPurposes
 class GetRequiredPurposes extends StatefulWidget {
+  GlobalKey dataKey;
+
+  GetRequiredPurposes(this.dataKey);
+
   @override
   State<StatefulWidget> createState() => _GetRequiredPurposesState();
 }
@@ -18,6 +22,11 @@ class _GetRequiredPurposesState
 
   @override
   String getActionId() => "getRequiredPurposes";
+
+  @override
+  GlobalKey? getDataKey() {
+    return this.widget.dataKey;
+  }
 
   @override
   Future<String> callDidomiPlugin() async {

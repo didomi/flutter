@@ -24,7 +24,7 @@ void main() {
   bool isError = false;
   bool isReady = false;
 
-  final purposeNames = "Native message: Required Purposes: purpose_1_name, purpose_3_name, purpose_5_name, special_feature_2_name, special_feature_1_name, purpose_10_name, purpose_9_name, purpose_7_name, purpose_8_name, purpose_2_name, purpose_4_name, purpose_6_name.";
+  final purposeNames = "purpose_1_name, purpose_3_name, purpose_5_name, special_feature_2_name, special_feature_1_name, purpose_10_name, purpose_9_name, purpose_7_name, purpose_8_name, purpose_2_name, purpose_4_name, purpose_6_name.";
 
   final listener = EventListener();
   listener.onError = (String message) {
@@ -361,7 +361,7 @@ void main() {
       assert(isReady == true);
     });
 
-    testWidgets("Get disabled purpose names with initialization and user agreed", (WidgetTester tester) async {
+    testWidgets("Get disabled purpose names with initialization and user disagreed", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -369,6 +369,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
+      await tapToScroll(tester);
       await tester.tap(disabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -381,18 +382,14 @@ void main() {
         findsOneWidget,
       );
 
-      const testKey = Key('nativeResponse_DisabledPurposes');
-      var finder = find.byKey(testKey);
-      var text = finder.evaluate().single.widget as Text;
-      var actual = text.data!.removeNewLines();
-      var expected = purposeNames;
-      assert(actual == expected, "Actual: $actual\nExpected: $expected");
+      var expected = "Native message: Disabled Purposes: $purposeNames";
+      assertNativeMessage("getDisabledPurposes", expected);
 
       assert(isError == false);
       assert(isReady == true);
     });
 
-    testWidgets("Get enabled purpose names with initialization and user agreed", (WidgetTester tester) async {
+    testWidgets("Get enabled purpose names with initialization and user disagreed", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -400,6 +397,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
+      await tapToScroll(tester);
       await tester.tap(enabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -412,18 +410,14 @@ void main() {
         findsOneWidget,
       );
 
-      const testKey = Key('nativeResponse_getEnabledPurposes');
-      var finder = find.byKey(testKey);
-      var text = finder.evaluate().single.widget as Text;
-      var actual = text.data!.removeNewLines();
-      var expected = purposeNames;
-      assert(actual == expected, "Actual: $actual\nExpected: $expected");
+      var expected = "Native message: Enabled Purpose list is empty.";
+      assertNativeMessage("getEnabledPurposes", expected);
 
       assert(isError == false);
       assert(isReady == true);
     });
 
-    testWidgets("Get required purpose names with initialization and user agreed", (WidgetTester tester) async {
+    testWidgets("Get required purpose names with initialization and user disagreed", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -431,6 +425,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
+      await tapToScroll(tester);
       await tester.tap(requiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -443,15 +438,27 @@ void main() {
         findsOneWidget,
       );
 
-      const testKey = Key('nativeResponse_getRequiredPurposes');
-      var finder = find.byKey(testKey);
-      var text = finder.evaluate().single.widget as Text;
-      var actual = text.data!.removeNewLines();
-      var expected = purposeNames;
-      assert(actual == expected, "Actual: $actual\nExpected: $expected");
+      var expected = "Native message: Required Purposes: $purposeNames";
+      assertNativeMessage("getRequiredPurposes", expected);
 
       assert(isError == false);
       assert(isReady == true);
     });
   });
+}
+
+// Tap on a button that will scroll the list to the last element.
+Future<void> tapToScroll(WidgetTester tester) async {
+  var button = find.byKey(Key("scroll_to_last_item"));
+  await tester.tap(button);
+  await tester.pumpAndSettle();
+}
+
+// Assert the text of the native message associated to a button.
+Future<void> assertNativeMessage(String buttonLabel, expected) async {
+  var testKey = Key("nativeResponse_$buttonLabel");
+  var finder = find.byKey(testKey);
+  var text = finder.evaluate().single.widget as Text;
+  var actual = text.data!.removeNewLines();
+  assert(actual == expected, "Actual: $actual\nExpected: $expected");
 }

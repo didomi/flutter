@@ -29,6 +29,8 @@ abstract class BaseSampleWidgetState<T extends StatefulWidget> extends State<T> 
   /// Action id for button and response text keys
   String getActionId();
 
+  GlobalKey? getDataKey() => GlobalKey();
+
   /// Action to call the Didomi SDK.
   /// Return description of the result, to display in Text component
   Future<String> callDidomiPlugin();
@@ -49,9 +51,18 @@ abstract class BaseSampleWidgetState<T extends StatefulWidget> extends State<T> 
   Widget build(BuildContext context) {
     super.build(context);
     return Card(
+        key: getDataKey(),
         elevation: 10,
         margin: EdgeInsets.only(left: 8.0, bottom: 8.0, right: 8.0),
-        child: Padding(padding: EdgeInsets.all(7.0), child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: buildWidgets())));
+        child: Padding(
+            padding: EdgeInsets.all(7.0),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: buildWidgets()
+            )
+        )
+    );
   }
 
   /// Define the widgets used to control this functionality
