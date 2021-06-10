@@ -8,6 +8,14 @@ on:
         description: "Increment (major, minor, patch)"
         required: true
         default: "patch"
+    force:
+      description: "Force update (even if sdk is up to date)"
+      required: true
+      default: "false"
+    reset:
+      description: "Reset"
+      required: true
+      default: "false"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -30,7 +38,15 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Publish Flutter SDK
+      - name: Reset Flutter SDK (for testing purpose)
+        if : github.event.inputs.reset == "true"
+        run: bash .github/scripts/reset_versions.sh
+
+      - name: Check if Flutter SDK requires update
+        if : github.event.inputs.force == "false"
+        run: bash .github/scripts/check_before_update.sh
+
+      - name: Update Flutter SDK
         run: bash .github/scripts/update.sh ${{ github.event.inputs.increment }}
 
 #  analyse:
@@ -88,7 +104,7 @@ jobs:
 #
 #      # Build and upload each scenarios to firebase
 #      - name: Run UI tests
-#        run: bash .github/scripts/uitests_for_android.sh ${GITHUB_REF##*/}
+#        run: bash .github/scripts/uitests_for_android.sh ${GITHUB_HEAD_REF}
 #
 #  test_ios:
 #    name: Testing iOS
@@ -119,7 +135,7 @@ jobs:
 #
 #      # Build and upload each scenarios to firebase
 #      - name: Run UI tests
-#        run: sh .github/scripts/uitests_for_ios.sh ${GITHUB_REF##*/}
+#        run: sh .github/scripts/uitests_for_ios.sh ${GITHUB_HEAD_REF}
 #
 #  tag:
 #    name: Tag
