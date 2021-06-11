@@ -159,7 +159,7 @@ jobs:
         run: |
           echo "flutter_version=$(sh .github/scripts/extract_flutter_version.sh)" >> $GITHUB_ENV
 
-     - name: Print Flutter Version
+      - name: Print Flutter Version
         run: |
           echo "FLUTTER VERSION IS: ${{ env.flutter_version }}"
 
