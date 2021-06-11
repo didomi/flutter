@@ -156,16 +156,16 @@ jobs:
         run: flutter pub get
 
       - name: Create tag
-          uses: actions/github-script@v3
-          with:
-            github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
-            script: |
-              github.git.createRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: "refs/tags/0.0.1",
-                sha: context.sha
-              })
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }} # Use custom token to trigger following workflows
+          script: |
+            github.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/0.0.1",
+              sha: context.sha
+            })
 
 #      - name: Tag and push
 #        env:
