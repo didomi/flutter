@@ -45,15 +45,20 @@ pod_last_version() {
   echo "$lastversion"
 }
 
-# Update Flutter version
+# Get Flutter version
 version=$(sh .github/scripts/extract_flutter_version.sh)
-flutterversion=$(increment_version "$version" $position)
+if [[ ! $version =~ ^[0-9]+.[0-9]+.[0-9]+$ ]]; then
+  echo "Error while getting Flutter version"
+  exit 1
+fi
 
+# Increment Flutter version
+flutterversion=$(increment_version "$version" $position)
 echo "Flutter version will change from $version to $flutterversion"
 
 # Update android SDK Version
 version=$(curl -s 'https://search.maven.org/solrsearch/select?q=didomi' | sed -n 's|.*"latestVersion":"\([^"]*\)".*|\1|p')
-if [[ -z $version ]]; then
+if [[ ! $version =~ ^[0-9]+.[0-9]+.[0-9]+$ ]]; then
   echo "Error while getting android SDK version"
   exit 1
 fi
@@ -67,7 +72,7 @@ popd >/dev/null
 
 # Update ios SDK Version
 version=$(pod_last_version)
-if [[ -z $version ]]; then
+if [[ ! $version =~ ^[0-9]+.[0-9]+.[0-9]+$ ]]; then
   echo "Error while getting ios SDK version"
   exit 1
 fi
@@ -82,7 +87,7 @@ popd >/dev/null
 # Update Flutter version
 sed -i~ -e "s|version: [0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|version: $flutterversion|g" pubspec.yaml || exit 1
 
-# and reload dependencies
+# Reload dependencies
 flutter pub get || exit 1
 
 # Commit and push

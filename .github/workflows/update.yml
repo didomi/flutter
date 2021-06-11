@@ -163,19 +163,14 @@ jobs:
         run: |
           echo "FLUTTER VERSION IS: ${{ env.flutter_version }}"
 
-#      - name: Create tag
-#        uses: actions/github-script@v3
-#        with:
-#          github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }} # Use custom token to trigger following workflows
-#          script: |
-#            github.git.createRef({
-#              owner: context.repo.owner,
-#              repo: context.repo.repo,
-#              ref: "refs/tags/${{ steps.vers.outputs.flutter_version }}",
-#              sha: context.sha
-#            })
-
-#      - name: Tag and push
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }} # Use custom token to trigger following workflows
-#        run: bash .github/scripts/tag.sh
+      - name: Create tag
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }} # Use custom token to trigger following workflows
+          script: |
+            github.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/${{ env.flutter_version }}",
+              sha: context.sha
+            })
