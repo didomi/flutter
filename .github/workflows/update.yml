@@ -13,7 +13,7 @@ on:
         required: false
         default: "false"
       reset:
-        description: "Reset versions"
+        description: "Reset versions (testing purpose)"
         required: false
         default: "false"
 
@@ -49,31 +49,36 @@ jobs:
       - name: Update Flutter SDK
         run: bash .github/scripts/update.sh ${{ github.event.inputs.increment }}
 
-#  analyse:
-#    name: Analyse Flutter
-#    needs: update
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - uses: actions/checkout@v2
-#      - uses: actions/setup-java@v1
-#        with:
-#          java-version: "12.x"
-#      - uses: subosito/flutter-action@v1
-#        with:
-#          channel: "stable"
-#
-#      - name: Install dependencies
-#        run: flutter pub get
-#
-#      # Uncomment this step to verify the use of 'dart format' on each commit.
-#      # - name: Verify formatting
-#      #   run: dart format --output=none --set-exit-if-changed .
-#      #   run: dart format --output=none --set-exit-if-changed example
-#
-#      # Consider passing '--fatal-infos' for slightly stricter analysis.
-#      - name: Analyze project source
-#        run: flutter analyze
+#      - name: Commit & Push changes
+#          uses: actions-js/push@master
+#          with:
+#            github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  analyse:
+    name: Analyse Flutter
+    needs: update
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Uncomment this step to verify the use of 'dart format' on each commit.
+      # - name: Verify formatting
+      #   run: dart format --output=none --set-exit-if-changed .
+      #   run: dart format --output=none --set-exit-if-changed example
+
+      # Consider passing '--fatal-infos' for slightly stricter analysis.
+      - name: Analyze project source
+        run: flutter analyze
 
 #  test_android:
 #    name: Testing Android
@@ -139,7 +144,7 @@ jobs:
 
   tag:
     name: Tag
-    needs: update
+    needs: analyse
 #    needs: [test_ios, test_android]
     runs-on: ubuntu-latest
 
@@ -161,7 +166,7 @@ jobs:
 
       - name: Print Flutter Version
         run: |
-          echo "FLUTTER VERSION IS: ${{ env.flutter_version }}"
+          echo "Flutter version is: ${{ env.flutter_version }}"
 
       - name: Create tag
         uses: actions/github-script@v3
