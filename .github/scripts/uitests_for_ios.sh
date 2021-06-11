@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#----------------------------------------------------------
+# Loop UI test files in order to build and upload
+# Scenarios to Firebase Test App
+#----------------------------------------------------------
+
 # Project settings
 if [[ -z $1 ]]; then
   # Doesn't work anymore on github action?

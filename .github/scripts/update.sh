@@ -1,5 +1,13 @@
 #!/bin/bash
 
+#----------------------------------------------------------
+# Update Android and iOS SDKs version (latest from repos)
+# Increment Flutter version (from param major|minor|patch)
+#   No argument: use patch as default
+# Update flutter dependencies
+# Commit and push changes
+#----------------------------------------------------------
+
 # set nocasematch option
 shopt -s nocasematch
 
@@ -89,7 +97,3 @@ sed -i~ -e "s|version: [0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|version: $flutterv
 
 # Reload dependencies
 flutter pub get || exit 1
-
-# Commit and push
-#git commit -a -m "Update dependencies and $message"
-#git push

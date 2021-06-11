@@ -1,6 +1,10 @@
 #!/bin/bash
 
-# Reset Flutter version
+#----------------------------------------------------------
+# Reset version for testing purpose to 0.0.0
+# Flutter version, iOS and Android SDKs will updated
+#----------------------------------------------------------
+
 version="0.0.0"
 
 pushd android >/dev/null

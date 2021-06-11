@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#----------------------------------------------------------
+# Check new versions for android and iOS sdks
+# exit with error if no update available (abort pipeline)
+#----------------------------------------------------------
+
 # Get last version from pod
 pod_last_version() {
   lastversion=""
