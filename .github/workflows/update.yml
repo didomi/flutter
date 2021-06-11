@@ -24,7 +24,7 @@ concurrency:
 jobs:
   update:
     name: Update version and dependencies
-    runs-on: test
+    runs-on: macos-latest # required for pod info
 
     steps:
       - uses: actions/checkout@v2
@@ -49,10 +49,14 @@ jobs:
       - name: Update Flutter SDK
         run: bash .github/scripts/update.sh ${{ github.event.inputs.increment }}
 
-#      - name: Commit & Push changes
-#          uses: actions-js/push@master
-#          with:
-#            github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit & Push changes
+        uses: actions-js/push@master
+        with:
+          author_email: "nicolas.chaix@didomi.io" # TODO('use alias email')
+          author_name: "Auto-Bot"
+          branch: ${{ github.ref }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: "Update Dependencies and increment ${{ github.event.inputs.increment }} version"
 
   analyse:
     name: Analyse Flutter
@@ -71,12 +75,6 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # Uncomment this step to verify the use of 'dart format' on each commit.
-      # - name: Verify formatting
-      #   run: dart format --output=none --set-exit-if-changed .
-      #   run: dart format --output=none --set-exit-if-changed example
-
-      # Consider passing '--fatal-infos' for slightly stricter analysis.
       - name: Analyze project source
         run: flutter analyze
 
