@@ -49,31 +49,31 @@ jobs:
       - name: Update Flutter SDK
         run: bash .github/scripts/update.sh ${{ github.event.inputs.increment }}
 
-  analyse:
-    name: Analyse Flutter
-    needs: update
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: "12.x"
-      - uses: subosito/flutter-action@v1
-        with:
-          channel: "stable"
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      # Uncomment this step to verify the use of 'dart format' on each commit.
-      # - name: Verify formatting
-      #   run: dart format --output=none --set-exit-if-changed .
-      #   run: dart format --output=none --set-exit-if-changed example
-
-      # Consider passing '--fatal-infos' for slightly stricter analysis.
-      - name: Analyze project source
-        run: flutter analyze
+#  analyse:
+#    name: Analyse Flutter
+#    needs: update
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: "12.x"
+#      - uses: subosito/flutter-action@v1
+#        with:
+#          channel: "stable"
+#
+#      - name: Install dependencies
+#        run: flutter pub get
+#
+#      # Uncomment this step to verify the use of 'dart format' on each commit.
+#      # - name: Verify formatting
+#      #   run: dart format --output=none --set-exit-if-changed .
+#      #   run: dart format --output=none --set-exit-if-changed example
+#
+#      # Consider passing '--fatal-infos' for slightly stricter analysis.
+#      - name: Analyze project source
+#        run: flutter analyze
 
 #  test_android:
 #    name: Testing Android
@@ -139,7 +139,7 @@ jobs:
 
   tag:
     name: Tag
-    needs: analyse
+    needs: update
 #    needs: [test_ios, test_android]
     runs-on: ubuntu-latest
 
@@ -155,17 +155,25 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Create tag
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }} # Use custom token to trigger following workflows
-          script: |
-            github.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: "refs/tags/0.0.1",
-              sha: context.sha
-            })
+      - name: Get Flutter Version
+        id: vars
+        run: echo ::set-output name=flutter_version::$(sh .github/scripts/extract_flutter_version.sh)
+
+     - name: Print Flutter Version
+         run: |
+          echo "FLUTTER VERSION IS: ${{ steps.vers.outputs.flutter_version }}"
+
+#      - name: Create tag
+#        uses: actions/github-script@v3
+#        with:
+#          github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }} # Use custom token to trigger following workflows
+#          script: |
+#            github.git.createRef({
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              ref: "refs/tags/${{ steps.vers.outputs.flutter_version }}",
+#              sha: context.sha
+#            })
 
 #      - name: Tag and push
 #        env:

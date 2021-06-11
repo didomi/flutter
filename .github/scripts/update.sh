@@ -46,13 +46,8 @@ pod_last_version() {
 }
 
 # Update Flutter version
-flutterversion=""
-version=$(awk '/^version/{print $NF}' pubspec.yaml)
+version=$(sh .github/scripts/extract_flutter_version.sh)
 flutterversion=$(increment_version "$version" $position)
-if [[ -z $flutterversion ]]; then
-  echo "Error while incrementing flutter version (from $version)"
-  exit 1
-fi
 
 echo "Flutter version will change from $version to $flutterversion"
 
