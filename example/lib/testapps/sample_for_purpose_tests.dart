@@ -21,15 +21,9 @@ class SampleForPurposeTestsApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  final dataKey = new GlobalKey();
-
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: const Text('Sample Code'),
-    ),
-    body: SingleChildScrollView(
-        child: Column(
+  Widget build(BuildContext context) => Material(
+        child: ListView(
           key: Key("components_list"),
           children: [
             InitializeSmall(),
@@ -42,17 +36,8 @@ class HomePage extends StatelessWidget {
             GetRequiredPurposeIds(),
             GetDisabledPurposes(),
             GetEnabledPurposes(),
-            GetRequiredPurposes(dataKey),
+            GetRequiredPurposes(),
           ],
         ),
-    ),
-      bottomNavigationBar: new ElevatedButton(
-        key: Key("scroll_to_last_item"),
-        onPressed: () {
-          print("Scroll to the last item of the list");
-          Scrollable.ensureVisible(dataKey.currentContext!);
-        },
-        child: new Text("Scroll to last item of the list"),
-      ),
   );
 }

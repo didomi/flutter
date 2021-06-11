@@ -7,6 +7,7 @@ import 'package:integration_test/integration_test.dart';
 import 'extensions/string_apis.dart';
 
 import 'util/initialize_helper.dart';
+import 'util/scroll_helper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -369,7 +370,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      await tapToScroll(tester);
+      await scrollDown(tester, Key("components_list"));
       await tester.tap(disabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -397,7 +398,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      await tapToScroll(tester);
+      await scrollDown(tester, Key("components_list"));
       await tester.tap(enabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -425,7 +426,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      await tapToScroll(tester);
+      await scrollDown(tester, Key("components_list"));
       await tester.tap(requiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -445,13 +446,6 @@ void main() {
       assert(isReady == true);
     });
   });
-}
-
-// Tap on a button that will scroll the list to the last element.
-Future<void> tapToScroll(WidgetTester tester) async {
-  var button = find.byKey(Key("scroll_to_last_item"));
-  await tester.tap(button);
-  await tester.pumpAndSettle();
 }
 
 // Assert the text of the native message associated to a button.
