@@ -12,6 +12,7 @@ on:
         description: "Force update (even if sdk is up to date)"
         required: false
         default: "false"
+      # TODO('remove this')
       reset:
         description: "Reset versions (testing purpose)"
         required: false
@@ -38,6 +39,7 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # TODO('remove this')
       - name: Reset Flutter SDK (for testing purpose)
         if : github.event.inputs.reset == 'true'
         run: bash .github/scripts/reset_versions.sh
@@ -78,6 +80,7 @@ jobs:
       - name: Analyze project source
         run: flutter analyze
 
+# TODO('revert this')
 #  test_android:
 #    name: Testing Android
 #    needs: analyse
