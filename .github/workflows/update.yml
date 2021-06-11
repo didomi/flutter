@@ -156,4 +156,6 @@ jobs:
         run: flutter pub get
 
       - name: Tag and push
+        env:
+          GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }} # Use custom token to trigger following workflows
         run: bash .github/scripts/tag.sh
