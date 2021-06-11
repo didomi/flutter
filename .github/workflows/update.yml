@@ -157,10 +157,11 @@ jobs:
 
       - name: Get Flutter Version
         id: vars
-        run: echo ::set-output name=flutter_version::$(sh .github/scripts/extract_flutter_version.sh)
+        run: |
+          echo ::set-output name=flutter_version::"$(sh .github/scripts/extract_flutter_version.sh)"
 
      - name: Print Flutter Version
-         run: |
+        run: |
           echo "FLUTTER VERSION IS: ${{ steps.vers.outputs.flutter_version }}"
 
 #      - name: Create tag
