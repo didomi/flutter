@@ -5,7 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'util/assertion_helper.dart';
 import 'util/initialize_helper.dart';
+import 'util/scroll_helper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +18,15 @@ void main() {
   final disabledVendorIdsBtnFinder = find.byKey(Key("getDisabledVendorIds"));
   final enabledVendorIdsBtnFinder = find.byKey(Key("getEnabledVendorIds"));
   final requiredVendorIdsBtnFinder = find.byKey(Key("getRequiredVendorIds"));
+  final disabledVendorsBtnFinder = find.byKey(Key("getDisabledVendors"));
+  final enabledVendorsBtnFinder = find.byKey(Key("getEnabledVendors"));
+  final requiredVendorsBtnFinder = find.byKey(Key("getRequiredVendors"));
+  final getVendorBtnFinder = find.byKey(Key("getVendor"));
+  final listKey = Key("components_list");
+
+  // Native message strings.
+  final vendorNames = "Exponential Interactive, Inc d/b/a VDX.tv, Index Exchange, Inc. , Fifty";
+  final notReadyMessage = "Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.";
 
   bool isError = false;
   bool isReady = false;
@@ -46,15 +57,8 @@ void main() {
       await tester.tap(disabledVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getDisabledVendorIds") &&
-              widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = notReadyMessage;
+      assertNativeMessage("getDisabledVendorIds", expected);
 
       assert(isError == false);
       assert(isReady == false);
@@ -71,15 +75,8 @@ void main() {
       await tester.tap(enabledVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getEnabledVendorIds") &&
-              widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = notReadyMessage;
+      assertNativeMessage("getEnabledVendorIds", expected);
 
       assert(isError == false);
       assert(isReady == false);
@@ -96,15 +93,85 @@ void main() {
       await tester.tap(requiredVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getRequiredVendorIds") &&
-              widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = notReadyMessage;
+      assertNativeMessage("getRequiredVendorIds", expected);
+
+      assert(isError == false);
+      assert(isReady == false);
+    });
+
+    testWidgets("Get disabled vendor names without initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == false);
+
+      await scrollDown(tester, listKey);
+      await tester.tap(disabledVendorsBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = notReadyMessage;
+      assertNativeMessage("getDisabledVendors", expected);
+
+      assert(isError == false);
+      assert(isReady == false);
+    });
+
+    testWidgets("Get enabled vendor names without initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == false);
+
+      await scrollDown(tester, listKey);
+      await tester.tap(enabledVendorsBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = notReadyMessage;
+      assertNativeMessage("getEnabledVendors", expected);
+
+      assert(isError == false);
+      assert(isReady == false);
+    });
+
+    testWidgets("Get required vendor names without initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == false);
+
+      await scrollDown(tester, listKey);
+      await tester.tap(requiredVendorsBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = notReadyMessage;
+      assertNativeMessage("getRequiredVendors", expected);
+
+      assert(isError == false);
+      assert(isReady == false);
+    });
+
+    testWidgets("Get a vendor name without initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == false);
+
+      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey);
+      await tester.tap(getVendorBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = notReadyMessage;
+      assertNativeMessage("getVendor", expected);
 
       assert(isError == false);
       assert(isReady == false);
@@ -127,15 +194,8 @@ void main() {
       await tester.tap(disabledVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getDisabledVendorIds") &&
-              widget.data?.contains("Native message: Disabled Vendor list is empty.") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Disabled Vendor list is empty.";
+      assertNativeMessage("getDisabledVendorIds", expected);
 
       assert(isError == false);
       assert(isReady == true);
@@ -152,15 +212,8 @@ void main() {
       await tester.tap(enabledVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getEnabledVendorIds") &&
-              widget.data?.contains("Native message: Enabled Vendor list is empty.") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Enabled Vendor list is empty.";
+      assertNativeMessage("getEnabledVendorIds", expected);
 
       assert(isError == false);
       assert(isReady == true);
@@ -177,15 +230,85 @@ void main() {
       await tester.tap(requiredVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getRequiredVendorIds") &&
-              widget.data?.startsWith("Native message: Required Vendors: 1,10,100,1000,1001,1002,") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Required Vendors: 1,10,100,1000,1001,1002,";
+      assertNativeMessageStartsWith("getRequiredVendorIds", expected);
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get disabled vendor names with initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+      await tester.tap(disabledVendorsBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = "Native message: Disabled Vendor list is empty.";
+      assertNativeMessage("getDisabledVendors", expected);
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get enabled vendor names with initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+      await tester.tap(enabledVendorsBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = "Native message: Enabled Vendor list is empty.";
+      assertNativeMessage("getEnabledVendors", expected);
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get required vendor names with initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+      await tester.tap(requiredVendorsBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = "Native message: Required Vendors: $vendorNames";
+      assertNativeMessageStartsWith("getRequiredVendors", expected);
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get a vendor name with initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey);
+      await tester.tap(getVendorBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = "Native message: Vendor: Google Advertising Products.";
+      assertNativeMessage("getVendor", expected);
 
       assert(isError == false);
       assert(isReady == true);
@@ -209,15 +332,8 @@ void main() {
       await tester.tap(disabledVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getDisabledVendorIds") &&
-              widget.data?.contains("Native message: Disabled Vendor list is empty.") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Disabled Vendor list is empty.";
+      assertNativeMessage("getDisabledVendorIds", expected);
 
       assert(isError == false);
       assert(isReady == true);
@@ -234,15 +350,8 @@ void main() {
       await tester.tap(enabledVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getEnabledVendorIds") &&
-              widget.data?.startsWith("Native message: Enabled Vendors: 1,10,100,1000,1001,1002,") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Enabled Vendors: 1,10,100,1000,1001,1002,";
+      assertNativeMessageStartsWith("getEnabledVendorIds", expected);
 
       assert(isError == false);
       assert(isReady == true);
@@ -259,15 +368,85 @@ void main() {
       await tester.tap(requiredVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getRequiredVendorIds") &&
-              widget.data?.startsWith("Native message: Required Vendors: 1,10,100,1000,1001,1002,") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Required Vendors: 1,10,100,1000,1001,1002,";
+      assertNativeMessageStartsWith("getRequiredVendorIds", expected);
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get disabled vendor names with initialization and user agreed", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+      await tester.tap(disabledVendorsBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = "Native message: Disabled Vendor list is empty.";
+      assertNativeMessage("getDisabledVendors", expected);
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get enabled vendor names with initialization and user agreed", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+      await tester.tap(enabledVendorsBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = "Native message: Enabled Vendors: $vendorNames";
+      assertNativeMessageStartsWith("getEnabledVendors", expected);
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get required vendor names with initialization and user agreed", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+      await tester.tap(requiredVendorsBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = "Native message: Required Vendors: $vendorNames";
+      assertNativeMessageStartsWith("getRequiredVendors", expected);
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get a vendor name with initialization and user agreed", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey);
+      await tester.tap(getVendorBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = "Native message: Vendor: Google Advertising Products.";
+      assertNativeMessage("getVendor", expected);
 
       assert(isError == false);
       assert(isReady == true);
@@ -277,7 +456,7 @@ void main() {
      * With initialization + Disagree to All
      */
 
-    testWidgets("Get disabled vendor ids with initialization and user agreed", (WidgetTester tester) async {
+    testWidgets("Get disabled vendor ids with initialization and user disagreed", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -291,21 +470,14 @@ void main() {
       await tester.tap(disabledVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getDisabledVendorIds") &&
-              widget.data?.startsWith("Native message: Disabled Vendors: 1,10,100,1000,1001,1002,") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Disabled Vendors: 1,10,100,1000,1001,1002,";
+      assertNativeMessageStartsWith("getDisabledVendorIds", expected);
 
       assert(isError == false);
       assert(isReady == true);
     });
 
-    testWidgets("Get enabled vendor ids with initialization and user agreed", (WidgetTester tester) async {
+    testWidgets("Get enabled vendor ids with initialization and user disagreed", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -316,21 +488,14 @@ void main() {
       await tester.tap(enabledVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getEnabledVendorIds") &&
-              widget.data?.contains("Native message: Enabled Vendor list is empty.") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Enabled Vendor list is empty.";
+      assertNativeMessage("getEnabledVendorIds", expected);
 
       assert(isError == false);
       assert(isReady == true);
     });
 
-    testWidgets("Get required vendor ids with initialization and user agreed", (WidgetTester tester) async {
+    testWidgets("Get required vendor ids with initialization and user disagreed", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -341,15 +506,85 @@ void main() {
       await tester.tap(requiredVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getRequiredVendorIds") &&
-              widget.data?.startsWith("Native message: Required Vendors: 1,10,100,1000,1001,1002,") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Required Vendors: 1,10,100,1000,1001,1002,";
+      assertNativeMessageStartsWith("getRequiredVendorIds", expected);
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get disabled vendor names with initialization and user disagreed", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+      await tester.tap(disabledVendorsBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = "Native message: Disabled Vendors: $vendorNames";
+      assertNativeMessageStartsWith("getDisabledVendors", expected);
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get enabled vendor names with initialization and user disagreed", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+      await tester.tap(enabledVendorsBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = "Native message: Enabled Vendor list is empty.";
+      assertNativeMessage("getEnabledVendors", expected);
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get required vendor names with initialization and user disagreed", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+      await tester.tap(requiredVendorsBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = "Native message: Required Vendors: $vendorNames";
+      assertNativeMessageStartsWith("getRequiredVendors", expected);
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get a vendor name with initialization and user disagreed", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey);
+      await tester.tap(getVendorBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = "Native message: Vendor: Google Advertising Products.";
+      assertNativeMessage("getVendor", expected);
 
       assert(isError == false);
       assert(isReady == true);
