@@ -155,14 +155,13 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Get Flutter Version
-        id: vars
+      - name: Set Flutter version as ENV
         run: |
-          echo ::set-output name=flutter_version::"$(sh .github/scripts/extract_flutter_version.sh)"
+          echo "flutter_version=$(sh .github/scripts/extract_flutter_version.sh)" >> $GITHUB_ENV
 
      - name: Print Flutter Version
         run: |
-          echo "FLUTTER VERSION IS: ${{ steps.vers.outputs.flutter_version }}"
+          echo "FLUTTER VERSION IS: ${{ env.flutter_version }}"
 
 #      - name: Create tag
 #        uses: actions/github-script@v3
