@@ -4,8 +4,8 @@ import 'package:didomi_sdk_example/testapps/sample_for_purpose_tests.dart' as ap
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'extensions/string_extension.dart';
 
+import 'util/assertion_helper.dart';
 import 'util/initialize_helper.dart';
 import 'util/scroll_helper.dart';
 
@@ -28,6 +28,7 @@ void main() {
   bool isReady = false;
 
   final purposeNames = "purpose_1_name, purpose_3_name, purpose_5_name, special_feature_2_name, special_feature_1_name, purpose_10_name, purpose_9_name, purpose_7_name, purpose_8_name, purpose_2_name, purpose_4_name, purpose_6_name.";
+  final purposeIds = "cookies,create_ads_profile,create_content_profile,device_characteristics,geolocation_data,improve_products,market_research,measure_ad_performance,measure_content_performance,select_basic_ads,select_personalized_ads,select_personalized_content.";
   final notReadyMessage = "Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.";
 
   final listener = EventListener();
@@ -56,15 +57,8 @@ void main() {
       await tester.tap(disabledPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getDisabledPurposeIds") &&
-              widget.data?.contains(notReadyMessage) == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = notReadyMessage;
+      assertNativeMessage("getDisabledPurposeIds", expected);
 
       assert(isError == false);
       assert(isReady == false);
@@ -81,15 +75,8 @@ void main() {
       await tester.tap(enabledPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getEnabledPurposeIds") &&
-              widget.data?.contains(notReadyMessage) == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = notReadyMessage;
+      assertNativeMessage("getEnabledPurposeIds", expected);
 
       assert(isError == false);
       assert(isReady == false);
@@ -106,15 +93,8 @@ void main() {
       await tester.tap(requiredPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getRequiredPurposeIds") &&
-              widget.data?.contains(notReadyMessage) == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = notReadyMessage;
+      assertNativeMessage("getRequiredPurposeIds", expected);
 
       assert(isError == false);
       assert(isReady == false);
@@ -132,7 +112,7 @@ void main() {
       await tester.tap(disabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      var expected = notReadyMessage;
+      final expected = notReadyMessage;
       assertNativeMessage("getDisabledPurposes", expected);
 
       assert(isError == false);
@@ -151,7 +131,7 @@ void main() {
       await tester.tap(enabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      var expected = notReadyMessage;
+      final expected = notReadyMessage;
       assertNativeMessage("getEnabledPurposes", expected);
 
       assert(isError == false);
@@ -170,7 +150,7 @@ void main() {
       await tester.tap(requiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      var expected = notReadyMessage;
+      final expected = notReadyMessage;
       assertNativeMessage("getRequiredPurposes", expected);
 
       assert(isError == false);
@@ -190,7 +170,7 @@ void main() {
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      var expected = notReadyMessage;
+      final expected = notReadyMessage;
       assertNativeMessage("getPurpose", expected);
 
       assert(isError == false);
@@ -214,15 +194,8 @@ void main() {
       await tester.tap(disabledPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getDisabledPurposeIds") &&
-              widget.data?.contains("Native message: Disabled Purpose list is empty.") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Disabled Purpose list is empty.";
+      assertNativeMessage("getDisabledPurposeIds", expected);
 
       assert(isError == false);
       assert(isReady == true);
@@ -239,15 +212,8 @@ void main() {
       await tester.tap(enabledPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getEnabledPurposeIds") &&
-              widget.data?.contains("Native message: Enabled Purpose list is empty.") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Enabled Purpose list is empty.";
+      assertNativeMessage("getEnabledPurposeIds", expected);
 
       assert(isError == false);
       assert(isReady == true);
@@ -264,15 +230,8 @@ void main() {
       await tester.tap(requiredPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getRequiredPurposeIds") &&
-              widget.data?.startsWith("Native message: Required Purposes: cookies,create_ads_profile,create_content_profile,") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Required Purposes: $purposeIds";
+      assertNativeMessage("getRequiredPurposeIds", expected);
 
       assert(isError == false);
       assert(isReady == true);
@@ -290,7 +249,7 @@ void main() {
       await tester.tap(disabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      var expected = "Native message: Disabled Purpose list is empty.";
+      final expected = "Native message: Disabled Purpose list is empty.";
       assertNativeMessage("getDisabledPurposes", expected);
 
       assert(isError == false);
@@ -309,7 +268,7 @@ void main() {
       await tester.tap(enabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      var expected = "Native message: Enabled Purpose list is empty.";
+      final expected = "Native message: Enabled Purpose list is empty.";
       assertNativeMessage("getEnabledPurposes", expected);
 
       assert(isError == false);
@@ -328,7 +287,7 @@ void main() {
       await tester.tap(requiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      var expected = "Native message: Required Purposes: $purposeNames";
+      final expected = "Native message: Required Purposes: $purposeNames";
       assertNativeMessage("getRequiredPurposes", expected);
 
       assert(isError == false);
@@ -348,7 +307,7 @@ void main() {
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      var expected = "Native message: Purpose: purpose_1_name.";
+      final expected = "Native message: Purpose: purpose_1_name.";
       assertNativeMessage("getPurpose", expected);
 
       assert(isError == false);
@@ -373,15 +332,8 @@ void main() {
       await tester.tap(disabledPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getDisabledPurposeIds") &&
-              widget.data?.contains("Native message: Disabled Purpose list is empty.") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Disabled Purpose list is empty.";
+      assertNativeMessage("getDisabledPurposeIds", expected);
 
       assert(isError == false);
       assert(isReady == true);
@@ -398,15 +350,8 @@ void main() {
       await tester.tap(enabledPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getEnabledPurposeIds") &&
-              widget.data?.startsWith("Native message: Enabled Purposes: cookies,create_ads_profile,create_content_profile,") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Enabled Purposes: $purposeIds";
+      assertNativeMessage("getEnabledPurposeIds", expected);
 
       assert(isError == false);
       assert(isReady == true);
@@ -423,15 +368,8 @@ void main() {
       await tester.tap(requiredPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getRequiredPurposeIds") &&
-              widget.data?.startsWith("Native message: Required Purposes: cookies,create_ads_profile,create_content_profile,") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Required Purposes: $purposeIds";
+      assertNativeMessage("getRequiredPurposeIds", expected);
 
       assert(isError == false);
       assert(isReady == true);
@@ -449,7 +387,7 @@ void main() {
       await tester.tap(disabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      var expected = "Native message: Disabled Purpose list is empty.";
+      final expected = "Native message: Disabled Purpose list is empty.";
       assertNativeMessage("getDisabledPurposes", expected);
 
       assert(isError == false);
@@ -468,7 +406,7 @@ void main() {
       await tester.tap(enabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      var expected = "Native message: Enabled Purposes: $purposeNames";
+      final expected = "Native message: Enabled Purposes: $purposeNames";
       assertNativeMessage("getEnabledPurposes", expected);
 
       assert(isError == false);
@@ -487,7 +425,7 @@ void main() {
       await tester.tap(requiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      var expected = "Native message: Required Purposes: $purposeNames";
+      final expected = "Native message: Required Purposes: $purposeNames";
       assertNativeMessage("getRequiredPurposes", expected);
 
       assert(isError == false);
@@ -507,7 +445,7 @@ void main() {
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      var expected = "Native message: Purpose: purpose_1_name.";
+      final expected = "Native message: Purpose: purpose_1_name.";
       assertNativeMessage("getPurpose", expected);
 
       assert(isError == false);
@@ -532,15 +470,8 @@ void main() {
       await tester.tap(disabledPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getDisabledPurposeIds") &&
-              widget.data?.startsWith("Native message: Disabled Purposes: cookies,create_ads_profile,create_content_profile,") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Disabled Purposes: $purposeIds";
+      assertNativeMessage("getDisabledPurposeIds", expected);
 
       assert(isError == false);
       assert(isReady == true);
@@ -557,15 +488,8 @@ void main() {
       await tester.tap(enabledPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getEnabledPurposeIds") &&
-              widget.data?.contains("Native message: Enabled Purpose list is empty.") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Enabled Purpose list is empty.";
+      assertNativeMessage("getEnabledPurposeIds", expected);
 
       assert(isError == false);
       assert(isReady == true);
@@ -582,15 +506,8 @@ void main() {
       await tester.tap(requiredPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getRequiredPurposeIds") &&
-              widget.data?.startsWith("Native message: Required Purposes: cookies,create_ads_profile,create_content_profile,") == true,
-        ),
-        findsOneWidget,
-      );
+      final expected = "Native message: Required Purposes: $purposeIds";
+      assertNativeMessage("getRequiredPurposeIds", expected);
 
       assert(isError == false);
       assert(isReady == true);
@@ -608,7 +525,7 @@ void main() {
       await tester.tap(disabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      var expected = "Native message: Disabled Purposes: $purposeNames";
+      final expected = "Native message: Disabled Purposes: $purposeNames";
       assertNativeMessage("getDisabledPurposes", expected);
 
       assert(isError == false);
@@ -627,7 +544,7 @@ void main() {
       await tester.tap(enabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      var expected = "Native message: Enabled Purpose list is empty.";
+      final expected = "Native message: Enabled Purpose list is empty.";
       assertNativeMessage("getEnabledPurposes", expected);
 
       assert(isError == false);
@@ -646,7 +563,7 @@ void main() {
       await tester.tap(requiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      var expected = "Native message: Required Purposes: $purposeNames";
+      final expected = "Native message: Required Purposes: $purposeNames";
       assertNativeMessage("getRequiredPurposes", expected);
 
       assert(isError == false);
@@ -666,20 +583,11 @@ void main() {
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      var expected = "Native message: Purpose: purpose_1_name.";
+      final expected = "Native message: Purpose: purpose_1_name.";
       assertNativeMessage("getPurpose", expected);
 
       assert(isError == false);
       assert(isReady == true);
     });
   });
-}
-
-// Assert the text of the native message associated to a button.
-Future<void> assertNativeMessage(String buttonLabel, expected) async {
-  var testKey = Key("nativeResponse_$buttonLabel");
-  var finder = find.byKey(testKey);
-  var text = finder.evaluate().single.widget as Text;
-  var actual = text.data!.removeNewLines();
-  assert(actual == expected, "Actual: $actual\nExpected: $expected");
 }
