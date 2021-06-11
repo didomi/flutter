@@ -1,11 +1,13 @@
 name: Build
 
-# Triggered when code is pushed to any branch except main in a repository or manually
+# Triggered manually or when code is pushed
+# (branch name exclusion list below)
 on:
   push:
     branches:
       - "**"
-      - "!main"
+      - "!main" # Prevent build when pushing main
+      - "!wip/*" # Prevent build when pushing on wip/*
   workflow_dispatch:
 
 concurrency:
