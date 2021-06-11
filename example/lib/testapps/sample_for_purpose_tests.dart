@@ -1,5 +1,6 @@
 import 'package:didomi_sdk_example/widgets/get_disabled_purpose_ids.dart';
 import 'package:didomi_sdk_example/widgets/get_enabled_purpose_ids.dart';
+import 'package:didomi_sdk_example/widgets/get_purpose.dart';
 import 'package:didomi_sdk_example/widgets/get_required_purpose_ids.dart';
 import 'package:didomi_sdk_example/widgets/get_disabled_purposes.dart';
 import 'package:didomi_sdk_example/widgets/get_enabled_purposes.dart';
@@ -37,6 +38,7 @@ class HomePage extends StatelessWidget {
             GetDisabledPurposes(),
             GetEnabledPurposes(),
             GetRequiredPurposes(),
+            GetPurpose()
           ],
         ),
   );

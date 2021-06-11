@@ -21,6 +21,7 @@ void main() {
   final disabledPurposesBtnFinder = find.byKey(Key("getDisabledPurposes"));
   final enabledPurposesBtnFinder = find.byKey(Key("getEnabledPurposes"));
   final requiredPurposesBtnFinder = find.byKey(Key("getRequiredPurposes"));
+  final getPurposesBtnFinder = find.byKey(Key("getPurpose"));
   final listKey = Key("components_list");
 
   bool isError = false;
@@ -127,7 +128,7 @@ void main() {
       assert(isError == false);
       assert(isReady == false);
 
-      await scrollDown(tester, Key("components_list"));
+      await scrollDown(tester, listKey);
       await tester.tap(disabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -146,7 +147,7 @@ void main() {
       assert(isError == false);
       assert(isReady == false);
 
-      await scrollDown(tester, Key("components_list"));
+      await scrollDown(tester, listKey);
       await tester.tap(enabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -165,12 +166,32 @@ void main() {
       assert(isError == false);
       assert(isReady == false);
 
-      await scrollDown(tester, Key("components_list"));
+      await scrollDown(tester, listKey);
       await tester.tap(requiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
       var expected = notReadyMessage;
       assertNativeMessage("getRequiredPurposes", expected);
+
+      assert(isError == false);
+      assert(isReady == false);
+    });
+
+    testWidgets("Get a purpose name without initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == false);
+
+      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey);
+      await tester.tap(getPurposesBtnFinder);
+      await tester.pumpAndSettle();
+
+      var expected = notReadyMessage;
+      assertNativeMessage("getPurpose", expected);
 
       assert(isError == false);
       assert(isReady == false);
@@ -265,7 +286,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      await scrollDown(tester, Key("components_list"));
+      await scrollDown(tester, listKey);
       await tester.tap(disabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -284,7 +305,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      await scrollDown(tester, Key("components_list"));
+      await scrollDown(tester, listKey);
       await tester.tap(enabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -303,12 +324,32 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      await scrollDown(tester, Key("components_list"));
+      await scrollDown(tester, listKey);
       await tester.tap(requiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
       var expected = "Native message: Required Purposes: $purposeNames";
       assertNativeMessage("getRequiredPurposes", expected);
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get a purpose name with initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey);
+      await tester.tap(getPurposesBtnFinder);
+      await tester.pumpAndSettle();
+
+      var expected = "Native message: Purpose: purpose_1_name.";
+      assertNativeMessage("getPurpose", expected);
 
       assert(isError == false);
       assert(isReady == true);
@@ -453,6 +494,26 @@ void main() {
       assert(isReady == true);
     });
 
+    testWidgets("Get a purpose name with initialization and user agreed", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey);
+      await tester.tap(getPurposesBtnFinder);
+      await tester.pumpAndSettle();
+
+      var expected = "Native message: Purpose: purpose_1_name.";
+      assertNativeMessage("getPurpose", expected);
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
     /*
      * With initialization + Disagree to All
      */
@@ -587,6 +648,26 @@ void main() {
 
       var expected = "Native message: Required Purposes: $purposeNames";
       assertNativeMessage("getRequiredPurposes", expected);
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get a purpose name with initialization and user disagreed", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey);
+      await tester.tap(getPurposesBtnFinder);
+      await tester.pumpAndSettle();
+
+      var expected = "Native message: Purpose: purpose_1_name.";
+      assertNativeMessage("getPurpose", expected);
 
       assert(isError == false);
       assert(isReady == true);
