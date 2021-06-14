@@ -165,6 +165,8 @@ void main() {
       assert(isError == false);
       assert(isReady == false);
 
+      // Depending on the screen size, we might need to scroll more than once
+      // in order to reach the widgets at the bottom of the list.
       await scrollDown(tester, listKey);
       await scrollDown(tester, listKey);
       await tester.tap(getVendorBtnFinder);
@@ -302,6 +304,8 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
+      // Depending on the screen size, we might need to scroll more than once
+      // in order to reach the widgets at the bottom of the list.
       await scrollDown(tester, listKey);
       await scrollDown(tester, listKey);
       await tester.tap(getVendorBtnFinder);
@@ -440,6 +444,8 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
+      // Depending on the screen size, we might need to scroll more than once
+      // in order to reach the widgets at the bottom of the list.
       await scrollDown(tester, listKey);
       await scrollDown(tester, listKey);
       await tester.tap(getVendorBtnFinder);
@@ -578,6 +584,8 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
+      // Depending on the screen size, we might need to scroll more than once
+      // in order to reach the widgets at the bottom of the list.
       await scrollDown(tester, listKey);
       await scrollDown(tester, listKey);
       await tester.tap(getVendorBtnFinder);
