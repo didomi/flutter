@@ -4,6 +4,7 @@ import 'package:didomi_sdk_example/events_helper.dart';
 import 'package:didomi_sdk_example/widgets/get_text.dart';
 import 'package:didomi_sdk_example/widgets/get_translated_text.dart';
 import 'package:didomi_sdk_example/widgets/set_user.dart';
+import 'package:didomi_sdk_example/widgets/set_user_status_globally.dart';
 import 'package:didomi_sdk_example/widgets/update_selected_language.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:flutter/material.dart';
@@ -136,6 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 SetUserAgreeToAll(),
                 SetUserDisagreeToAll(),
                 SetUserStatus(),
+                SetUserStatusGlobally(),
                 // Purposes
                 Text("Purposes:"),
                 GetDisabledPurposeIds(),
