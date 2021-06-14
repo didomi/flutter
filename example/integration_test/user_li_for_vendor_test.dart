@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk_example/testapps/sample_for_user_li_for_vendor_tests.dart' as app;
@@ -7,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'util/assertion_helper.dart';
 import 'util/initialize_helper.dart';
 
 void main() {
@@ -18,6 +17,13 @@ void main() {
   final resetBtnFinder = find.byKey(Key("reset"));
   final getUserLegitimateInterestStatusForVendorBtnFinder = find.byKey(Key("getUserLegitimateInterestStatusForVendor"));
   final getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder = find.byKey(Key("getUserLegitimateInterestStatusForVendorAndRequiredPurposes"));
+
+  // Messages
+  final notReadyMessage = "Native message: Failed: 'Didomi SDK is not ready. Use the onReady callback to access this method.'.";
+  final enabledForVendorMessage = "Native message: User status is 'Enabled' for vendor '738'.";
+  final disabledForVendorMessage = "Native message: User status is 'Disabled' for vendor '738'.";
+  final enabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Enabled' for vendor '738' and required purposes.";
+  final disabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Disabled' for vendor '738' and required purposes.";
 
   bool isError = false;
   bool isReady = false;
@@ -32,7 +38,7 @@ void main() {
 
   DidomiSdk.addEventListener(listener);
 
-  group("User Legitimate Interest for ", () {
+  group("User Legitimate Interest for Vendor", () {
     /*
      * Without initialization
      */
@@ -49,29 +55,13 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
-              widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("getUserLegitimateInterestStatusForVendor", notReadyMessage);
 
       // UserLegitimateInterestStatusForVendorAndRequiredPurposes
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getUserLegitimateInterestStatusForVendorAndRequiredPurposes") &&
-              widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -94,43 +84,17 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
       await tester.pumpAndSettle();
 
-      // TODO('Check difference')
-      if (Platform.isAndroid) {
-        expect(
-          find.byWidgetPredicate(
-                (Widget widget) =>
-            widget is Text &&
-                widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
-                widget.data?.contains("Native message: User status is 'Enabled' for vendor '738'.") == true,
-          ),
-          findsOneWidget,
-        );
-      } else if (Platform.isIOS) {
-        expect(
-          find.byWidgetPredicate(
-                (Widget widget) =>
-            widget is Text &&
-                widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
-                widget.data?.contains("Native message: No user status for vendor '738'.") == true,
-          ),
-          findsOneWidget,
-        );
-      }
+      assertNativeMessage("getUserLegitimateInterestStatusForVendor", enabledForVendorMessage);
 
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getUserLegitimateInterestStatusForVendorAndRequiredPurposes") &&
-              widget.data?.contains("Native message: User status is 'Enabled' for vendor '738' and required purposes.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", enabledForVendorAndRequiredPurposesMessage);
     });
 
+    /*
+     * With initialization + agree then reset
+     */
     testWidgets("Click LI for vendor '738' after agreeing then reset", (WidgetTester tester) async {
       // Start app
       app.main();
@@ -143,40 +107,18 @@ void main() {
       await tester.tap(agreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text && widget.key.toString().contains("setUserAgreeToAll") && widget.data?.contains("Native message: Consent updated: true.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserAgreeToAll", "Native message: Consent updated: true.");
 
       // Check LI
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
-              widget.data?.contains("Native message: User status is 'Enabled' for vendor '738'.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("getUserLegitimateInterestStatusForVendor", enabledForVendorMessage);
 
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getUserLegitimateInterestStatusForVendorAndRequiredPurposes") &&
-              widget.data?.contains("Native message: User status is 'Enabled' for vendor '738' and required purposes.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", enabledForVendorAndRequiredPurposesMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -192,43 +134,17 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
       await tester.pumpAndSettle();
 
-      // TODO('Check difference')
-      if (Platform.isAndroid) {
-        expect(
-          find.byWidgetPredicate(
-                (Widget widget) =>
-            widget is Text &&
-                widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
-                widget.data?.contains("Native message: User status is 'Enabled' for vendor '738'.") == true,
-          ),
-          findsOneWidget,
-        );
-      } else if (Platform.isIOS) {
-        expect(
-          find.byWidgetPredicate(
-                (Widget widget) =>
-            widget is Text &&
-                widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
-                widget.data?.contains("Native message: No user status for vendor '738'.") == true,
-          ),
-          findsOneWidget,
-        );
-      }
+      assertNativeMessage("getUserLegitimateInterestStatusForVendor", enabledForVendorMessage);
 
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getUserLegitimateInterestStatusForVendorAndRequiredPurposes") &&
-              widget.data?.contains("Native message: User status is 'Enabled' for vendor '738' and required purposes.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", enabledForVendorAndRequiredPurposesMessage);
     });
 
+    /*
+     * With initialization + disagree then reset
+     */
     testWidgets("Click LI for vendor '738' after disagreeing then reset", (WidgetTester tester) async {
       // Start app
       app.main();
@@ -241,42 +157,18 @@ void main() {
       await tester.tap(disagreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("setUserDisagreeToAll") &&
-              widget.data?.contains("Native message: Consent updated: true.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserDisagreeToAll", "Native message: Consent updated: true.");
 
       // Check LI
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
-              widget.data?.contains("Native message: User status is 'Disabled' for vendor '738'.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("getUserLegitimateInterestStatusForVendor", disabledForVendorMessage);
 
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getUserLegitimateInterestStatusForVendorAndRequiredPurposes") &&
-              widget.data?.contains("Native message: User status is 'Disabled' for vendor '738' and required purposes.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", disabledForVendorAndRequiredPurposesMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -292,41 +184,12 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
       await tester.pumpAndSettle();
 
-      // TODO('Check difference')
-      if (Platform.isAndroid) {
-        expect(
-          find.byWidgetPredicate(
-                (Widget widget) =>
-            widget is Text &&
-                widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
-                widget.data?.contains("Native message: User status is 'Enabled' for vendor '738'.") == true,
-          ),
-          findsOneWidget,
-        );
-      } else if (Platform.isIOS) {
-        expect(
-          find.byWidgetPredicate(
-                (Widget widget) =>
-            widget is Text &&
-                widget.key.toString().contains("getUserLegitimateInterestStatusForVendor") &&
-                widget.data?.contains("Native message: No user status for vendor '738'.") == true,
-          ),
-          findsOneWidget,
-        );
-      }
+      assertNativeMessage("getUserLegitimateInterestStatusForVendor", enabledForVendorMessage);
 
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getUserLegitimateInterestStatusForVendorAndRequiredPurposes") &&
-              widget.data?.contains("Native message: User status is 'Enabled' for vendor '738' and required purposes.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", enabledForVendorAndRequiredPurposesMessage);
     });
   });
 }
