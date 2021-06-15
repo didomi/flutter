@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
@@ -28,7 +29,9 @@ class _GetTextState extends BaseSampleWidgetState<GetText> {
     if (result == null) {
       sb.writeln("No result");
     } else {
-      result.entries.forEach((element) {
+      // Sort result for UI tests
+      final sorted = SplayTreeMap<String, dynamic>.from(result, (a, b) => result[a]!.compareTo(result[b]!));
+      sorted.entries.forEach((element) {
         sb.writeln("${element.key} =>");
         sb.writeln(element.value);
       });
