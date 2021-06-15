@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'util/assertion_helper.dart';
 import 'util/initialize_helper.dart';
 
 void main() {
@@ -32,6 +33,9 @@ void main() {
     consentChanged = true;
   };
 
+  final String didomiNotReadyMessage = "Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.";
+  final String consentUpdatedMessage = "Native message: Consent updated: true.";
+  final String consentNotUpdatedMessage = "Native message: Consent updated: false.";
 
   DidomiSdk.addEventListener(listener);
 
@@ -41,6 +45,7 @@ void main() {
      */
 
     testWidgets("Click agree to all without initialization", (WidgetTester tester) async {
+
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -52,15 +57,7 @@ void main() {
       await tester.tap(agreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("setUserAgreeToAll") &&
-              widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserAgreeToAll", didomiNotReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -78,15 +75,7 @@ void main() {
       await tester.tap(disagreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("setUserDisagreeToAll") &&
-              widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserDisagreeToAll", didomiNotReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -104,15 +93,7 @@ void main() {
       await tester.tap(userStatusBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("setUserStatus") &&
-              widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserStatus", didomiNotReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -130,15 +111,8 @@ void main() {
       await tester.tap(userStatusGloballyBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("setUserStatusGlobally") &&
-              widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserStatusGlobally", didomiNotReadyMessage);
+
       assert(isError == false);
       assert(isReady == false);
     });
@@ -161,13 +135,7 @@ void main() {
       await tester.tap(agreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text && widget.key.toString().contains("setUserAgreeToAll") && widget.data?.contains("Native message: Consent updated: true.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserAgreeToAll", consentUpdatedMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -176,13 +144,7 @@ void main() {
       await tester.tap(agreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text && widget.key.toString().contains("setUserAgreeToAll") && widget.data?.contains("Native message: Consent updated: false.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserAgreeToAll", consentNotUpdatedMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -200,13 +162,7 @@ void main() {
       await tester.tap(agreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text && widget.key.toString().contains("setUserAgreeToAll") && widget.data?.contains("Native message: Consent updated: false.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserAgreeToAll", consentNotUpdatedMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -219,13 +175,7 @@ void main() {
       await tester.tap(agreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text && widget.key.toString().contains("setUserAgreeToAll") && widget.data?.contains("Native message: Consent updated: true.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserAgreeToAll", consentUpdatedMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -243,15 +193,7 @@ void main() {
       await tester.tap(disagreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("setUserDisagreeToAll") &&
-              widget.data?.contains("Native message: Consent updated: true.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserDisagreeToAll", consentUpdatedMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -260,15 +202,7 @@ void main() {
       await tester.tap(disagreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("setUserDisagreeToAll") &&
-              widget.data?.contains("Native message: Consent updated: false.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserDisagreeToAll", consentNotUpdatedMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -286,15 +220,7 @@ void main() {
       await tester.tap(disagreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("setUserDisagreeToAll") &&
-              widget.data?.contains("Native message: Consent updated: false.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserDisagreeToAll", consentNotUpdatedMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -307,15 +233,7 @@ void main() {
       await tester.tap(disagreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("setUserDisagreeToAll") &&
-              widget.data?.contains("Native message: Consent updated: true.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserDisagreeToAll", consentUpdatedMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -333,13 +251,7 @@ void main() {
       await tester.tap(userStatusBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text && widget.key.toString().contains("setUserStatus") && widget.data?.contains("Native message: Consent updated: true.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserStatus", consentUpdatedMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -356,13 +268,7 @@ void main() {
 
       consentChanged = false;
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text && widget.key.toString().contains("setUserStatus") && widget.data?.contains("Native message: Consent updated: false.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserStatus", consentNotUpdatedMessage);
 
       assert(consentChanged == false);
       assert(isError == false);
@@ -382,13 +288,7 @@ void main() {
       await tester.tap(userStatusBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text && widget.key.toString().contains("setUserStatus") && widget.data?.contains("Native message: Consent updated: false.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserStatus", consentNotUpdatedMessage);
 
       assert(consentChanged == false);
       assert(isError == false);
@@ -402,13 +302,7 @@ void main() {
       await tester.tap(userStatusBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text && widget.key.toString().contains("setUserStatus") && widget.data?.contains("Native message: Consent updated: true.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserStatus", consentUpdatedMessage);
 
       assert(consentChanged == true);
       assert(isError == false);
@@ -427,13 +321,7 @@ void main() {
       await tester.tap(userStatusGloballyBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text && widget.key.toString().contains("setUserStatusGlobally") && widget.data?.contains("Native message: Consent updated: true.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserStatusGlobally", consentUpdatedMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -450,13 +338,7 @@ void main() {
 
       consentChanged = false;
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text && widget.key.toString().contains("setUserStatusGlobally") && widget.data?.contains("Native message: Consent updated: false.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserStatusGlobally", consentNotUpdatedMessage);
 
       assert(consentChanged == false);
       assert(isError == false);
@@ -476,13 +358,7 @@ void main() {
       await tester.tap(userStatusGloballyBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text && widget.key.toString().contains("setUserStatusGlobally") && widget.data?.contains("Native message: Consent updated: false.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserStatusGlobally", consentNotUpdatedMessage);
 
       assert(consentChanged == false);
       assert(isError == false);
@@ -496,13 +372,7 @@ void main() {
       await tester.tap(userStatusGloballyBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text && widget.key.toString().contains("setUserStatusGlobally") && widget.data?.contains("Native message: Consent updated: true.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserStatusGlobally", consentUpdatedMessage);
 
       assert(consentChanged == true);
       assert(isError == false);
