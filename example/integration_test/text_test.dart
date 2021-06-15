@@ -13,10 +13,6 @@ import 'util/initialize_helper.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  final initializeBtnFinder = find.byKey(Key("initializeSmall"));
-  final getTextBtnFinder = find.byKey(Key("getText"));
-  final getWebviewStringsBtnFinder = find.byKey(Key("getWebviewStrings"));
-
   // Messages
   const expectedResult = "Native message: fr =>Avec votre consentement, nous et <a href=\"javascript:Didomi.preferences.show('vendors')\">nos partenaires</a> "
       "utilisons l'espace de stockage du terminal pour stocker et accéder à des données personnelles telles que des données de géolocalisation "
@@ -27,6 +23,10 @@ void main() {
       "like precise geolocation data, and identification through device scanning. We process that data for purposes like personalised ads and content, "
       "ad and content measurement, audience insights and product development. You can withdraw your consent or object to data processing based on "
       "legitimate interest at any time from the app menu.";
+
+  final initializeBtnFinder = find.byKey(Key("initializeSmall"));
+  final getTextBtnFinder = find.byKey(Key("getText"));
+  final getWebviewStringsBtnFinder = find.byKey(Key("getWebviewStrings"));
 
   bool isError = false;
   bool isReady = false;
