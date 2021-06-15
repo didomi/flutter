@@ -29,8 +29,8 @@ void main() {
 
   // Native message strings.
   final purposeNames = "purpose_1_name, purpose_3_name, purpose_5_name, special_feature_2_name, special_feature_1_name, purpose_10_name, purpose_9_name, purpose_7_name, purpose_8_name, purpose_2_name, purpose_4_name, purpose_6_name.";
-  final purposeIds = "cookies,create_ads_profile,create_content_profile,device_characteristics,geolocation_data,improve_products,market_research,measure_ad_performance,measure_content_performance,select_basic_ads,select_personalized_ads,select_personalized_content.";
-  final notReadyMessage = "Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.";
+  final purposeIds = "cookies, create_ads_profile, create_content_profile, device_characteristics, geolocation_data, improve_products, market_research, measure_ad_performance, measure_content_performance, select_basic_ads, select_personalized_ads, select_personalized_content.";
+  final notReadyMessage = "Native message: Failed: 'Didomi SDK is not ready. Use the onReady callback to access this method.'.";
 
   final listener = EventListener();
   listener.onError = (String message) {

@@ -1,7 +1,8 @@
 import 'dart:async';
-import 'dart:collection';
 
 import 'package:didomi_sdk/didomi_sdk.dart';
+import 'package:didomi_sdk_example/extensions/map.dart';
+import 'package:didomi_sdk_example/extensions/splay_tree_map.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
 import 'package:flutter/material.dart';
 
@@ -25,18 +26,14 @@ class _GetTextState extends BaseSampleWidgetState<GetText> {
   @override
   Future<String> callDidomiPlugin() async {
     Map<String, String>? result = await DidomiSdk.getText(_keyController.text);
-    StringBuffer sb = StringBuffer("\n");
     if (result == null) {
-      sb.writeln("No result");
+      return "\nNo result";
     } else {
       // Sort result for UI tests
-      final sorted = SplayTreeMap<String, dynamic>.from(result, (a, b) => result[a]!.compareTo(result[b]!));
-      sorted.entries.forEach((element) {
-        sb.writeln("${element.key} =>");
-        sb.writeln(element.value);
-      });
+      final sorted = result.sortByKey();
+      // Pretty print for content
+      return sorted.pretty("\n");
     }
-    return sb.toString();
   }
 
   @override

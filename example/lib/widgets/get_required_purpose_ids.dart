@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:didomi_sdk/didomi_sdk.dart';
+import 'package:didomi_sdk_example/extensions/list.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
 import 'package:flutter/material.dart';
 
@@ -10,8 +11,7 @@ class GetRequiredPurposeIds extends StatefulWidget {
   State<StatefulWidget> createState() => _GetRequiredPurposeIdsState();
 }
 
-class _GetRequiredPurposeIdsState
-    extends BaseSampleWidgetState<GetRequiredPurposeIds> {
+class _GetRequiredPurposeIdsState extends BaseSampleWidgetState<GetRequiredPurposeIds> {
   @override
   String getButtonName() => "GetRequiredPurposeIds";
 
@@ -22,11 +22,10 @@ class _GetRequiredPurposeIdsState
   Future<String> callDidomiPlugin() async {
     final List<String> result = await DidomiSdk.requiredPurposeIds;
     result.sort(); // Required for UI tests
-    print(result.join(","));
     if (result.isEmpty) {
       return "Required Purpose list is empty.";
     } else {
-      return "Required Purposes: ${result.join(",")}.";
+      return "Required Purposes: ${result.joinToString()}.";
     }
   }
 }

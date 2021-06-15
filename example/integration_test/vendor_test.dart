@@ -26,7 +26,7 @@ void main() {
 
   // Native message strings.
   final vendorNames = "Exponential Interactive, Inc d/b/a VDX.tv, Index Exchange, Inc. , Fifty";
-  final notReadyMessage = "Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.";
+  final notReadyMessage = "Native message: Failed: 'Didomi SDK is not ready. Use the onReady callback to access this method.'.";
 
   bool isError = false;
   bool isReady = false;
@@ -231,7 +231,7 @@ void main() {
       await tester.tap(requiredVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Required Vendors: 1,10,100,1000,1001,1002,";
+      final expected = "Native message: Required Vendors: 1, 10, 100, 1000, 1001, 1002, ";
       assertNativeMessageStartsWith("getRequiredVendorIds", expected);
 
       assert(isError == false);
@@ -352,7 +352,7 @@ void main() {
       await tester.tap(enabledVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Enabled Vendors: 1,10,100,1000,1001,1002,";
+      final expected = "Native message: Enabled Vendors: 1, 10, 100, 1000, 1001, 1002, ";
       assertNativeMessageStartsWith("getEnabledVendorIds", expected);
 
       assert(isError == false);
@@ -370,7 +370,7 @@ void main() {
       await tester.tap(requiredVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Required Vendors: 1,10,100,1000,1001,1002,";
+      final expected = "Native message: Required Vendors: 1, 10, 100, 1000, 1001, 1002, ";
       assertNativeMessageStartsWith("getRequiredVendorIds", expected);
 
       assert(isError == false);
@@ -473,7 +473,7 @@ void main() {
       await tester.tap(disabledVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Disabled Vendors: 1,10,100,1000,1001,1002,";
+      final expected = "Native message: Disabled Vendors: 1, 10, 100, 1000, 1001, 1002, ";
       assertNativeMessageStartsWith("getDisabledVendorIds", expected);
 
       assert(isError == false);
@@ -509,7 +509,7 @@ void main() {
       await tester.tap(requiredVendorIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Required Vendors: 1,10,100,1000,1001,1002,";
+      final expected = "Native message: Required Vendors: 1, 10, 100, 1000, 1001, 1002, ";
       assertNativeMessageStartsWith("getRequiredVendorIds", expected);
 
       assert(isError == false);
