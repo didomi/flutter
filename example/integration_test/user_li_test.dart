@@ -68,7 +68,6 @@ void main() {
       assertNativeMessage("getUserLegitimateInterestStatusForVendor", notReadyMessage);
 
       await scrollDown(tester, listKey);
-      await tester.pumpAndSettle();
 
       // UserLegitimateInterestStatusForVendorAndRequiredPurposes
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
@@ -107,7 +106,6 @@ void main() {
       assertNativeMessage("getUserLegitimateInterestStatusForVendor", enabledForVendorMessage);
 
       await scrollDown(tester, listKey);
-      await tester.pumpAndSettle();
 
       // UserLegitimateInterestStatusForVendorAndRequiredPurposes
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
@@ -146,7 +144,6 @@ void main() {
       assertNativeMessage("getUserLegitimateInterestStatusForVendor", enabledForVendorMessage);
 
       await scrollDown(tester, listKey);
-      await tester.pumpAndSettle();
 
       // UserLegitimateInterestStatusForVendorAndRequiredPurposes
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
@@ -177,7 +174,6 @@ void main() {
       assertNativeMessage("getUserLegitimateInterestStatusForVendor", enabledForVendorMessage);
 
       await scrollDown(tester, listKey);
-      await tester.pumpAndSettle();
 
       // UserLegitimateInterestStatusForVendorAndRequiredPurposes
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
@@ -216,7 +212,6 @@ void main() {
       assertNativeMessage("getUserLegitimateInterestStatusForVendor", disabledForVendorMessage);
 
       await scrollDown(tester, listKey);
-      await tester.pumpAndSettle();
 
       // UserLegitimateInterestStatusForVendorAndRequiredPurposes
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
@@ -247,7 +242,6 @@ void main() {
       assertNativeMessage("getUserLegitimateInterestStatusForVendor", enabledForVendorMessage);
 
       await scrollDown(tester, listKey);
-      await tester.pumpAndSettle();
 
       // UserLegitimateInterestStatusForVendorAndRequiredPurposes
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
