@@ -90,6 +90,7 @@ echo "iOS SDK last version is $version"
 pushd ios >/dev/null
 sed -i~ -e "s|s.dependency 'Didomi-XCFramework', '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|s.dependency 'Didomi-XCFramework', '$version'|g" didomi_sdk.podspec || exit 1
 sed -i~ -e "s|s.version          = '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|s.version          = '$flutterversion'|g" didomi_sdk.podspec || exit 1
+pod update || exit 1
 popd >/dev/null
 
 # Update Flutter version
