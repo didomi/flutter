@@ -32,7 +32,7 @@ class _GetTextState extends BaseSampleWidgetState<GetText> {
       // Sort result for UI tests
       final sorted = result.sortByKey();
       // Pretty print for content
-      return sorted.pretty("\n");
+      return sorted.joinToString("\n");
     }
   }
 
