@@ -1,12 +1,13 @@
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
-import 'package:didomi_sdk_example/testapps/sample_for_user_li_for_vendor_tests.dart' as app;
+import 'package:didomi_sdk_example/testapps/sample_for_user_li_tests.dart' as app;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'util/assertion_helper.dart';
 import 'util/initialize_helper.dart';
+import 'util/scroll_helper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -15,11 +16,14 @@ void main() {
   final agreeToAllBtnFinder = find.byKey(Key("setUserAgreeToAll"));
   final disagreeToAllBtnFinder = find.byKey(Key("setUserDisagreeToAll"));
   final resetBtnFinder = find.byKey(Key("reset"));
+  final getUserLegitimateInterestStatusForPurposeBtnFinder = find.byKey(Key("getUserLegitimateInterestStatusForPurpose"));
   final getUserLegitimateInterestStatusForVendorBtnFinder = find.byKey(Key("getUserLegitimateInterestStatusForVendor"));
   final getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder = find.byKey(Key("getUserLegitimateInterestStatusForVendorAndRequiredPurposes"));
+  final listKey = Key("components_list");
 
   // Messages
   final notReadyMessage = "Native message: Failed: 'Didomi SDK is not ready. Use the onReady callback to access this method.'.";
+  final enabledForPurposeMessage = "Native message: User status is 'Enabled' for purpose 'cookies'.";
   final enabledForVendorMessage = "Native message: User status is 'Enabled' for vendor '738'.";
   final disabledForVendorMessage = "Native message: User status is 'Disabled' for vendor '738'.";
   final enabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Enabled' for vendor '738' and required purposes.";
@@ -51,11 +55,20 @@ void main() {
       assert(isError == false);
       assert(isReady == false);
 
+      // UserLegitimateInterestStatusForPurpose
+      await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
+      await tester.pumpAndSettle();
+
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", notReadyMessage);
+
       // UserLegitimateInterestStatusForVendor
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
       await tester.pumpAndSettle();
 
       assertNativeMessage("getUserLegitimateInterestStatusForVendor", notReadyMessage);
+
+      await scrollDown(tester, listKey);
+      await tester.pumpAndSettle();
 
       // UserLegitimateInterestStatusForVendorAndRequiredPurposes
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
@@ -76,16 +89,30 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      await scrollUp(tester, listKey);
+      await tester.pumpAndSettle();
+
       await InitializeHelper.initialize(tester, initializeBtnFinder);
 
       assert(isError == false);
       assert(isReady == true);
 
+      // UserLegitimateInterestStatusForPurpose
+      await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
+      await tester.pumpAndSettle();
+
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", enabledForPurposeMessage);
+
+      // UserLegitimateInterestStatusForVendor
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
       await tester.pumpAndSettle();
 
       assertNativeMessage("getUserLegitimateInterestStatusForVendor", enabledForVendorMessage);
 
+      await scrollDown(tester, listKey);
+      await tester.pumpAndSettle();
+
+      // UserLegitimateInterestStatusForVendorAndRequiredPurposes
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -100,6 +127,9 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      await scrollUp(tester, listKey);
+      await tester.pumpAndSettle();
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -109,12 +139,22 @@ void main() {
 
       assertNativeMessage("setUserAgreeToAll", "Native message: Consent updated: true.");
 
-      // Check LI
+      // UserLegitimateInterestStatusForPurpose
+      await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
+      await tester.pumpAndSettle();
+
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", enabledForPurposeMessage);
+
+      // getUserLegitimateInterestStatusForVendor
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
       await tester.pumpAndSettle();
 
       assertNativeMessage("getUserLegitimateInterestStatusForVendor", enabledForVendorMessage);
 
+      await scrollDown(tester, listKey);
+      await tester.pumpAndSettle();
+
+      // UserLegitimateInterestStatusForVendorAndRequiredPurposes
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -123,6 +163,9 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
+      await scrollUp(tester, listKey);
+      await tester.pumpAndSettle();
+
       // Reset user consent
       await tester.tap(resetBtnFinder);
       await tester.pumpAndSettle();
@@ -130,12 +173,22 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      // Check LI (no change)
+      // UserLegitimateInterestStatusForPurpose
+      await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
+      await tester.pumpAndSettle();
+
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", enabledForPurposeMessage);
+
+      // UserLegitimateInterestStatusForVendor
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
       await tester.pumpAndSettle();
 
       assertNativeMessage("getUserLegitimateInterestStatusForVendor", enabledForVendorMessage);
 
+      await scrollDown(tester, listKey);
+      await tester.pumpAndSettle();
+
+      // UserLegitimateInterestStatusForVendorAndRequiredPurposes
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -150,6 +203,9 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      await scrollUp(tester, listKey);
+      await tester.pumpAndSettle();
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -159,12 +215,22 @@ void main() {
 
       assertNativeMessage("setUserDisagreeToAll", "Native message: Consent updated: true.");
 
-      // Check LI
+      // UserLegitimateInterestStatusForPurpose
+      await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
+      await tester.pumpAndSettle();
+
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", enabledForPurposeMessage);
+
+      // UserLegitimateInterestStatusForVendor
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
       await tester.pumpAndSettle();
 
       assertNativeMessage("getUserLegitimateInterestStatusForVendor", disabledForVendorMessage);
 
+      await scrollDown(tester, listKey);
+      await tester.pumpAndSettle();
+
+      // UserLegitimateInterestStatusForVendorAndRequiredPurposes
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -173,6 +239,9 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
+      await scrollUp(tester, listKey);
+      await tester.pumpAndSettle();
+
       // Reset user consent
       await tester.tap(resetBtnFinder);
       await tester.pumpAndSettle();
@@ -180,12 +249,22 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      // Check LI (reverted)
+      // UserLegitimateInterestStatusForPurpose
+      await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
+      await tester.pumpAndSettle();
+
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", enabledForPurposeMessage);
+
+      // UserLegitimateInterestStatusForVendor
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
       await tester.pumpAndSettle();
 
       assertNativeMessage("getUserLegitimateInterestStatusForVendor", enabledForVendorMessage);
 
+      await scrollDown(tester, listKey);
+      await tester.pumpAndSettle();
+
+      // UserLegitimateInterestStatusForVendorAndRequiredPurposes
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
