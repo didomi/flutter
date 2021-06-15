@@ -3,7 +3,7 @@ import 'dart:collection';
 /// SplayTreeMap extension.
 extension SplayTreeMapPrettyPrint on SplayTreeMap {
   /// Extension method used to print content.
-  String pretty(String prefix) {
+  String joinToString(String prefix) {
     StringBuffer sb = StringBuffer(prefix);
     this.entries.forEach((element) {
       sb.writeln("${element.key} =>");

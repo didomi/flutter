@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'util/assertion_helper.dart';
+import 'util/constants.dart';
 import 'util/initialize_helper.dart';
 import 'util/scroll_helper.dart';
 
@@ -28,9 +29,10 @@ void main() {
   bool isReady = false;
 
   // Native message strings.
-  final purposeNames = "purpose_1_name, purpose_3_name, purpose_5_name, special_feature_2_name, special_feature_1_name, purpose_10_name, purpose_9_name, purpose_7_name, purpose_8_name, purpose_2_name, purpose_4_name, purpose_6_name.";
-  final purposeIds = "cookies, create_ads_profile, create_content_profile, device_characteristics, geolocation_data, improve_products, market_research, measure_ad_performance, measure_content_performance, select_basic_ads, select_personalized_ads, select_personalized_content.";
-  final notReadyMessage = "Native message: Failed: 'Didomi SDK is not ready. Use the onReady callback to access this method.'.";
+  const purposeNames = "purpose_1_name, purpose_3_name, purpose_5_name, special_feature_2_name, special_feature_1_name, purpose_10_name, purpose_9_name, "
+      "purpose_7_name, purpose_8_name, purpose_2_name, purpose_4_name, purpose_6_name.";
+  const purposeIds = "cookies, create_ads_profile, create_content_profile, device_characteristics, geolocation_data, improve_products, market_research, "
+      "measure_ad_performance, measure_content_performance, select_basic_ads, select_personalized_ads, select_personalized_content.";
 
   final listener = EventListener();
   listener.onError = (String message) {
@@ -58,8 +60,7 @@ void main() {
       await tester.tap(disabledPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = notReadyMessage;
-      assertNativeMessage("getDisabledPurposeIds", expected);
+      assertNativeMessage("getDisabledPurposeIds", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -76,8 +77,7 @@ void main() {
       await tester.tap(enabledPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = notReadyMessage;
-      assertNativeMessage("getEnabledPurposeIds", expected);
+      assertNativeMessage("getEnabledPurposeIds", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -94,8 +94,7 @@ void main() {
       await tester.tap(requiredPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = notReadyMessage;
-      assertNativeMessage("getRequiredPurposeIds", expected);
+      assertNativeMessage("getRequiredPurposeIds", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -113,8 +112,7 @@ void main() {
       await tester.tap(disabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = notReadyMessage;
-      assertNativeMessage("getDisabledPurposes", expected);
+      assertNativeMessage("getDisabledPurposes", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -132,8 +130,7 @@ void main() {
       await tester.tap(enabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = notReadyMessage;
-      assertNativeMessage("getEnabledPurposes", expected);
+      assertNativeMessage("getEnabledPurposes", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -151,8 +148,7 @@ void main() {
       await tester.tap(requiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = notReadyMessage;
-      assertNativeMessage("getRequiredPurposes", expected);
+      assertNativeMessage("getRequiredPurposes", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -170,8 +166,7 @@ void main() {
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = notReadyMessage;
-      assertNativeMessage("getPurpose", expected);
+      assertNativeMessage("getPurpose", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
