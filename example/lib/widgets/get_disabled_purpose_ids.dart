@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:didomi_sdk/didomi_sdk.dart';
+import 'package:didomi_sdk_example/extensions/list.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
 import 'package:flutter/material.dart';
 
@@ -10,8 +11,7 @@ class GetDisabledPurposeIds extends StatefulWidget {
   State<StatefulWidget> createState() => _GetDisabledPurposeIdsState();
 }
 
-class _GetDisabledPurposeIdsState
-    extends BaseSampleWidgetState<GetDisabledPurposeIds> {
+class _GetDisabledPurposeIdsState extends BaseSampleWidgetState<GetDisabledPurposeIds> {
   @override
   String getButtonName() => "GetDisabledPurposeIds";
 
@@ -22,11 +22,10 @@ class _GetDisabledPurposeIdsState
   Future<String> callDidomiPlugin() async {
     final List<String> result = await DidomiSdk.disabledPurposeIds;
     result.sort(); // Required for UI tests
-    print(result.join(","));
     if (result.isEmpty) {
       return "Disabled Purpose list is empty.";
     } else {
-      return "Disabled Purposes: ${result.join(",")}.";
+      return "Disabled Purposes: ${result.pretty()}.";
     }
   }
 }
