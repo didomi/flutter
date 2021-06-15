@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:didomi_sdk/didomi_sdk.dart';
+import 'package:didomi_sdk_example/extensions/list.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
 import 'package:flutter/material.dart';
 
@@ -21,11 +22,10 @@ class _GetDisabledVendorIdsState extends BaseSampleWidgetState<GetDisabledVendor
   Future<String> callDidomiPlugin() async {
     final List<String> result = await DidomiSdk.disabledVendorIds;
     result.sort(); // Required for UI tests
-    print(result.join(","));
     if (result.isEmpty) {
       return "Disabled Vendor list is empty.";
     } else {
-      return "Disabled Vendors: ${result.join(",")}.";
+      return "Disabled Vendors: ${result.joinToString()}.";
     }
   }
 }
