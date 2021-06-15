@@ -378,6 +378,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     /**
      * Get the user consent status for a specific purpose
+     * @param purposeId
      * @return The user consent status for the specified purpose
      */
     private fun getUserConsentStatusForPurpose(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -402,6 +403,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     /**
      * Get the user consent status for a specific vendor
+     * @param vendorId
      * @return The user consent status for the specified vendor
      */
     private fun getUserConsentStatusForVendor(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -426,6 +428,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     /**
      * Check if a vendor has consent for all the purposes that it requires
+     * @param vendorId
      * @return The user consent status for all the purposes that it requires for the specified vendor
      */
     private fun getUserConsentStatusForVendorAndRequiredPurposes(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -450,6 +453,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     /**
      * Get the user legitimate interest status for a specific purpose
+     * @param purposeId
      * @return The user legitimate interest status for the specified purpose
      */
     private fun getUserLegitimateInterestStatusForPurpose(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -474,6 +478,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     /**
      * Get the user legitimate interest status for a specific vendor
+     * @param vendorId
      * @return The user legitimate interest status for the specified vendor
      */
     private fun getUserLegitimateInterestStatusForVendor(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -498,6 +503,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     /**
      * Check if a vendor has legitimate interest for all the purposes that it requires
+     * @param vendorId
      * @return The user legitimate interest status for all the purposes that it requires for the specified vendor
      */
     private fun getUserLegitimateInterestStatusForVendorAndRequiredPurposes(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -521,6 +527,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     /**
      * Get the user consent and legitimate interest status for a specific vendor
+     * @param vendorId
      * @return The user consent and legitimate interest status for the specified vendor
      */
     private fun getUserStatusForVendor(@NonNull call: MethodCall, @NonNull result: Result) {
