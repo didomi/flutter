@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'util/assertion_helper.dart';
 import 'util/initialize_helper.dart';
 
 void main() {
@@ -14,6 +15,11 @@ void main() {
   final updateSelectedLanguageBtnFinder = find.byKey(Key("updateSelectedLanguage"));
   final getTranslatedTextBtnFinder = find.byKey(Key("getTranslatedText"));
   final languageCodeToUpdateFieldFinder = find.byKey(Key("languageCodeToUpdate"));
+
+  // Messages
+  final notReadyMessage = "Native message: Failed: 'Didomi SDK is not ready. Use the onReady callback to access this method.'.";
+  final expectedConsentEn = "Native message: With your agreement, we";
+  final expectedConsentFr = "Native message: Avec votre consentement, nous";
 
   bool isError = false;
   bool isReady = false;
@@ -40,15 +46,7 @@ void main() {
       await tester.tap(getTranslatedTextBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getTranslatedText") &&
-              widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("getTranslatedText", notReadyMessage);
     });
 
     testWidgets("Get Translated Texts after initialization", (WidgetTester tester) async {
@@ -65,15 +63,7 @@ void main() {
       await tester.tap(getTranslatedTextBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getTranslatedText") &&
-              widget.data?.startsWith("Native message: With your agreement, we") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessageStartsWith("getTranslatedText", expectedConsentEn);
     });
 
     testWidgets("Get Translated Texts after invalid language update", (WidgetTester tester) async {
@@ -96,15 +86,7 @@ void main() {
       await tester.tap(getTranslatedTextBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getTranslatedText") &&
-              widget.data?.startsWith("Native message: With your agreement, we") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessageStartsWith("getTranslatedText", expectedConsentEn);
     });
 
     testWidgets("Get Translated Texts after valid language update", (WidgetTester tester) async {
@@ -127,15 +109,7 @@ void main() {
       await tester.tap(getTranslatedTextBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getTranslatedText") &&
-              widget.data?.startsWith("Native message: Avec votre consentement, nous") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessageStartsWith("getTranslatedText", expectedConsentFr);
     });
   });
 }
