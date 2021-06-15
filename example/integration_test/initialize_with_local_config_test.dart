@@ -7,6 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'util/assertion_helper.dart';
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
@@ -41,23 +43,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // SDK is not ready at startup
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) => widget is Text && widget.key.toString().contains("isReady") && widget.data?.contains("Native message: Result = false") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("isReady", "Native message: Result = false");
 
       await tester.tap(onReadyBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text && widget.key.toString().contains("onReady") && widget.data?.contains("Native message: Waiting for onReady callback") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("onReady", "Native message: Waiting for onReady callback");
 
       await tester.tap(localConfigBoxFinder);
       await tester.tap(initializeBtnFinder);
@@ -65,30 +56,14 @@ void main() {
 
       await Future.delayed(Duration(seconds: 4));
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) => widget is Text && widget.key.toString().contains("initialize") && widget.data?.contains("Native message: OK") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("initialize", "Native message: OK");
 
       await tester.tap(isReadyBtnFinder);
       await tester.pumpAndSettle();
 
       // SDK is ready
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) => widget is Text && widget.key.toString().contains("isReady") && widget.data?.contains("Native message: Result = true") == true,
-        ),
-        findsOneWidget,
-      );
-
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) => widget is Text && widget.key.toString().contains("onReady") && widget.data?.contains("Native message: SDK is ready!") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("isReady", "Native message: Result = true");
+      assertNativeMessage("onReady", "Native message: SDK is ready!");
 
       assert(isError == false);
       assert(isReady == true);
