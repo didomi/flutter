@@ -167,8 +167,7 @@ void main() {
 
       // Depending on the screen size, we might need to scroll more than once
       // in order to reach the widgets at the bottom of the list.
-      await scrollDown(tester, listKey);
-      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey, offsetY: 600);
       await tester.tap(getVendorBtnFinder);
       await tester.pumpAndSettle();
 
@@ -306,8 +305,7 @@ void main() {
 
       // Depending on the screen size, we might need to scroll more than once
       // in order to reach the widgets at the bottom of the list.
-      await scrollDown(tester, listKey);
-      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey, offsetY: 600);
       await tester.tap(getVendorBtnFinder);
       await tester.pumpAndSettle();
 
@@ -446,8 +444,7 @@ void main() {
 
       // Depending on the screen size, we might need to scroll more than once
       // in order to reach the widgets at the bottom of the list.
-      await scrollDown(tester, listKey);
-      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey, offsetY: 600);
       await tester.tap(getVendorBtnFinder);
       await tester.pumpAndSettle();
 
@@ -586,8 +583,7 @@ void main() {
 
       // Depending on the screen size, we might need to scroll more than once
       // in order to reach the widgets at the bottom of the list.
-      await scrollDown(tester, listKey);
-      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey, offsetY: 600);
       await tester.tap(getVendorBtnFinder);
       await tester.pumpAndSettle();
 
