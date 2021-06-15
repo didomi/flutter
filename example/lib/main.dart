@@ -7,6 +7,14 @@ import 'package:didomi_sdk_example/widgets/set_user.dart';
 import 'package:didomi_sdk_example/widgets/set_user_status_globally.dart';
 import 'package:didomi_sdk_example/widgets/update_selected_language.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
+import 'package:didomi_sdk_example/widgets/get_disabled_purposes.dart';
+import 'package:didomi_sdk_example/widgets/get_disabled_vendors.dart';
+import 'package:didomi_sdk_example/widgets/get_enabled_purposes.dart';
+import 'package:didomi_sdk_example/widgets/get_enabled_vendors.dart';
+import 'package:didomi_sdk_example/widgets/get_purpose.dart';
+import 'package:didomi_sdk_example/widgets/get_required_purposes.dart';
+import 'package:didomi_sdk_example/widgets/get_required_vendors.dart';
+import 'package:didomi_sdk_example/widgets/get_vendor.dart';
 import 'package:flutter/material.dart';
 
 import 'events_helper.dart';
@@ -145,6 +153,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 GetRequiredPurposeIds(),
                 GetUserConsentStatusForPurpose(),
                 GetUserLegitimateInterestStatusForPurpose(),
+                GetEnabledPurposes(),
+                GetDisabledPurposes(),
+                GetRequiredPurposes(),
+                GetPurpose(),
                 // Vendors
                 Text("Vendors:"),
                 GetDisabledVendorIds(),
@@ -155,6 +167,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 GetUserLegitimateInterestStatusForVendor(),
                 GetUserLegitimateInterestStatusForVendorAndRequiredPurposes(),
                 GetUserStatusForVendor(),
+                GetEnabledVendors(),
+                GetDisabledVendors(),
+                GetRequiredVendors(),
+                GetVendor(),
                 // Languages,
                 Text("Languages:"),
                 UpdateSelectedLanguage(),

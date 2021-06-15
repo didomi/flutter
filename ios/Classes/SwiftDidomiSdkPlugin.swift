@@ -82,6 +82,22 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             getRequiredPurposeIds(result: result)
         case "getRequiredVendorIds":
             getRequiredVendorIds(result: result)
+        case "getEnabledPurposes":
+            getEnabledPurposes(result: result)
+        case "getDisabledPurposes":
+            getDisabledPurposes(result: result)
+        case "getEnabledVendors":
+            getEnabledVendors(result: result)
+        case "getDisabledVendors":
+            getDisabledVendors(result: result)
+        case "getRequiredPurposes":
+            getRequiredPurposes(result: result)
+        case "getRequiredVendors":
+            getRequiredVendors(result: result)
+        case "getPurpose":
+            getPurpose(call, result: result)
+        case "getVendor":
+            getVendor(call, result: result)
         case "setLogLevel":
             setLogLevel(call, result: result)
         case "setUserAgreeToAll":
@@ -310,6 +326,116 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         }
         let vendorIdList = Array(Didomi.shared.getRequiredVendorIds())
         result(vendorIdList)
+    }
+    
+    // Get enabled purposes from native to flutter.
+    func getEnabledPurposes(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let purposes = Didomi.shared.getEnabledPurposes()
+        let encoded = EntitiesHelper.dictionaries(from: purposes)
+        result(encoded)
+    }
+    
+    // Get disabled purposes from native to flutter.
+    func getDisabledPurposes(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let purposes = Didomi.shared.getDisabledPurposes()
+        let encoded = EntitiesHelper.dictionaries(from: purposes)
+        result(encoded)
+    }
+    
+    // Get enabled vendors from native to flutter.
+    func getEnabledVendors(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let vendors = Didomi.shared.getEnabledVendors()
+        let encoded = EntitiesHelper.dictionaries(from: vendors)
+        result(encoded)
+    }
+    
+    // Get disabled vendors from native to flutter.
+    func getDisabledVendors(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let vendors = Didomi.shared.getDisabledVendors()
+        let encoded = EntitiesHelper.dictionaries(from: vendors)
+        result(encoded)
+    }
+    
+    // Get required purposes from native to flutter.
+    func getRequiredPurposes(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let purposes = Didomi.shared.getRequiredPurposes()
+        let encoded = EntitiesHelper.dictionaries(from: purposes)
+        result(encoded)
+    }
+    
+    // Get required vendors from native to flutter.
+    func getRequiredVendors(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let vendors = Didomi.shared.getRequiredVendors()
+        let encoded = EntitiesHelper.dictionaries(from: vendors)
+        result(encoded)
+    }
+    
+    // Get a purpose based on its ID from native to flutter.
+    func getPurpose(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getPurpose", details: nil))
+            return
+        }
+        
+        guard let purposeID = args["purposeId"] as? String else {
+            result(FlutterError.init(code: "invalid_args", message: "getPurpose: Missing argument purposeID", details: nil))
+            return
+        }
+        
+        let purpose = Didomi.shared.getPurpose(purposeId: purposeID)
+        let encoded = EntitiesHelper.dictionary(from: purpose)
+        result(encoded)
+    }
+    
+    // Get a vendor based on its ID from native to flutter.
+    func getVendor(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for getVendor", details: nil))
+            return
+        }
+        
+        guard let vendorID = args["vendorId"] as? String else {
+            result(FlutterError.init(code: "invalid_args", message: "getVendor: Missing argument vendorID", details: nil))
+            return
+        }
+        
+        let vendor = Didomi.shared.getVendor(vendorId: vendorID)
+        let encoded = EntitiesHelper.dictionary(from: vendor)
+        result(encoded)
     }
 
     /**

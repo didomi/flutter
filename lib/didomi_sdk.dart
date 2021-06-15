@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'dart:async';
 
+import 'package:didomi_sdk/entities/entities_helper.dart';
+import 'package:didomi_sdk/entities/purpose.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'consent_status.dart';
+import 'entities/vendor.dart';
 import 'log_level.dart';
 import 'preferences_view.dart';
 import 'constants.dart';
@@ -208,6 +211,56 @@ class DidomiSdk {
     return result.cast();
   }
 
+  // Get enabled purposes.
+  static Future<List<Purpose>> get enabledPurposes async {
+    final List<dynamic> result = await _channel.invokeMethod("getEnabledPurposes");
+    return EntitiesHelper.toPurposes(result);
+  }
+
+  // Get disabled purposes.
+  static Future<List<Purpose>> get disabledPurposes async {
+    final List<dynamic> result = await _channel.invokeMethod("getDisabledPurposes");
+    return EntitiesHelper.toPurposes(result);
+  }
+
+  // Get enabled vendors.
+  static Future<List<Vendor>> get enabledVendors async {
+    final List<dynamic> result = await _channel.invokeMethod("getEnabledVendors");
+    return EntitiesHelper.toVendors(result);
+  }
+
+  // Get disabled vendors.
+  static Future<List<Vendor>> get disabledVendors async {
+    final List<dynamic> result = await _channel.invokeMethod("getDisabledVendors");
+    return EntitiesHelper.toVendors(result);
+  }
+
+  // Get required purposes.
+  static Future<List<Purpose>> get requiredPurposes async {
+    final List<dynamic> result = await _channel.invokeMethod("getRequiredPurposes");
+    return EntitiesHelper.toPurposes(result);
+  }
+
+  // Get required vendors.
+  static Future<List<Vendor>> get requiredVendors async {
+    final List<dynamic> result = await _channel.invokeMethod("getRequiredVendors");
+    return EntitiesHelper.toVendors(result);
+  }
+
+  // Get a purpose by its id.
+  static Future<Purpose?> getPurpose(String purposeId) async {
+    final dynamic result = await _channel.invokeMethod("getPurpose", { "purposeId": purposeId });
+    if (result == null) return null;
+    return Purpose.fromJson(result);
+  }
+
+  // Get a vendor by its id.
+  static Future<Vendor?> getVendor(String vendorId) async {
+    final dynamic result = await _channel.invokeMethod("getVendor", { "vendorId": vendorId });
+    if (result == null) return null;
+    return Vendor.fromJson(result);
+  }
+
   /// Set the minimum level of messages to log
   static setLogLevel(LogLevel minLevel) {
     _channel.invokeMethod("setLogLevel", {"minLevel": minLevel.platformLevel});
@@ -320,5 +373,4 @@ class DidomiSdk {
       "organizationUserIdAuthSalt": organizationUserIdAuthSalt,
       "organizationUserIdAuthDigest": organizationUserIdAuthDigest
     });
-
 }
