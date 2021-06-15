@@ -9,11 +9,14 @@ import 'package:integration_test/integration_test.dart';
 import 'util/assertion_helper.dart';
 import 'util/constants.dart';
 import 'util/initialize_helper.dart';
+import 'util/scroll_helper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   // Messages
+  const expectedConsentEn = "Native message: With your agreement, we";
+  const expectedConsentFr = "Native message: Avec votre consentement, nous";
   const expectedResult = "Native message: fr =>Avec votre consentement, nous et <a href=\"javascript:Didomi.preferences.show('vendors')\">nos partenaires</a> "
       "utilisons l'espace de stockage du terminal pour stocker et accéder à des données personnelles telles que des données de géolocalisation "
       "précises et d'identification par analyse du terminal. Nous traitons ces données à des fins telles que les publicités et contenus personnalisés, "
@@ -27,6 +30,10 @@ void main() {
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final getTextBtnFinder = find.byKey(Key("getText"));
   final getWebviewStringsBtnFinder = find.byKey(Key("getWebviewStrings"));
+  final updateSelectedLanguageBtnFinder = find.byKey(Key("updateSelectedLanguage"));
+  final getTranslatedTextBtnFinder = find.byKey(Key("getTranslatedText"));
+  final languageCodeToUpdateFieldFinder = find.byKey(Key("languageCodeToUpdate"));
+  final listKey = Key("components_list");
 
   bool isError = false;
   bool isReady = false;
@@ -54,6 +61,44 @@ void main() {
       await tester.pumpAndSettle();
 
       assertNativeMessage("getText", notReadyMessage);
+    });
+
+    testWidgets("Get webView string before initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == false);
+
+      expect(find.byType(AlertDialog), findsNothing);
+
+      await tester.tap(getWebviewStringsBtnFinder);
+      await tester.pumpAndSettle();
+
+      expect(find.byType(AlertDialog), findsOneWidget);
+
+      assert(isError == true);
+      assert(isReady == false);
+
+      // reset error for following tests
+      isError = false;
+    });
+
+    testWidgets("Get Translated Text before initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == false);
+
+      await scrollDown(tester, listKey);
+
+      await tester.tap(getTranslatedTextBtnFinder);
+      await tester.pumpAndSettle();
+
+      assertNativeMessage("getTranslatedText", notReadyMessage);
     });
 
     testWidgets("Get Text after initialization", (WidgetTester tester) async {
@@ -86,6 +131,73 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(AlertDialog), findsOneWidget);
+    });
+
+    testWidgets("Get Translated Texts after initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+
+      // Tap on log level button
+      await tester.tap(getTranslatedTextBtnFinder);
+      await tester.pumpAndSettle();
+
+      assertNativeMessageStartsWith("getTranslatedText", expectedConsentEn);
+    });
+
+    testWidgets("Get Translated Texts after invalid language update", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+
+      await tester.tap(languageCodeToUpdateFieldFinder);
+      await tester.pumpAndSettle();
+
+      await tester.enterText(languageCodeToUpdateFieldFinder, "zh_CN");
+      await tester.pumpAndSettle();
+
+      await tester.tap(updateSelectedLanguageBtnFinder);
+      await tester.pumpAndSettle();
+
+      await tester.tap(getTranslatedTextBtnFinder);
+      await tester.pumpAndSettle();
+
+      assertNativeMessageStartsWith("getTranslatedText", expectedConsentEn);
+    });
+
+    testWidgets("Get Translated Texts after valid language update", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await scrollDown(tester, listKey);
+
+      await tester.tap(languageCodeToUpdateFieldFinder);
+      await tester.pumpAndSettle();
+
+      await tester.enterText(languageCodeToUpdateFieldFinder, "fr");
+      await tester.pumpAndSettle();
+
+      await tester.tap(updateSelectedLanguageBtnFinder);
+      await tester.pumpAndSettle();
+
+      await tester.tap(getTranslatedTextBtnFinder);
+      await tester.pumpAndSettle();
+
+      assertNativeMessageStartsWith("getTranslatedText", expectedConsentFr);
     });
   });
 }
