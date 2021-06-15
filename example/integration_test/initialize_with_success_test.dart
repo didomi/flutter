@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'util/assertion_helper.dart';
+import 'util/constants.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -40,26 +41,26 @@ void main() {
       await tester.pumpAndSettle();
 
       // SDK is not ready at startup
-      assertNativeMessage("isReady", "Native message: Result = false");
+      assertNativeMessage("isReady", resultFalseMessage);
 
       await tester.tap(onReadyBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("isReady", "Native message: Waiting for onReady callback");
+      assertNativeMessage("onReady", sdkNotReadyMessage);
 
       await tester.tap(initializeBtnFinder);
       await tester.pumpAndSettle();
 
       await Future.delayed(Duration(seconds: 4));
 
-      assertNativeMessage("initialize", "Native message: OK");
+      assertNativeMessage("initialize", okMessage);
 
       await tester.tap(isReadyBtnFinder);
       await tester.pumpAndSettle();
 
       // SDK is ready
-      assertNativeMessage("isReady", "Native message: Result = true");
-      assertNativeMessage("onReady", "Native message: SDK is ready!");
+      assertNativeMessage("isReady", resultTrueMessage);
+      assertNativeMessage("onReady", sdkReadyMessage);
 
       assert(isError == false);
       assert(isReady == true);

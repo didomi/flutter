@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'util/assertion_helper.dart';
+import 'util/constants.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -46,12 +47,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // SDK is not ready at startup
-      assertNativeMessage("isReady", "Native message: Result = false");
+      assertNativeMessage("isReady", resultFalseMessage);
 
       await tester.tap(onReadyBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("onReady", "Native message: Waiting for onReady callback");
+      assertNativeMessage("onReady", sdkNotReadyMessage);
 
       await tester.tap(apiKeyFieldFinder);
       await tester.pumpAndSettle();
@@ -74,7 +75,7 @@ void main() {
       await tester.tap(onReadyBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("isReady", "Native message: Result = false");
+      assertNativeMessage("isReady", resultFalseMessage);
 
       // TODO('Check this difference')
       if (Platform.isAndroid) {
