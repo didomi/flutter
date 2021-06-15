@@ -25,7 +25,7 @@ class _GetDisabledVendorIdsState extends BaseSampleWidgetState<GetDisabledVendor
     if (result.isEmpty) {
       return "Disabled Vendor list is empty.";
     } else {
-      return "Disabled Vendors: ${result.pretty()}.";
+      return "Disabled Vendors: ${result.joinToString()}.";
     }
   }
 }

@@ -25,7 +25,7 @@ class _GetDisabledPurposeIdsState extends BaseSampleWidgetState<GetDisabledPurpo
     if (result.isEmpty) {
       return "Disabled Purpose list is empty.";
     } else {
-      return "Disabled Purposes: ${result.pretty()}.";
+      return "Disabled Purposes: ${result.joinToString()}.";
     }
   }
 }

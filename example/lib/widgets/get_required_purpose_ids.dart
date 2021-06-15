@@ -25,7 +25,7 @@ class _GetRequiredPurposeIdsState extends BaseSampleWidgetState<GetRequiredPurpo
     if (result.isEmpty) {
       return "Required Purpose list is empty.";
     } else {
-      return "Required Purposes: ${result.pretty()}.";
+      return "Required Purposes: ${result.joinToString()}.";
     }
   }
 }

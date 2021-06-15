@@ -28,7 +28,7 @@ class _GetRequiredPurposesState
     if (result.isEmpty) {
       return "Required Purpose list is empty.";
     } else {
-      return "Required Purposes: ${result.pretty()}.";
+      return "Required Purposes: ${result.joinToString()}.";
     }
   }
 }

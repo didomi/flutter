@@ -28,7 +28,7 @@ class _GetEnabledPurposesState
     if (result.isEmpty) {
       return "Enabled Purpose list is empty.";
     } else {
-      return "Enabled Purposes: ${result.pretty()}.";
+      return "Enabled Purposes: ${result.joinToString()}.";
     }
   }
 }

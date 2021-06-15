@@ -25,7 +25,7 @@ class _GetEnabledVendorIdsState extends BaseSampleWidgetState<GetEnabledVendorId
     if (result.isEmpty) {
       return "Enabled Vendor list is empty.";
     } else {
-      return "Enabled Vendors: ${result.pretty()}.";
+      return "Enabled Vendors: ${result.joinToString()}.";
     }
   }
 }

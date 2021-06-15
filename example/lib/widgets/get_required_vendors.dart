@@ -28,7 +28,7 @@ class _GetRequiredVendorsState
     if (result.isEmpty) {
       return "Required Vendor list is empty.";
     } else {
-      return "Required Vendors: ${result.pretty()}.";
+      return "Required Vendors: ${result.joinToString()}.";
     }
   }
 }
