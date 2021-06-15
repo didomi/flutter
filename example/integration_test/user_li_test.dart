@@ -157,9 +157,6 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      await scrollUp(tester, listKey);
-      await tester.pumpAndSettle();
-
       // Reset user consent
       await tester.tap(resetBtnFinder);
       await tester.pumpAndSettle();
