@@ -1,13 +1,18 @@
+import 'dart:io';
+
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
-import 'package:didomi_sdk_example/testapps/sample_for_setup_ui_tests.dart' as app;
+import 'package:didomi_sdk_example/testapps/sample_for_setup_tests.dart' as app;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'util/assertion_helper.dart';
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
+  final setLogLevelBtnFinder = find.byKey(Key("setLogLevel"));
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final setupUIBtnFinder = find.byKey(Key("setupUI"));
 
@@ -29,6 +34,24 @@ void main() {
   DidomiSdk.addEventListener(listener);
 
   group("Setup UI", () {
+    testWidgets("Set Log Level", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Tap on log level button
+      await tester.tap(setLogLevelBtnFinder);
+      await tester.pumpAndSettle();
+
+      String expected = "";
+      if (Platform.isAndroid) {
+        expected = "Native message: Level is error (6).";
+      } else if (Platform.isIOS) {
+        expected = "Native message: Level is error (17).";
+      }
+      assertNativeMessage("setLogLevel", expected);
+    });
+
     testWidgets("Setup UI and initialize after", (WidgetTester tester) async {
       // Start app
       app.main();
@@ -43,12 +66,7 @@ void main() {
       assert(isError == false);
       assert(isReady == false);
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) => widget is Text && widget.key.toString().contains("setupUI") && widget.data?.contains("Native message: OK") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setupUI", "Native message: OK");
 
       await tester.tap(initializeBtnFinder);
       await tester.pumpAndSettle();
