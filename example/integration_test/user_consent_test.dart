@@ -15,9 +15,11 @@ void main() {
   final disagreeToAllBtnFinder = find.byKey(Key("setUserDisagreeToAll"));
   final resetBtnFinder = find.byKey(Key("reset"));
   final userStatusBtnFinder = find.byKey(Key("setUserStatus"));
+  final userStatusGloballyBtnFinder = find.byKey(Key("setUserStatusGlobally"));
 
   bool isError = false;
   bool isReady = false;
+  bool consentChanged = false;
 
   final listener = EventListener();
   listener.onError = (String message) {
@@ -26,6 +28,10 @@ void main() {
   listener.onReady = () {
     isReady = true;
   };
+  listener.onConsentChanged = () {
+    consentChanged = true;
+  };
+
 
   DidomiSdk.addEventListener(listener);
 
@@ -108,6 +114,31 @@ void main() {
         findsOneWidget,
       );
 
+      assert(isError == false);
+      assert(isReady == false);
+    });
+
+    testWidgets("Click global user status without initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == false);
+
+      // Tap on User status button
+      await tester.tap(userStatusGloballyBtnFinder);
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byWidgetPredicate(
+              (Widget widget) =>
+          widget is Text &&
+              widget.key.toString().contains("setUserStatusGlobally") &&
+              widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
+        ),
+        findsOneWidget,
+      );
       assert(isError == false);
       assert(isReady == false);
     });
@@ -312,10 +343,18 @@ void main() {
 
       assert(isError == false);
       assert(isReady == true);
+    });
+
+    testWidgets("Click user status 2nd time", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
 
       // Second click returns false
       await tester.tap(userStatusBtnFinder);
       await tester.pumpAndSettle();
+
+      consentChanged = false;
 
       expect(
         find.byWidgetPredicate(
@@ -325,6 +364,7 @@ void main() {
         findsOneWidget,
       );
 
+      assert(consentChanged == false);
       assert(isError == false);
       assert(isReady == true);
     });
@@ -337,6 +377,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
+      consentChanged = false;
       // First click returns false (already clicked before)
       await tester.tap(userStatusBtnFinder);
       await tester.pumpAndSettle();
@@ -349,6 +390,7 @@ void main() {
         findsOneWidget,
       );
 
+      assert(consentChanged == false);
       assert(isError == false);
       assert(isReady == true);
 
@@ -368,6 +410,101 @@ void main() {
         findsOneWidget,
       );
 
+      assert(consentChanged == true);
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Click global user status with initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      // First click returns true
+      await tester.tap(userStatusGloballyBtnFinder);
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byWidgetPredicate(
+              (Widget widget) =>
+          widget is Text && widget.key.toString().contains("setUserStatusGlobally") && widget.data?.contains("Native message: Consent updated: true.") == true,
+        ),
+        findsOneWidget,
+      );
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Click global user status 2nd time", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Second click returns false
+      await tester.tap(userStatusGloballyBtnFinder);
+      await tester.pumpAndSettle();
+
+      consentChanged = false;
+
+      expect(
+        find.byWidgetPredicate(
+              (Widget widget) =>
+          widget is Text && widget.key.toString().contains("setUserStatusGlobally") && widget.data?.contains("Native message: Consent updated: false.") == true,
+        ),
+        findsOneWidget,
+      );
+
+      assert(consentChanged == false);
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Click global user status after reset", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      consentChanged = false;
+      // First click returns false (already clicked before)
+      await tester.tap(userStatusGloballyBtnFinder);
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byWidgetPredicate(
+              (Widget widget) =>
+          widget is Text && widget.key.toString().contains("setUserStatusGlobally") && widget.data?.contains("Native message: Consent updated: false.") == true,
+        ),
+        findsOneWidget,
+      );
+
+      assert(consentChanged == false);
+      assert(isError == false);
+      assert(isReady == true);
+
+      // Reset user consent
+      await tester.tap(resetBtnFinder);
+      await tester.pumpAndSettle();
+
+      // Click after reset returns true
+      await tester.tap(userStatusGloballyBtnFinder);
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byWidgetPredicate(
+              (Widget widget) =>
+          widget is Text && widget.key.toString().contains("setUserStatusGlobally") && widget.data?.contains("Native message: Consent updated: true.") == true,
+        ),
+        findsOneWidget,
+      );
+
+      assert(consentChanged == true);
       assert(isError == false);
       assert(isReady == true);
     });
