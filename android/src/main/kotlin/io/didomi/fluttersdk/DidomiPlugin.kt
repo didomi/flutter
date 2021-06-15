@@ -5,7 +5,6 @@ import androidx.annotation.NonNull
 import androidx.fragment.app.FragmentActivity
 import com.google.gson.JsonParseException
 import io.didomi.sdk.Didomi
-import io.didomi.sdk.Log
 import io.didomi.sdk.exceptions.DidomiNotReadyException
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -30,7 +29,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /// This is always the current displayed Activity, as activities can not be passed through Flutter channels
     private var currentActivity: Activity? = null
 
-    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "didomi_sdk")
         eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "didomi_sdk/events")
         eventChannel.setStreamHandler(eventStreamHandler)
@@ -44,7 +43,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         currentActivity = activityPluginBinding.activity
     }
 
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
         eventChannel.setStreamHandler(null)
     }
@@ -62,7 +61,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         onAttachedToActivity(binding)
     }
 
-    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+    override fun onMethodCall(call: MethodCall, result: Result) {
         val didomi = Didomi.getInstance()
         try {
             when (call.method) {
@@ -178,6 +177,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "setUserStatus" -> setUserStatus(call, result)
 
+                "setUserStatusGlobally" -> setUserStatusGlobally(call, result)
+
                 "setUser" -> setUser(call, result)
 
                 "setUserWithAuthentication" -> setUserWithAuthentication(call, result)
@@ -237,7 +238,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /**
      * Get the current activity as FragmentActivity, or raise an error
      */
-    private fun getFragmentActivity(@NonNull result: Result): FragmentActivity? = currentActivity?.let {
+    private fun getFragmentActivity(result: Result): FragmentActivity? = currentActivity?.let {
         if (it is FragmentActivity) {
             it
         } else {
@@ -279,7 +280,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /**
      * Get the IDs of the disabled purposes
      */
-    private fun getDisabledPurposeIds(@NonNull result: Result) {
+    private fun getDisabledPurposeIds(result: Result) {
         try {
             val idSet = Didomi.getInstance().disabledPurposeIds
             result.success(idSet.toList())
@@ -291,7 +292,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /**
      * Get the IDs of the disabled vendors
      */
-    private fun getDisabledVendorIds(@NonNull result: Result) {
+    private fun getDisabledVendorIds(result: Result) {
         try {
             val idSet = Didomi.getInstance().disabledVendorIds
             result.success(idSet.toList())
@@ -303,7 +304,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /**
      * Get the IDs of the enabled purposes
      */
-    private fun getEnabledPurposeIds(@NonNull result: Result) {
+    private fun getEnabledPurposeIds(result: Result) {
         try {
             val idSet = Didomi.getInstance().enabledPurposeIds
             result.success(idSet.toList())
@@ -315,7 +316,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /**
      * Get the IDs of the enabled vendors
      */
-    private fun getEnabledVendorIds(@NonNull result: Result) {
+    private fun getEnabledVendorIds(result: Result) {
         try {
             val idSet = Didomi.getInstance().enabledVendorIds
             result.success(idSet.toList())
@@ -327,7 +328,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /**
      * Get the IDs of the required purposes
      */
-    private fun getRequiredPurposeIds(@NonNull result: Result) {
+    private fun getRequiredPurposeIds(result: Result) {
         try {
             val idSet = Didomi.getInstance().requiredPurposeIds
             result.success(idSet.toList())
@@ -339,7 +340,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /**
      * Get the IDs of the required vendors
      */
-    private fun getRequiredVendorIds(@NonNull result: Result) {
+    private fun getRequiredVendorIds(result: Result) {
         try {
             val idSet = Didomi.getInstance().requiredVendorIds
             result.success(idSet.toList())
@@ -467,7 +468,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      * <p>
      * We recommend setting `android.util.Log.WARN` in production
      */
-    private fun setLogLevel(@NonNull call: MethodCall, @NonNull result: Result) {
+    private fun setLogLevel(call: MethodCall, result: Result) {
         Didomi.getInstance().setLogLevel(call.argument("minLevel") as? Int ?: 2)
         result.success(null)
     }
@@ -476,7 +477,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      * Enable all purposes and vendors for the user.
      * @return true if user consent status was updated, false otherwise.
      */
-    private fun setUserAgreeToAll(@NonNull result: Result) {
+    private fun setUserAgreeToAll(result: Result) {
         try {
             val consentHasBeenUpdated = Didomi.getInstance().setUserAgreeToAll()
             result.success(consentHasBeenUpdated)
@@ -489,7 +490,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      * Update user status to disagree : disable consent and legitimate interest purposes, disable consent vendors, but still enable legitimate interest vendors.
      * @return true if user status was updated, false otherwise.
      */
-    private fun setUserDisagreeToAll(@NonNull result: Result) {
+    private fun setUserDisagreeToAll(result: Result) {
         try {
             val consentHasBeenUpdated = Didomi.getInstance().setUserDisagreeToAll()
             result.success(consentHasBeenUpdated)
@@ -503,7 +504,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      * @param purposeId
      * @return The user consent status for the specified purpose
      */
-    private fun getUserConsentStatusForPurpose(@NonNull call: MethodCall, @NonNull result: Result) {
+    private fun getUserConsentStatusForPurpose(call: MethodCall, result: Result) {
         val purposeId = call.argument("purposeId") as? String
         if (purposeId.isNullOrBlank()) {
             result.error("getUserConsentStatusForPurpose", "purposeId is null or blank", null)
@@ -528,7 +529,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      * @param vendorId
      * @return The user consent status for the specified vendor
      */
-    private fun getUserConsentStatusForVendor(@NonNull call: MethodCall, @NonNull result: Result) {
+    private fun getUserConsentStatusForVendor(call: MethodCall, result: Result) {
         val vendorId = call.argument("vendorId") as? String
         if (vendorId.isNullOrBlank()) {
             result.error("getUserConsentStatusForVendor", "vendorId is null or blank", null)
@@ -553,7 +554,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      * @param vendorId
      * @return The user consent status for all the purposes that it requires for the specified vendor
      */
-    private fun getUserConsentStatusForVendorAndRequiredPurposes(@NonNull call: MethodCall, @NonNull result: Result) {
+    private fun getUserConsentStatusForVendorAndRequiredPurposes(call: MethodCall, result: Result) {
         val vendorId = call.argument("vendorId") as? String
         if (vendorId.isNullOrBlank()) {
             result.error("getUserConsentStatusForVendorAndRequiredPurposes", "vendorId is null or blank", null)
@@ -578,7 +579,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      * @param purposeId
      * @return The user legitimate interest status for the specified purpose
      */
-    private fun getUserLegitimateInterestStatusForPurpose(@NonNull call: MethodCall, @NonNull result: Result) {
+    private fun getUserLegitimateInterestStatusForPurpose(call: MethodCall, result: Result) {
         val purposeId = call.argument("purposeId") as? String
         if (purposeId.isNullOrBlank()) {
             result.error("getUserLegitimateInterestStatusForPurpose", "purposeId is null or blank", null)
@@ -603,7 +604,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      * @param vendorId
      * @return The user legitimate interest status for the specified vendor
      */
-    private fun getUserLegitimateInterestStatusForVendor(@NonNull call: MethodCall, @NonNull result: Result) {
+    private fun getUserLegitimateInterestStatusForVendor(call: MethodCall, result: Result) {
         val vendorId = call.argument("vendorId") as? String
         if (vendorId.isNullOrBlank()) {
             result.error("getUserLegitimateInterestStatusForVendor", "vendorId is null or blank", null)
@@ -628,7 +629,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      * @param vendorId
      * @return The user legitimate interest status for all the purposes that it requires for the specified vendor
      */
-    private fun getUserLegitimateInterestStatusForVendorAndRequiredPurposes(@NonNull call: MethodCall, @NonNull result: Result) {
+    private fun getUserLegitimateInterestStatusForVendorAndRequiredPurposes(call: MethodCall, result: Result) {
         val vendorId = call.argument("vendorId") as? String
         if (vendorId.isNullOrBlank()) {
             result.error("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", "vendorId is null or blank", null)
@@ -652,7 +653,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      * @param vendorId
      * @return The user consent and legitimate interest status for the specified vendor
      */
-    private fun getUserStatusForVendor(@NonNull call: MethodCall, @NonNull result: Result) {
+    private fun getUserStatusForVendor(call: MethodCall, result: Result) {
         val vendorId = call.argument("vendorId") as? String
         if (vendorId.isNullOrBlank()) {
             result.error("getUserStatusForVendor", "vendorId is null or blank", null)
@@ -675,7 +676,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      * Set the user status globally
      * @return true if user consent status was updated, false otherwise.
      */
-    private fun setUserStatus(@NonNull call: MethodCall, @NonNull result: Result) {
+    private fun setUserStatusGlobally(call: MethodCall, result: Result) {
         try {
             val consentHasBeenUpdated = Didomi.getInstance().setUserStatus(
                 call.argument("purposesConsentStatus") as? Boolean ?: false,
@@ -688,6 +689,31 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.error("setUserStatus", e.message.orEmpty(), e)
         }
     }
+
+    /**
+     * Set the user status
+     * @return true if user consent status was updated, false otherwise.
+     */
+    private fun setUserStatus(call: MethodCall, result: Result) {
+        try {
+            val consentHasBeenUpdated = Didomi.getInstance().setUserStatus(
+                    getListArgAsSet(call, "enabledConsentPurposeIds"),
+                    getListArgAsSet(call, "disabledConsentPurposeIds"),
+                    getListArgAsSet(call, "enabledLIPurposeIds"),
+                    getListArgAsSet(call, "disabledLIPurposeIds"),
+                    getListArgAsSet(call, "enabledConsentVendorIds"),
+                    getListArgAsSet(call, "disabledConsentVendorIds"),
+                    getListArgAsSet(call, "enabledLIVendorIds"),
+                    getListArgAsSet(call, "disabledLIVendorIds")
+            )
+            result.success(consentHasBeenUpdated)
+        } catch (e: DidomiNotReadyException) {
+            result.error("setUserStatus", e.message.orEmpty(), e)
+        }
+    }
+
+    private fun getListArgAsSet(call: MethodCall, key: String) =
+            (call.argument(key) as? List<String>)?.toSet() ?: emptySet()
 
     private fun setUser(call: MethodCall, result: Result) {
         val userId = argumentOrError("organizationUserId", "setUser", call, result)

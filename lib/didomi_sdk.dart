@@ -322,13 +322,35 @@ class DidomiSdk {
   }
 
   /// Set the user status globally
-  static Future<bool> setUserStatus(bool purposesConsentStatus, bool purposesLIStatus, bool vendorsConsentStatus, bool vendorsLIStatus) async =>
-    await _channel.invokeMethod("setUserStatus", {
+  static Future<bool> setUserStatusGlobally(bool purposesConsentStatus, bool purposesLIStatus, bool vendorsConsentStatus, bool vendorsLIStatus) async =>
+    await _channel.invokeMethod("setUserStatusGlobally", {
       "purposesConsentStatus": purposesConsentStatus,
       "purposesLIStatus": purposesLIStatus,
       "vendorsConsentStatus": vendorsConsentStatus,
       "vendorsLIStatus": vendorsLIStatus
     });
+
+  /// Set the user status
+  static Future<bool> setUserStatus(
+      List<String> enabledConsentPurposeIds,
+      List<String> disabledConsentPurposeIds,
+      List<String> enabledLIPurposeIds,
+      List<String> disabledLIPurposeIds,
+      List<String> enabledConsentVendorIds,
+      List<String> disabledConsentVendorIds,
+      List<String> enabledLIVendorIds,
+      List<String> disabledLIVendorIds
+      ) async =>
+      await _channel.invokeMethod("setUserStatus", {
+        "enabledConsentPurposeIds": enabledConsentPurposeIds,
+        "disabledConsentPurposeIds": disabledConsentPurposeIds,
+        "enabledLIPurposeIds": enabledLIPurposeIds,
+        "disabledLIPurposeIds": disabledLIPurposeIds,
+        "enabledConsentVendorIds": enabledConsentVendorIds,
+        "disabledConsentVendorIds": disabledConsentVendorIds,
+        "enabledLIVendorIds": enabledLIVendorIds,
+        "disabledLIVendorIds": disabledLIVendorIds
+      });
 
   /// Set user information
   static Future<void> setUser(String organizationUserId) async =>

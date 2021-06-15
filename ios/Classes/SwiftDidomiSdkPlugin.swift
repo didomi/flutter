@@ -120,6 +120,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             getUserStatusForVendor(call, result: result)
         case "setUserStatus":
             setUserStatus(call, result: result)
+        case "setUserStatusGlobally":
+            setUserStatusGlobally(call, result: result)
         case "setUser":
             setUser(call, result: result)
         case "setUserWithAuthentication":
@@ -707,10 +709,14 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
 
     /**
      Set the user status for purposes and vendors for consent and legitimate interest.
-     - Parameters purposesConsentStatus: boolean used to determine if consent will be enabled or disabled for all purposes.
-     - Parameters purposesLIStatus: boolean used to determine if legitimate interest will be enabled or disabled for all purposes.
-     - Parameters vendorsConsentStatus: boolean used to determine if consent will be enabled or disabled for all vendors.
-     - Parameters vendorsLIStatus: boolean used to determine if legitimate interest will be enabled or disabled for all vendors.
+     - Parameters enabledConsentPurposeIds: List of enabled consent purposes to set.
+     - Parameters disabledConsentPurposeIds: List of disabled consent purposes to set.
+     - Parameters enabledLIPurposeIds: List of enabled legitimate interest purposes to set.
+     - Parameters disabledLIPurposeIds: List of disabled legitimate interest purposes to set.
+     - Parameters enabledConsentVendorIds: List of enabled consent vendors to set.
+     - Parameters disabledConsentVendorIds: List of disabled consent vendors to set.
+     - Parameters enabledLIVendorIds: List of enabled legitimate interest vendors to set.
+     - Parameters disabledLIVendorIds: List of disabled legitimate interest vendors to set.
      - Returns: **true** if consent status has been updated, **false** otherwise.
      */
     func setUserStatus(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -718,8 +724,45 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
             return
         }
-        guard let args = call.arguments as? Dictionary<String, Bool> else {
+        guard let args = call.arguments as? Dictionary<String, Array<String>> else {
                 result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserStatus", details: nil))
+                return
+            }
+
+        result(Didomi.shared.setUserStatus(
+                enabledConsentPurposeIds: arrayArgToSet(args: args, key: "enabledConsentPurposeIds"),
+                disabledConsentPurposeIds: arrayArgToSet(args: args, key: "disabledConsentPurposeIds"),
+                enabledLIPurposeIds: arrayArgToSet(args: args, key: "enabledLIPurposeIds"),
+                disabledLIPurposeIds: arrayArgToSet(args: args, key: "disabledLIPurposeIds"),
+                enabledConsentVendorIds: arrayArgToSet(args: args, key: "enabledConsentVendorIds"),
+                disabledConsentVendorIds: arrayArgToSet(args: args, key: "disabledConsentVendorIds"),
+                enabledLIVendorIds: arrayArgToSet(args: args, key: "enabledLIVendorIds"),
+                disabledLIVendorIds: arrayArgToSet(args: args, key: "disabledLIVendorIds"))
+        )
+    }
+    
+    func arrayArgToSet(args: Dictionary<String, Array<String>>, key: String) -> Set<String> {
+        if let array = args[key] {
+            return Set(array)
+        }
+        return Set()
+    }
+    
+    /**
+     Set the global user status for purposes and vendors for consent and legitimate interest.
+     - Parameters purposesConsentStatus: boolean used to determine if consent will be enabled or disabled for all purposes.
+     - Parameters purposesLIStatus: boolean used to determine if legitimate interest will be enabled or disabled for all purposes.
+     - Parameters vendorsConsentStatus: boolean used to determine if consent will be enabled or disabled for all vendors.
+     - Parameters vendorsLIStatus: boolean used to determine if legitimate interest will be enabled or disabled for all vendors.
+     - Returns: **true** if consent status has been updated, **false** otherwise.
+     */
+    func setUserStatusGlobally(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        guard let args = call.arguments as? Dictionary<String, Bool> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserStatusGlobally", details: nil))
                 return
             }
 

@@ -11,15 +11,34 @@ class SetUserStatus extends StatefulWidget {
 }
 
 class _SetUserStatusState extends BaseSampleWidgetState<SetUserStatus> {
+
+  final String vendor1 = "738"; // Adbility Media
+  final String vendor2 = "331"; // ad6media
+  final String vendor3 = "318"; // Accorp Sp. z o.o.
+
+  final String purpose1 = "cookies";
+  final String purpose2 = "advertising_personalization";
+  final String purpose3 = "ad_delivery";
+
+
   @override
-  String getButtonName() => "Set User Status (LI only)";
+  String getButtonName() => "Set User Status (detailed)";
 
   @override
   String getActionId() => "setUserStatus";
 
   @override
   Future<String> callDidomiPlugin() async {
-    final bool result = await DidomiSdk.setUserStatus(false, true, false, true);
+    final bool result = await DidomiSdk.setUserStatus(
+        [purpose1, purpose2],
+        [purpose3],
+        [purpose1],
+        [purpose2, purpose3],
+        [vendor1, vendor2],
+        [vendor3],
+        [vendor1],
+        [vendor2, vendor3]
+    );
     return "Consent updated: $result.";
   }
 }
