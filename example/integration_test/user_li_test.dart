@@ -89,9 +89,6 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      await scrollUp(tester, listKey);
-      await tester.pumpAndSettle();
-
       await InitializeHelper.initialize(tester, initializeBtnFinder);
 
       assert(isError == false);
@@ -125,9 +122,6 @@ void main() {
     testWidgets("Click LI for vendor '738' after agreeing then reset", (WidgetTester tester) async {
       // Start app
       app.main();
-      await tester.pumpAndSettle();
-
-      await scrollUp(tester, listKey);
       await tester.pumpAndSettle();
 
       assert(isError == false);
@@ -203,9 +197,6 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      await scrollUp(tester, listKey);
-      await tester.pumpAndSettle();
-
       assert(isError == false);
       assert(isReady == true);
 
@@ -238,9 +229,6 @@ void main() {
 
       assert(isError == false);
       assert(isReady == true);
-
-      await scrollUp(tester, listKey);
-      await tester.pumpAndSettle();
 
       // Reset user consent
       await tester.tap(resetBtnFinder);

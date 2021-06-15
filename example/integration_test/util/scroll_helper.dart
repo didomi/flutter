@@ -12,9 +12,3 @@ Future<void> scrollDown(WidgetTester tester, Key key) async {
   await tester.drag(find.byKey(key), const Offset(0.0, -300));
   await tester.pump();
 }
-
-/// Drag gesture upwards within a scrollable item.
-Future<void> scrollUp(WidgetTester tester, Key key) async {
-  await tester.drag(find.byKey(key), const Offset(0.0, 300));
-  await tester.pump();
-}
