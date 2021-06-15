@@ -166,8 +166,7 @@ void main() {
       assert(isError == false);
       assert(isReady == false);
 
-      await scrollDown(tester, listKey);
-      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey, offsetY: 600);
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -303,8 +302,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      await scrollDown(tester, listKey);
-      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey, offsetY: 600);
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -441,8 +439,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      await scrollDown(tester, listKey);
-      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey, offsetY: 600);
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -579,8 +576,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      await scrollDown(tester, listKey);
-      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey, offsetY: 600);
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 
