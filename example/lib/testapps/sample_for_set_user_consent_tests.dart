@@ -7,12 +7,12 @@ import 'package:didomi_sdk_example/widgets/set_user_status_globally.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(SampleForUserConsentTestsApp());
+void main() => runApp(SampleForSetUserConsentTestsApp());
 
-class SampleForUserConsentTestsApp extends StatelessWidget {
+class SampleForSetUserConsentTestsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: "User Consent Tests",
+        title: "Set User Consent Tests",
         home: HomePage(),
       );
 }

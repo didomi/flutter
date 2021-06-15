@@ -13,18 +13,6 @@ import 'util/scroll_helper.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  final initializeBtnFinder = find.byKey(Key("initializeSmall"));
-  final agreeToAllBtnFinder = find.byKey(Key("setUserAgreeToAll"));
-  final disagreeToAllBtnFinder = find.byKey(Key("setUserDisagreeToAll"));
-  final disabledVendorIdsBtnFinder = find.byKey(Key("getDisabledVendorIds"));
-  final enabledVendorIdsBtnFinder = find.byKey(Key("getEnabledVendorIds"));
-  final requiredVendorIdsBtnFinder = find.byKey(Key("getRequiredVendorIds"));
-  final disabledVendorsBtnFinder = find.byKey(Key("getDisabledVendors"));
-  final enabledVendorsBtnFinder = find.byKey(Key("getEnabledVendors"));
-  final requiredVendorsBtnFinder = find.byKey(Key("getRequiredVendors"));
-  final getVendorBtnFinder = find.byKey(Key("getVendor"));
-  final listKey = Key("components_list");
-
   // Native message strings.
   const emptyDisabledVendorMessage = "Native message: Disabled Vendor list is empty.";
   const emptyEnabledVendorMessage = "Native message: Enabled Vendor list is empty.";
@@ -56,6 +44,18 @@ void main() {
   const enabledVendorMessage = "Native message: Enabled Vendors: $suffixVendorMessage";
   const requiredVendorMessage = "Native message: Required Vendors: $suffixVendorMessage";
   const vendorNames = "Exponential Interactive, Inc d/b/a VDX.tv, Index Exchange, Inc. , Fifty";
+
+  final initializeBtnFinder = find.byKey(Key("initializeSmall"));
+  final agreeToAllBtnFinder = find.byKey(Key("setUserAgreeToAll"));
+  final disagreeToAllBtnFinder = find.byKey(Key("setUserDisagreeToAll"));
+  final disabledVendorIdsBtnFinder = find.byKey(Key("getDisabledVendorIds"));
+  final enabledVendorIdsBtnFinder = find.byKey(Key("getEnabledVendorIds"));
+  final requiredVendorIdsBtnFinder = find.byKey(Key("getRequiredVendorIds"));
+  final disabledVendorsBtnFinder = find.byKey(Key("getDisabledVendors"));
+  final enabledVendorsBtnFinder = find.byKey(Key("getEnabledVendors"));
+  final requiredVendorsBtnFinder = find.byKey(Key("getRequiredVendors"));
+  final getVendorBtnFinder = find.byKey(Key("getVendor"));
+  final listKey = Key("components_list");
 
   bool isError = false;
   bool isReady = false;

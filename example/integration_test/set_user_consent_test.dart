@@ -1,15 +1,19 @@
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
-import 'package:didomi_sdk_example/testapps/sample_for_user_consent_tests.dart' as app;
+import 'package:didomi_sdk_example/testapps/sample_for_set_user_consent_tests.dart' as app;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'util/assertion_helper.dart';
+import 'util/constants.dart';
 import 'util/initialize_helper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  const String consentUpdatedMessage = "Native message: Consent updated: true.";
+  const String consentNotUpdatedMessage = "Native message: Consent updated: false.";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final agreeToAllBtnFinder = find.byKey(Key("setUserAgreeToAll"));
@@ -33,10 +37,6 @@ void main() {
     consentChanged = true;
   };
 
-  final String didomiNotReadyMessage = "Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.";
-  final String consentUpdatedMessage = "Native message: Consent updated: true.";
-  final String consentNotUpdatedMessage = "Native message: Consent updated: false.";
-
   DidomiSdk.addEventListener(listener);
 
   group("User Consent", () {
@@ -45,7 +45,6 @@ void main() {
      */
 
     testWidgets("Click agree to all without initialization", (WidgetTester tester) async {
-
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -57,7 +56,7 @@ void main() {
       await tester.tap(agreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("setUserAgreeToAll", didomiNotReadyMessage);
+      assertNativeMessage("setUserAgreeToAll", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -75,7 +74,7 @@ void main() {
       await tester.tap(disagreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("setUserDisagreeToAll", didomiNotReadyMessage);
+      assertNativeMessage("setUserDisagreeToAll", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -93,7 +92,7 @@ void main() {
       await tester.tap(userStatusBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("setUserStatus", didomiNotReadyMessage);
+      assertNativeMessage("setUserStatus", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -111,7 +110,7 @@ void main() {
       await tester.tap(userStatusGloballyBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("setUserStatusGlobally", didomiNotReadyMessage);
+      assertNativeMessage("setUserStatusGlobally", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);

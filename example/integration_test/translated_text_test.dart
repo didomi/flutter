@@ -12,14 +12,14 @@ import 'util/initialize_helper.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
+  // Messages
+  const expectedConsentEn = "Native message: With your agreement, we";
+  const expectedConsentFr = "Native message: Avec votre consentement, nous";
+
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final updateSelectedLanguageBtnFinder = find.byKey(Key("updateSelectedLanguage"));
   final getTranslatedTextBtnFinder = find.byKey(Key("getTranslatedText"));
   final languageCodeToUpdateFieldFinder = find.byKey(Key("languageCodeToUpdate"));
-
-  // Messages
-  const expectedConsentEn = "Native message: With your agreement, we";
-  const expectedConsentFr = "Native message: Avec votre consentement, nous";
 
   bool isError = false;
   bool isReady = false;

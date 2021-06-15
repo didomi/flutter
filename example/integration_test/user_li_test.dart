@@ -13,6 +13,13 @@ import 'util/scroll_helper.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
+  // Messages
+  const enabledForPurposeMessage = "Native message: User status is 'Enabled' for purpose 'cookies'.";
+  const enabledForVendorMessage = "Native message: User status is 'Enabled' for vendor '738'.";
+  const disabledForVendorMessage = "Native message: User status is 'Disabled' for vendor '738'.";
+  const enabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Enabled' for vendor '738' and required purposes.";
+  const disabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Disabled' for vendor '738' and required purposes.";
+
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final agreeToAllBtnFinder = find.byKey(Key("setUserAgreeToAll"));
   final disagreeToAllBtnFinder = find.byKey(Key("setUserDisagreeToAll"));
@@ -21,13 +28,6 @@ void main() {
   final getUserLegitimateInterestStatusForVendorBtnFinder = find.byKey(Key("getUserLegitimateInterestStatusForVendor"));
   final getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder = find.byKey(Key("getUserLegitimateInterestStatusForVendorAndRequiredPurposes"));
   final listKey = Key("components_list");
-
-  // Messages
-  const enabledForPurposeMessage = "Native message: User status is 'Enabled' for purpose 'cookies'.";
-  const enabledForVendorMessage = "Native message: User status is 'Enabled' for vendor '738'.";
-  const disabledForVendorMessage = "Native message: User status is 'Disabled' for vendor '738'.";
-  const enabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Enabled' for vendor '738' and required purposes.";
-  const disabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Disabled' for vendor '738' and required purposes.";
 
   bool isError = false;
   bool isReady = false;
