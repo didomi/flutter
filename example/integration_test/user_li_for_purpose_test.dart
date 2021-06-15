@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk_example/testapps/sample_for_user_li_for_purpose_tests.dart' as app;
@@ -7,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'util/assertion_helper.dart';
 import 'util/initialize_helper.dart';
 
 void main() {
@@ -17,6 +16,10 @@ void main() {
   final disagreeToAllBtnFinder = find.byKey(Key("setUserDisagreeToAll"));
   final resetBtnFinder = find.byKey(Key("reset"));
   final getUserLegitimateInterestStatusForPurposeBtnFinder = find.byKey(Key("getUserLegitimateInterestStatusForPurpose"));
+
+  // Messages
+  final notReadyMessage = "Native message: Failed: 'Didomi SDK is not ready. Use the onReady callback to access this method.'.";
+  final enabledForPurposeMessage = "Native message: User status is 'Enabled' for purpose 'cookies'.";
 
   bool isError = false;
   bool isReady = false;
@@ -31,7 +34,7 @@ void main() {
 
   DidomiSdk.addEventListener(listener);
 
-  group("User Legitimate Interest for ", () {
+  group("User Legitimate Interest for Purpose", () {
     /*
      * Without initialization
      */
@@ -47,15 +50,7 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("getUserLegitimateInterestStatusForPurpose") &&
-              widget.data?.contains("Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -78,30 +73,12 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
       await tester.pumpAndSettle();
 
-      // TODO('Check difference')
-      if (Platform.isAndroid) {
-        expect(
-          find.byWidgetPredicate(
-                (Widget widget) =>
-            widget is Text &&
-                widget.key.toString().contains("getUserLegitimateInterestStatusForPurpose") &&
-                widget.data?.contains("Native message: User status is 'Enabled' for purpose 'cookies'.") == true,
-          ),
-          findsOneWidget,
-        );
-      } else if (Platform.isIOS) {
-        expect(
-          find.byWidgetPredicate(
-                (Widget widget) =>
-            widget is Text &&
-                widget.key.toString().contains("getUserLegitimateInterestStatusForPurpose") &&
-                widget.data?.contains("Native message: No user status for purpose 'cookies'.") == true,
-          ),
-          findsOneWidget,
-        );
-      }
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", enabledForPurposeMessage);
     });
 
+    /*
+     * With initialization + agree then reset
+     */
     testWidgets("Click LI for purpose 'cookie' after agreeing then reset", (WidgetTester tester) async {
       // Start app
       app.main();
@@ -114,40 +91,13 @@ void main() {
       await tester.tap(agreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text && widget.key.toString().contains("setUserAgreeToAll") && widget.data?.contains("Native message: Consent updated: true.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserAgreeToAll", "Native message: Consent updated: true.");
 
       // Check LI
       await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
       await tester.pumpAndSettle();
 
-      // TODO('Check difference')
-      if (Platform.isAndroid) {
-        expect(
-          find.byWidgetPredicate(
-                (Widget widget) =>
-            widget is Text &&
-                widget.key.toString().contains("getUserLegitimateInterestStatusForPurpose") &&
-                widget.data?.contains("Native message: User status is 'Enabled' for purpose 'cookies'.") == true,
-          ),
-          findsOneWidget,
-        );
-      } else if (Platform.isIOS) {
-        expect(
-          find.byWidgetPredicate(
-                (Widget widget) =>
-            widget is Text &&
-                widget.key.toString().contains("getUserLegitimateInterestStatusForPurpose") &&
-                widget.data?.contains("Native message: No user status for purpose 'cookies'.") == true,
-          ),
-          findsOneWidget,
-        );
-      }
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", enabledForPurposeMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -163,30 +113,12 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
       await tester.pumpAndSettle();
 
-      // TODO('Check difference')
-      if (Platform.isAndroid) {
-        expect(
-          find.byWidgetPredicate(
-                (Widget widget) =>
-            widget is Text &&
-                widget.key.toString().contains("getUserLegitimateInterestStatusForPurpose") &&
-                widget.data?.contains("Native message: User status is 'Enabled' for purpose 'cookies'.") == true,
-          ),
-          findsOneWidget,
-        );
-      } else if (Platform.isIOS) {
-        expect(
-          find.byWidgetPredicate(
-                (Widget widget) =>
-            widget is Text &&
-                widget.key.toString().contains("getUserLegitimateInterestStatusForPurpose") &&
-                widget.data?.contains("Native message: No user status for purpose 'cookies'.") == true,
-          ),
-          findsOneWidget,
-        );
-      }
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", enabledForPurposeMessage);
     });
 
+    /*
+     * With initialization + disagree then reset
+     */
     testWidgets("Click LI for purpose 'cookie' after disagreeing then reset", (WidgetTester tester) async {
       // Start app
       app.main();
@@ -199,42 +131,13 @@ void main() {
       await tester.tap(disagreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text &&
-              widget.key.toString().contains("setUserDisagreeToAll") &&
-              widget.data?.contains("Native message: Consent updated: true.") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("setUserDisagreeToAll", "Native message: Consent updated: true.");
 
       // Check LI
       await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
       await tester.pumpAndSettle();
 
-      // TODO('Check difference')
-      if (Platform.isAndroid) {
-        expect(
-          find.byWidgetPredicate(
-                (Widget widget) =>
-            widget is Text &&
-                widget.key.toString().contains("getUserLegitimateInterestStatusForPurpose") &&
-                widget.data?.contains("Native message: User status is 'Enabled' for purpose 'cookies'.") == true,
-          ),
-          findsOneWidget,
-        );
-      } else if (Platform.isIOS) {
-        expect(
-          find.byWidgetPredicate(
-                (Widget widget) =>
-            widget is Text &&
-                widget.key.toString().contains("getUserLegitimateInterestStatusForPurpose") &&
-                widget.data?.contains("Native message: No user status for purpose 'cookies'.") == true,
-          ),
-          findsOneWidget,
-        );
-      }
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", enabledForPurposeMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -250,28 +153,7 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
       await tester.pumpAndSettle();
 
-      // TODO('Check difference')
-      if (Platform.isAndroid) {
-        expect(
-          find.byWidgetPredicate(
-                (Widget widget) =>
-            widget is Text &&
-                widget.key.toString().contains("getUserLegitimateInterestStatusForPurpose") &&
-                widget.data?.contains("Native message: User status is 'Enabled' for purpose 'cookies'.") == true,
-          ),
-          findsOneWidget,
-        );
-      } else if (Platform.isIOS) {
-        expect(
-          find.byWidgetPredicate(
-                (Widget widget) =>
-            widget is Text &&
-                widget.key.toString().contains("getUserLegitimateInterestStatusForPurpose") &&
-                widget.data?.contains("Native message: No user status for purpose 'cookies'.") == true,
-          ),
-          findsOneWidget,
-        );
-      }
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", enabledForPurposeMessage);
     });
   });
 }
