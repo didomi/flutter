@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'util/assertion_helper.dart';
+import 'util/constants.dart';
 import 'util/initialize_helper.dart';
 
 void main() {
@@ -17,9 +18,8 @@ void main() {
   final languageCodeToUpdateFieldFinder = find.byKey(Key("languageCodeToUpdate"));
 
   // Messages
-  final notReadyMessage = "Native message: Failed: 'Didomi SDK is not ready. Use the onReady callback to access this method.'.";
-  final expectedConsentEn = "Native message: With your agreement, we";
-  final expectedConsentFr = "Native message: Avec votre consentement, nous";
+  const expectedConsentEn = "Native message: With your agreement, we";
+  const expectedConsentFr = "Native message: Avec votre consentement, nous";
 
   bool isError = false;
   bool isReady = false;

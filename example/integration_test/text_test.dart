@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'util/assertion_helper.dart';
+import 'util/constants.dart';
 import 'util/initialize_helper.dart';
 
 void main() {
@@ -17,8 +18,7 @@ void main() {
   final getWebviewStringsBtnFinder = find.byKey(Key("getWebviewStrings"));
 
   // Messages
-  final notReadyMessage = "Native message: Failed: 'Didomi SDK is not ready. Use the onReady callback to access this method.'.";
-  final expectedResult = "Native message: fr =>Avec votre consentement, nous et <a href=\"javascript:Didomi.preferences.show('vendors')\">nos partenaires</a> "
+  const expectedResult = "Native message: fr =>Avec votre consentement, nous et <a href=\"javascript:Didomi.preferences.show('vendors')\">nos partenaires</a> "
       "utilisons l'espace de stockage du terminal pour stocker et accéder à des données personnelles telles que des données de géolocalisation "
       "précises et d'identification par analyse du terminal. Nous traitons ces données à des fins telles que les publicités et contenus personnalisés, "
       "la mesure de performance des publicités et du contenu, les données d'audience et le développement des produits. Vous pouvez à tout moment retirer "

@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'util/assertion_helper.dart';
+import 'util/constants.dart';
 import 'util/initialize_helper.dart';
 import 'util/scroll_helper.dart';
 
@@ -22,12 +23,11 @@ void main() {
   final listKey = Key("components_list");
 
   // Messages
-  final notReadyMessage = "Native message: Failed: 'Didomi SDK is not ready. Use the onReady callback to access this method.'.";
-  final enabledForPurposeMessage = "Native message: User status is 'Enabled' for purpose 'cookies'.";
-  final enabledForVendorMessage = "Native message: User status is 'Enabled' for vendor '738'.";
-  final disabledForVendorMessage = "Native message: User status is 'Disabled' for vendor '738'.";
-  final enabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Enabled' for vendor '738' and required purposes.";
-  final disabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Disabled' for vendor '738' and required purposes.";
+  const enabledForPurposeMessage = "Native message: User status is 'Enabled' for purpose 'cookies'.";
+  const enabledForVendorMessage = "Native message: User status is 'Enabled' for vendor '738'.";
+  const disabledForVendorMessage = "Native message: User status is 'Disabled' for vendor '738'.";
+  const enabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Enabled' for vendor '738' and required purposes.";
+  const disabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Disabled' for vendor '738' and required purposes.";
 
   bool isError = false;
   bool isReady = false;
