@@ -7,6 +7,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
+import 'util/assertion_helper.dart';
+import 'util/constants.dart';
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
@@ -44,23 +47,12 @@ void main() {
       await tester.pumpAndSettle();
 
       // SDK is not ready at startup
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) => widget is Text && widget.key.toString().contains("isReady") && widget.data?.contains("Native message: Result = false") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("isReady", resultFalseMessage);
 
       await tester.tap(onReadyBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) =>
-          widget is Text && widget.key.toString().contains("onReady") && widget.data?.contains("Native message: Waiting for onReady callback") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("onReady", sdkNotReadyMessage);
 
       await tester.tap(apiKeyFieldFinder);
       await tester.pumpAndSettle();
@@ -83,12 +75,7 @@ void main() {
       await tester.tap(onReadyBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(
-        find.byWidgetPredicate(
-              (Widget widget) => widget is Text && widget.key.toString().contains("isReady") && widget.data?.contains("Native message: Result = false") == true,
-        ),
-        findsOneWidget,
-      );
+      assertNativeMessage("isReady", resultFalseMessage);
 
       // TODO('Check this difference')
       if (Platform.isAndroid) {
