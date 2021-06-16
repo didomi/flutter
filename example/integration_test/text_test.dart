@@ -76,9 +76,11 @@ void main() {
       await tester.tap(getWebviewStringsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(find.byType(AlertDialog), findsOneWidget);
+      assertNativeMessage("getWebviewStrings", notReadyMessage);
 
-      assert(isError == true);
+      expect(find.byType(AlertDialog), findsNothing);
+
+      assert(isError == false);
       assert(isReady == false);
 
       // reset error for following tests
@@ -129,6 +131,8 @@ void main() {
 
       await tester.tap(getWebviewStringsBtnFinder);
       await tester.pumpAndSettle();
+
+      assertNativeMessage("getWebviewStrings", defaultMessage);
 
       expect(find.byType(AlertDialog), findsOneWidget);
     });
