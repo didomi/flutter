@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk_example/testapps/sample_for_text_tests.dart' as app;
@@ -26,6 +28,12 @@ void main() {
       "like precise geolocation data, and identification through device scanning. We process that data for purposes like personalised ads and content, "
       "ad and content measurement, audience insights and product development. You can withdraw your consent or object to data processing based on "
       "legitimate interest at any time from the app menu.";
+  const expectedJavascript = "window.didomiOnReady = window.didomiOnReady ||\n[];window.didomiOnReady.push(function (Didomi)\n{Didomi.notice.hide();"
+      "Didomi.setUserStatus({\"purposes\":{\"consent\":{\"enabled\":[],\"disabled\":[]},\"legitimate_interest\":{\"enabled\":[],\"disabled\":[]}},"
+      "\"vendors\":{\"consent\":{\"enabled\":[],\"disabled\":[]},\"legitimate_interest\":{\"enabled\":[],\"disabled\":[]}},"
+      "\"user_id\":\"48d64935-942a-4ee2-b2d4-8de517969728\",\"created\":\"\d+-\d+-\d+T\d+:\d+:\d+Z\",\"updated\":\"\d+-\d+-\d+T\d+:\d+:\d+Z\","
+      "\"source\":{\"type\":\"app\",\"domain\":\"io.didomi.flutter.sample\"},\"action\":\"webview\"});});";
+  const expectedQueryString = "didomiConfig.user.externalConsent.value=";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final getTextBtnFinder = find.byKey(Key("getText"));
@@ -76,13 +84,12 @@ void main() {
       await tester.tap(getWebviewStringsBtnFinder);
       await tester.pumpAndSettle();
 
-      expect(find.byType(AlertDialog), findsOneWidget);
+      assertNativeMessage("getWebviewStrings", notReadyMessage);
 
-      assert(isError == true);
+      expect(find.byType(AlertDialog), findsNothing);
+
+      assert(isError == false);
       assert(isReady == false);
-
-      // reset error for following tests
-      isError = false;
     });
 
     testWidgets("Get Translated Text before initialization", (WidgetTester tester) async {
@@ -130,7 +137,21 @@ void main() {
       await tester.tap(getWebviewStringsBtnFinder);
       await tester.pumpAndSettle();
 
+      assertNativeMessage("getWebviewStrings", defaultMessage);
+
       expect(find.byType(AlertDialog), findsOneWidget);
+
+      final javascriptResult = await DidomiSdk.javaScriptForWebView;
+      final exp = RegExp(expectedJavascript);
+      assert(exp.hasMatch(expectedJavascript), "Actual: $javascriptResult\nExpected: $expectedJavascript");
+
+      final queryStringResult = await DidomiSdk.queryStringForWebView;
+      if (Platform.isAndroid) {
+        assert(queryStringResult.startsWith(expectedQueryString), "Actual: $queryStringResult\nExpected: $expectedQueryString");
+      } else if (Platform.isIOS) {
+        // Not implemented for iOS
+        assert(queryStringResult == "", "Actual: $queryStringResult\nExpected:");
+      }
     });
 
     testWidgets("Get Translated Texts after initialization", (WidgetTester tester) async {

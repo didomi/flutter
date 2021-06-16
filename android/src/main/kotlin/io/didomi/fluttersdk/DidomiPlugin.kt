@@ -117,7 +117,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     result.success(didomi.isPreferencesVisible)
                 }
 
-                "getJavaScriptForWebView" -> result.success(didomi.javaScriptForWebView)
+                "getJavaScriptForWebView" -> getJavaScriptForWebView(result)
 
                 "getQueryStringForWebView" -> result.success(didomi.queryStringForWebView)
 
@@ -274,6 +274,18 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(text)
         } catch (e: DidomiNotReadyException) {
             result.error("getTranslatedText", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the JavaScript For WebView
+     */
+    private fun getJavaScriptForWebView(result: Result) {
+        try {
+            val text = Didomi.getInstance().javaScriptForWebView
+            result.success(text)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getJavaScriptForWebView", e.message.orEmpty(), e)
         }
     }
 

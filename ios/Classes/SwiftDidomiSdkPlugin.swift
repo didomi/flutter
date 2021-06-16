@@ -63,7 +63,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         case "isPreferencesVisible":
             result(Didomi.shared.isPreferencesVisible())
         case "getJavaScriptForWebView":
-            result(Didomi.shared.getJavaScriptForWebView())
+            getJavaScriptForWebView(result: result)
         case "updateSelectedLanguage":
             updateSelectedLanguage(call, result: result)
         case "getText":
@@ -248,6 +248,18 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             return
         }
         result(Didomi.shared.getTranslatedText(key: key))
+    }
+
+    /**
+     * Get the JavaScript For WebView
+     - Returns: String
+     */
+    func getJavaScriptForWebView(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        result(Didomi.shared.getJavaScriptForWebView())
     }
 
     /**
