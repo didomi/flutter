@@ -130,7 +130,7 @@ jobs:
 #        run: flutter pub get
 #
 #        # pod update
-#        - name: Build iOS Sample
+#        - name: Run pod update
 #          working-directory: ./example/ios
 #          run: pod update
 #
