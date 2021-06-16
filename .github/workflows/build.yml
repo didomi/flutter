@@ -87,6 +87,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # pod update
+      - name: Build iOS Sample
+        working-directory: ./example/ios
+        run: pod update
+
       # iOS IPA
       - name: Build iOS Sample
         working-directory: ./example

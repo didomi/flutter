@@ -84,6 +84,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # pod update
+      - name: Build iOS Sample
+        working-directory: ./example/ios
+        run: pod update
+
       # Connect to GCloud
       - name: Login to Google Cloud
         uses: google-github-actions/setup-gcloud@master
