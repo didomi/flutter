@@ -43,11 +43,8 @@ void main() {
   DidomiSdk.addEventListener(listener);
 
   group("User Legitimate Interest for Vendor", () {
-    /*
-     * Without initialization
-     */
 
-    testWidgets("Click LI for vendor '738' without initialization", (WidgetTester tester) async {
+    testWidgets("Click LI without initialization", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -79,11 +76,8 @@ void main() {
       assert(isReady == false);
     });
 
-    /*
-     * With initialization
-     */
 
-    testWidgets("Click LI for vendor '738' with initialization", (WidgetTester tester) async {
+    testWidgets("Click LI with initialization", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -114,10 +108,7 @@ void main() {
       assertNativeMessage("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", enabledForVendorAndRequiredPurposesMessage);
     });
 
-    /*
-     * With initialization + agree then reset
-     */
-    testWidgets("Click LI for vendor '738' after agreeing then reset", (WidgetTester tester) async {
+    testWidgets("Click LI after agreeing then reset", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -182,10 +173,7 @@ void main() {
       assertNativeMessage("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", enabledForVendorAndRequiredPurposesMessage);
     });
 
-    /*
-     * With initialization + disagree then reset
-     */
-    testWidgets("Click LI for vendor '738' after disagreeing then reset", (WidgetTester tester) async {
+    testWidgets("Click LI after disagreeing then reset", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();

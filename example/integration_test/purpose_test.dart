@@ -45,9 +45,7 @@ void main() {
   DidomiSdk.addEventListener(listener);
 
   group("Purpose", () {
-    /*
-     * Without initialization
-     */
+    /// Without initialization
 
     testWidgets("Get disabled purpose ids without initialization", (WidgetTester tester) async {
       // Start app
@@ -172,9 +170,7 @@ void main() {
       assert(isReady == false);
     });
 
-    /*
-     * With initialization
-     */
+    /// With initialization
 
     testWidgets("Get disabled purpose ids with initialization", (WidgetTester tester) async {
       // Start app
@@ -308,9 +304,7 @@ void main() {
       assert(isReady == true);
     });
 
-    /*
-     * With initialization + Agree to All
-     */
+    /// With initialization + Agree to All
 
     testWidgets("Get disabled purpose ids with initialization and user agreed", (WidgetTester tester) async {
       // Start app
@@ -445,9 +439,7 @@ void main() {
       assert(isReady == true);
     });
 
-    /*
-     * With initialization + Disagree to All
-     */
+    /// With initialization + Disagree to All
 
     testWidgets("Get disabled purpose ids with initialization and user agreed", (WidgetTester tester) async {
       // Start app

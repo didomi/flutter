@@ -45,10 +45,6 @@ void main() {
   DidomiSdk.addEventListener(listener);
 
   group("User Consent for Vendor", () {
-    /*
-     * Without initialization
-     */
-
     testWidgets("Get user consent without initialization", (WidgetTester tester) async {
       // Start app
       app.main();
@@ -80,10 +76,6 @@ void main() {
       assert(isError == false);
       assert(isReady == false);
     });
-
-    /*
-     * With initialization
-     */
 
     testWidgets("Get user consent with initialization", (WidgetTester tester) async {
       // Start app
@@ -118,10 +110,6 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
     });
-
-    /*
-     * With initialization + agree then reset
-     */
 
     testWidgets("Get user consent with initialization after agree then reset", (WidgetTester tester) async {
       // Start app
@@ -187,10 +175,6 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
     });
-
-    /*
-     * With initialization + disagree then reset
-     */
 
     testWidgets("Get user consent with initialization after disagree then reset", (WidgetTester tester) async {
       // Start app

@@ -40,9 +40,7 @@ void main() {
   DidomiSdk.addEventListener(listener);
 
   group("User Consent", () {
-    /*
-     * Without initialization
-     */
+    /// Without initialization
 
     testWidgets("Click agree to all without initialization", (WidgetTester tester) async {
       // Start app
@@ -116,9 +114,7 @@ void main() {
       assert(isReady == false);
     });
 
-    /*
-     * With initialization
-     */
+    /// With initialization
 
     testWidgets("Click agree to all with initialization", (WidgetTester tester) async {
       // Start app

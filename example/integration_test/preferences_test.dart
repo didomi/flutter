@@ -79,7 +79,7 @@ void main() {
       assert(await DidomiSdk.isPreferencesVisible == false);
     });
 
-    testWidgets("Show Preferences with initialization for vendors", (WidgetTester tester) async {
+    testWidgets("Show Preferences with initialization for vendor", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
