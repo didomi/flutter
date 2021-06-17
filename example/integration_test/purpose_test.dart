@@ -6,11 +6,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'util/assertion_helper.dart';
+import 'util/constants.dart';
 import 'util/initialize_helper.dart';
 import 'util/scroll_helper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  // Native message strings.
+  const purposeNames = "purpose_1_name, purpose_3_name, purpose_5_name, special_feature_2_name, special_feature_1_name, purpose_10_name, purpose_9_name, "
+      "purpose_7_name, purpose_8_name, purpose_2_name, purpose_4_name, purpose_6_name.";
+  const purposeIds = "cookies, create_ads_profile, create_content_profile, device_characteristics, geolocation_data, improve_products, market_research, "
+      "measure_ad_performance, measure_content_performance, select_basic_ads, select_personalized_ads, select_personalized_content.";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final agreeToAllBtnFinder = find.byKey(Key("setUserAgreeToAll"));
@@ -27,11 +34,6 @@ void main() {
   bool isError = false;
   bool isReady = false;
 
-  // Native message strings.
-  final purposeNames = "purpose_1_name, purpose_3_name, purpose_5_name, special_feature_2_name, special_feature_1_name, purpose_10_name, purpose_9_name, purpose_7_name, purpose_8_name, purpose_2_name, purpose_4_name, purpose_6_name.";
-  final purposeIds = "cookies,create_ads_profile,create_content_profile,device_characteristics,geolocation_data,improve_products,market_research,measure_ad_performance,measure_content_performance,select_basic_ads,select_personalized_ads,select_personalized_content.";
-  final notReadyMessage = "Native message: Failed: \'Didomi SDK is not ready. Use the onReady callback to access this method.\'.";
-
   final listener = EventListener();
   listener.onError = (String message) {
     isError = true;
@@ -43,9 +45,7 @@ void main() {
   DidomiSdk.addEventListener(listener);
 
   group("Purpose", () {
-    /*
-     * Without initialization
-     */
+    /// Without initialization
 
     testWidgets("Get disabled purpose ids without initialization", (WidgetTester tester) async {
       // Start app
@@ -58,8 +58,7 @@ void main() {
       await tester.tap(disabledPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = notReadyMessage;
-      assertNativeMessage("getDisabledPurposeIds", expected);
+      assertNativeMessage("getDisabledPurposeIds", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -76,8 +75,7 @@ void main() {
       await tester.tap(enabledPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = notReadyMessage;
-      assertNativeMessage("getEnabledPurposeIds", expected);
+      assertNativeMessage("getEnabledPurposeIds", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -94,8 +92,7 @@ void main() {
       await tester.tap(requiredPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = notReadyMessage;
-      assertNativeMessage("getRequiredPurposeIds", expected);
+      assertNativeMessage("getRequiredPurposeIds", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -113,8 +110,7 @@ void main() {
       await tester.tap(disabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = notReadyMessage;
-      assertNativeMessage("getDisabledPurposes", expected);
+      assertNativeMessage("getDisabledPurposes", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -132,8 +128,7 @@ void main() {
       await tester.tap(enabledPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = notReadyMessage;
-      assertNativeMessage("getEnabledPurposes", expected);
+      assertNativeMessage("getEnabledPurposes", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -151,8 +146,7 @@ void main() {
       await tester.tap(requiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = notReadyMessage;
-      assertNativeMessage("getRequiredPurposes", expected);
+      assertNativeMessage("getRequiredPurposes", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
@@ -166,21 +160,17 @@ void main() {
       assert(isError == false);
       assert(isReady == false);
 
-      await scrollDown(tester, listKey);
-      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey, offsetY: 600);
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = notReadyMessage;
-      assertNativeMessage("getPurpose", expected);
+      assertNativeMessage("getPurpose", notReadyMessage);
 
       assert(isError == false);
       assert(isReady == false);
     });
 
-    /*
-     * With initialization
-     */
+    /// With initialization
 
     testWidgets("Get disabled purpose ids with initialization", (WidgetTester tester) async {
       // Start app
@@ -303,8 +293,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      await scrollDown(tester, listKey);
-      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey, offsetY: 600);
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -315,9 +304,7 @@ void main() {
       assert(isReady == true);
     });
 
-    /*
-     * With initialization + Agree to All
-     */
+    /// With initialization + Agree to All
 
     testWidgets("Get disabled purpose ids with initialization and user agreed", (WidgetTester tester) async {
       // Start app
@@ -441,8 +428,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      await scrollDown(tester, listKey);
-      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey, offsetY: 600);
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 
@@ -453,9 +439,7 @@ void main() {
       assert(isReady == true);
     });
 
-    /*
-     * With initialization + Disagree to All
-     */
+    /// With initialization + Disagree to All
 
     testWidgets("Get disabled purpose ids with initialization and user agreed", (WidgetTester tester) async {
       // Start app
@@ -579,8 +563,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      await scrollDown(tester, listKey);
-      await scrollDown(tester, listKey);
+      await scrollDown(tester, listKey, offsetY: 600);
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 

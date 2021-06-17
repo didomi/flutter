@@ -1,3 +1,5 @@
+import 'package:didomi_sdk_example/widgets/get_user_consent_status_for_purpose.dart';
+import 'package:didomi_sdk_example/widgets/get_user_consent_status_for_vendor.dart';
 import 'package:didomi_sdk_example/widgets/get_user_consent_status_for_vendor_and_required_purposes.dart';
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
 import 'package:didomi_sdk_example/widgets/reset.dart';
@@ -6,12 +8,12 @@ import 'package:didomi_sdk_example/widgets/set_user_disagree_to_all.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(SampleForUserConsentForVendorAndRequiredPurposesTestsApp());
+void main() => runApp(SampleForGetUserConsentTestsApp());
 
-class SampleForUserConsentForVendorAndRequiredPurposesTestsApp extends StatelessWidget {
+class SampleForGetUserConsentTestsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: "User Consent for Vendor and Required Purposes Tests",
+        title: "Get User Consent Tests",
         home: HomePage(),
       );
 }
@@ -27,7 +29,10 @@ class HomePage extends StatelessWidget {
             SetUserAgreeToAll(),
             SetUserDisagreeToAll(),
             Reset(),
+            // Purpose
+            GetUserConsentStatusForPurpose(),
             // Vendor
+            GetUserConsentStatusForVendor(),
             GetUserConsentStatusForVendorAndRequiredPurposes(),
           ],
         ),

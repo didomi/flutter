@@ -1,15 +1,15 @@
-import 'package:didomi_sdk_example/widgets/get_translated_text.dart';
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
-import 'package:didomi_sdk_example/widgets/update_selected_language.dart';
+import 'package:didomi_sdk_example/widgets/set_log_level.dart';
+import 'package:didomi_sdk_example/widgets/setup_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(SampleForTranslatedTextTestsApp());
+void main() => runApp(SampleForSetupUITestsApp());
 
-class SampleForTranslatedTextTestsApp extends StatelessWidget {
+class SampleForSetupUITestsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: "Translated text Tests",
+        title: "Dialogs Tests",
         home: HomePage(),
       );
 }
@@ -21,10 +21,8 @@ class HomePage extends StatelessWidget {
           key: Key("components_list"),
           children: [
             InitializeSmall(),
-            // Change language
-            UpdateSelectedLanguage(),
-            // Get text
-            GetTranslatedText(),
+            SetupUI(),
+            SetLogLevel(),
           ],
         ),
       );
