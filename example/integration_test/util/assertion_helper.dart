@@ -9,6 +9,12 @@ Future<void> assertNativeMessage(String suffix, String expected) async {
   assert(actual == expected, "Actual: $actual\nExpected: $expected");
 }
 
+/// Assert text in a Text widget whose key starts with "nativeResponse_" matches the expected regexp being passed.
+Future<void> assertNativeMessageMatch(String suffix, String pattern) async {
+  final actual = _extractTextFromWidget(suffix);
+  assert(RegExp(pattern).hasMatch(actual), "Actual: $actual\nPattern: $pattern");
+}
+
 /// Assert text in a Text widget whose key starts with "nativeResponse_" starts with the expected value being passed.
 Future<void> assertNativeMessageStartsWith(String suffix, String expected) async {
   final actual = _extractTextFromWidget(suffix);
