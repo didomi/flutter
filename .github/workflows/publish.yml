@@ -38,4 +38,4 @@ jobs:
         run: flutter analyze
 
       - name: Publish Flutter SDK
-        run: flutter pub publish --dry-run
+        run: flutter pub publish
