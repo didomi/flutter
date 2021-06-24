@@ -16,6 +16,7 @@ void main() {
   // Native message strings.
   const emptyDisabledVendorMessage = "Native message: Disabled Vendor list is empty.";
   const emptyEnabledVendorMessage = "Native message: Enabled Vendor list is empty.";
+  const vendorIdListInMessage = ["google", "827", "1000"];
   const suffixVendorMessage = "([^,]+,\\s)+[^,]+\\.";
   const disabledVendorMessage = "Native message: Disabled Vendors: $suffixVendorMessage";
   const enabledVendorMessage = "Native message: Enabled Vendors: $suffixVendorMessage";
@@ -225,6 +226,7 @@ void main() {
       await tester.pumpAndSettle();
 
       assertNativeMessageMatch("getRequiredVendorIds", requiredVendorMessage);
+      assertNativeMessageContains("getRequiredVendorIds", vendorIdListInMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -340,6 +342,7 @@ void main() {
       await tester.pumpAndSettle();
 
       assertNativeMessageMatch("getEnabledVendorIds", enabledVendorMessage);
+      assertNativeMessageContains("getEnabledVendorIds", vendorIdListInMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -357,6 +360,7 @@ void main() {
       await tester.pumpAndSettle();
 
       assertNativeMessageMatch("getRequiredVendorIds", requiredVendorMessage);
+      assertNativeMessageContains("getRequiredVendorIds", vendorIdListInMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -456,6 +460,7 @@ void main() {
       await tester.pumpAndSettle();
 
       assertNativeMessageMatch("getDisabledVendorIds", disabledVendorMessage);
+      assertNativeMessageContains("getDisabledVendorIds", vendorIdListInMessage);
 
       assert(isError == false);
       assert(isReady == true);
@@ -490,6 +495,7 @@ void main() {
       await tester.pumpAndSettle();
 
       assertNativeMessageMatch("getRequiredVendorIds", requiredVendorMessage);
+      assertNativeMessageContains("getRequiredVendorIds", vendorIdListInMessage);
 
       assert(isError == false);
       assert(isReady == true);

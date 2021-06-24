@@ -1,12 +1,23 @@
 // Assert the text of the native message associated to a button.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import '../extensions/string_extension.dart';
 
 /// Assert text in a Text widget whose key starts with "nativeResponse_" matches the expected value being passed.
 Future<void> assertNativeMessage(String suffix, String expected) async {
   final actual = _extractTextFromWidget(suffix);
   assert(actual == expected, "Actual: $actual\nExpected: $expected");
+}
+
+/// Assert text in a Text widget whose key starts with "nativeResponse_" contains the expected value being passed.
+Future<void> assertNativeMessageContains(String suffix, List<String> expectedList) async {
+  final actual = _extractTextFromWidget(suffix);
+  var result = true;
+  for (String expected in expectedList) {
+    result = result && actual.contains(expected);
+  }
+  assert(result, "Actual: $actual\nExpected list: ${expectedList.join(", ")}");
 }
 
 /// Assert text in a Text widget whose key starts with "nativeResponse_" matches the expected regexp being passed.
