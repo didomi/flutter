@@ -1,3 +1,4 @@
+import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class InitializeHelper {
@@ -5,6 +6,12 @@ class InitializeHelper {
     await tester.tap(finder);
     await tester.pumpAndSettle();
 
-    await Future.delayed(Duration(seconds: 4));
+    // Wait for sdk init
+    await tester.runAsync(() async {
+      while (await DidomiSdk.isReady == false) {
+        await Future.delayed(Duration(milliseconds: 100));
+      }
+      await expectLater(await DidomiSdk.isReady, isTrue);
+    });
   }
 }
