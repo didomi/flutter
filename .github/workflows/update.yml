@@ -12,11 +12,6 @@ on:
         description: "Force update (even if sdk is up to date)"
         required: false
         default: "false"
-      # TODO('remove this')
-      reset:
-        description: "Reset versions (testing purpose)"
-        required: false
-        default: "false"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -39,13 +34,8 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # TODO('remove this')
-      - name: Reset Flutter SDK (for testing purpose)
-        if : github.event.inputs.reset == 'true'
-        run: bash .github/scripts/reset_versions.sh
-
       - name: Check if Flutter SDK requires update
-        if : github.event.inputs.force != 'true'
+        if: github.event.inputs.force != 'true'
         run: bash .github/scripts/check_before_update.sh
 
       - name: Update Flutter SDK
@@ -80,78 +70,76 @@ jobs:
       - name: Analyze project source
         run: flutter analyze
 
-# TODO('revert this')
-#  test_android:
-#    name: Testing Android
-#    needs: analyse
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - uses: actions/checkout@v2
-#      - uses: actions/setup-java@v1
-#        with:
-#          java-version: "12.x"
-#      - uses: subosito/flutter-action@v1
-#        with:
-#          channel: "stable"
-#
-#      - name: Install dependencies
-#        run: flutter pub get
-#
-#      # Connect to GCloud
-#      - name: Login to Google Cloud
-#        uses: google-github-actions/setup-gcloud@master
-#        with:
-#          version: "342.0.0"
-#          service_account_key: ${{ secrets.GCLOUD_AUTH }}
-#
-#      - name: Set current project
-#        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
-#
-#      # Build and upload each scenarios to firebase
-#      - name: Run UI tests
-#        run: bash .github/scripts/uitests_for_android.sh ${GITHUB_HEAD_REF}
-#
-#  test_ios:
-#    name: Testing iOS
-#    needs: analyse
-#    runs-on: self-hosted
-#
-#    steps:
-#      - uses: actions/checkout@v2
-#      - uses: actions/setup-java@v1
-#        with:
-#          java-version: "12.x"
-#      - uses: subosito/flutter-action@v1
-#        with:
-#          channel: "stable"
-#
-#      - name: Install dependencies
-#        run: flutter pub get
-#
-#        # pod update
-#        - name: Run pod update
-#          working-directory: ./example/ios
-#          run: pod update
-#
-#      # Connect to GCloud
-#      - name: Login to Google Cloud
-#        uses: google-github-actions/setup-gcloud@master
-#        with:
-#          version: "342.0.0"
-#          service_account_key: ${{ secrets.GCLOUD_AUTH }}
-#
-#      - name: Set current project
-#        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
-#
-#      # Build and upload each scenarios to firebase
-#      - name: Run UI tests
-#        run: sh .github/scripts/uitests_for_ios.sh ${GITHUB_HEAD_REF}
+  test_android:
+    name: Testing Android
+    needs: analyse
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Connect to GCloud
+      - name: Login to Google Cloud
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          version: "342.0.0"
+          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+
+      - name: Set current project
+        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
+
+      # Build and upload each scenarios to firebase
+      - name: Run UI tests
+        run: bash .github/scripts/uitests_for_android.sh ${GITHUB_HEAD_REF}
+
+  test_ios:
+    name: Testing iOS
+    needs: analyse
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # pod update
+      - name: Run pod update
+        working-directory: ./example/ios
+        run: pod update
+
+      # Connect to GCloud
+      - name: Login to Google Cloud
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          version: "342.0.0"
+          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+
+      - name: Set current project
+        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
+
+      # Build and upload each scenarios to firebase
+      - name: Run UI tests
+        run: sh .github/scripts/uitests_for_ios.sh ${GITHUB_HEAD_REF}
 
   tag:
     name: Tag
-    needs: analyse
-#    needs: [test_ios, test_android]
+    needs: [ test_ios, test_android ]
     runs-on: ubuntu-latest
 
     steps:
