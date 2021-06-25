@@ -1,6 +1,6 @@
 name: didomi_sdk
 description: Didomi CMP Plugin
-version: 0.0.1
+version: 0.0.1.beta.1
 repository: https://github.com/didomi/flutter
 
 environment:
