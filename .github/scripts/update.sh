@@ -14,13 +14,10 @@ shopt -s nocasematch
 # Increment position (Patch is default)
 if [[ "$1" =~ ^major$ ]]; then
   position=0
-  message="major version"
 elif [[ "$1" =~ ^minor$ ]]; then
   position=1
-  message="minor version"
 else
   position=2
-  message="patch version"
 fi
 
 # unset nocasematch option
@@ -90,11 +87,13 @@ echo "iOS SDK last version is $version"
 pushd ios >/dev/null
 sed -i~ -e "s|s.dependency 'Didomi-XCFramework', '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|s.dependency 'Didomi-XCFramework', '$version'|g" didomi_sdk.podspec || exit 1
 sed -i~ -e "s|s.version          = '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|s.version          = '$flutterversion'|g" didomi_sdk.podspec || exit 1
-pod update || exit 1
 popd >/dev/null
 
 # Update Flutter version
 sed -i~ -e "s|version: [0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|version: $flutterversion|g" pubspec.yaml || exit 1
+
+# Update changelog
+sh .github/scripts/update_changelog.sh "$flutterversion" || exit 1
 
 # Reload dependencies
 flutter pub get || exit 1
