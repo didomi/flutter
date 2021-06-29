@@ -24,7 +24,7 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
           body: |
-            Automatic release
+            Update latest versions of native Android and iOS sdks
             More info: https://developers.didomi.io/cmp/mobile-sdk
           draft: false
           prerelease: false
