@@ -13,17 +13,17 @@ concurrency:
 
 jobs:
   publish:
-    name: Analyse and Publish
+    name: Publish Flutter SDK
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Publish Flutter SDK
+      - name: Publish
         uses: sakebook/actions-flutter-pub-publisher@v1.3.1
         with:
           credential: ${{ secrets.PUB_DEV_CREDENTIALS }}
           flutter_package: true
-          skip_test: false
+          skip_test: true
           dry_run: true
