@@ -17,8 +17,8 @@ Check out our [releases](https://github.com/didomi/flutter/releases) for the lat
 
 For instructions on installing and using the plugin, please read our documentation:
 
-- [Developer guide](https://developers.didomi.io/cmp/flutter).
-- [API reference](https://developers.didomi.io/cmp/flutter/reference)
+- [Developer guide](https://developers.didomi.io/cmp/mobile-sdk/flutter).
+- [API reference](https://developers.didomi.io/cmp/mobile-sdk/flutter/reference)
 
 # Sample app
 
