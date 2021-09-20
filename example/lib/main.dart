@@ -3,14 +3,12 @@ import 'package:didomi_sdk/log_level.dart';
 import 'package:didomi_sdk_example/events_helper.dart';
 import 'package:didomi_sdk_example/widgets/get_text.dart';
 import 'package:didomi_sdk_example/widgets/get_translated_text.dart';
+import 'package:didomi_sdk_example/widgets/get_user_status_other_info.dart';
+import 'package:didomi_sdk_example/widgets/get_user_status_purposes.dart';
 import 'package:didomi_sdk_example/widgets/set_user.dart';
 import 'package:didomi_sdk_example/widgets/set_user_status_globally.dart';
 import 'package:didomi_sdk_example/widgets/update_selected_language.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
-import 'package:didomi_sdk_example/widgets/get_disabled_purposes.dart';
-import 'package:didomi_sdk_example/widgets/get_disabled_vendors.dart';
-import 'package:didomi_sdk_example/widgets/get_enabled_purposes.dart';
-import 'package:didomi_sdk_example/widgets/get_enabled_vendors.dart';
 import 'package:didomi_sdk_example/widgets/get_purpose.dart';
 import 'package:didomi_sdk_example/widgets/get_required_purposes.dart';
 import 'package:didomi_sdk_example/widgets/get_required_vendors.dart';
@@ -19,21 +17,11 @@ import 'package:flutter/material.dart';
 
 import 'events_helper.dart';
 import 'widgets/check_consent.dart';
-import 'widgets/get_disabled_purpose_ids.dart';
-import 'widgets/get_disabled_vendor_ids.dart';
-import 'widgets/get_enabled_purpose_ids.dart';
-import 'widgets/get_enabled_vendor_ids.dart';
 import 'widgets/get_required_purpose_ids.dart';
 import 'widgets/get_required_vendor_ids.dart';
 import 'widgets/get_text.dart';
 import 'widgets/get_translated_text.dart';
-import 'widgets/get_user_consent_status_for_purpose.dart';
-import 'widgets/get_user_consent_status_for_vendor.dart';
-import 'widgets/get_user_consent_status_for_vendor_and_required_purposes.dart';
-import 'widgets/get_user_legitimate_interest_status_for_purpose.dart';
-import 'widgets/get_user_legitimate_interest_status_for_vendor.dart';
-import 'widgets/get_user_legitimate_interest_status_for_vendor_and_required_purposes.dart';
-import 'widgets/get_user_status_for_vendor.dart';
+import 'widgets/get_user_status_vendors.dart';
 import 'widgets/initialize.dart';
 import 'widgets/is_ready.dart';
 import 'widgets/on_error.dart';
@@ -146,29 +134,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 SetUserDisagreeToAll(),
                 SetUserStatus(),
                 SetUserStatusGlobally(),
+                // Get user status
+                GetUserStatusPurposes(),
+                GetUserStatusVendors(),
+                GetUserStatusOtherInfo(),
                 // Purposes
                 Text("Purposes:"),
-                GetDisabledPurposeIds(),
-                GetEnabledPurposeIds(),
                 GetRequiredPurposeIds(),
-                GetUserConsentStatusForPurpose(),
-                GetUserLegitimateInterestStatusForPurpose(),
-                GetEnabledPurposes(),
-                GetDisabledPurposes(),
                 GetRequiredPurposes(),
                 GetPurpose(),
                 // Vendors
                 Text("Vendors:"),
-                GetDisabledVendorIds(),
-                GetEnabledVendorIds(),
                 GetRequiredVendorIds(),
-                GetUserConsentStatusForVendor(),
-                GetUserConsentStatusForVendorAndRequiredPurposes(),
-                GetUserLegitimateInterestStatusForVendor(),
-                GetUserLegitimateInterestStatusForVendorAndRequiredPurposes(),
-                GetUserStatusForVendor(),
-                GetEnabledVendors(),
-                GetDisabledVendors(),
                 GetRequiredVendors(),
                 GetVendor(),
                 // Languages,

@@ -132,6 +132,10 @@ class DidomiEventStreamHandler: EventChannel.StreamHandler, DidomiEventListener 
         sendEvent("onSyncDone", mapOf("organizationUserId" to event.organizationUserId))
     }
 
+    override fun syncError(event: SyncErrorEvent) {
+        sendEvent("onSyncError", mapOf("error" to event.error))
+    }
+
     fun onReadyCallback() {
         sendEvent("onReadyCallback")
     }

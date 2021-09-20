@@ -127,6 +127,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "getTranslatedText" -> getTranslatedText(call, result)
 
+                "getUserStatus" -> getUserStatus(result)
+
                 "getDisabledPurposeIds" -> getDisabledPurposeIds(result)
 
                 "getDisabledVendorIds" -> getDisabledVendorIds(result)
@@ -286,6 +288,19 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(text)
         } catch (e: DidomiNotReadyException) {
             result.error("getJavaScriptForWebView", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the IDs of the disabled purposes
+     */
+    private fun getUserStatus(result: Result) {
+        try {
+            val userStatus = Didomi.getInstance().userStatus
+            val map = EntitiesHelper.toMap(userStatus)
+            result.success(map)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getUserStatus", e.message.orEmpty(), e)
         }
     }
 

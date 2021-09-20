@@ -3,6 +3,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import io.didomi.sdk.Purpose
 import io.didomi.sdk.Vendor
+import io.didomi.sdk.models.UserStatus
 import java.util.*
 
 // Class used to convert Didomi entities (Vendor, Purpose) from and to types that can be sent through the Flutter channels.
@@ -38,6 +39,14 @@ class EntitiesHelper {
         @Throws(JsonParseException::class)
         fun toMap(vendor: Vendor?): HashMap<*, *>? {
             val valid = vendor ?: return null
+            val json = gson.toJsonTree(valid)
+            return gson.fromJson(json, HashMap::class.java)
+        }
+
+        // Convert a user status into a map.
+        @Throws(JsonParseException::class)
+        fun toMap(userStatus: UserStatus?): HashMap<*, *>? {
+            val valid = userStatus ?: return null
             val json = gson.toJsonTree(valid)
             return gson.fromJson(json, HashMap::class.java)
         }

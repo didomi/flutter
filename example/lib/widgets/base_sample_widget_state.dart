@@ -12,7 +12,7 @@ abstract class BaseSampleWidgetState<T extends StatefulWidget> extends State<T> 
 
   /// A Text displaying SDK response
   Widget buildResponseText(String key) =>
-      Text("Native message: $_messageFromNative\n", key: Key("nativeResponse_$key"), textAlign: TextAlign.center, maxLines: 3, overflow: TextOverflow.ellipsis);
+      Text("Native message: $_messageFromNative\n", key: Key("nativeResponse_$key"), textAlign: TextAlign.center, maxLines: 10, overflow: TextOverflow.ellipsis);
 
   /// Update displayed SDK response
   Future<void> updateMessageFromNative(String messageFromNative) async {
