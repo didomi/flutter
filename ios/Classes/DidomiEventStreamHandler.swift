@@ -101,6 +101,10 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
         eventListener.onSyncDone = { [weak self] event, organizationUserId in
             self?.sendEvent(eventType: "onSyncDone", arguments: ["organizationUserId": organizationUserId])
         }
+        
+        eventListener.onSyncError = { [weak self] event, error in
+            self?.sendEvent(eventType: "onSyncError", arguments: ["error": error])
+        }
     }
         
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
