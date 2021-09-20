@@ -70,6 +70,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             getText(call, result: result)
         case "getTranslatedText":
             getTranslatedText(call, result: result)
+        case "getUserStatus":
+            getUserStatus(result: result)
         case "getDisabledPurposeIds":
             getDisabledPurposeIds(result: result)
         case "getDisabledVendorIds":
@@ -262,6 +264,21 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(Didomi.shared.getJavaScriptForWebView())
     }
 
+    /**
+     * Get the user status object
+     - Returns: json describing the user status
+     */
+    func getUserStatus(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let userStatus = Didomi.shared.getUserStatus()
+        let encoded = EntitiesHelper.dictionary(from: userStatus)
+        result(encoded)
+    }
+
+    
     /**
      * Get the disabled purpose IDs
      - Returns: Array of purpose ids

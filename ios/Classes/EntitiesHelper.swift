@@ -34,6 +34,13 @@ class EntitiesHelper {
         return dictionary(from: data)
     }
     
+    // Convert an instance of UserStatus into a dictionary.
+    static func dictionary(from userStatus: UserStatus?) -> [String: Any]? {
+        let encoder = JSONEncoder()
+        let data = try? encoder.encode(userStatus)
+        return dictionary(from: data)
+    }
+    
     // Convert an instance of Data into a dictionary.
     static private func dictionary(from data: Data?) -> [String: Any]? {
         if let data = data {

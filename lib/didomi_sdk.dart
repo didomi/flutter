@@ -178,7 +178,6 @@ class DidomiSdk {
 
   static Future<UserStatus> get userStatus async {
     final dynamic result = await _channel.invokeMethod("getUserStatus");
-    print("User Status result : $result");
     return UserStatus.fromJson(result);
   }
 
