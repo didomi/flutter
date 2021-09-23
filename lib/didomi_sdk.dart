@@ -182,70 +182,76 @@ class DidomiSdk {
   }
 
   /// Get the IDs of the disabled purposes
-  @Deprecated("use getUserStatus instead")
+  @Deprecated("Use userStatus instead. "
+      "Search for the purposeId in userStatus.purposes.global.disabled or userStatus.purposes.consent.disabled")
   static Future<List<String>> get disabledPurposeIds async {
     final List<dynamic> result = await _channel.invokeMethod('getDisabledPurposeIds');
     return result.cast();
   }
 
   /// Get the IDs of the disabled vendors
-  @Deprecated("use getUserStatus instead")
+  @Deprecated("Use userStatus instead. "
+      "The result of this method has been replaced by userStatus.vendors.consent.disabled.")
   static Future<List<String>> get disabledVendorIds async {
     final List<dynamic> result = await _channel.invokeMethod('getDisabledVendorIds');
     return result.cast();
   }
 
   /// Get the IDs of the enabled purposes
-  @Deprecated("use getUserStatus instead")
+  @Deprecated("Use userStatus instead. "
+      "Search for the purposeId in userStatus.purposes.global.enabled or userStatus.purposes.consent.disabled")
   static Future<List<String>> get enabledPurposeIds async {
     final List<dynamic> result = await _channel.invokeMethod('getEnabledPurposeIds');
     return result.cast();
   }
 
   /// Get the IDs of the enabled vendors
-  @Deprecated("use getUserStatus instead")
+  @Deprecated("Use userStatus instead. "
+      "The result of this method has been replaced by userStatus.vendors.consent.enabled")
   static Future<List<String>> get enabledVendorIds async {
     final List<dynamic> result = await _channel.invokeMethod('getEnabledVendorIds');
     return result.cast();
   }
 
   /// Get the IDs of the required purposes
-  @Deprecated("use getUserStatus instead")
   static Future<List<String>> get requiredPurposeIds async {
     final List<dynamic> result = await _channel.invokeMethod('getRequiredPurposeIds');
     return result.cast();
   }
 
   /// Get the IDs of the required vendors
-  @Deprecated("use getUserStatus instead")
   static Future<List<String>> get requiredVendorIds async {
     final List<dynamic> result = await _channel.invokeMethod('getRequiredVendorIds');
     return result.cast();
   }
 
   /// Get enabled purposes.
-  @Deprecated("use getUserStatus instead")
+  @Deprecated("Use userStatus instead. "
+      "The result of this method has been replaced by userStatus.purposes.global.enabled")
   static Future<List<Purpose>> get enabledPurposes async {
     final List<dynamic> result = await _channel.invokeMethod("getEnabledPurposes");
     return EntitiesHelper.toPurposes(result);
   }
 
   /// Get disabled purposes.
-  @Deprecated("use getUserStatus instead")
+  @Deprecated("Use userStatus instead. "
+      "The result of this method has been replaced by userStatus.purposes.global.disabled")
   static Future<List<Purpose>> get disabledPurposes async {
     final List<dynamic> result = await _channel.invokeMethod("getDisabledPurposes");
     return EntitiesHelper.toPurposes(result);
   }
 
   /// Get enabled vendors.
-  @Deprecated("use getUserStatus instead")
+  @Deprecated("Use userStatus instead. "
+      "The result of this method has been replaced by userStatus.vendors.consent.enabled")
   static Future<List<Vendor>> get enabledVendors async {
     final List<dynamic> result = await _channel.invokeMethod("getEnabledVendors");
     return EntitiesHelper.toVendors(result);
   }
 
   /// Get disabled vendors.
-  @Deprecated("use getUserStatus instead")
+  @Deprecated("Use userStatus instead. "
+      "The result of this method has been replaced by userStatus.vendors.consent.disabled")
   static Future<List<Vendor>> get disabledVendors async {
     final List<dynamic> result = await _channel.invokeMethod("getDisabledVendors");
     return EntitiesHelper.toVendors(result);
@@ -295,21 +301,24 @@ class DidomiSdk {
   }
 
   /// Get the user consent status for a specific purpose
-  @Deprecated("use getUserStatus instead")
+  @Deprecated("use userStatus instead. "
+      "Search for the purposeId in userStatus.purposes.global.enabled or userStatus.purposes.consent.disabled")
   static Future<ConsentStatus> getUserConsentStatusForPurpose(String purposeId) async {
     final int result = await _channel.invokeMethod("getUserConsentStatusForPurpose", {"purposeId": purposeId});
     return ConsentStatus.values[result];
   }
 
   /// Get the user consent status for a specific vendor
-  @Deprecated("use getUserStatus instead")
+  @Deprecated("Use userStatus instead. "
+      "Search for the vendorId in userStatus.vendors.global.enabled or userStatus.vendors.global.disabled")
   static Future<ConsentStatus> getUserConsentStatusForVendor(String vendorId) async {
     final int result = await _channel.invokeMethod("getUserConsentStatusForVendor", {"vendorId": vendorId});
     return ConsentStatus.values[result];
   }
 
   /// Get the user consent status for a specific vendor and all its purposes
-  @Deprecated("use getUserStatus instead")
+  @Deprecated("Use userStatus instead. "
+      "Search for the vendorId in userStatus.vendors.globalConsent.enabled or userStatus.vendors.globalConsent.disabled")
   static Future<ConsentStatus> getUserConsentStatusForVendorAndRequiredPurposes(String vendorId) async {
     final int result = await _channel.invokeMethod("getUserConsentStatusForVendorAndRequiredPurposes", {"vendorId": vendorId});
     return ConsentStatus.values[result];
@@ -317,28 +326,32 @@ class DidomiSdk {
 
 
   /// Get the user legitimate interest status for a specific purpose
-  @Deprecated("use getUserStatus instead")
+  @Deprecated("Use userStatus instead. "
+      "Search for the purposeId in userStatus.purposes.global.enabled or userStatus.purposes.legitimateInterest.disabled")
   static Future<ConsentStatus> getUserLegitimateInterestStatusForPurpose(String purposeId) async {
     final int result = await _channel.invokeMethod("getUserLegitimateInterestStatusForPurpose", {"purposeId": purposeId});
     return ConsentStatus.values[result];
   }
 
   /// Get the user legitimate interest status for a specific vendor
-  @Deprecated("use getUserStatus instead")
+  @Deprecated("Use userStatus instead. "
+      "Search for the vendorId in userStatus.vendors.global.enabled or userStatus.vendors.global.disabled")
   static Future<ConsentStatus> getUserLegitimateInterestStatusForVendor(String vendorId) async {
     final int result = await _channel.invokeMethod("getUserLegitimateInterestStatusForVendor", {"vendorId": vendorId});
     return ConsentStatus.values[result];
   }
 
   /// Get the user legitimate interest status for a specific vendor and all its purposes
-  @Deprecated("use getUserStatus instead")
+  @Deprecated("Use userStatus instead. "
+      "Search for the vendorId in userStatus.vendors.globalLegitimateInterest.enabled or userStatus.vendors.globalLegitimateInterest.disabled")
   static Future<ConsentStatus> getUserLegitimateInterestStatusForVendorAndRequiredPurposes(String vendorId) async {
     final int result = await _channel.invokeMethod("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", {"vendorId": vendorId});
     return ConsentStatus.values[result];
   }
 
   /// Get the user consent and legitimate interest status for a specific vendor
-  @Deprecated("use getUserStatus instead")
+  @Deprecated("Use userStatus instead. "
+      "Search for the vendorId in userStatus.vendors.global.enabled or userStatus.vendors.global.disabled")
   static Future<ConsentStatus> getUserStatusForVendor(String vendorId) async {
     final int result = await _channel.invokeMethod("getUserStatusForVendor", {"vendorId": vendorId});
     return ConsentStatus.values[result];

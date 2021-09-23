@@ -5,7 +5,7 @@ import 'package:didomi_sdk/entities/user_status.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
 import 'package:flutter/material.dart';
 
-/// Widget to call DidomiSdk.getDisabledPurposeIds
+/// Widget to call DidomiSdk.getUserStatus and display additional info from result
 class GetUserStatusOtherInfo extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _GetUserStatusOtherInfo();

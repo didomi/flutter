@@ -6,7 +6,7 @@ import 'package:didomi_sdk_example/extensions/list.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
 import 'package:flutter/material.dart';
 
-/// Widget to call DidomiSdk.getDisabledPurposeIds
+/// Widget to call DidomiSdk.getUserStatus and display enabled vendors from result
 class GetUserStatusVendors extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _GetUserStatusVendorsState();
