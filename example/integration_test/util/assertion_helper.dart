@@ -63,6 +63,6 @@ void assertMatchesUuidPattern(String? text, {String? message}) {
 }
 
 void assertMatchesDatePattern(String? text, {String? message}) {
-  RegExp exp = RegExp(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z");
+  RegExp exp = RegExp(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:.\d{3})?Z");
   assert(exp.hasMatch(text ?? ""), "$text should be a date");
 }

@@ -5,6 +5,7 @@ import androidx.annotation.NonNull
 import androidx.fragment.app.FragmentActivity
 import com.google.gson.JsonParseException
 import io.didomi.sdk.Didomi
+import io.didomi.sdk.DidomiInitializeParameters
 import io.didomi.sdk.exceptions.DidomiNotReadyException
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -199,13 +200,15 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val disableDidomiRemoteConfig: Boolean = call.argument("disableDidomiRemoteConfig") ?: false
             Didomi.getInstance().initialize(
                 it.application,
-                apiKey,
-                call.argument("localConfigurationPath"),
-                call.argument("remoteConfigurationURL"),
-                call.argument("providerId"),
-                disableDidomiRemoteConfig,
-                call.argument("languageCode"),
-                call.argument("noticeId")
+                DidomiInitializeParameters(
+                    apiKey,
+                    call.argument("localConfigurationPath"),
+                    call.argument("remoteConfigurationURL"),
+                    call.argument("providerId"),
+                    disableDidomiRemoteConfig,
+                    call.argument("languageCode"),
+                    call.argument("noticeId")
+                )
             )
             result.success(null)
         } ?: run {
