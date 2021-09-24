@@ -100,7 +100,6 @@ class EventsHelper {
       onEvent("Sync failed with error $error");
     };
 
-
     DidomiSdk.addEventListener(didomiListener);
   }
 

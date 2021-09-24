@@ -112,7 +112,6 @@ void main() {
       assertListEmpty(result.vendors?.globalLegitimateInterest?.disabled);
     });
 
-
     testWidgets("Get user status after disagree to all", (WidgetTester tester) async {
       // Start app
       app.main();
