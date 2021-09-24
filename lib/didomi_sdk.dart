@@ -301,7 +301,7 @@ class DidomiSdk {
   }
 
   /// Get the user consent status for a specific purpose
-  @Deprecated("use userStatus instead. "
+  @Deprecated("Use userStatus instead. "
       "Search for the purposeId in userStatus.purposes.global.enabled or userStatus.purposes.consent.disabled")
   static Future<ConsentStatus> getUserConsentStatusForPurpose(String purposeId) async {
     final int result = await _channel.invokeMethod("getUserConsentStatusForPurpose", {"purposeId": purposeId});
