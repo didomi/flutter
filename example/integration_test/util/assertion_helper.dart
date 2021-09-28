@@ -54,7 +54,11 @@ void assertListEmpty(List? elements) {
 }
 
 void assertListContains(List<String>? elements, String contained) {
-  assert(elements != null && elements.contains(contained), "List should should contain $contained, but was: ${elements?.join("-")}");
+  assert(elements != null && elements.contains(contained), "List should contain $contained, but was: ${elements?.join("-")}");
+}
+
+void assertListDoesNotContain(List<String>? elements, String excluded) {
+  assert(elements != null && !elements.contains(excluded), "List should not contain $excluded, but was: ${elements?.join("-")}");
 }
 
 void assertMatchesUuidPattern(String? text, {String? message}) {

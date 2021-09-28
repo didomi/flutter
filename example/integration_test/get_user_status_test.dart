@@ -104,8 +104,7 @@ void main() {
       assertListContains(result.vendors?.legitimateInterest?.enabled, "738");
       assertListEmpty(result.vendors?.legitimateInterest?.disabled);
       assertListContains(result.vendors?.global?.enabled, "738");
-      // TODO Restore this when iOS sdk is fixed
-      // assertListEmpty(result.vendors?.global?.disabled);
+      assertListEmpty(result.vendors?.global?.disabled);
       assertListContains(result.vendors?.globalConsent?.enabled, "738");
       assertListEmpty(result.vendors?.globalConsent?.disabled);
       assertListContains(result.vendors?.globalLegitimateInterest?.enabled, "738");
@@ -143,7 +142,7 @@ void main() {
       assertListContains(result.vendors?.consent?.disabled, "738");
       assertListEmpty(result.vendors?.legitimateInterest?.enabled);
       assertListContains(result.vendors?.legitimateInterest?.disabled, "738");
-      assertListEmpty(result.vendors?.global?.enabled);
+      assertListDoesNotContain(result.vendors?.global?.enabled, "738");
       assertListContains(result.vendors?.global?.disabled, "738");
       assertListEmpty(result.vendors?.globalConsent?.enabled);
       assertListContains(result.vendors?.globalConsent?.disabled, "738");
