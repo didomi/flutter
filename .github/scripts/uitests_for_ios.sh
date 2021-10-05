@@ -18,6 +18,9 @@ output="../build/ios_integ"
 product="build/ios_integ/Build/Products"
 dev_target="14.4"
 
+# Update the CocoaPods specs
+pod repo update
+
 # Move to sample folder
 cd ./example || exit 1
 
