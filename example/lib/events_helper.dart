@@ -96,7 +96,9 @@ class EventsHelper {
     didomiListener.onSyncDone = (organizationUserId) {
       onEvent("Sync has been done for user $organizationUserId");
     };
-
+    didomiListener.onSyncError = (error) {
+      onEvent("Sync failed with error $error");
+    };
 
     DidomiSdk.addEventListener(didomiListener);
   }

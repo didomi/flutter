@@ -72,5 +72,6 @@ class EventListener {
   dynamic Function() onConsentChanged = () {};
   /// User consent synchronization was done
   dynamic Function(String organizationUserId) onSyncDone = (organizationUserId) {};
-
+  /// User consent synchronization failed
+  dynamic Function(String error) onSyncError = (error) {};
 }

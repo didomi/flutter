@@ -40,3 +40,33 @@ String _extractTextFromWidget(String suffix) {
   final text = finder.evaluate().single.widget as Text;
   return text.data!.removeNewLines();
 }
+
+void assertTextNotEmpty(String? text) {
+  assert((text ?? "").isNotEmpty, "$text should have a value");
+}
+
+void assertListNotEmpty(List? elements) {
+  assert(elements != null && elements.length > 0);
+}
+
+void assertListEmpty(List? elements) {
+  assert(elements != null && elements.length == 0, "List should be empty but was: ${elements?.join("-")}");
+}
+
+void assertListContains(List<String>? elements, String contained) {
+  assert(elements != null && elements.contains(contained), "List should contain $contained, but was: ${elements?.join("-")}");
+}
+
+void assertListDoesNotContain(List<String>? elements, String excluded) {
+  assert(elements != null && !elements.contains(excluded), "List should not contain $excluded, but was: ${elements?.join("-")}");
+}
+
+void assertMatchesUuidPattern(String? text, {String? message}) {
+  RegExp exp = RegExp(r"\S{8}-\S{4}-\S{4}-\S{4}-\S{12}");
+  assert(exp.hasMatch(text ?? ""), "$text should be an UUID");
+}
+
+void assertMatchesDatePattern(String? text, {String? message}) {
+  RegExp exp = RegExp(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:.\d{3})?Z");
+  assert(exp.hasMatch(text ?? ""), "$text should be a date");
+}

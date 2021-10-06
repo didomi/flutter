@@ -5,6 +5,7 @@ import androidx.annotation.NonNull
 import androidx.fragment.app.FragmentActivity
 import com.google.gson.JsonParseException
 import io.didomi.sdk.Didomi
+import io.didomi.sdk.DidomiInitializeParameters
 import io.didomi.sdk.exceptions.DidomiNotReadyException
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -127,6 +128,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "getTranslatedText" -> getTranslatedText(call, result)
 
+                "getUserStatus" -> getUserStatus(result)
+
                 "getDisabledPurposeIds" -> getDisabledPurposeIds(result)
 
                 "getDisabledVendorIds" -> getDisabledVendorIds(result)
@@ -197,13 +200,15 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val disableDidomiRemoteConfig: Boolean = call.argument("disableDidomiRemoteConfig") ?: false
             Didomi.getInstance().initialize(
                 it.application,
-                apiKey,
-                call.argument("localConfigurationPath"),
-                call.argument("remoteConfigurationURL"),
-                call.argument("providerId"),
-                disableDidomiRemoteConfig,
-                call.argument("languageCode"),
-                call.argument("noticeId")
+                DidomiInitializeParameters(
+                    apiKey,
+                    call.argument("localConfigurationPath"),
+                    call.argument("remoteConfigurationURL"),
+                    call.argument("providerId"),
+                    disableDidomiRemoteConfig,
+                    call.argument("languageCode"),
+                    call.argument("noticeId")
+                )
             )
             result.success(null)
         } ?: run {
@@ -286,6 +291,19 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(text)
         } catch (e: DidomiNotReadyException) {
             result.error("getJavaScriptForWebView", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the IDs of the disabled purposes
+     */
+    private fun getUserStatus(result: Result) {
+        try {
+            val userStatus = Didomi.getInstance().userStatus
+            val map = EntitiesHelper.toMap(userStatus)
+            result.success(map)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getUserStatus", e.message.orEmpty(), e)
         }
     }
 

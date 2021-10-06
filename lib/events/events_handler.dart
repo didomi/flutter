@@ -227,6 +227,13 @@ class EventsHandler {
         }
         break;
 
+      case "onSyncError":
+        final String error = jsonEvent["error"].toString();
+        for (var listener in listeners) {
+          listener.onSyncError(error);
+        }
+        break;
+
       default:
         print("Received invalid event: $eventType");
         break;
