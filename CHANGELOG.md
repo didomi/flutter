@@ -1,5 +1,9 @@
 # Release Note
 
+## 1.0.0
+Update Android / iOS native sdks
+Add getUserStatus feature from native sdks
+
 ## 0.0.1-alpha.1
 Internal release that add missing features from native sdks
 
