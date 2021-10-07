@@ -1,5 +1,8 @@
 # Release Note
 
+## 1.0.1
+Fix git repository to allow publication
+
 ## 1.0.0
 Update Android / iOS native sdks
 Add getUserStatus feature from native sdks
