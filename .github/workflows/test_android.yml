@@ -2,11 +2,8 @@ name: Test Android
 
 # Triggered on pull request or manually
 on:
-#  pull_request:
-#    branches: [ main ]
-  push:
-    branches:
-      - "**"
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 concurrency:
