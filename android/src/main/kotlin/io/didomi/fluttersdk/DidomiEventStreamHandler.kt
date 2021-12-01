@@ -24,6 +24,10 @@ class DidomiEventStreamHandler: EventChannel.StreamHandler, DidomiEventListener 
         sendEvent("onShowNotice")
     }
 
+    override fun showPreferences(event: ShowPreferencesEvent) {
+        sendEvent("onShowPreferences")
+    }
+
     override fun noticeClickAgree(event: NoticeClickAgreeEvent) {
         sendEvent("onNoticeClickAgree")
     }
@@ -94,6 +98,10 @@ class DidomiEventStreamHandler: EventChannel.StreamHandler, DidomiEventListener 
 
     override fun hideNotice(event: HideNoticeEvent) {
         sendEvent("onHideNotice")
+    }
+
+    override fun hidePreferences(event: HidePreferencesEvent) {
+        sendEvent("onHidePreferences")
     }
 
     override fun consentChanged(event: ConsentChangedEvent) {
