@@ -59,7 +59,6 @@ for file in $(find integration_test -maxdepth 1 -type f); do
 #  echo "--------------------------------------------------------"
 #
 #  xcodebuild test-without-building -xctestrun "$product/Runner_iphoneos$dev_target-arm64-armv7.xctestrun" -destination id=<DEVICE_ID>
-#  break
 
   echo "--------------------------------------------------------"
   echo "| Publishing $fileName to Firebase for iOS"
