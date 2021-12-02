@@ -36,6 +36,7 @@ for file in $(find integration_test -maxdepth 1 -type f); do
   echo "--------------------------------------------------------"
 
   # Build zip file for iOS
+  # Pass --simulator if building for the simulator.
   flutter build ios --config-only "$file" || exit 1
 
   echo "--------------------------------------------------------"
@@ -55,7 +56,7 @@ for file in $(find integration_test -maxdepth 1 -type f); do
   popd
 
 #  echo "--------------------------------------------------------"
-#  echo "| Running $fileName locally" !! Won't work with a simulator !!
+#  echo "| Running $fileName locally" requires --simulator on build
 #  echo "--------------------------------------------------------"
 #
 #  xcodebuild test-without-building -xctestrun "$product/Runner_iphoneos$dev_target-arm64-armv7.xctestrun" -destination id=<DEVICE_ID>
