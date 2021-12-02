@@ -63,6 +63,10 @@ jobs:
         working-directory: ./example/ios
         run: pod update
 
+      # unlock keychain
+      - name: Unlock key chain
+        run: security unlock-keychain -p ${{ secrets.KEYCHAIN_PWD }} login.keychain
+
       # Connect to GCloud
       - name: Login to Google Cloud
         uses: google-github-actions/setup-gcloud@master
