@@ -76,8 +76,7 @@ jobs:
   build_ios:
     name: Build for iOS
     needs: analyse
-#    runs-on: macos-latest
-    runs-on: m1
+    runs-on: macos-11
 
     steps:
       - uses: actions/checkout@v2
