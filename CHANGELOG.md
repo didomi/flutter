@@ -1,5 +1,9 @@
 # Release Note
 
+## 1.1.0
+Update Android / iOS native sdks
+Add `showPreferences` / `hidePreferences` events from native sdks
+
 ## 1.0.1
 Fix git repository to allow publication
 

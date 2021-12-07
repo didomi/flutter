@@ -28,13 +28,15 @@ Clone this repository and open the `example/` folder.
 
 All test scenarios are located in `example/integration_test/`
 
-### Using Flutter Bridge
+### Using Flutter Mobile
 ```
 cd ./example
 
-flutter drive \
-    --driver=test_driver/integration_test.dart \
-    --target=integration_test/<FILENAME>.dart
+// Single test
+flutter test "integration_test/<FILENAME>.dart"
+
+// Bulk test
+flutter test integration_test
 ```
 
 ### Using Espresso (Android)
@@ -45,7 +47,7 @@ cd ./example/android/
 ./gradlew app:connectedAndroidTest -Ptarget=`pwd`/../integration_test/<FILENAME>.dart
 
 // Bulk test
-.gradlew bulk
+./gradlew bulk
 ```
 
 ### Using XCTest (iOS)

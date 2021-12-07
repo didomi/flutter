@@ -1,4 +1,4 @@
-name: Test
+name: Test iOS
 
 # Triggered on pull request or manually
 on:
@@ -17,9 +17,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v2
         with:
-          java-version: "12.x"
+          distribution: 'zulu'
+          java-version: '11'
       - uses: subosito/flutter-action@v1
         with:
           channel: "stable"
@@ -36,47 +37,17 @@ jobs:
       - name: Analyze project source
         run: flutter analyze --no-fatal-infos
 
-  test_android:
-    name: Testing Android
-    needs: analyse
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: "12.x"
-      - uses: subosito/flutter-action@v1
-        with:
-          channel: "stable"
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      # Connect to GCloud
-      - name: Login to Google Cloud
-        uses: google-github-actions/setup-gcloud@master
-        with:
-          version: "342.0.0"
-          service_account_key: ${{ secrets.GCLOUD_AUTH }}
-
-      - name: Set current project
-        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
-
-      # Build and upload each scenarios to firebase
-      - name: Run UI tests
-        run: bash .github/scripts/uitests_for_android.sh ${GITHUB_HEAD_REF}
-
   test_ios:
     name: Testing iOS
     needs: analyse
-    runs-on: self-hosted
+    runs-on: m1
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v2
         with:
-          java-version: "12.x"
+          distribution: 'zulu'
+          java-version: '11'
       - uses: subosito/flutter-action@v1
         with:
           channel: "stable"
@@ -88,6 +59,10 @@ jobs:
       - name: Run pod update
         working-directory: ./example/ios
         run: pod update
+
+      # unlock keychain
+      - name: Unlock key chain
+        run: security unlock-keychain -p ${{ secrets.KEYCHAIN_PWD }} login.keychain
 
       # Connect to GCloud
       - name: Login to Google Cloud
