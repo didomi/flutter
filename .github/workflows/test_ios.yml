@@ -1,11 +1,13 @@
 name: Test iOS
 
 # Triggered on pull request or manually
-on:
+#on:
 #  pull_request:
 #    branches: [ main ]
-  branches:
-    - "**"
+on:
+  push:
+    branches:
+      - "**"
   workflow_dispatch:
 
 concurrency:
