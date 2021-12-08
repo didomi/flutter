@@ -62,7 +62,7 @@ jobs:
       # pod update
       - name: Run pod update
         working-directory: ./example/ios
-        run: pod update
+        run: brew install cocoapods & pod update
 
       # unlock keychain
       - name: Unlock key chain
