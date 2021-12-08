@@ -45,7 +45,7 @@ jobs:
     name: Testing iOS
     needs: analyse
 #    runs-on: self-hosted
-    runs-on: m2
+    runs-on: m1
 
     steps:
       - uses: actions/checkout@v2
