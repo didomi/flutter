@@ -44,7 +44,7 @@ jobs:
       - name: Commit & Push changes
         uses: actions-js/push@master
         with:
-          author_email: "nicolas.chaix@didomi.io" # TODO('use alias email')
+          author_email: "cmp-mobile@didomi.io"
           author_name: "Auto-Bot"
           branch: ${{ github.ref }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -77,9 +77,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v2
         with:
-          java-version: "12.x"
+          distribution: 'zulu'
+          java-version: '11'
       - uses: subosito/flutter-action@v1
         with:
           channel: "stable"
@@ -108,9 +109,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v2
         with:
-          java-version: "12.x"
+          distribution: 'zulu'
+          java-version: '11'
       - uses: subosito/flutter-action@v1
         with:
           channel: "stable"
@@ -122,6 +124,10 @@ jobs:
       - name: Run pod update
         working-directory: ./example/ios
         run: pod update
+
+      # unlock keychain
+      - name: Unlock key chain
+        run: security unlock-keychain -p ${{ secrets.KEYCHAIN_PWD }} login.keychain
 
       # Connect to GCloud
       - name: Login to Google Cloud
@@ -144,9 +150,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/setup-java@v2
         with:
-          java-version: "12.x"
+          distribution: 'zulu'
+          java-version: '11'
       - uses: subosito/flutter-action@v1
         with:
           channel: "stable"
