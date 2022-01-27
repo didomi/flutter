@@ -21,6 +21,12 @@ class EventsHelper {
     didomiListener.onHideNotice = () {
       onEvent("Notice hidden");
     };
+    didomiListener.onShowPreferences = () {
+      onEvent("Preferences screen displayed");
+    };
+    didomiListener.onHidePreferences = () {
+      onEvent("Preferences screen hidden");
+    };
     didomiListener.onNoticeClickAgree = () {
       onEvent("Click Agree from Notice");
     };

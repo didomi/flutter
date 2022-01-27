@@ -18,6 +18,8 @@ void main() {
 
   bool isError = false;
   bool isReady = false;
+  bool preferencesWasHidden = false;
+  bool preferencesWasShown = false;
 
   final listener = EventListener();
   listener.onError = (String message) {
@@ -25,6 +27,12 @@ void main() {
   };
   listener.onReady = () {
     isReady = true;
+  };
+  listener.onHidePreferences = () {
+    preferencesWasHidden = true;
+  };
+  listener.onShowPreferences = () {
+    preferencesWasShown = true;
   };
 
   DidomiSdk.addEventListener(listener);
@@ -37,17 +45,24 @@ void main() {
 
       assert(isError == false);
       assert(isReady == false);
+      assert(preferencesWasHidden == false);
+      assert(preferencesWasShown == false);
 
       await tester.tap(showPreferencesBtnFinder);
       await tester.pumpAndSettle();
 
       assert(isError == false);
       assert(isReady == false);
+      assert(preferencesWasHidden == false);
+      assert(preferencesWasShown == false);
 
       // Don't check DidomiSdk.isPreferencesVisible (SDK not initialized)
     });
 
     testWidgets("Show Preferences with initialization for purpose", (WidgetTester tester) async {
+      preferencesWasHidden = false;
+      preferencesWasShown = false;
+
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -56,6 +71,8 @@ void main() {
 
       assert(isError == false);
       assert(isReady == true);
+      assert(preferencesWasHidden == false);
+      assert(preferencesWasShown == false);
 
       await tester.tap(purposesCbFinder);
       await tester.pumpAndSettle();
@@ -71,21 +88,29 @@ void main() {
 
       // Preferences dialog is visible
       assert(await DidomiSdk.isPreferencesVisible == true);
+      assert(preferencesWasHidden == false);
+      assert(preferencesWasShown == true);
 
       // Wait for dialog to close
       await Future.delayed(Duration(seconds: 4));
 
       // Preferences dialog is NOT visible anymore
       assert(await DidomiSdk.isPreferencesVisible == false);
+      assert(preferencesWasHidden == true);
     });
 
     testWidgets("Show Preferences with initialization for vendor", (WidgetTester tester) async {
+      preferencesWasHidden = false;
+      preferencesWasShown = false;
+
       // Start app
       app.main();
       await tester.pumpAndSettle();
 
       assert(isError == false);
       assert(isReady == true);
+      assert(preferencesWasHidden == false);
+      assert(preferencesWasShown == false);
 
       await tester.tap(vendorsCbFinder);
       await tester.pumpAndSettle();
@@ -101,12 +126,15 @@ void main() {
 
       // Preferences dialog is visible
       assert(await DidomiSdk.isPreferencesVisible == true);
+      assert(preferencesWasHidden == false);
+      assert(preferencesWasShown == true);
 
       // Wait for dialog to close
       await Future.delayed(Duration(seconds: 4));
 
       // Preferences dialog is NOT visible anymore
       assert(await DidomiSdk.isPreferencesVisible == false);
+      assert(preferencesWasHidden == true);
     });
   });
 }
