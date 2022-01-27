@@ -40,7 +40,7 @@ else
 fi
 
 # Check ios SDK Version
-currentversion=$(cat ios/didomi_sdk.podspec | sed -n "s|.*s.dependency 'Didomi-XCFramework', '\([^']*\)'.*|\1|p")
+currentversion=$(cat ios/didomi_sdk.podspec | sed -n "s|.*s.dependency[ ]*'Didomi-XCFramework', '\([^']*\)'.*|\1|p")
 if [[ -z $currentversion ]]; then
   echo "Error while getting ios SDK current version"
   exit 1
