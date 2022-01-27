@@ -1,8 +1,5 @@
 # Release Note
 
-## 1.2.0
-Update latest versions of native Android and iOS sdks
-
 ## 1.1.0
 Update Android / iOS native sdks
 Add `showPreferences` / `hidePreferences` events from native sdks
