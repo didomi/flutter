@@ -146,15 +146,25 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             result(FlutterError.init(code: "invalid_args", message: "initialize: Missing argument disableDidomiRemoteConfig", details: nil))
             return
         }
+        guard let userAgentName = args["userAgentName"] as? String else {
+            result(FlutterError.init(code: "invalid_args", message: "initialize: Missing user agent name info", details: nil))
+            return
+        }
+        guard let userAgentVersion = args["userAgentName"] as? String else {
+            result(FlutterError.init(code: "invalid_args", message: "initialize: Missing user agent version info", details: nil))
+            return
+        }
         let didomi = Didomi.shared
-        didomi.initialize(
+        didomi.setUserAgent(name: userAgentName, version: userAgentVersion)
+        let parameters = DidomiInitializeParameters(
             apiKey: apiKey,
             localConfigurationPath: args["localConfigurationPath"] as? String,
             remoteConfigurationURL: args["remoteConfigurationURL"] as? String,
-            providerId: args["providerId"] as? String,
+            providerID: args["providerId"] as? String,
             disableDidomiRemoteConfig: disableDidomiRemoteConfig,
             languageCode: args["languageCode"] as? String,
-            noticeId: args["noticeId"] as? String)
+            noticeID: args["noticeId"] as? String)
+        didomi.initialize(parameters)
         result(nil)
     }
     
