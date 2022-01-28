@@ -96,6 +96,9 @@ popd >/dev/null
 
 # Update Flutter version
 sed -i~ -e "s|version: [0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|version: $flutterversion|g" pubspec.yaml || exit 1
+pushd lib/assets >/dev/null
+sed -i~ -e "s|\"plugin_version\": \"[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}\"|\"plugin_version\": \"$flutterversion\"|g" plugin_info.json || exit 1
+popd >/dev/null
 
 # Update changelog
 sh .github/scripts/update_changelog.sh "$flutterversion" || exit 1
