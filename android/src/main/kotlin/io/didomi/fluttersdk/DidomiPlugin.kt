@@ -194,6 +194,10 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun initialize(call: MethodCall, result: Result) {
+        val userAgentName = call.argument<String>("userAgentName").orEmpty()
+        val userAgentVersion = call.argument<String>("userAgentVersion").orEmpty()
+        Didomi.getInstance().setUserAgent(userAgentName, userAgentVersion)
+
         currentActivity?.also {
             val apiKey = argumentOrError("apiKey", "initialize", call, result)
                     ?: return

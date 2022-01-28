@@ -1,5 +1,5 @@
+import 'dart:convert';
 import 'dart:io';
-
 import 'dart:async';
 
 import 'package:didomi_sdk/entities/entities_helper.dart';
@@ -7,6 +7,7 @@ import 'package:didomi_sdk/entities/purpose.dart';
 import 'package:didomi_sdk/entities/user_status.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import "package:flutter/services.dart" as services;
 
 import 'consent_status.dart';
 import 'entities/vendor.dart';
@@ -28,16 +29,28 @@ class DidomiSdk {
         String? providerId,
         bool disableDidomiRemoteConfig = false,
         String? languageCode,
-        String? noticeId}) async =>
-      await _channel.invokeMethod("initialize", {
-        "apiKey": apiKey,
-        "localConfigurationPath": localConfigurationPath,
-        "remoteConfigurationURL": remoteConfigurationURL,
-        "providerId": providerId,
-        "disableDidomiRemoteConfig": disableDidomiRemoteConfig,
-        "languageCode": languageCode,
-        "noticeId": noticeId
-      });
+        String? noticeId}) async {
+    // Get User Agent info before initializing
+    String userAgentName;
+    String userAgentVersion;
+    String dataStr = await services.rootBundle.loadString('packages/didomi_sdk/assets/plugin_info.json');
+    dynamic pluginInfo = json.decode(dataStr);
+    userAgentName = pluginInfo["plugin_user_agent"];
+    userAgentVersion = pluginInfo["plugin_version"];
+
+    // Initialize the SDK
+    await _channel.invokeMethod("initialize", {
+      "userAgentName": userAgentName,
+      "userAgentVersion": userAgentVersion,
+      "apiKey": apiKey,
+      "localConfigurationPath": localConfigurationPath,
+      "remoteConfigurationURL": remoteConfigurationURL,
+      "providerId": providerId,
+      "disableDidomiRemoteConfig": disableDidomiRemoteConfig,
+      "languageCode": languageCode,
+      "noticeId": noticeId
+    });
+  }
 
   /// Check if Didomi SDK was successfully initialized
   static Future<bool> get isReady async => await _channel.invokeMethod('isReady');
