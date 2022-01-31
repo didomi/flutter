@@ -29,6 +29,12 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
         eventListener.onHideNotice = { [weak self] event in
             self?.sendEvent(eventType: "onHideNotice")
         }
+        eventListener.onShowPreferences = { [weak self] event in
+            self?.sendEvent(eventType: "onShowPreferences")
+        }
+        eventListener.onHidePreferences = { [weak self] event in
+            self?.sendEvent(eventType: "onHidePreferences")
+        }
         eventListener.onNoticeClickAgree = { [weak self] event in
             self?.sendEvent(eventType: "onNoticeClickAgree")
         }

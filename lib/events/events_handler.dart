@@ -76,6 +76,18 @@ class EventsHandler {
         }
         break;
 
+      case "onShowPreferences":
+        for (var listener in listeners) {
+          listener.onShowPreferences();
+        }
+        break;
+
+      case "onHidePreferences":
+        for (var listener in listeners) {
+          listener.onHidePreferences();
+        }
+        break;
+
       case "onNoticeClickAgree":
         for (var listener in listeners) {
           listener.onNoticeClickAgree();

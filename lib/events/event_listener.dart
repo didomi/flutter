@@ -11,10 +11,14 @@ class EventListener {
   /*
    * Notice events
    */
-  /// Notice was displayed
+  /// Notice was displayed or should be displayed
   dynamic Function() onShowNotice = () {};
   /// Notice was hidden
   dynamic Function() onHideNotice = () {};
+  /// Preferences screen was displayed
+  dynamic Function() onShowPreferences = () {};
+  /// Preferences screen was hidden
+  dynamic Function() onHidePreferences = () {};
   /// Agree to all was clicked from the notice
   dynamic Function() onNoticeClickAgree = () {};
   /// Disagree to all was clicked from the notice
