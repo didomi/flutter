@@ -19,6 +19,3 @@ popd >/dev/null
 
 # Reset Flutter version
 sed -i~ -e "s|version: [0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|version: $version|g" pubspec.yaml || exit 1
-pushd lib/assets >/dev/null
-sed -i~ -e "s|\"plugin_version\": \"[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}\"|\"plugin_version\": \"$version\"|g" plugin_info.json || exit 1
-popd >/dev/null
