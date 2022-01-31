@@ -34,6 +34,9 @@ android {
     defaultConfig {
         minSdkVersion(16)
         multiDexEnabled = true
+
+        buildConfigField("String", "PLUGIN_VERSION", "\"" + version + "\"")
+        buildConfigField("String", "USER_AGENT_NAME", "\"Didomi Flutter SDK\"")
     }
 
     compileOptions {
