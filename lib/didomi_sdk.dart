@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'dart:async';
 
 import 'package:didomi_sdk/entities/entities_helper.dart';
@@ -29,15 +28,15 @@ class DidomiSdk {
         bool disableDidomiRemoteConfig = false,
         String? languageCode,
         String? noticeId}) async =>
-      await _channel.invokeMethod("initialize", {
-        "apiKey": apiKey,
-        "localConfigurationPath": localConfigurationPath,
-        "remoteConfigurationURL": remoteConfigurationURL,
-        "providerId": providerId,
-        "disableDidomiRemoteConfig": disableDidomiRemoteConfig,
-        "languageCode": languageCode,
-        "noticeId": noticeId
-      });
+    await _channel.invokeMethod("initialize", {
+      "apiKey": apiKey,
+      "localConfigurationPath": localConfigurationPath,
+      "remoteConfigurationURL": remoteConfigurationURL,
+      "providerId": providerId,
+      "disableDidomiRemoteConfig": disableDidomiRemoteConfig,
+      "languageCode": languageCode,
+      "noticeId": noticeId
+    });
 
   /// Check if Didomi SDK was successfully initialized
   static Future<bool> get isReady async => await _channel.invokeMethod('isReady');

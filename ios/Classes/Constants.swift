@@ -10,6 +10,9 @@ struct Constants {
     static let methodsChannelName = "didomi_sdk"
     static let eventsChannelName = "didomi_sdk/events"
     
-    // Events
+    static let bundleId = "org.cocoapods.didomi-sdk"
     
+    // User Agent
+    static let userAgentVersion = Bundle(identifier: bundleId)?.infoDictionary?["CFBundleShortVersionString"] as? String
+    static let userAgentName = "Didomi Flutter SDK"
 }

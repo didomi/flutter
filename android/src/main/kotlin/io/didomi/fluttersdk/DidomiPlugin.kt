@@ -30,6 +30,11 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /// This is always the current displayed Activity, as activities can not be passed through Flutter channels
     private var currentActivity: Activity? = null
 
+    init {
+        // Set User Agent for Flutter
+        Didomi.getInstance().setUserAgent(BuildConfig.USER_AGENT_NAME, BuildConfig.PLUGIN_VERSION)
+    }
+
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "didomi_sdk")
         eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "didomi_sdk/events")
