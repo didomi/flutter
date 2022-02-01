@@ -2,7 +2,11 @@
 
 ## 1.2.0
 Update latest versions of native Android and iOS sdks
-
+Support new IAB rules regarding timestamp in the GDPR consent string: See https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/pull/306/files#diff-99d4d9da93e17e584b04a239a04503a776d54503b0e2db52fc157b77fc950bbbR65
+- The timestamps have now only day-level granularity.
+- `Created` field has the same value as `LastUpdated`
+Fully support `showPreferences` / `hidePreferences` events
+  
 ## 1.1.0
 Update Android / iOS native sdks
 Add `showPreferences` / `hidePreferences` events from native sdks
