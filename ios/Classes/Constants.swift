@@ -13,8 +13,6 @@ struct Constants {
     static let bundleId = "org.cocoapods.didomi-sdk"
     
     // User Agent
-    static let userAgentVersion: String = Bundle(identifier: bundleId)?.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+    static let userAgentVersion = Bundle(identifier: bundleId)?.infoDictionary?["CFBundleShortVersionString"] as? String
     static let userAgentName = "Didomi Flutter SDK"
-    
-    
 }

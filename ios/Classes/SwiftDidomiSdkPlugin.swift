@@ -12,7 +12,9 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     override init() {
         super.init()
         
-        Didomi.shared.setUserAgent(name: Constants.userAgentName, version: Constants.userAgentVersion)
+        if let userAgentVersion = Constants.userAgentVersion {
+            Didomi.shared.setUserAgent(name: Constants.userAgentName, version: userAgentVersion)
+        }
     }
     
     public static func register(with registrar: FlutterPluginRegistrar) {
