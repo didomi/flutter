@@ -134,8 +134,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             setUserStatusGlobally(call, result: result)
         case "setUser":
             setUser(call, result: result)
-        case "setUserWithAuthentication":
-            setUserWithAuthentication(call, result: result)
+        case "setUserWithHashAuthentication":
+            setUserWithHashAuthentication(call, result: result)
+        case "setUserWithEncryptionAuthentication":
+            setUserWithEncryptionAuthentication(call, result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -813,10 +815,6 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     }
 
     func setUser(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        if !Didomi.shared.isReady() {
-            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
-            return
-        }
         guard let args = call.arguments as? Dictionary<String, Any> else {
                 result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUser", details: nil))
                 return
@@ -829,34 +827,80 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(nil)
     }
 
-    func setUserWithAuthentication(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        if !Didomi.shared.isReady() {
-            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
-            return
-        }
+    func setUserWithHashAuthentication(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         guard let args = call.arguments as? Dictionary<String, Any> else {
-                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserWithAuthentication", details: nil))
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserWithHashAuthentication", details: nil))
                 return
             }
 
-        guard let userId = argumentOrError(argumentName: "organizationUserId", methodName: "setUserWithAuthentication", args: args, result: result) else {
+        guard let userId = argumentOrError(argumentName: "organizationUserId", methodName: "setUserWithHashAuthentication", args: args, result: result) else {
             return
         }
-        guard let organizationUserIdAuthAlgorithm = argumentOrError(argumentName: "organizationUserIdAuthAlgorithm", methodName: "setUserWithAuthentication", args: args, result: result) else {
+        guard let algorithm = argumentOrError(argumentName: "algorithm", methodName: "setUserWithHashAuthentication", args: args, result: result) else {
             return
         }
-        guard let organizationUserIdAuthSid = argumentOrError(argumentName: "organizationUserIdAuthSid", methodName: "setUserWithAuthentication", args: args, result: result) else {
+        guard let secretId = argumentOrError(argumentName: "secretId", methodName: "setUserWithHashAuthentication", args: args, result: result) else {
             return
         }
-        guard let organizationUserIdAuthDigest = argumentOrError(argumentName: "organizationUserIdAuthDigest", methodName: "setUserWithAuthentication", args: args, result: result) else {
+        guard let digest = argumentOrError(argumentName: "digest", methodName: "setUserWithHashAuthentication", args: args, result: result) else {
             return
         }
-        Didomi.shared.setUser(
-            id: userId,
-            algorithm: organizationUserIdAuthAlgorithm,
-            secretId: organizationUserIdAuthSid,
-            salt: args["organizationUserIdAuthSalt"] as? String,
-            digest: organizationUserIdAuthDigest)
+        let salt = args["salt"] as? String
+        let parameters: UserAuthWithHashParams
+        if let expiration = args["expiration"] as? CLong {
+            parameters = UserAuthWithHashParams(
+                id: userId,
+                algorithm: algorithm,
+                secretID: secretId,
+                digest: digest,
+                salt: salt,
+                legacyExpiration: Double(expiration))
+        } else {
+            parameters = UserAuthWithHashParams(
+                id: userId,
+                algorithm: algorithm,
+                secretID: secretId,
+                digest: digest,
+                salt: salt)
+        }
+        Didomi.shared.setUser(userAuthParams: parameters)
+        result(nil)
+    }
+    
+    func setUserWithEncryptionAuthentication(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserWithEncryptionAuthentication", details: nil))
+                return
+            }
+
+        guard let userId = argumentOrError(argumentName: "organizationUserId", methodName: "setUserWithEncryptionAuthentication", args: args, result: result) else {
+            return
+        }
+        guard let algorithm = argumentOrError(argumentName: "algorithm", methodName: "setUserWithEncryptionAuthentication", args: args, result: result) else {
+            return
+        }
+        guard let secretId = argumentOrError(argumentName: "secretId", methodName: "setUserWithEncryptionAuthentication", args: args, result: result) else {
+            return
+        }
+        guard let initializationVector = argumentOrError(argumentName: "initializationVector", methodName: "setUserWithEncryptionAuthentication", args: args, result: result) else {
+            return
+        }
+        let parameters: UserAuthWithEncryptionParams
+        if let expiration = args["expiration"] as? CLong {
+            parameters = UserAuthWithEncryptionParams(
+                id: userId,
+                algorithm: algorithm,
+                secretID: secretId,
+                initializationVector: initializationVector,
+                legacyExpiration: Double(expiration))
+        } else {
+            parameters = UserAuthWithEncryptionParams(
+                id: userId,
+                algorithm: algorithm,
+                secretID: secretId,
+                initializationVector: initializationVector)
+        }
+        Didomi.shared.setUser(userAuthParams: parameters)
         result(nil)
     }
 
