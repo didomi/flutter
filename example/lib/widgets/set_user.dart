@@ -51,10 +51,18 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
             salt,
             expiration));
         break;
-        case AuthType.withEncryption:
+      case AuthType.withEncryption:
         await DidomiSdk.setUserWithAuthParams(new UserAuthWithEncryptionParams(
             userId,
             "aes-256-cbc",
+            secretId,
+            "3ff223854400259e5592cbb992be93cf",
+            expiration));
+        break;
+      case AuthType.invalid:
+        await DidomiSdk.setUserWithAuthParams(new UserAuthWithEncryptionParams(
+            userId,
+            "hash-md5",
             secretId,
             "3ff223854400259e5592cbb992be93cf",
             expiration));
@@ -123,6 +131,19 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
           }
         },
       ),
+      RadioListTile<AuthType>(
+        key: Key("setUserWithInvalidParams"),
+        title: const Text("Invalid auth params"),
+        value: AuthType.invalid,
+        groupValue: _authenticationType,
+        onChanged: (AuthType? value) {
+          if (value != null) {
+            setState(() {
+              _authenticationType = value;
+            });
+          }
+        },
+      ),
       CheckboxListTile(
         title: Text("With salt"),
         key: Key('setUserWithSalt'),
@@ -156,5 +177,5 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
   }
 }
 
-enum AuthType { userId, deprecatedAuth, withHash, withEncryption }
+enum AuthType { invalid, userId, deprecatedAuth, withHash, withEncryption }
 
