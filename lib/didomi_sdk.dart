@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:didomi_sdk/entities/entities_helper.dart';
 import 'package:didomi_sdk/entities/purpose.dart';
 import 'package:didomi_sdk/entities/user_status.dart';
+import 'package:didomi_sdk/parameters/user_auth_params.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -394,6 +395,29 @@ class DidomiSdk {
     });
 
   /// Set user information with authentication
+  static Future<void> setUserWithAuthParams(UserAuthParams parameters) async {
+    if (parameters is UserAuthWithEncryptionParams) {
+      return await _channel.invokeMethod("setUserWithEncryptionAuthentication", {
+        "organizationUserId": parameters.id,
+        "algorithm": parameters.algorithm,
+        "secretId": parameters.secretId,
+        "initializationVector": parameters.initializationVector,
+        "expiration": parameters.expiration
+      });
+    } else if (parameters is UserAuthWithHashParams) {
+      return await _channel.invokeMethod("setUserWithHashAuthentication", {
+        "organizationUserId": parameters.id,
+        "algorithm": parameters.algorithm,
+        "secretId": parameters.secretId,
+        "digest": parameters.digest,
+        "salt": parameters.salt,
+        "expiration": parameters.expiration
+      });
+    }
+  }
+
+  /// Set user information with authentication
+  @Deprecated("Use setUserWithAuthParams(UserAuthParams) instead.")
   static Future<void> setUserWithAuthentication(
       String organizationUserId,
       String organizationUserIdAuthAlgorithm,
@@ -401,11 +425,11 @@ class DidomiSdk {
       String? organizationUserIdAuthSalt,
       String organizationUserIdAuthDigest
       ) async =>
-    await _channel.invokeMethod("setUserWithAuthentication", {
-      "organizationUserId": organizationUserId,
-      "organizationUserIdAuthAlgorithm": organizationUserIdAuthAlgorithm,
-      "organizationUserIdAuthSid": organizationUserIdAuthSid,
-      "organizationUserIdAuthSalt": organizationUserIdAuthSalt,
-      "organizationUserIdAuthDigest": organizationUserIdAuthDigest
-    });
+    await setUserWithAuthParams(new UserAuthWithHashParams(
+        organizationUserId,
+        organizationUserIdAuthAlgorithm,
+        organizationUserIdAuthSid,
+        organizationUserIdAuthDigest,
+        organizationUserIdAuthSalt)
+    );
 }
