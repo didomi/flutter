@@ -90,7 +90,7 @@ jobs:
 
       # Connect to GCloud
       - name: Login to Google Cloud
-        uses: google-github-actions/setup-gcloud@master
+        uses: google-github-actions/setup-gcloud@v0
         with:
           version: "342.0.0"
           service_account_key: ${{ secrets.GCLOUD_AUTH }}
@@ -131,7 +131,7 @@ jobs:
 
       # Connect to GCloud
       - name: Login to Google Cloud
-        uses: google-github-actions/setup-gcloud@master
+        uses: google-github-actions/setup-gcloud@v0
         with:
           version: "342.0.0"
           service_account_key: ${{ secrets.GCLOUD_AUTH }}
