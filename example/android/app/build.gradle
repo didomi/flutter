@@ -28,6 +28,9 @@ apply plugin: "kotlin-android"
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
+    //  Currently (2022/03/24) it is not possible to match buildToolsVersion with compileSdkVersion:
+    //  - buildToolsVersion 31.0.0 is marked as corrupted
+    //  - Setting compileSdkVersion to 30 raises a dependency error
     compileSdkVersion(31)
     buildToolsVersion = "30.0.3"
 
