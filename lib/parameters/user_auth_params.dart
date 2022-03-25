@@ -3,10 +3,10 @@ abstract class UserAuthParams {
   String id;
 
   /// Algorithm used for computing the user ID
-  String? algorithm;
+  String algorithm;
 
   /// ID of the secret used for computing the user ID
-  String? secretId;
+  String secretId;
 
   /// Expiration date as timestamp (to prevent replay attacks)
   int? expiration;
@@ -19,7 +19,7 @@ class UserAuthWithEncryptionParams extends UserAuthParams {
   /// Initialization Vector used for computing the user ID
   String initializationVector;
 
-  UserAuthWithEncryptionParams(String id, String? algorithm, String? secretId, this.initializationVector, [int? expiration]) :
+  UserAuthWithEncryptionParams(String id, String algorithm, String secretId, this.initializationVector, [int? expiration]) :
         super(id, algorithm, secretId, expiration);
 }
 
@@ -31,6 +31,6 @@ class UserAuthWithHashParams extends UserAuthParams {
   /// Salt used for computing the user ID (optional)
   String? salt;
 
-  UserAuthWithHashParams(String id, String? algorithm, String? secretId, this.digest, this.salt, [int? expiration]) :
+  UserAuthWithHashParams(String id, String algorithm, String secretId, this.digest, this.salt, [int? expiration]) :
         super(id, algorithm, secretId, expiration);
 }
