@@ -1,5 +1,9 @@
 # Release Note
 
+## 1.3.0
+Update latest versions of native Android and iOS sdks
+Add `setUserWithAuthParams` feature (replaces deprecated `setUserWithAuthentication`)
+
 ## 1.2.0
 Update latest versions of native Android and iOS sdks
 Support new IAB rules regarding timestamp in the GDPR consent string: See https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/pull/306/files#diff-99d4d9da93e17e584b04a239a04503a776d54503b0e2db52fc157b77fc950bbbR65
