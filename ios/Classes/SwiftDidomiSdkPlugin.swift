@@ -72,6 +72,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             result(Didomi.shared.isPreferencesVisible())
         case "getJavaScriptForWebView":
             getJavaScriptForWebView(result: result)
+        case "getQueryStringForWebView":
+            result(Didomi.shared.getQueryStringForWebView())
         case "updateSelectedLanguage":
             updateSelectedLanguage(call, result: result)
         case "getText":

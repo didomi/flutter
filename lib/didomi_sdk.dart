@@ -142,13 +142,7 @@ class DidomiSdk {
   /// the consent status from the app to the Didomi Web SDK embedded on the target URL.
   /// Note: Available for Android only, will return an empty string if called from iOS
   static Future<String> get queryStringForWebView async {
-    final String result;
-    if (Platform.isAndroid) {
-      result = await _channel.invokeMethod("getQueryStringForWebView");
-    } else {
-      // Not available on iOS
-      result = "";
-    }
+    final String result = await _channel.invokeMethod("getQueryStringForWebView");
     return result;
   }
 
