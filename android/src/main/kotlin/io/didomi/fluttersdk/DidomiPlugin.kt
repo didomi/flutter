@@ -109,7 +109,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 }
 
                 "isNoticeVisible" -> {
-                    result.success(didomi.isNoticeVisible)
+                    result.success(didomi.isNoticeVisible())
                 }
 
                 "showPreferences" -> showPreferences(call, result)
@@ -120,7 +120,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 }
 
                 "isPreferencesVisible" -> {
-                    result.success(didomi.isPreferencesVisible)
+                    result.success(didomi.isPreferencesVisible())
                 }
 
                 "getJavaScriptForWebView" -> getJavaScriptForWebView(result)
@@ -264,7 +264,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private fun updateSelectedLanguage(call: MethodCall, result: Result) {
         try {
-            Didomi.getInstance().updateSelectedLanguage(call.argument("languageCode"))
+            val languageCode: String? = call.argument("languageCode")
+            Didomi.getInstance().updateSelectedLanguage(languageCode.orEmpty())
             result.success(null)
         } catch (e: DidomiNotReadyException) {
             result.error("updateSelectedLanguage", e.message.orEmpty(), e)
@@ -273,7 +274,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private fun getText(call: MethodCall, result: Result) {
         try {
-            val textMap = Didomi.getInstance().getText(call.argument("key"))
+            val key: String? = call.argument("key")
+            val textMap = Didomi.getInstance().getText(key.orEmpty())
             result.success(textMap)
         } catch (e: DidomiNotReadyException) {
             result.error("getText", e.message.orEmpty(), e)
@@ -282,7 +284,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private fun getTranslatedText(call: MethodCall, result: Result) {
         try {
-            val text = Didomi.getInstance().getTranslatedText(call.argument("key"))
+            val key: String? = call.argument("key")
+            val text = Didomi.getInstance().getTranslatedText(key.orEmpty())
             result.success(text)
         } catch (e: DidomiNotReadyException) {
             result.error("getTranslatedText", e.message.orEmpty(), e)
@@ -294,7 +297,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      */
     private fun getJavaScriptForWebView(result: Result) {
         try {
-            val text = Didomi.getInstance().javaScriptForWebView
+            val text = Didomi.getInstance().getJavaScriptForWebView()
             result.success(text)
         } catch (e: DidomiNotReadyException) {
             result.error("getJavaScriptForWebView", e.message.orEmpty(), e)
@@ -470,7 +473,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun getPurpose(call: MethodCall, result: Result) {
         try {
             val id: String? = call.argument("purposeId")
-            val purpose = Didomi.getInstance().getPurpose(id)
+            val purpose = Didomi.getInstance().getPurpose(id.orEmpty())
             val map = EntitiesHelper.toMap(purpose)
             result.success(map)
         } catch (e: Exception) {
@@ -484,7 +487,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun getVendor(call: MethodCall, result: Result) {
         try {
             val id: String? = call.argument("vendorId")
-            val vendor = Didomi.getInstance().getVendor(id)
+            val vendor = Didomi.getInstance().getVendor(id.orEmpty())
             val map = EntitiesHelper.toMap(vendor)
             result.success(map)
         } catch (e: Exception) {
