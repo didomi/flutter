@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:async';
 
 import 'package:didomi_sdk/entities/entities_helper.dart';
@@ -9,12 +8,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'consent_status.dart';
-import 'entities/vendor.dart';
-import 'log_level.dart';
-import 'preferences_view.dart';
 import 'constants.dart';
+import 'entities/vendor.dart';
 import 'events/event_listener.dart';
 import 'events/events_handler.dart';
+import 'log_level.dart';
+import 'preferences_view.dart';
 
 /// Didomi SDK Plugin
 class DidomiSdk {
