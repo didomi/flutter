@@ -20,6 +20,8 @@ class UserStatus {
   String? consentString;
   /// Additional consent
   String? additionalConsent;
+  /// Regulation applied
+  String? regulation;
 
   UserStatus.fromJson(dynamic json)
     : purposes = EntitiesHelper.toPurposesStatus(json["purposes"]),
@@ -28,7 +30,8 @@ class UserStatus {
       created = json["created"],
       updated = json["updated"],
       consentString = json["consent_string"],
-      additionalConsent = json["addtl_consent"];
+      additionalConsent = json["addtl_consent"],
+      regulation = json["regulation"];
 }
 
 /// User status for purposes
