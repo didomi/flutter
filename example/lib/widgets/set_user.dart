@@ -5,17 +5,17 @@ import 'package:didomi_sdk/parameters/user_auth_params.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
 import 'package:flutter/material.dart';
 
-/// Widget to call DidomiSdk.SetUserStatus()
+/// Widget to call DidomiSdk.SetUser()
 class SetUser extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SetUserState();
 }
 
 class _SetUserState extends BaseSampleWidgetState<SetUser> {
-
-  AuthType _authenticationType = AuthType.userId;
+  AuthType _authenticationType = AuthType.clearUser;
   bool _withSalt = false;
   bool _withExpiration = false;
+  bool _withSetupUI = false;
 
   @override
   String getButtonName() => "Set User";
@@ -27,45 +27,48 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
   Future<String> callDidomiPlugin() async {
     String userId = "d13e49f6255c8729cbb201310f49d70d65f365415a67f034b567b7eac962b944eda131376594ef5e23b025fada4e4259e953ceb45ea57a2ced7872c567e6d1fae8dcc3a9772ead783d8513032e77d3fd";
     String secretId = "testsdks-PEap2wBx";
+    String initializationVector = "3ff223854400259e5592cbb992be93cf";
     String? salt = _withSalt ? "test-digest" : null;
     int? expiration = _withExpiration ? 3600 : null;
+    bool setUserAndSetupUI = _withSetupUI;
 
     switch (_authenticationType) {
+      case AuthType.clearUser:
+        await DidomiSdk.clearUser();
+        break;
       case AuthType.userId:
-        await DidomiSdk.setUser(userId);
+        if (setUserAndSetupUI) {
+          await DidomiSdk.setUserAndSetupUI(userId);
+        } else {
+          await DidomiSdk.setUser(userId);
+        }
         break;
       case AuthType.deprecatedAuth:
-        await DidomiSdk.setUserWithAuthentication(
-            userId,
-            "hash-md5",
-            secretId,
-            salt,
-            "test-digest");
+        await DidomiSdk.setUserWithAuthentication(userId, "hash-md5", secretId, salt, "test-digest");
         break;
       case AuthType.withHash:
-        await DidomiSdk.setUserWithAuthParams(new UserAuthWithHashParams(
-            userId,
-            "hash-md5",
-            secretId,
-            "test-digest",
-            salt,
-            expiration));
+        if (setUserAndSetupUI) {
+          await DidomiSdk.setUserWithAuthParamsAndSetupUI(new UserAuthWithHashParams(userId, "hash-md5", secretId, "test-digest", salt, expiration));
+        } else {
+          await DidomiSdk.setUserWithAuthParams(new UserAuthWithHashParams(userId, "hash-md5", secretId, "test-digest", salt, expiration));
+        }
         break;
       case AuthType.withEncryption:
-        await DidomiSdk.setUserWithAuthParams(new UserAuthWithEncryptionParams(
-            userId,
-            "aes-256-cbc",
-            secretId,
-            "3ff223854400259e5592cbb992be93cf",
-            expiration));
+        if (setUserAndSetupUI) {
+          await DidomiSdk.setUserWithAuthParamsAndSetupUI(
+              new UserAuthWithEncryptionParams(userId, "aes-256-cbc", secretId, initializationVector, expiration));
+        } else {
+          await DidomiSdk.setUserWithAuthParams(
+              new UserAuthWithEncryptionParams(userId, "aes-256-cbc", secretId, initializationVector, expiration));
+        }
         break;
       case AuthType.invalid:
-        await DidomiSdk.setUserWithAuthParams(new UserAuthWithEncryptionParams(
-            userId,
-            "hash-md5",
-            secretId,
-            "3ff223854400259e5592cbb992be93cf",
-            expiration));
+        if (setUserAndSetupUI) {
+          await DidomiSdk.setUserWithAuthParamsAndSetupUI(
+              new UserAuthWithEncryptionParams(userId, "hash-md5", secretId, initializationVector, expiration));
+        } else {
+          await DidomiSdk.setUserWithAuthParams(new UserAuthWithEncryptionParams(userId, "hash-md5", secretId, initializationVector, expiration));
+        }
         break;
     }
     return "OK";
@@ -78,6 +81,19 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
         child: Text(getButtonName()),
         onPressed: requestAction,
         key: Key(getActionId()),
+      ),
+      RadioListTile<AuthType>(
+        key: Key("clearUser"),
+        title: const Text("Clear user"),
+        value: AuthType.clearUser,
+        groupValue: _authenticationType,
+        onChanged: (AuthType? value) {
+          if (value != null) {
+            setState(() {
+              _authenticationType = value;
+            });
+          }
+        },
       ),
       RadioListTile<AuthType>(
         key: Key("setUserWithId"),
@@ -155,8 +171,7 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
             });
           }
         },
-        controlAffinity:
-        ListTileControlAffinity.leading, //  <-- leading Checkbox
+        controlAffinity: ListTileControlAffinity.leading, //  <-- leading Checkbox
       ),
       CheckboxListTile(
         title: Text("With expiration"),
@@ -169,13 +184,24 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
             });
           }
         },
-        controlAffinity:
-        ListTileControlAffinity.leading, //  <-- leading Checkbox
+        controlAffinity: ListTileControlAffinity.leading, //  <-- leading Checkbox
+      ),
+      CheckboxListTile(
+        title: Text("With setupUI"),
+        key: Key('setUserAndSetupUI'),
+        value: _withSetupUI,
+        onChanged: (newValue) {
+          if (newValue != null) {
+            setState(() {
+              _withSetupUI = newValue;
+            });
+          }
+        },
+        controlAffinity: ListTileControlAffinity.leading, //  <-- leading Checkbox
       ),
       buildResponseText(getActionId())
     ];
   }
 }
 
-enum AuthType { invalid, userId, deprecatedAuth, withHash, withEncryption }
-
+enum AuthType { invalid, userId, deprecatedAuth, withHash, withEncryption, clearUser }
