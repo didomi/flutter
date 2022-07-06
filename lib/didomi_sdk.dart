@@ -381,9 +381,18 @@ class DidomiSdk {
         "disabledLIVendorIds": disabledLIVendorIds
       });
 
+  /// Clear user information
+  static Future<void> clearUser() async => await _channel.invokeMethod("clearUser");
+
   /// Set user information
   static Future<void> setUser(String organizationUserId) async =>
     await _channel.invokeMethod("setUser", {
+      "organizationUserId": organizationUserId
+    });
+
+  /// Set user information and check for missing consent
+  static Future<void> setUserAndSetupUI(String organizationUserId) async =>
+    await _channel.invokeMethod("setUserAndSetupUI", {
       "organizationUserId": organizationUserId
     });
 
@@ -399,6 +408,28 @@ class DidomiSdk {
       });
     } else if (parameters is UserAuthWithHashParams) {
       return await _channel.invokeMethod("setUserWithHashAuthentication", {
+        "organizationUserId": parameters.id,
+        "algorithm": parameters.algorithm,
+        "secretId": parameters.secretId,
+        "digest": parameters.digest,
+        "salt": parameters.salt,
+        "expiration": parameters.expiration
+      });
+    }
+  }
+
+  /// Set user information with authentication and check for missing consent
+  static Future<void> setUserWithAuthParamsAndSetupUI(UserAuthParams parameters) async {
+    if (parameters is UserAuthWithEncryptionParams) {
+      return await _channel.invokeMethod("setUserWithEncryptionAuthenticationAndSetupUI", {
+        "organizationUserId": parameters.id,
+        "algorithm": parameters.algorithm,
+        "secretId": parameters.secretId,
+        "initializationVector": parameters.initializationVector,
+        "expiration": parameters.expiration
+      });
+    } else if (parameters is UserAuthWithHashParams) {
+      return await _channel.invokeMethod("setUserWithHashAuthenticationAndSetupUI", {
         "organizationUserId": parameters.id,
         "algorithm": parameters.algorithm,
         "secretId": parameters.secretId,

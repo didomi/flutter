@@ -134,12 +134,20 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             setUserStatus(call, result: result)
         case "setUserStatusGlobally":
             setUserStatusGlobally(call, result: result)
+        case "clearUser":
+            clearUser(call, result: result)
         case "setUser":
             setUser(call, result: result)
+        case "setUserAndSetupUI":
+            setUserAndSetupUI(call, result: result)
         case "setUserWithHashAuthentication":
             setUserWithHashAuthentication(call, result: result)
+        case "setUserWithHashAuthenticationAndSetupUI":
+            setUserWithHashAuthenticationAndSetupUI(call, result: result)
         case "setUserWithEncryptionAuthentication":
             setUserWithEncryptionAuthentication(call, result: result)
+        case "setUserWithEncryptionAuthenticationAndSetupUI":
+            setUserWithEncryptionAuthenticationAndSetupUI(call, result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -816,24 +824,49 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         ))
     }
 
+    func clearUser(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        Didomi.shared.clearUser()
+        result(nil)
+    }
+
     func setUser(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         guard let args = call.arguments as? Dictionary<String, Any> else {
-                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUser", details: nil))
-                return
-            }
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUser", details: nil))
+            return
+        }
 
         guard let userId = argumentOrError(argumentName: "organizationUserId", methodName: "setUser", args: args, result: result) else {
             return
         }
+
         Didomi.shared.setUser(id: userId)
+        result(nil)
+    }
+
+    func setUserAndSetupUI(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUser", details: nil))
+            return
+        }
+
+        guard let userId = argumentOrError(argumentName: "organizationUserId", methodName: "setUser", args: args, result: result) else {
+            return
+        }
+
+        if let viewController: UIViewController = UIApplication.shared.delegate?.window??.rootViewController {
+            Didomi.shared.setUser(id: userId, containerController: viewController)
+        } else {
+            Didomi.shared.setUser(id: userId)
+        }
+
         result(nil)
     }
 
     func setUserWithHashAuthentication(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         guard let args = call.arguments as? Dictionary<String, Any> else {
-                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserWithHashAuthentication", details: nil))
-                return
-            }
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserWithHashAuthentication", details: nil))
+            return
+        }
 
         guard let userId = argumentOrError(argumentName: "organizationUserId", methodName: "setUserWithHashAuthentication", args: args, result: result) else {
             return
@@ -865,15 +898,62 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
                 digest: digest,
                 salt: salt)
         }
+
         Didomi.shared.setUser(userAuthParams: parameters)
+        result(nil)
+    }
+
+    func setUserWithHashAuthenticationAndSetupUI(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserWithHashAuthentication", details: nil))
+            return
+        }
+
+        guard let userId = argumentOrError(argumentName: "organizationUserId", methodName: "setUserWithHashAuthentication", args: args, result: result) else {
+            return
+        }
+        guard let algorithm = argumentOrError(argumentName: "algorithm", methodName: "setUserWithHashAuthentication", args: args, result: result) else {
+            return
+        }
+        guard let secretId = argumentOrError(argumentName: "secretId", methodName: "setUserWithHashAuthentication", args: args, result: result) else {
+            return
+        }
+        guard let digest = argumentOrError(argumentName: "digest", methodName: "setUserWithHashAuthentication", args: args, result: result) else {
+            return
+        }
+        let salt = args["salt"] as? String
+        let parameters: UserAuthWithHashParams
+        if let expiration = args["expiration"] as? CLong {
+            parameters = UserAuthWithHashParams(
+                id: userId,
+                algorithm: algorithm,
+                secretID: secretId,
+                digest: digest,
+                salt: salt,
+                legacyExpiration: Double(expiration))
+        } else {
+            parameters = UserAuthWithHashParams(
+                id: userId,
+                algorithm: algorithm,
+                secretID: secretId,
+                digest: digest,
+                salt: salt)
+        }
+
+        if let viewController: UIViewController = UIApplication.shared.delegate?.window??.rootViewController {
+            Didomi.shared.setUser(userAuthParams: parameters, containerController: viewController)
+        } else {
+            Didomi.shared.setUser(userAuthParams: parameters)
+        }
+
         result(nil)
     }
     
     func setUserWithEncryptionAuthentication(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         guard let args = call.arguments as? Dictionary<String, Any> else {
-                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserWithEncryptionAuthentication", details: nil))
-                return
-            }
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserWithEncryptionAuthentication", details: nil))
+            return
+        }
 
         guard let userId = argumentOrError(argumentName: "organizationUserId", methodName: "setUserWithEncryptionAuthentication", args: args, result: result) else {
             return
@@ -902,7 +982,49 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
                 secretID: secretId,
                 initializationVector: initializationVector)
         }
+
         Didomi.shared.setUser(userAuthParams: parameters)
+        result(nil)
+    }
+
+    func setUserWithEncryptionAuthenticationAndSetupUI(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUserWithEncryptionAuthentication", details: nil))
+            return
+        }
+
+        guard let userId = argumentOrError(argumentName: "organizationUserId", methodName: "setUserWithEncryptionAuthentication", args: args, result: result) else {
+            return
+        }
+        guard let algorithm = argumentOrError(argumentName: "algorithm", methodName: "setUserWithEncryptionAuthentication", args: args, result: result) else {
+            return
+        }
+        guard let secretId = argumentOrError(argumentName: "secretId", methodName: "setUserWithEncryptionAuthentication", args: args, result: result) else {
+            return
+        }
+        guard let initializationVector = argumentOrError(argumentName: "initializationVector", methodName: "setUserWithEncryptionAuthentication", args: args, result: result) else {
+            return
+        }
+        let parameters: UserAuthWithEncryptionParams
+        if let expiration = args["expiration"] as? CLong {
+            parameters = UserAuthWithEncryptionParams(
+                id: userId,
+                algorithm: algorithm,
+                secretID: secretId,
+                initializationVector: initializationVector,
+                legacyExpiration: Double(expiration))
+        } else {
+            parameters = UserAuthWithEncryptionParams(
+                id: userId,
+                algorithm: algorithm,
+                secretID: secretId,
+                initializationVector: initializationVector)
+        }
+        if let viewController: UIViewController = UIApplication.shared.delegate?.window??.rootViewController {
+            Didomi.shared.setUser(userAuthParams: parameters, containerController: viewController)
+        } else {
+            Didomi.shared.setUser(userAuthParams: parameters)
+        }
         result(nil)
     }
 

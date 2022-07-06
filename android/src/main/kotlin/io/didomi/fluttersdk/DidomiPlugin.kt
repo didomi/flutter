@@ -108,9 +108,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     result.success(null)
                 }
 
-                "isNoticeVisible" -> {
-                    result.success(didomi.isNoticeVisible())
-                }
+                "isNoticeVisible" -> result.success(didomi.isNoticeVisible())
 
                 "showPreferences" -> showPreferences(call, result)
 
@@ -119,9 +117,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     result.success(null)
                 }
 
-                "isPreferencesVisible" -> {
-                    result.success(didomi.isPreferencesVisible())
-                }
+                "isPreferencesVisible" -> result.success(didomi.isPreferencesVisible())
 
                 "getJavaScriptForWebView" -> getJavaScriptForWebView(result)
 
@@ -187,11 +183,19 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "setUserStatusGlobally" -> setUserStatusGlobally(call, result)
 
+                "clearUser" -> clearUser(call, result)
+
                 "setUser" -> setUser(call, result)
+
+                "setUserAndSetupUI" -> setUserAndSetupUI(call, result)
 
                 "setUserWithHashAuthentication" -> setUserWithHashAuthentication(call, result)
 
+                "setUserWithHashAuthenticationAndSetupUI" -> setUserWithHashAuthenticationAndSetupUI(call, result)
+
                 "setUserWithEncryptionAuthentication" -> setUserWithEncryptionAuthentication(call, result)
+
+                "setUserWithEncryptionAuthenticationAndSetupUI" -> setUserWithEncryptionAuthenticationAndSetupUI(call, result)
 
                 else -> result.notImplemented()
             }
@@ -752,13 +756,24 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
     }
 
-    private fun getListArgAsSet(call: MethodCall, key: String) =
-            (call.argument(key) as? List<String>)?.toSet() ?: emptySet()
+    private fun getListArgAsSet(call: MethodCall, key: String) = (call.argument(key) as? List<String>)?.toSet() ?: emptySet()
+
+    private fun clearUser(call: MethodCall, result: Result) {
+        Didomi.getInstance().setUser(null)
+        result.success(null)
+    }
 
     private fun setUser(call: MethodCall, result: Result) {
         val userId = argumentOrError("organizationUserId", "setUser", call, result)
-                ?: return
+            ?: return
         Didomi.getInstance().setUser(userId)
+        result.success(null)
+    }
+
+    private fun setUserAndSetupUI(call: MethodCall, result: Result) {
+        val userId = argumentOrError("organizationUserId", "setUser", call, result)
+            ?: return
+        Didomi.getInstance().setUser(userId, getFragmentActivity(result))
         result.success(null)
     }
 
@@ -772,14 +787,42 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 ?: return
         val digest = argumentOrError("digest", methodName, call, result)
                 ?: return
-        Didomi.getInstance().setUser(UserAuthWithHashParams(
-            id = userId,
-            algorithm = algorithm,
-            secretId = secretId,
-            digest = digest,
-            salt = call.argument("salt") as? String,
-            expiration = call.argument("expiration") as? Long
-        ))
+
+        Didomi.getInstance().setUser(
+            UserAuthWithHashParams(
+                id = userId,
+                algorithm = algorithm,
+                secretId = secretId,
+                digest = digest,
+                salt = call.argument("salt") as? String,
+                expiration = call.argument("expiration") as? Long
+            )
+        )
+        result.success(null)
+    }
+
+    private fun setUserWithHashAuthenticationAndSetupUI(call: MethodCall, result: Result) {
+        val methodName = "setUserWithHashAuthentication"
+        val userId = argumentOrError("organizationUserId", methodName, call, result)
+                ?: return
+        val algorithm = argumentOrError("algorithm", methodName, call, result)
+                ?: return
+        val secretId = argumentOrError("secretId", methodName, call, result)
+                ?: return
+        val digest = argumentOrError("digest", methodName, call, result)
+                ?: return
+
+        Didomi.getInstance().setUser(
+            UserAuthWithHashParams(
+                id = userId,
+                algorithm = algorithm,
+                secretId = secretId,
+                digest = digest,
+                salt = call.argument("salt") as? String,
+                expiration = call.argument("expiration") as? Long
+            ),
+            getFragmentActivity(result)
+        )
         result.success(null)
     }
 
@@ -793,13 +836,40 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             ?: return
         val initializationVector = argumentOrError("initializationVector", methodName, call, result)
             ?: return
-        Didomi.getInstance().setUser(UserAuthWithEncryptionParams(
-            id = userId,
-            algorithm = algorithm,
-            secretId = secretId,
-            initializationVector = initializationVector,
-            expiration = call.argument("expiration") as? Long
-        ))
+
+        Didomi.getInstance().setUser(
+            UserAuthWithEncryptionParams(
+                id = userId,
+                algorithm = algorithm,
+                secretId = secretId,
+                initializationVector = initializationVector,
+                expiration = call.argument("expiration") as? Long
+            )
+        )
+        result.success(null)
+    }
+
+    private fun setUserWithEncryptionAuthenticationAndSetupUI(call: MethodCall, result: Result) {
+        val methodName = "setUserWithEncryptionAuthentication"
+        val userId = argumentOrError("organizationUserId", methodName, call, result)
+            ?: return
+        val algorithm = argumentOrError("algorithm", methodName, call, result)
+            ?: return
+        val secretId = argumentOrError("secretId", methodName, call, result)
+            ?: return
+        val initializationVector = argumentOrError("initializationVector", methodName, call, result)
+            ?: return
+
+        Didomi.getInstance().setUser(
+            UserAuthWithEncryptionParams(
+                id = userId,
+                algorithm = algorithm,
+                secretId = secretId,
+                initializationVector = initializationVector,
+                expiration = call.argument("expiration") as? Long
+            ),
+            getFragmentActivity(result)
+        )
         result.success(null)
     }
 
