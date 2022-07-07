@@ -70,7 +70,7 @@ for file in $(find integration_test -maxdepth 1 -type f); do
 
   # Upload zip to firebase
   gcloud firebase test ios run --test "$product/ios_tests.zip" \
-    --device model=iphone8,version=15.5,locale=en_US,orientation=portrait \
+    --device model=iphone8,version=14.7,locale=en_US,orientation=portrait \
     --timeout 30m \
     --num-flaky-test-attempts 3 \
     --results-history-name "${branchName}_${fileName%%_test.dart}" || exit 1
