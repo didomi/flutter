@@ -1,14 +1,14 @@
 //noinspection GrPackage
 
 buildscript {
-    ext.kotlin_version = "1.5.0" // Should match flutter dependencies (1.4.32)?
+    ext.kotlin_version = "1.5.31" // Should match flutter dependencies (1.4.32)?
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:4.1.0")
+        classpath("com.android.tools.build:gradle:7.2.1")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }

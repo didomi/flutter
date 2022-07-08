@@ -25,6 +25,7 @@ class _GetUserStatusOtherInfo extends BaseSampleWidgetState<GetUserStatusOtherIn
         "- User id ${result.userId}\n"
         "- Created ${result.created}, updated ${result.updated}\n"
         "- Additional consent: ${result.additionalConsent}\n"
-        "- Consent String ${result.consentString}";
+        "- Consent String: ${result.consentString}\n"
+        "- Regulation: ${result.regulation}";
   }
 }

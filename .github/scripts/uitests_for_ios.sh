@@ -7,16 +7,19 @@
 
 # Project settings
 if [[ -z $1 ]]; then
-  # Doesn't work anymore on github action?
+  # From Local - Doesn't work anymore on github action?
   branchName=$(git rev-parse --abbrev-ref HEAD)
+  # Cleanup workspace
+  flutter clean || exit 1
 else
+  # From CI
   branchName="$1"
 fi
 
 # iOS Settings
 output="../build/ios_integ"
 product="build/ios_integ/Build/Products"
-dev_target="15.0"
+dev_target="15.5"
 
 # Move to sample folder
 cd ./example || exit 1

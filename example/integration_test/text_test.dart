@@ -146,12 +146,7 @@ void main() {
       assert(exp.hasMatch(expectedJavascript), "Actual: $javascriptResult\nExpected: $expectedJavascript");
 
       final queryStringResult = await DidomiSdk.queryStringForWebView;
-      if (Platform.isAndroid) {
-        assert(queryStringResult.startsWith(expectedQueryString), "Actual: $queryStringResult\nExpected: $expectedQueryString");
-      } else if (Platform.isIOS) {
-        // Not implemented for iOS
-        assert(queryStringResult == "", "Actual: $queryStringResult\nExpected:");
-      }
+      assert(queryStringResult.startsWith(expectedQueryString), "Actual: $queryStringResult\nExpected: $expectedQueryString");
     });
 
     testWidgets("Get Translated Texts after initialization", (WidgetTester tester) async {

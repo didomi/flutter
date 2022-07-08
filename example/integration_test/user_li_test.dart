@@ -15,10 +15,10 @@ void main() {
 
   // Messages
   const enabledForPurposeMessage = "Native message: User status is 'Enabled' for purpose 'cookies'.";
-  const enabledForVendorMessage = "Native message: User status is 'Enabled' for vendor '738'.";
-  const disabledForVendorMessage = "Native message: User status is 'Disabled' for vendor '738'.";
-  const enabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Enabled' for vendor '738' and required purposes.";
-  const disabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Disabled' for vendor '738' and required purposes.";
+  const enabledForVendorMessage = "Native message: User status is 'Enabled' for vendor 'google'.";
+  const disabledForVendorMessage = "Native message: User status is 'Disabled' for vendor 'google'.";
+  const enabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Enabled' for vendor 'google' and required purposes.";
+  const disabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Disabled' for vendor 'google' and required purposes.";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final agreeToAllBtnFinder = find.byKey(Key("setUserAgreeToAll"));
@@ -181,7 +181,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
-      // Agree
+      // Disagree
       await tester.tap(disagreeToAllBtnFinder);
       await tester.pumpAndSettle();
 

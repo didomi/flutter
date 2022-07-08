@@ -14,6 +14,7 @@ void main() {
   const String userId = "d13e49f6255c8729cbb201310f49d70d65f365415a67f034b567b7eac962b944eda131376594ef5e23b025fada4e4259e953ceb45ea57a2ced7872c567e6d1fae8dcc3a9772ead783d8513032e77d3fd";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
+  final clearUser = find.byKey(Key("clearUser"));
   final setUserWithId = find.byKey(Key("setUserWithId"));
   final setUserAuthDeprecated = find.byKey(Key("setUserWithAuthDeprecated"));
   final setUserAuthWithHash = find.byKey(Key("setUserAuthWithHash"));
@@ -21,6 +22,7 @@ void main() {
   final setUserWithInvalidParams = find.byKey(Key("setUserWithInvalidParams"));
   final withSalt = find.byKey(Key("setUserWithSalt"));
   final withExpiration = find.byKey(Key("setUserWithExpiration"));
+  final withSetupUI = find.byKey(Key("setUserAndSetupUI"));
   final submitSetUser = find.byKey(Key("setUser"));
 
   String? syncUserId;
@@ -28,7 +30,7 @@ void main() {
 
   final listener = EventListener();
   listener.onSyncDone = (String userId) {
-    syncUserId = userId;
+    syncUserId = userId != "null" ? userId : null;
   };
   listener.onSyncError = (String error) {
     syncError = true;
@@ -57,6 +59,24 @@ void main() {
       assert(syncError == false);
 
       await tester.tap(setUserWithInvalidParams);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertNativeMessage("setUser", "Native message: OK");
+
+      assert(syncUserId == null);
+      assert(syncError == false);
+    });
+
+    testWidgets("Click clearUser without initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      assert(syncUserId == null);
+      assert(syncError == false);
+
+      await tester.tap(clearUser);
       await tester.tap(submitSetUser);
       await tester.pumpAndSettle();
 
@@ -163,6 +183,143 @@ void main() {
     });
 
     testWidgets("Click setUser with hash", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      syncUserId = null;
+      syncError = false;
+
+      // Click on expiration and salt so it becomes checked
+      await tester.tap(setUserAuthWithHash);
+      await tester.tap(withExpiration);
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assert(syncUserId == userId);
+      assert(syncError == false);
+
+      syncUserId = null;
+      syncError = false;
+
+      // Uncheck salt parameter
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assert(syncUserId == userId);
+      assert(syncError == false);
+
+      await waitForSync(tester);
+
+      syncUserId = null;
+      syncError = false;
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assert(syncUserId == userId);
+      assert(syncError == false);
+    });
+
+    testWidgets("Click clearUser", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      syncUserId = null;
+      syncError = false;
+
+      // Select with id
+      await tester.tap(setUserWithId);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertNativeMessage("setUser", "Native message: OK");
+
+      await waitForSync(tester);
+
+      assert(syncUserId == userId);
+      assert(syncError == false);
+
+      // Clear user
+      await tester.tap(clearUser);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertNativeMessage("setUser", "Native message: OK");
+
+      assert(syncUserId == null);
+      assert(syncError == false);
+    });
+
+    /// With setupUI
+
+    testWidgets("Click setUser with id and setupUI", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      syncUserId = null;
+      syncError = false;
+
+      // Select with id
+      await tester.tap(setUserWithId);
+      // Select setUserAndSetupUI
+      await tester.tap(withSetupUI);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertNativeMessage("setUser", "Native message: OK");
+
+      await waitForSync(tester);
+
+      assert(syncUserId == userId);
+      assert(syncError == false);
+    });
+
+    testWidgets("Click setUser with encryption and setupUI", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      syncUserId = null;
+      syncError = false;
+
+      // Select Encryption auth
+      await tester.tap(setUserAuthWithEncryption);
+      // Click on expiration so it becomes checked
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assert(syncUserId == userId);
+      assert(syncError == false);
+
+      syncUserId = null;
+      syncError = false;
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assert(syncUserId == userId);
+      assert(syncError == false);
+    });
+
+    testWidgets("Click setUser with hash and setupUI", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();

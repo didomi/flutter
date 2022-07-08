@@ -13,7 +13,7 @@ class GetUserLegitimateInterestStatusForVendorAndRequiredPurposes extends Statef
 
 class _GetUserLegitimateInterestStatusForVendorAndRequiredPurposesState extends BaseSampleWidgetState<GetUserLegitimateInterestStatusForVendorAndRequiredPurposes> {
   // Vendor id for sample
-  final String vendorId = "738";  // Adbility Media
+  final String vendorId = "google";
 
   @override
   String getButtonName() => "getUserLegitimateInterestStatusForVendorAndRequiredPurposes\n$vendorId";

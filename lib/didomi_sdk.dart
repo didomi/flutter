@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:async';
 
 import 'package:didomi_sdk/entities/entities_helper.dart';
@@ -9,12 +8,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'consent_status.dart';
-import 'entities/vendor.dart';
-import 'log_level.dart';
-import 'preferences_view.dart';
 import 'constants.dart';
+import 'entities/vendor.dart';
 import 'events/event_listener.dart';
 import 'events/events_handler.dart';
+import 'log_level.dart';
+import 'preferences_view.dart';
 
 /// Didomi SDK Plugin
 class DidomiSdk {
@@ -142,13 +141,7 @@ class DidomiSdk {
   /// the consent status from the app to the Didomi Web SDK embedded on the target URL.
   /// Note: Available for Android only, will return an empty string if called from iOS
   static Future<String> get queryStringForWebView async {
-    final String result;
-    if (Platform.isAndroid) {
-      result = await _channel.invokeMethod("getQueryStringForWebView");
-    } else {
-      // Not available on iOS
-      result = "";
-    }
+    final String result = await _channel.invokeMethod("getQueryStringForWebView");
     return result;
   }
 
@@ -388,9 +381,18 @@ class DidomiSdk {
         "disabledLIVendorIds": disabledLIVendorIds
       });
 
+  /// Clear user information
+  static Future<void> clearUser() async => await _channel.invokeMethod("clearUser");
+
   /// Set user information
   static Future<void> setUser(String organizationUserId) async =>
     await _channel.invokeMethod("setUser", {
+      "organizationUserId": organizationUserId
+    });
+
+  /// Set user information and check for missing consent
+  static Future<void> setUserAndSetupUI(String organizationUserId) async =>
+    await _channel.invokeMethod("setUserAndSetupUI", {
       "organizationUserId": organizationUserId
     });
 
@@ -406,6 +408,28 @@ class DidomiSdk {
       });
     } else if (parameters is UserAuthWithHashParams) {
       return await _channel.invokeMethod("setUserWithHashAuthentication", {
+        "organizationUserId": parameters.id,
+        "algorithm": parameters.algorithm,
+        "secretId": parameters.secretId,
+        "digest": parameters.digest,
+        "salt": parameters.salt,
+        "expiration": parameters.expiration
+      });
+    }
+  }
+
+  /// Set user information with authentication and check for missing consent
+  static Future<void> setUserWithAuthParamsAndSetupUI(UserAuthParams parameters) async {
+    if (parameters is UserAuthWithEncryptionParams) {
+      return await _channel.invokeMethod("setUserWithEncryptionAuthenticationAndSetupUI", {
+        "organizationUserId": parameters.id,
+        "algorithm": parameters.algorithm,
+        "secretId": parameters.secretId,
+        "initializationVector": parameters.initializationVector,
+        "expiration": parameters.expiration
+      });
+    } else if (parameters is UserAuthWithHashParams) {
+      return await _channel.invokeMethod("setUserWithHashAuthenticationAndSetupUI", {
         "organizationUserId": parameters.id,
         "algorithm": parameters.algorithm,
         "secretId": parameters.secretId,

@@ -1,5 +1,4 @@
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
-import 'package:didomi_sdk_example/widgets/reset.dart';
 import 'package:didomi_sdk_example/widgets/set_user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +22,6 @@ class HomePage extends StatelessWidget {
             InitializeSmall(),
             // Actions
             SetUser(),
-            Reset(),
           ],
         ),
       );
