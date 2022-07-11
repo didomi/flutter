@@ -65,14 +65,15 @@ jobs:
         run: security unlock-keychain -p ${{ secrets.KEYCHAIN_PWD }} login.keychain
 
       # Connect to GCloud
-      - name: Login to Google Cloud
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
         with:
-          version: "342.0.0"
-          service_account_key: ${{ secrets.GCLOUD_AUTH }}
-
-      - name: Set current project
-        run: gcloud config set project ${{ secrets.FIREBASE_PROJECT_ID }}
+          project_id: ${{ secrets.FIREBASE_PROJECT_ID }}
 
       # Build and upload each scenarios to firebase
       - name: Run UI tests
