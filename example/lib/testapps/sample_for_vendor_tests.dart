@@ -8,7 +8,6 @@ import 'package:didomi_sdk_example/widgets/get_vendor.dart';
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
 import 'package:didomi_sdk_example/widgets/set_user_agree_to_all.dart';
 import 'package:didomi_sdk_example/widgets/set_user_disagree_to_all.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(SampleForVendorTestsApp());

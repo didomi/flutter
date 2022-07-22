@@ -1,7 +1,6 @@
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
 import 'package:didomi_sdk_example/widgets/set_log_level.dart';
 import 'package:didomi_sdk_example/widgets/setup_ui.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(SampleForSetupUITestsApp());

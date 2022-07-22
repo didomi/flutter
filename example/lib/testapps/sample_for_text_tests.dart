@@ -3,7 +3,6 @@ import 'package:didomi_sdk_example/widgets/get_translated_text.dart';
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
 import 'package:didomi_sdk_example/widgets/update_selected_language.dart';
 import 'package:didomi_sdk_example/widgets/webview_strings.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(SampleForTextTestsApp());
