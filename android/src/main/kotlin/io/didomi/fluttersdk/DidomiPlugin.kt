@@ -759,7 +759,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun getListArgAsSet(call: MethodCall, key: String) = (call.argument(key) as? List<String>)?.toSet() ?: emptySet()
 
     private fun clearUser(call: MethodCall, result: Result) {
-        Didomi.getInstance().setUser(null)
+        Didomi.getInstance().clearUser()
         result.success(null)
     }
 
