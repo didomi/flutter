@@ -14,7 +14,7 @@ class UpdateSelectedLanguage extends StatefulWidget {
 class _UpdateSelectedLanguageState extends BaseSampleWidgetState<UpdateSelectedLanguage> {
 
   TextEditingController _languageCodeController =
-  TextEditingController(text: "zh-CN");
+  TextEditingController(text: "");
 
   @override
   String getButtonName() {
