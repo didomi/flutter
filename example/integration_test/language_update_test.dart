@@ -86,7 +86,7 @@ void main() {
       assert(selectedLanguageCode == null);
       assert(failureReason == "Language code zh-CN is not enabled in the SDK");
 
-      assertNativeMessage("updateSelectedLanguage", "Native message: OK");
+      assertNativeMessage("updateSelectedLanguage", okMessage);
     });
 
     testWidgets("Update language after initialization returns success", (WidgetTester tester) async {
@@ -116,7 +116,7 @@ void main() {
       assert(selectedLanguageCode == "fr");
       assert(failureReason == null);
 
-      assertNativeMessage("updateSelectedLanguage", "Native message: OK");
+      assertNativeMessage("updateSelectedLanguage", okMessage);
     });
   });
 }
