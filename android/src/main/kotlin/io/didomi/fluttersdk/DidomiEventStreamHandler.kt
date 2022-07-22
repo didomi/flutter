@@ -144,6 +144,14 @@ class DidomiEventStreamHandler: EventChannel.StreamHandler, DidomiEventListener 
         sendEvent("onSyncError", mapOf("error" to event.error))
     }
 
+    override fun languageUpdated(event: LanguageUpdatedEvent) {
+        sendEvent("onLanguageUpdated", mapOf("languageCode" to event.languageCode))
+    }
+
+    override fun languageUpdateFailed(event: LanguageUpdateFailedEvent) {
+        sendEvent("onLanguageUpdateFailed", mapOf("reason" to event.reason))
+    }
+
     fun onReadyCallback() {
         sendEvent("onReadyCallback")
     }
