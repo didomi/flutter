@@ -70,11 +70,6 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0
-        with:
-          project_id: ${{ secrets.FIREBASE_PROJECT_ID }}
-
       # Build and upload each scenarios to firebase
       - name: Run UI tests
         run: sh .github/scripts/uitests_for_ios.sh ${GITHUB_HEAD_REF}
