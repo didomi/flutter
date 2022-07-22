@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'didomi_sdk'
-  s.version          = '1.3.0'
+  s.version          = '1.4.0'
   s.summary          = 'Didomi CMP Plugin.'
   s.homepage         = 'https://github.com/didomi/flutter'
   s.license          = { :file => '../LICENSE' }
