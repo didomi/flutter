@@ -48,7 +48,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '11'
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v1 # v1 required for mac mini
         with:
           channel: "stable"
           architecture: arm64

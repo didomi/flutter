@@ -94,11 +94,6 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0
-        with:
-          project_id: ${{ secrets.FIREBASE_PROJECT_ID }}
-
       # Build and upload each scenarios to firebase
       - name: Run UI tests
         run: bash .github/scripts/uitests_for_android.sh ${GITHUB_HEAD_REF}
@@ -114,7 +109,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '11'
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v1 # v1 required for mac mini
         with:
           channel: "stable"
           architecture: arm64
@@ -137,10 +132,11 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0
-        with:
-          project_id: ${{ secrets.FIREBASE_PROJECT_ID }}
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v0'
+
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
 
       # Build and upload each scenarios to firebase
       - name: Run UI tests
