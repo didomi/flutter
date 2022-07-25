@@ -39,7 +39,7 @@ for file in $(find integration_test -maxdepth 1 -type f); do
   popd
 
   echo "--------------------------------------------------------"
-  echo "| Publishing $fileName to Firebase  for Android"
+  echo "| Publishing $fileName to Firebase for Android"
   echo "--------------------------------------------------------"
 
   # Upload apk to firebase
