@@ -1,7 +1,8 @@
+import 'dart:async';
+
+import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:didomi_sdk/didomi_sdk.dart';
 
 /// Widget to call DidomiSdk.updateSelectedLanguage
 class UpdateSelectedLanguage extends StatefulWidget {
@@ -14,7 +15,7 @@ class UpdateSelectedLanguage extends StatefulWidget {
 class _UpdateSelectedLanguageState extends BaseSampleWidgetState<UpdateSelectedLanguage> {
 
   TextEditingController _languageCodeController =
-  TextEditingController(text: "zh-CN");
+  TextEditingController(text: "");
 
   @override
   String getButtonName() {

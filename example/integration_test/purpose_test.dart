@@ -14,8 +14,11 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   // Native message strings.
-  const purposeNames = "purpose_1_name, purpose_3_name, purpose_5_name, special_feature_2_name, special_feature_1_name, purpose_10_name, purpose_9_name, "
-      "purpose_7_name, purpose_8_name, purpose_2_name, purpose_4_name, purpose_6_name.";
+  const purpose1Name = "Store and/or access information on a device";
+  const purposeNames = "$purpose1Name, Create a personalised ads profile, Create a personalised content profile, "
+      "Actively scan device characteristics for identification, Use precise geolocation data, Develop and improve products, "
+      "Apply market research to generate audience insights, Measure ad performance, Measure content performance, Select basic ads, "
+      "Select personalised ads, Select personalised content.";
   const purposeIds = "cookies, create_ads_profile, create_content_profile, device_characteristics, geolocation_data, improve_products, market_research, "
       "measure_ad_performance, measure_content_performance, select_basic_ads, select_personalized_ads, select_personalized_content.";
 
@@ -297,7 +300,7 @@ void main() {
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Purpose: purpose_1_name.";
+      final expected = "Native message: Purpose: $purpose1Name.";
       assertNativeMessage("getPurpose", expected);
 
       assert(isError == false);
@@ -311,11 +314,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      await tester.tap(agreeToAllBtnFinder);
-      await tester.pumpAndSettle();
-
       assert(isError == false);
       assert(isReady == true);
+
+      await tester.tap(agreeToAllBtnFinder);
+      await tester.pumpAndSettle();
 
       await tester.tap(disabledPurposeIdsBtnFinder);
       await tester.pumpAndSettle();
@@ -432,7 +435,7 @@ void main() {
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Purpose: purpose_1_name.";
+      final expected = "Native message: Purpose: $purpose1Name.";
       assertNativeMessage("getPurpose", expected);
 
       assert(isError == false);
@@ -567,7 +570,7 @@ void main() {
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Purpose: purpose_1_name.";
+      final expected = "Native message: Purpose: $purpose1Name.";
       assertNativeMessage("getPurpose", expected);
 
       assert(isError == false);

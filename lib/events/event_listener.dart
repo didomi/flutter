@@ -78,4 +78,11 @@ class EventListener {
   dynamic Function(String organizationUserId) onSyncDone = (organizationUserId) {};
   /// User consent synchronization failed
   dynamic Function(String error) onSyncError = (error) {};
+  /*
+   * Language change events
+   */
+  /// The language update is complete
+  dynamic Function(String languageCode) onLanguageUpdated = (languageCode) {};
+  /// The language update is complete
+  dynamic Function(String reason) onLanguageUpdateFailed = (reason) {};
 }

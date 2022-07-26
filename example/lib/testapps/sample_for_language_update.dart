@@ -1,13 +1,13 @@
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
-import 'package:didomi_sdk_example/widgets/set_user.dart';
+import 'package:didomi_sdk_example/widgets/update_selected_language.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(SampleForSetUserTestsApp());
+void main() => runApp(SampleForLanguageUpdateTestsApp());
 
-class SampleForSetUserTestsApp extends StatelessWidget {
+class SampleForLanguageUpdateTestsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: "Set User Tests",
+        title: "Language Tests",
         home: HomePage(),
       );
 }
@@ -19,8 +19,7 @@ class HomePage extends StatelessWidget {
           key: Key("components_list"),
           children: [
             InitializeSmall(),
-            // Actions
-            SetUser(),
+            UpdateSelectedLanguage(),
           ],
         ),
       );

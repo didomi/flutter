@@ -1,5 +1,9 @@
 # Release Note
 
+## 1.4.0
+Update latest versions of native Android and iOS sdks
+Add `languageUpdated` / `languageUpdateFailed` events from native sdks
+
 ## 1.3.0
 Update latest versions of native Android and iOS sdks
 Add `setUserWithAuthParams` feature (replaces deprecated `setUserWithAuthentication`)

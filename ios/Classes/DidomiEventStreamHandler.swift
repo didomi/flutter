@@ -110,6 +110,12 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
         eventListener.onSyncError = { [weak self] event, error in
             self?.sendEvent(eventType: "onSyncError", arguments: ["error": error])
         }
+        eventListener.onLanguageUpdated = { [weak self] event, languageCode in
+            self?.sendEvent(eventType: "onLanguageUpdated", arguments: ["languageCode": languageCode])
+        }
+        eventListener.onLanguageUpdateFailed = { [weak self] event, reason in
+            self?.sendEvent(eventType: "onLanguageUpdateFailed", arguments: ["reason": reason])
+        }
     }
         
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {

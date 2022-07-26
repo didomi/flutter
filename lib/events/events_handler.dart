@@ -1,14 +1,17 @@
 import 'dart:convert';
 
-import 'event_listener.dart';
-import 'package:flutter/services.dart';
 import 'package:didomi_sdk/constants.dart';
+import 'package:flutter/services.dart';
+
+import 'event_listener.dart';
 
 /// Handler for events emitted by native SDK
 class EventsHandler {
   static const EventChannel _eventChannel = EventChannel(eventsChannelName);
   List<EventListener> listeners = [];
+
   List<Function()> onReadyCallbacks = [];
+
   List<Function()> onErrorCallbacks = [];
 
   EventsHandler() {
@@ -18,7 +21,7 @@ class EventsHandler {
   handleDidomiEvent(dynamic event) {
     try {
       handleDecodedEvent(json.decode(event));
-    } on FormatException catch(e) {
+    } on FormatException catch (e) {
       print("Error while decoding event $event: $e");
     }
   }
@@ -26,7 +29,7 @@ class EventsHandler {
   handleDecodedEvent(Map jsonEvent) {
     final String eventType = jsonEvent["type"].toString();
 
-    switch(eventType) {
+    switch (eventType) {
       case "onReady":
         for (var listener in listeners) {
           listener.onReady();
@@ -243,6 +246,20 @@ class EventsHandler {
         final String error = jsonEvent["error"].toString();
         for (var listener in listeners) {
           listener.onSyncError(error);
+        }
+        break;
+
+      case "onLanguageUpdated":
+        final String languageCode = jsonEvent["languageCode"].toString();
+        for (var listener in listeners) {
+          listener.onLanguageUpdated(languageCode);
+        }
+        break;
+
+      case "onLanguageUpdateFailed":
+        final String reason = jsonEvent["reason"].toString();
+        for (var listener in listeners) {
+          listener.onLanguageUpdateFailed(reason);
         }
         break;
 

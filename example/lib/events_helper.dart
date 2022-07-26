@@ -105,6 +105,12 @@ class EventsHelper {
     didomiListener.onSyncError = (error) {
       onEvent("Sync failed with error $error");
     };
+    didomiListener.onLanguageUpdated = (languageCode) {
+      onEvent("Language has changed ($languageCode)");
+    };
+    didomiListener.onLanguageUpdateFailed = (reason) {
+      onEvent("Language has not changed: $reason");
+    };
 
     DidomiSdk.addEventListener(didomiListener);
   }
@@ -112,5 +118,4 @@ class EventsHelper {
   void onEvent(eventDescription) {
     uiCallback?.call(eventDescription);
   }
-
 }
