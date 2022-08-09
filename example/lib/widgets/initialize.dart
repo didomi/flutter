@@ -21,13 +21,22 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
   Future<String> callDidomiPlugin() async {
     String languageCodeText = _languageController.text;
     String? languageCode = languageCodeText.isEmpty ? null : languageCodeText;
+
     String noticeIdText = _noticeIdController.text;
     String? noticeId = noticeIdText.isEmpty ? null : noticeIdText;
+
+    String tvNoticeIdText = _tvNoticeIdController.text;
+    String? tvNoticeId = tvNoticeIdText.isEmpty ? null : tvNoticeIdText;
+
     await DidomiSdk.initialize(
         _apiKeyController.text,
         disableDidomiRemoteConfig: _disableRemoteConfigValue,
         languageCode: languageCode,
-        noticeId: noticeId);
+        noticeId: noticeId,
+        tvNoticeId: tvNoticeId,
+        androidTvEnabled: _androidTvEnabled
+    );
+
     return "OK";
   }
 
@@ -35,9 +44,13 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
 
   TextEditingController _noticeIdController = TextEditingController(text: "Ar7NPQ72");
 
+  TextEditingController _tvNoticeIdController = TextEditingController(text: "DirGCFKy");
+
   TextEditingController _languageController = TextEditingController();
 
   bool _disableRemoteConfigValue = false;
+
+  bool _androidTvEnabled = false;
 
   @override
   List<Widget> buildWidgets() => [
@@ -49,6 +62,7 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
         Text('With parameters: \n'),
         TextFormField(controller: _apiKeyController, key: Key("apiKey"), decoration: InputDecoration(labelText: 'API Key')),
         TextFormField(controller: _noticeIdController, key: Key("noticeId"), decoration: InputDecoration(labelText: 'Notice id')),
+        TextFormField(controller: _tvNoticeIdController, key: Key("tvNoticeId"), decoration: InputDecoration(labelText: 'TV Notice id')),
         TextFormField(controller: _languageController, key: Key("languageCode"), decoration: InputDecoration(labelText: 'Language code')),
         CheckboxListTile(
           title: Text("Disable remote config"),
@@ -58,6 +72,27 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
             if (newValue != null) {
               setState(() {
                 _disableRemoteConfigValue = newValue;
+                // Only remote console configuration is allowed for AndroidTV
+                if (newValue) {
+                  _androidTvEnabled = false;
+                }
+              });
+            }
+          },
+          controlAffinity: ListTileControlAffinity.leading, //  <-- leading Checkbox
+        ),
+        CheckboxListTile(
+          title: Text("Enable AndroidTV"),
+          key: Key('androidTvEnabled'),
+          value: _androidTvEnabled,
+          onChanged: (newValue) {
+            if (newValue != null) {
+              setState(() {
+                _androidTvEnabled = newValue;
+                // Only remote console configuration is allowed for AndroidTV
+                if (newValue) {
+                  _disableRemoteConfigValue = false;
+                }
               });
             }
           },
