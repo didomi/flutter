@@ -28,7 +28,7 @@ class DidomiSdk {
         bool disableDidomiRemoteConfig = false,
         String? languageCode,
         String? noticeId,
-        String? tvNoticeId,
+        String? androidTvNoticeId,
         bool androidTvEnabled = false}) async =>
     await _channel.invokeMethod("initialize", {
       "apiKey": apiKey,
@@ -38,7 +38,7 @@ class DidomiSdk {
       "disableDidomiRemoteConfig": disableDidomiRemoteConfig,
       "languageCode": languageCode,
       "noticeId": noticeId,
-      "tvNoticeId": tvNoticeId,
+      "androidTvNoticeId": androidTvNoticeId,
       "androidTvEnabled": androidTvEnabled
     });
 

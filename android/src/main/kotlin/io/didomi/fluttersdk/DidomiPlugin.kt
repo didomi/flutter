@@ -220,7 +220,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     disableDidomiRemoteConfig,
                     call.argument("languageCode"),
                     call.argument("noticeId"),
-                    call.argument("tvNoticeId"),
+                    call.argument("androidTvNoticeId"),
                     androidTvEnabled
                 )
             )
