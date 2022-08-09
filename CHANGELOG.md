@@ -1,5 +1,9 @@
 # Release Note
 
+## 1.5.0
+Update latest versions of native Android (1.65.0) and iOS (1.74.0) sdks
+Add AndroidTV support
+
 ## 1.4.0
 Update latest versions of native Android and iOS sdks
 Add `languageUpdated` / `languageUpdateFailed` events from native sdks
