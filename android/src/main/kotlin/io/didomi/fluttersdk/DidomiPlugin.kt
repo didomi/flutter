@@ -209,6 +209,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val apiKey = argumentOrError("apiKey", "initialize", call, result)
                     ?: return
             val disableDidomiRemoteConfig: Boolean = call.argument("disableDidomiRemoteConfig") ?: false
+            val androidTvEnabled: Boolean = call.argument("androidTvEnabled") ?: false
             Didomi.getInstance().initialize(
                 it.application,
                 DidomiInitializeParameters(
@@ -218,7 +219,9 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     call.argument("providerId"),
                     disableDidomiRemoteConfig,
                     call.argument("languageCode"),
-                    call.argument("noticeId")
+                    call.argument("noticeId"),
+                    call.argument("tvNoticeId"),
+                    androidTvEnabled
                 )
             )
             result.success(null)
