@@ -62,30 +62,30 @@ flutterversion=$(increment_version "$version" $position)
 echo "Flutter version will change from $version to $flutterversion"
 
 # Update android SDK Version
-version=$(curl -s 'https://search.maven.org/solrsearch/select?q=didomi' | sed -n 's|.*"latestVersion":"\([^"]*\)".*|\1|p')
+androidVersion=$(curl -s 'https://search.maven.org/solrsearch/select?q=didomi' | sed -n 's|.*"latestVersion":"\([^"]*\)".*|\1|p')
 if [[ ! $version =~ ^[0-9]+.[0-9]+.[0-9]+$ ]]; then
   echo "Error while getting android SDK version"
   exit 1
 fi
 
-echo "Android SDK last version is $version"
+echo "Android SDK last version is $androidVersion"
 
 pushd android >/dev/null
-sed -i~ -e "s|io.didomi.sdk:android:[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|io.didomi.sdk:android:$version|g" build.gradle || exit 1
+sed -i~ -e "s|io.didomi.sdk:android:[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|io.didomi.sdk:android:$androidVersion|g" build.gradle || exit 1
 sed -i~ -e "s|^version = \"[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}\"|version = \"$flutterversion\"|g" build.gradle || exit 1
 popd >/dev/null
 
 # Update ios SDK Version
-version=$(pod_last_version)
+iOSVersion=$(pod_last_version)
 if [[ ! $version =~ ^[0-9]+.[0-9]+.[0-9]+$ ]]; then
   echo "Error while getting ios SDK version"
   exit 1
 fi
 
-echo "iOS SDK last version is $version"
+echo "iOS SDK last version is $iOSVersion"
 
 pushd ios >/dev/null
-sed -i~ -e "s|s.dependency       'Didomi-XCFramework', '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|s.dependency       'Didomi-XCFramework', '$version'|g" didomi_sdk.podspec || exit 1
+sed -i~ -e "s|s.dependency       'Didomi-XCFramework', '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|s.dependency       'Didomi-XCFramework', '$iOSVersion'|g" didomi_sdk.podspec || exit 1
 sed -i~ -e "s|s.version          = '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|s.version          = '$flutterversion'|g" didomi_sdk.podspec || exit 1
 popd >/dev/null
 
@@ -98,7 +98,7 @@ popd >/dev/null
 sed -i~ -e "s|version: [0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|version: $flutterversion|g" pubspec.yaml || exit 1
 
 # Update changelog
-sh .github/scripts/update_changelog.sh "$flutterversion" || exit 1
+sh .github/scripts/update_changelog.sh "$flutterversion" "$androidVersion" "$iOSVersion" || exit 1
 
 # Reload dependencies
 flutter pub get || exit 1
