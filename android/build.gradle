@@ -11,7 +11,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:7.2.1")
+        classpath("com.android.tools.build:gradle:7.2.2")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
@@ -27,7 +27,8 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
 android {
-    compileSdkVersion(30)
+    compileSdkVersion(31)
+    buildToolsVersion = "31.0.0"
 
     sourceSets {
         main.java.srcDirs += "src/main/kotlin"
@@ -35,6 +36,7 @@ android {
 
     defaultConfig {
         minSdkVersion(16)
+        targetSdkVersion(31)
         multiDexEnabled = true
 
         buildConfigField("String", "PLUGIN_VERSION", "\"" + version + "\"")

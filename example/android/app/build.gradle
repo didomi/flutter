@@ -28,11 +28,8 @@ apply plugin: "kotlin-android"
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    //  Currently (2022/03/24) it is not possible to match buildToolsVersion with compileSdkVersion:
-    //  - buildToolsVersion 31.0.0 is marked as corrupted
-    //  - Setting compileSdkVersion to 30 raises a dependency error
     compileSdkVersion(31)
-    buildToolsVersion = "30.0.3"
+    buildToolsVersion = "31.0.0"
 
     defaultConfig {
         minSdkVersion(16)
@@ -71,7 +68,7 @@ flutter {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    implementation "com.google.code.gson:gson:2.8.8"
+    implementation("com.google.code.gson:gson:2.9.0")
 
     testImplementation("junit:junit:4.12") // Must match flutter dependencies
 
