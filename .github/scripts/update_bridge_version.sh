@@ -73,13 +73,19 @@ echo "iOS SDK current version is $iOSVersion"
 
 # Update Flutter version
 sed -i~ -e "s|version: [0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|version: $flutterversion|g" pubspec.yaml || exit 1
+# Cleanup backup files
+find . -type f -name '*~' -delete
 
 pushd android >/dev/null
 sed -i~ -e "s|^version = \"[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}\"|version = \"$flutterversion\"|g" build.gradle || exit 1
+# Cleanup backup files
+find . -type f -name '*~' -delete
 popd >/dev/null
 
 pushd ios >/dev/null
 sed -i~ -e "s|s.version          = '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|s.version          = '$flutterversion'|g" didomi_sdk.podspec || exit 1
+# Cleanup backup files
+find . -type f -name '*~' -delete
 popd >/dev/null
 
 # Update changelog

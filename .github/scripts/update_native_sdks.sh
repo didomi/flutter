@@ -26,6 +26,8 @@ echo "Android SDK last version is $androidVersion"
 
 pushd android >/dev/null
 sed -i~ -e "s|io.didomi.sdk:android:[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|io.didomi.sdk:android:$androidVersion|g" build.gradle || exit 1
+# Cleanup backup files
+find . -type f -name '*~' -delete
 popd >/dev/null
 
 # Update ios SDK Version
@@ -39,6 +41,8 @@ echo "iOS SDK last version is $iOSVersion"
 
 pushd ios >/dev/null
 sed -i~ -e "s|s.dependency       'Didomi-XCFramework', '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|s.dependency       'Didomi-XCFramework', '$iOSVersion'|g" didomi_sdk.podspec || exit 1
+# Cleanup backup files
+find . -type f -name '*~' -delete
 popd >/dev/null
 
 pushd example/ios >/dev/null
