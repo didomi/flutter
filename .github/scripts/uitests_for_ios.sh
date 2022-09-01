@@ -40,7 +40,7 @@ for file in $(find integration_test -maxdepth 1 -type f); do
 
   # Build zip file for iOS
   # Pass --simulator if building for the simulator.
-  flutter build ios --config-only "$file" || exit 1
+  flutter build ios "$file" --release || exit 1
 
   echo "--------------------------------------------------------"
   echo "| Xcodebuild $fileName Test App for iOS"
@@ -55,14 +55,14 @@ for file in $(find integration_test -maxdepth 1 -type f); do
   echo "--------------------------------------------------------"
 
   pushd $product
-  zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos$dev_target-arm64-armv7.xctestrun"
+  zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos$dev_target-arm64.xctestrun"
   popd
 
 #  echo "--------------------------------------------------------"
 #  echo "| Running $fileName locally" requires --simulator on build
 #  echo "--------------------------------------------------------"
 #
-#  xcodebuild test-without-building -xctestrun "$product/Runner_iphoneos$dev_target-arm64-armv7.xctestrun" -destination id=<DEVICE_ID>
+#  xcodebuild test-without-building -xctestrun "$product/Runner_iphoneos$dev_target-arm64.xctestrun" -destination id=<DEVICE_ID>
 
   echo "--------------------------------------------------------"
   echo "| Publishing $fileName to Firebase for iOS"
