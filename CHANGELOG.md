@@ -1,7 +1,7 @@
 # Release Note
 
 ## 1.5.0
-Update latest versions of native Android (1.65.0) and iOS (1.74.0) sdks
+Update latest versions of native Android (1.66.0) and iOS (1.75.0) sdks
 Add AndroidTV support
 
 ## 1.4.0
