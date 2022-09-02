@@ -7,9 +7,9 @@ Pod::Spec.new do |s|
   s.version          = '1.5.0'
   s.summary          = 'Didomi CMP Plugin.'
   s.homepage         = 'https://github.com/didomi/flutter'
-  s.license          = { :file => '../LICENSE' }
+  s.license          = { :type => 'BSD', :file => '../LICENSE' }
   s.author           = { 'Didomi ' => 'tech@didomi.io' }
-  s.source           = { :path => '.' }
+  s.source           = { :path => 'git@github.com:didomi/flutter.git', :tag => '1.5.0' }
   s.source_files     = 'Classes/**/*'
   s.dependency       'Flutter'
   s.dependency       'Didomi-XCFramework', '1.75.0'

@@ -80,6 +80,7 @@ popd >/dev/null
 
 pushd ios >/dev/null
 sed -i~ -e "s|s.version          = '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|s.version          = '$flutterversion'|g" didomi_sdk.podspec || exit 1
+sed -i~ -e "s|:tag => '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|:tag => '$flutterversion'|g" didomi_sdk.podspec || exit 1
 popd >/dev/null
 
 # Update changelog
