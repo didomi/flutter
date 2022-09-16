@@ -1,7 +1,7 @@
 //noinspection GrPackage
 
 group = "io.didomi.fluttersdk"
-version = "1.5.0"
+version = "1.6.0"
 
 buildscript {
     ext.kotlin_version = "1.5.31" // Should match flutter dependencies (1.4.32)?
@@ -55,6 +55,6 @@ android {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    implementation("io.didomi.sdk:android:1.66.0")
+    implementation("io.didomi.sdk:android:1.69.0")
     implementation("androidx.multidex:multidex:2.0.1")
 }

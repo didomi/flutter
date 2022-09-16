@@ -83,6 +83,12 @@ sed -i~ -e "s|s.version          = '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|s.ve
 sed -i~ -e "s|:tag => '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|:tag => '$flutterversion'|g" didomi_sdk.podspec || exit 1
 popd >/dev/null
 
+# Update Example
+pushd example/ios >/dev/null
+pod repo update || exit 1
+pod update || exit 1
+popd >/dev/null
+
 # Update changelog
 sh .github/scripts/update_changelog.sh "$flutterversion" "$androidVersion" "$iOSVersion" || exit 1
 

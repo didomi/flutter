@@ -1,5 +1,9 @@
 # Release Note
 
+## 1.6.0
+Update latest versions of native Android (1.69.0) and iOS (1.78.0) sdks
+Add CCPA regulation support
+
 ## 1.5.0
 Update latest versions of native Android (1.66.0) and iOS (1.75.0) sdks
 Add AndroidTV support
