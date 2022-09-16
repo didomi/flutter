@@ -46,8 +46,8 @@ if [[ ! $version =~ ^[0-9]+.[0-9]+.[0-9]+$ ]]; then
 fi
 
 # Increment Flutter version
-flutterversion=$(increment_version "$version" $position)
-echo "Flutter version will change from $version to $flutterversion"
+flutterVersion=$(increment_version "$version" $position)
+echo "Flutter version will change from $version to $flutterVersion"
 
 # Get current android SDK Version
 pushd android >/dev/null
@@ -72,15 +72,15 @@ fi
 echo "iOS SDK current version is $iOSVersion"
 
 # Update Flutter version
-sed -i~ -e "s|version: [0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|version: $flutterversion|g" pubspec.yaml || exit 1
+sed -i~ -e "s|version: [0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|version: $flutterVersion|g" pubspec.yaml || exit 1
 
 pushd android >/dev/null
-sed -i~ -e "s|^version = \"[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}\"|version = \"$flutterversion\"|g" build.gradle || exit 1
+sed -i~ -e "s|^version = \"[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}\"|version = \"$flutterVersion\"|g" build.gradle || exit 1
 popd >/dev/null
 
 pushd ios >/dev/null
-sed -i~ -e "s|s.version          = '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|s.version          = '$flutterversion'|g" didomi_sdk.podspec || exit 1
-sed -i~ -e "s|:tag => '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|:tag => '$flutterversion'|g" didomi_sdk.podspec || exit 1
+sed -i~ -e "s|s.version          = '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|s.version          = '$flutterVersion'|g" didomi_sdk.podspec || exit 1
+sed -i~ -e "s|:tag => '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|:tag => '$flutterVersion'|g" didomi_sdk.podspec || exit 1
 popd >/dev/null
 
 # Update Example
@@ -90,7 +90,7 @@ pod update || exit 1
 popd >/dev/null
 
 # Update changelog
-sh .github/scripts/update_changelog.sh "$flutterversion" "$androidVersion" "$iOSVersion" || exit 1
+sh .github/scripts/update_changelog.sh "$flutterVersion" "$androidVersion" "$iOSVersion" || exit 1
 
 # Cleanup backup files
 find . -type f -name '*~' -delete
