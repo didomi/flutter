@@ -55,6 +55,6 @@ android {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    implementation("io.didomi.sdk:android:1.69.0")
+    implementation("io.didomi.sdk:android:1.70.1")
     implementation("androidx.multidex:multidex:2.0.1")
 }
