@@ -23,4 +23,3 @@ doc/api/
 *.js.deps
 *.js.map
 runConfigurations.xml
-credentials.json
