@@ -1,5 +1,9 @@
 # Release Note
 
+## 1.7.0
+- Update latest versions of native Android (1.70.1) and iOS (1.79.1) sdks
+- Update Android Build Config (Kotlin version 1.7.20)
+
 ## 1.6.0
 - Update latest versions of native Android (1.69.0) and iOS (1.78.0) sdks
 - Add CCPA regulation support
