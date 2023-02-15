@@ -46,8 +46,7 @@ class Vendor implements Comparable<Vendor> {
       this.specialFeatureIds,
       this.cookieMaxAgeSeconds,
       this.usesNonCookieAccess,
-      this.deviceStorageDisclosureUrl
-      );
+      this.deviceStorageDisclosureUrl);
 
   // When parsing a Vendor, we need to consider that some properties are parsed differently on Android and iOS,
   // mainly because TCFv1 used properties such as purposeIds and TCFv2 uses properties such as purposes.
@@ -59,11 +58,18 @@ class Vendor implements Comparable<Vendor> {
         namespace = json["namespace"],
         namespaces = json["namespaces"]?.cast<String, String>(),
         purposeIds = (json["purposeIds"] ?? json["purposes"]).cast<String>(),
-        legIntPurposeIds = (json["legIntPurposeIds"] ?? json["legIntPurposes"]).cast<String>(),
+        legIntPurposeIds =
+            (json["legIntPurposeIds"] ?? json["legIntPurposes"]).cast<String>(),
         featureIds = (json["featureIds"] ?? json["features"]).cast<String>(),
-        flexiblePurposeIds = (json["flexiblePurposeIds"] ?? json["flexiblePurposes"]).cast<String>(),
-        specialPurposeIds = (json["specialPurposeIds"] ?? json["specialPurposes"]).cast<String>(),
-        specialFeatureIds = (json["specialFeatureIds"] ?? json["specialFeatures"]).cast<String>(),
+        flexiblePurposeIds =
+            (json["flexiblePurposeIds"] ?? json["flexiblePurposes"])
+                .cast<String>(),
+        specialPurposeIds =
+            (json["specialPurposeIds"] ?? json["specialPurposes"])
+                .cast<String>(),
+        specialFeatureIds =
+            (json["specialFeatureIds"] ?? json["specialFeatures"])
+                .cast<String>(),
         cookieMaxAgeSeconds = json["cookieMaxAgeSeconds"]?.toDouble(),
         usesNonCookieAccess = json["usesNonCookieAccess"],
         deviceStorageDisclosureUrl = json["deviceStorageDisclosureUrl"];

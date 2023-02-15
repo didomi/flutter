@@ -11,7 +11,7 @@ extension LogLevelExtension on LogLevel {
     } else if (Platform.isIOS) {
       return iosLevel;
     } else {
-      throw("Platform is neither android nor ios");
+      throw ("Platform is neither android nor ios");
     }
   }
 
