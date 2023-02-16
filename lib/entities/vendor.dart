@@ -46,8 +46,7 @@ class Vendor implements Comparable<Vendor> {
       this.specialFeatureIds,
       this.cookieMaxAgeSeconds,
       this.usesNonCookieAccess,
-      this.deviceStorageDisclosureUrl
-      );
+      this.deviceStorageDisclosureUrl);
 
   // When parsing a Vendor, we need to consider that some properties are parsed differently on Android and iOS,
   // mainly because TCFv1 used properties such as purposeIds and TCFv2 uses properties such as purposes.

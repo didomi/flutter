@@ -19,5 +19,4 @@ class EntitiesHelper {
 
   /// Convert json to vendors status info, or null
   static Vendors? toVendorsStatus(dynamic json) => json != null ? Vendors.fromJson(json) : null;
-
 }
