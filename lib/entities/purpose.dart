@@ -11,8 +11,7 @@ class Purpose implements Comparable<Purpose> {
   // Legal description of the purpose.
   String? descriptionLegal;
 
-  Purpose(
-      this.id, this.iabId, this.name, this.description, this.descriptionLegal);
+  Purpose(this.id, this.iabId, this.name, this.description, this.descriptionLegal);
 
   Purpose.fromJson(dynamic json)
       : id = json["id"],

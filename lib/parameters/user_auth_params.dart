@@ -15,24 +15,22 @@ abstract class UserAuthParams {
 }
 
 class UserAuthWithEncryptionParams extends UserAuthParams {
+
   /// Initialization Vector used for computing the user ID
   String initializationVector;
 
-  UserAuthWithEncryptionParams(
-      String id, String algorithm, String secretId, this.initializationVector,
-      [int? expiration])
-      : super(id, algorithm, secretId, expiration);
+  UserAuthWithEncryptionParams(String id, String algorithm, String secretId, this.initializationVector, [int? expiration]) :
+        super(id, algorithm, secretId, expiration);
 }
 
 class UserAuthWithHashParams extends UserAuthParams {
+
   /// Digest used for representing the user ID
   String digest;
 
   /// Salt used for computing the user ID (optional)
   String? salt;
 
-  UserAuthWithHashParams(
-      String id, String algorithm, String secretId, this.digest, this.salt,
-      [int? expiration])
-      : super(id, algorithm, secretId, expiration);
+  UserAuthWithHashParams(String id, String algorithm, String secretId, this.digest, this.salt, [int? expiration]) :
+        super(id, algorithm, secretId, expiration);
 }

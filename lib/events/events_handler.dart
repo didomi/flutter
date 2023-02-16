@@ -15,9 +15,7 @@ class EventsHandler {
   List<Function()> onErrorCallbacks = [];
 
   EventsHandler() {
-    _eventChannel
-        .receiveBroadcastStream()
-        .listen(handleDidomiEvent, onError: handleDidomiErrorEvent);
+    _eventChannel.receiveBroadcastStream().listen(handleDidomiEvent, onError: handleDidomiErrorEvent);
   }
 
   handleDidomiEvent(dynamic event) {
@@ -238,8 +236,7 @@ class EventsHandler {
         break;
 
       case "onSyncDone":
-        final String organizationUserId =
-            jsonEvent["organizationUserId"].toString();
+        final String organizationUserId = jsonEvent["organizationUserId"].toString();
         for (var listener in listeners) {
           listener.onSyncDone(organizationUserId);
         }
@@ -272,8 +269,7 @@ class EventsHandler {
     }
   }
 
-  handleDidomiErrorEvent(dynamic error) =>
-      print('Received error: ${error.message}');
+  handleDidomiErrorEvent(dynamic error) => print('Received error: ${error.message}');
 
   /// Add an event listener
   addEventListener(EventListener listener) {

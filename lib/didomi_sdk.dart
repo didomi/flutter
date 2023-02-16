@@ -22,29 +22,28 @@ class DidomiSdk {
 
   /// Initialize the SDK
   static Future<void> initialize(String apiKey,
-          {String? localConfigurationPath,
-          String? remoteConfigurationURL,
-          String? providerId,
-          bool disableDidomiRemoteConfig = false,
-          String? languageCode,
-          String? noticeId,
-          String? androidTvNoticeId,
-          bool androidTvEnabled = false}) async =>
-      await _channel.invokeMethod("initialize", {
-        "apiKey": apiKey,
-        "localConfigurationPath": localConfigurationPath,
-        "remoteConfigurationURL": remoteConfigurationURL,
-        "providerId": providerId,
-        "disableDidomiRemoteConfig": disableDidomiRemoteConfig,
-        "languageCode": languageCode,
-        "noticeId": noticeId,
-        "androidTvNoticeId": androidTvNoticeId,
-        "androidTvEnabled": androidTvEnabled
-      });
+      {String? localConfigurationPath,
+        String? remoteConfigurationURL,
+        String? providerId,
+        bool disableDidomiRemoteConfig = false,
+        String? languageCode,
+        String? noticeId,
+        String? androidTvNoticeId,
+        bool androidTvEnabled = false}) async =>
+    await _channel.invokeMethod("initialize", {
+      "apiKey": apiKey,
+      "localConfigurationPath": localConfigurationPath,
+      "remoteConfigurationURL": remoteConfigurationURL,
+      "providerId": providerId,
+      "disableDidomiRemoteConfig": disableDidomiRemoteConfig,
+      "languageCode": languageCode,
+      "noticeId": noticeId,
+      "androidTvNoticeId": androidTvNoticeId,
+      "androidTvEnabled": androidTvEnabled
+    });
 
   /// Check if Didomi SDK was successfully initialized
-  static Future<bool> get isReady async =>
-      await _channel.invokeMethod('isReady');
+  static Future<bool> get isReady async => await _channel.invokeMethod('isReady');
 
   /// Check if user consent are partial or not set
   static Future<bool> get shouldConsentBeCollected async {
@@ -63,15 +62,13 @@ class DidomiSdk {
 
   /// Determine if consent information is available for all purposes and vendors that are required
   static Future<bool> get isUserConsentStatusPartial async {
-    final bool result =
-        await _channel.invokeMethod('isUserConsentStatusPartial');
+    final bool result = await _channel.invokeMethod('isUserConsentStatusPartial');
     return result;
   }
 
   /// Determine if legitimate interest information is available for all purposes and vendors that are required
   static Future<bool> get isUserLegitimateInterestStatusPartial async {
-    final bool result =
-        await _channel.invokeMethod('isUserLegitimateInterestStatusPartial');
+    final bool result = await _channel.invokeMethod('isUserLegitimateInterestStatusPartial');
     return result;
   }
 
@@ -103,19 +100,18 @@ class DidomiSdk {
   }
 
   /// Show the preferences screen
-  static Future<void> showPreferences(
-      {PreferencesView view = PreferencesView.purposes}) async {
-    await _channel
-        .invokeMethod("showPreferences", {"view": describeEnum(view)});
+  static Future<void> showPreferences({PreferencesView view = PreferencesView.purposes}) async {
+    await _channel.invokeMethod("showPreferences", {
+      "view": describeEnum(view)
+    });
   }
 
   /// Hide the preferences screen
-  static Future<void> hidePreferences() async =>
-      await _channel.invokeMethod("hidePreferences");
+  static Future<void> hidePreferences() async => await _channel.invokeMethod("hidePreferences");
 
   /// Check if preferences screen is visible
   static Future<bool> get isPreferencesVisible async =>
-      await _channel.invokeMethod('isPreferencesVisible');
+    await _channel.invokeMethod('isPreferencesVisible');
 
   /// Add listener to SDK events
   static addEventListener(EventListener listener) {
@@ -143,14 +139,13 @@ class DidomiSdk {
   /// Get JavaScript to embed into a WebView to pass the consent status
   /// from the app to the Didomi Web SDK embedded into the WebView
   static Future<String> get javaScriptForWebView async =>
-      await _channel.invokeMethod("getJavaScriptForWebView");
+    await _channel.invokeMethod("getJavaScriptForWebView");
 
   /// Get a query-string to add to the URL of a WebView or Chrome Custom Tab to pass
   /// the consent status from the app to the Didomi Web SDK embedded on the target URL.
   /// Note: Available for Android only, will return an empty string if called from iOS
   static Future<String> get queryStringForWebView async {
-    final String result =
-        await _channel.invokeMethod("getQueryStringForWebView");
+    final String result = await _channel.invokeMethod("getQueryStringForWebView");
     return result;
   }
 
@@ -160,8 +155,7 @@ class DidomiSdk {
   /// i.e.: from within the app rather than from the device settings.
   /// In order to update the language of the views displayed by the Didomi SDK, this method needs to be called before these views are displayed.
   static Future<void> updateSelectedLanguage(String languageCode) async =>
-      await _channel.invokeMethod(
-          "updateSelectedLanguage", {"languageCode": languageCode});
+    await _channel.invokeMethod("updateSelectedLanguage", {"languageCode": languageCode});
 
   /// Get a dictionary/map for a given key in the form of { en: "Value in English", fr: "Value in French" }
   /// from the didomi_config.json file containing translations in different languages.
@@ -172,7 +166,7 @@ class DidomiSdk {
       await _channel.invokeMapMethod("getText", {"key": key});
 
   /// Get a translated string for a given key from the didomi_config.json file based on the currently selected language.
-  ///
+  /// 
   /// The keys and values considered come from different places in the didomi_config.json file such as { notice: ... },
   /// { preferences: ... } and { texts: ... }, giving the latter the highest priority in case of duplicates.
   static Future<String> getTranslatedText(String key) async =>
@@ -188,8 +182,7 @@ class DidomiSdk {
   @Deprecated("Use userStatus instead. "
       "Search for the purposeId in userStatus.purposes.global.disabled or userStatus.purposes.consent.disabled")
   static Future<List<String>> get disabledPurposeIds async {
-    final List<dynamic> result =
-        await _channel.invokeMethod('getDisabledPurposeIds');
+    final List<dynamic> result = await _channel.invokeMethod('getDisabledPurposeIds');
     return result.cast();
   }
 
@@ -197,8 +190,7 @@ class DidomiSdk {
   @Deprecated("Use userStatus instead. "
       "The result of this method has been replaced by userStatus.vendors.consent.disabled.")
   static Future<List<String>> get disabledVendorIds async {
-    final List<dynamic> result =
-        await _channel.invokeMethod('getDisabledVendorIds');
+    final List<dynamic> result = await _channel.invokeMethod('getDisabledVendorIds');
     return result.cast();
   }
 
@@ -206,8 +198,7 @@ class DidomiSdk {
   @Deprecated("Use userStatus instead. "
       "Search for the purposeId in userStatus.purposes.global.enabled or userStatus.purposes.consent.disabled")
   static Future<List<String>> get enabledPurposeIds async {
-    final List<dynamic> result =
-        await _channel.invokeMethod('getEnabledPurposeIds');
+    final List<dynamic> result = await _channel.invokeMethod('getEnabledPurposeIds');
     return result.cast();
   }
 
@@ -215,22 +206,19 @@ class DidomiSdk {
   @Deprecated("Use userStatus instead. "
       "The result of this method has been replaced by userStatus.vendors.consent.enabled")
   static Future<List<String>> get enabledVendorIds async {
-    final List<dynamic> result =
-        await _channel.invokeMethod('getEnabledVendorIds');
+    final List<dynamic> result = await _channel.invokeMethod('getEnabledVendorIds');
     return result.cast();
   }
 
   /// Get the IDs of the required purposes
   static Future<List<String>> get requiredPurposeIds async {
-    final List<dynamic> result =
-        await _channel.invokeMethod('getRequiredPurposeIds');
+    final List<dynamic> result = await _channel.invokeMethod('getRequiredPurposeIds');
     return result.cast();
   }
 
   /// Get the IDs of the required vendors
   static Future<List<String>> get requiredVendorIds async {
-    final List<dynamic> result =
-        await _channel.invokeMethod('getRequiredVendorIds');
+    final List<dynamic> result = await _channel.invokeMethod('getRequiredVendorIds');
     return result.cast();
   }
 
@@ -238,8 +226,7 @@ class DidomiSdk {
   @Deprecated("Use userStatus instead. "
       "The result of this method has been replaced by userStatus.purposes.global.enabled")
   static Future<List<Purpose>> get enabledPurposes async {
-    final List<dynamic> result =
-        await _channel.invokeMethod("getEnabledPurposes");
+    final List<dynamic> result = await _channel.invokeMethod("getEnabledPurposes");
     return EntitiesHelper.toPurposes(result);
   }
 
@@ -247,8 +234,7 @@ class DidomiSdk {
   @Deprecated("Use userStatus instead. "
       "The result of this method has been replaced by userStatus.purposes.global.disabled")
   static Future<List<Purpose>> get disabledPurposes async {
-    final List<dynamic> result =
-        await _channel.invokeMethod("getDisabledPurposes");
+    final List<dynamic> result = await _channel.invokeMethod("getDisabledPurposes");
     return EntitiesHelper.toPurposes(result);
   }
 
@@ -256,8 +242,7 @@ class DidomiSdk {
   @Deprecated("Use userStatus instead. "
       "The result of this method has been replaced by userStatus.vendors.consent.enabled")
   static Future<List<Vendor>> get enabledVendors async {
-    final List<dynamic> result =
-        await _channel.invokeMethod("getEnabledVendors");
+    final List<dynamic> result = await _channel.invokeMethod("getEnabledVendors");
     return EntitiesHelper.toVendors(result);
   }
 
@@ -265,37 +250,32 @@ class DidomiSdk {
   @Deprecated("Use userStatus instead. "
       "The result of this method has been replaced by userStatus.vendors.consent.disabled")
   static Future<List<Vendor>> get disabledVendors async {
-    final List<dynamic> result =
-        await _channel.invokeMethod("getDisabledVendors");
+    final List<dynamic> result = await _channel.invokeMethod("getDisabledVendors");
     return EntitiesHelper.toVendors(result);
   }
 
   /// Get required purposes.
   static Future<List<Purpose>> get requiredPurposes async {
-    final List<dynamic> result =
-        await _channel.invokeMethod("getRequiredPurposes");
+    final List<dynamic> result = await _channel.invokeMethod("getRequiredPurposes");
     return EntitiesHelper.toPurposes(result);
   }
 
   /// Get required vendors.
   static Future<List<Vendor>> get requiredVendors async {
-    final List<dynamic> result =
-        await _channel.invokeMethod("getRequiredVendors");
+    final List<dynamic> result = await _channel.invokeMethod("getRequiredVendors");
     return EntitiesHelper.toVendors(result);
   }
 
   /// Get a purpose by its id.
   static Future<Purpose?> getPurpose(String purposeId) async {
-    final dynamic result =
-        await _channel.invokeMethod("getPurpose", {"purposeId": purposeId});
+    final dynamic result = await _channel.invokeMethod("getPurpose", { "purposeId": purposeId });
     if (result == null) return null;
     return Purpose.fromJson(result);
   }
 
   /// Get a vendor by its id.
   static Future<Vendor?> getVendor(String vendorId) async {
-    final dynamic result =
-        await _channel.invokeMethod("getVendor", {"vendorId": vendorId});
+    final dynamic result = await _channel.invokeMethod("getVendor", { "vendorId": vendorId });
     if (result == null) return null;
     return Vendor.fromJson(result);
   }
@@ -320,63 +300,49 @@ class DidomiSdk {
   /// Get the user consent status for a specific purpose
   @Deprecated("Use userStatus instead. "
       "Search for the purposeId in userStatus.purposes.global.enabled or userStatus.purposes.consent.disabled")
-  static Future<ConsentStatus> getUserConsentStatusForPurpose(
-      String purposeId) async {
-    final int result = await _channel.invokeMethod(
-        "getUserConsentStatusForPurpose", {"purposeId": purposeId});
+  static Future<ConsentStatus> getUserConsentStatusForPurpose(String purposeId) async {
+    final int result = await _channel.invokeMethod("getUserConsentStatusForPurpose", {"purposeId": purposeId});
     return ConsentStatus.values[result];
   }
 
   /// Get the user consent status for a specific vendor
   @Deprecated("Use userStatus instead. "
       "Search for the vendorId in userStatus.vendors.global.enabled or userStatus.vendors.global.disabled")
-  static Future<ConsentStatus> getUserConsentStatusForVendor(
-      String vendorId) async {
-    final int result = await _channel
-        .invokeMethod("getUserConsentStatusForVendor", {"vendorId": vendorId});
+  static Future<ConsentStatus> getUserConsentStatusForVendor(String vendorId) async {
+    final int result = await _channel.invokeMethod("getUserConsentStatusForVendor", {"vendorId": vendorId});
     return ConsentStatus.values[result];
   }
 
   /// Get the user consent status for a specific vendor and all its purposes
   @Deprecated("Use userStatus instead. "
       "Search for the vendorId in userStatus.vendors.globalConsent.enabled or userStatus.vendors.globalConsent.disabled")
-  static Future<ConsentStatus> getUserConsentStatusForVendorAndRequiredPurposes(
-      String vendorId) async {
-    final int result = await _channel.invokeMethod(
-        "getUserConsentStatusForVendorAndRequiredPurposes",
-        {"vendorId": vendorId});
+  static Future<ConsentStatus> getUserConsentStatusForVendorAndRequiredPurposes(String vendorId) async {
+    final int result = await _channel.invokeMethod("getUserConsentStatusForVendorAndRequiredPurposes", {"vendorId": vendorId});
     return ConsentStatus.values[result];
   }
+
 
   /// Get the user legitimate interest status for a specific purpose
   @Deprecated("Use userStatus instead. "
       "Search for the purposeId in userStatus.purposes.global.enabled or userStatus.purposes.legitimateInterest.disabled")
-  static Future<ConsentStatus> getUserLegitimateInterestStatusForPurpose(
-      String purposeId) async {
-    final int result = await _channel.invokeMethod(
-        "getUserLegitimateInterestStatusForPurpose", {"purposeId": purposeId});
+  static Future<ConsentStatus> getUserLegitimateInterestStatusForPurpose(String purposeId) async {
+    final int result = await _channel.invokeMethod("getUserLegitimateInterestStatusForPurpose", {"purposeId": purposeId});
     return ConsentStatus.values[result];
   }
 
   /// Get the user legitimate interest status for a specific vendor
   @Deprecated("Use userStatus instead. "
       "Search for the vendorId in userStatus.vendors.global.enabled or userStatus.vendors.global.disabled")
-  static Future<ConsentStatus> getUserLegitimateInterestStatusForVendor(
-      String vendorId) async {
-    final int result = await _channel.invokeMethod(
-        "getUserLegitimateInterestStatusForVendor", {"vendorId": vendorId});
+  static Future<ConsentStatus> getUserLegitimateInterestStatusForVendor(String vendorId) async {
+    final int result = await _channel.invokeMethod("getUserLegitimateInterestStatusForVendor", {"vendorId": vendorId});
     return ConsentStatus.values[result];
   }
 
   /// Get the user legitimate interest status for a specific vendor and all its purposes
   @Deprecated("Use userStatus instead. "
       "Search for the vendorId in userStatus.vendors.globalLegitimateInterest.enabled or userStatus.vendors.globalLegitimateInterest.disabled")
-  static Future<ConsentStatus>
-      getUserLegitimateInterestStatusForVendorAndRequiredPurposes(
-          String vendorId) async {
-    final int result = await _channel.invokeMethod(
-        "getUserLegitimateInterestStatusForVendorAndRequiredPurposes",
-        {"vendorId": vendorId});
+  static Future<ConsentStatus> getUserLegitimateInterestStatusForVendorAndRequiredPurposes(String vendorId) async {
+    final int result = await _channel.invokeMethod("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", {"vendorId": vendorId});
     return ConsentStatus.values[result];
   }
 
@@ -384,34 +350,30 @@ class DidomiSdk {
   @Deprecated("Use userStatus instead. "
       "Search for the vendorId in userStatus.vendors.global.enabled or userStatus.vendors.global.disabled")
   static Future<ConsentStatus> getUserStatusForVendor(String vendorId) async {
-    final int result = await _channel
-        .invokeMethod("getUserStatusForVendor", {"vendorId": vendorId});
+    final int result = await _channel.invokeMethod("getUserStatusForVendor", {"vendorId": vendorId});
     return ConsentStatus.values[result];
   }
 
   /// Set the user status globally
-  static Future<bool> setUserStatusGlobally(
-          bool purposesConsentStatus,
-          bool purposesLIStatus,
-          bool vendorsConsentStatus,
-          bool vendorsLIStatus) async =>
-      await _channel.invokeMethod("setUserStatusGlobally", {
-        "purposesConsentStatus": purposesConsentStatus,
-        "purposesLIStatus": purposesLIStatus,
-        "vendorsConsentStatus": vendorsConsentStatus,
-        "vendorsLIStatus": vendorsLIStatus
-      });
+  static Future<bool> setUserStatusGlobally(bool purposesConsentStatus, bool purposesLIStatus, bool vendorsConsentStatus, bool vendorsLIStatus) async =>
+    await _channel.invokeMethod("setUserStatusGlobally", {
+      "purposesConsentStatus": purposesConsentStatus,
+      "purposesLIStatus": purposesLIStatus,
+      "vendorsConsentStatus": vendorsConsentStatus,
+      "vendorsLIStatus": vendorsLIStatus
+    });
 
   /// Set the user status
   static Future<bool> setUserStatus(
-          List<String> enabledConsentPurposeIds,
-          List<String> disabledConsentPurposeIds,
-          List<String> enabledLIPurposeIds,
-          List<String> disabledLIPurposeIds,
-          List<String> enabledConsentVendorIds,
-          List<String> disabledConsentVendorIds,
-          List<String> enabledLIVendorIds,
-          List<String> disabledLIVendorIds) async =>
+      List<String> enabledConsentPurposeIds,
+      List<String> disabledConsentPurposeIds,
+      List<String> enabledLIPurposeIds,
+      List<String> disabledLIPurposeIds,
+      List<String> enabledConsentVendorIds,
+      List<String> disabledConsentVendorIds,
+      List<String> enabledLIVendorIds,
+      List<String> disabledLIVendorIds
+      ) async =>
       await _channel.invokeMethod("setUserStatus", {
         "enabledConsentPurposeIds": enabledConsentPurposeIds,
         "disabledConsentPurposeIds": disabledConsentPurposeIds,
@@ -424,23 +386,24 @@ class DidomiSdk {
       });
 
   /// Clear user information
-  static Future<void> clearUser() async =>
-      await _channel.invokeMethod("clearUser");
+  static Future<void> clearUser() async => await _channel.invokeMethod("clearUser");
 
   /// Set user information
-  static Future<void> setUser(String organizationUserId) async => await _channel
-      .invokeMethod("setUser", {"organizationUserId": organizationUserId});
+  static Future<void> setUser(String organizationUserId) async =>
+    await _channel.invokeMethod("setUser", {
+      "organizationUserId": organizationUserId
+    });
 
   /// Set user information and check for missing consent
   static Future<void> setUserAndSetupUI(String organizationUserId) async =>
-      await _channel.invokeMethod(
-          "setUserAndSetupUI", {"organizationUserId": organizationUserId});
+    await _channel.invokeMethod("setUserAndSetupUI", {
+      "organizationUserId": organizationUserId
+    });
 
   /// Set user information with authentication
   static Future<void> setUserWithAuthParams(UserAuthParams parameters) async {
     if (parameters is UserAuthWithEncryptionParams) {
-      return await _channel
-          .invokeMethod("setUserWithEncryptionAuthentication", {
+      return await _channel.invokeMethod("setUserWithEncryptionAuthentication", {
         "organizationUserId": parameters.id,
         "algorithm": parameters.algorithm,
         "secretId": parameters.secretId,
@@ -460,11 +423,9 @@ class DidomiSdk {
   }
 
   /// Set user information with authentication and check for missing consent
-  static Future<void> setUserWithAuthParamsAndSetupUI(
-      UserAuthParams parameters) async {
+  static Future<void> setUserWithAuthParamsAndSetupUI(UserAuthParams parameters) async {
     if (parameters is UserAuthWithEncryptionParams) {
-      return await _channel
-          .invokeMethod("setUserWithEncryptionAuthenticationAndSetupUI", {
+      return await _channel.invokeMethod("setUserWithEncryptionAuthenticationAndSetupUI", {
         "organizationUserId": parameters.id,
         "algorithm": parameters.algorithm,
         "secretId": parameters.secretId,
@@ -472,8 +433,7 @@ class DidomiSdk {
         "expiration": parameters.expiration
       });
     } else if (parameters is UserAuthWithHashParams) {
-      return await _channel
-          .invokeMethod("setUserWithHashAuthenticationAndSetupUI", {
+      return await _channel.invokeMethod("setUserWithHashAuthenticationAndSetupUI", {
         "organizationUserId": parameters.id,
         "algorithm": parameters.algorithm,
         "secretId": parameters.secretId,
@@ -487,15 +447,17 @@ class DidomiSdk {
   /// Set user information with authentication
   @Deprecated("Use setUserWithAuthParams(UserAuthParams) instead.")
   static Future<void> setUserWithAuthentication(
-          String organizationUserId,
-          String organizationUserIdAuthAlgorithm,
-          String organizationUserIdAuthSid,
-          String? organizationUserIdAuthSalt,
-          String organizationUserIdAuthDigest) async =>
-      await setUserWithAuthParams(new UserAuthWithHashParams(
-          organizationUserId,
-          organizationUserIdAuthAlgorithm,
-          organizationUserIdAuthSid,
-          organizationUserIdAuthDigest,
-          organizationUserIdAuthSalt));
+      String organizationUserId,
+      String organizationUserIdAuthAlgorithm,
+      String organizationUserIdAuthSid,
+      String? organizationUserIdAuthSalt,
+      String organizationUserIdAuthDigest
+      ) async =>
+    await setUserWithAuthParams(new UserAuthWithHashParams(
+        organizationUserId,
+        organizationUserIdAuthAlgorithm,
+        organizationUserIdAuthSid,
+        organizationUserIdAuthDigest,
+        organizationUserIdAuthSalt)
+    );
 }
