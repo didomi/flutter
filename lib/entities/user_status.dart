@@ -8,30 +8,37 @@ import 'package:didomi_sdk/entities/entities_helper.dart';
 class UserStatus {
   /// Property that contains the user status associated to purposes.
   Purposes? purposes;
+
   /// Property that contains the user status associated to vendors.
   Vendors? vendors;
+
   /// Didomi user id
   String? userId;
+
   /// User choices creation date
   String? created;
+
   /// User choices update date
   String? updated;
+
   /// TCF consent as string
   String? consentString;
+
   /// Additional consent
   String? additionalConsent;
+
   /// Regulation applied
   String? regulation;
 
   UserStatus.fromJson(dynamic json)
-    : purposes = EntitiesHelper.toPurposesStatus(json["purposes"]),
-      vendors = EntitiesHelper.toVendorsStatus(json["vendors"]),
-      userId = json["user_id"],
-      created = json["created"],
-      updated = json["updated"],
-      consentString = json["consent_string"],
-      additionalConsent = json["addtl_consent"],
-      regulation = json["regulation"];
+      : purposes = EntitiesHelper.toPurposesStatus(json["purposes"]),
+        vendors = EntitiesHelper.toVendorsStatus(json["vendors"]),
+        userId = json["user_id"],
+        created = json["created"],
+        updated = json["updated"],
+        consentString = json["consent_string"],
+        additionalConsent = json["addtl_consent"],
+        regulation = json["regulation"];
 }
 
 /// User status for purposes
@@ -91,6 +98,7 @@ class Vendors {
 class Ids {
   /// List of disabled ids
   List<String>? disabled;
+
   /// List of enabled ids
   List<String>? enabled;
 

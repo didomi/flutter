@@ -2,6 +2,7 @@
 enum PreferencesView {
   /// Main preferences screen
   purposes,
+
   /// Vendors preferences screen
   vendors
 }
