@@ -48,10 +48,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - uses: subosito/flutter-action@v1 # v1 required for mac mini
+      - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          architecture: arm64
+          architecture: arm64 # optional value for v2 (use self-hosted mac mini)
 
       - name: Install dependencies
         run: flutter pub get
