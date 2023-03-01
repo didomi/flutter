@@ -9,8 +9,6 @@
 if [[ -z $1 ]]; then
   # From Local - Doesn't work anymore on github action?
   branchName=$(git rev-parse --abbrev-ref HEAD)
-  # Cleanup workspace
-  flutter clean || exit 1
 else
   # From CI
   branchName="$1"
@@ -23,6 +21,9 @@ dev_target="15.5"
 
 # Move to sample folder
 cd ./example || exit 1
+
+# Cleanup workspace
+flutter clean || exit 1
 
 # Compute UI tests scenarios
 for file in $(find integration_test -maxdepth 1 -type f); do
@@ -46,17 +47,17 @@ for file in $(find integration_test -maxdepth 1 -type f); do
   echo "| Xcodebuild $fileName Test App for iOS"
   echo "--------------------------------------------------------"
 
-  pushd ios
+  pushd ios >/dev/null || exit 1
   xcodebuild -workspace Runner.xcworkspace -scheme Runner -config Flutter/Release.xcconfig -derivedDataPath $output -sdk iphoneos build-for-testing || exit 1
-  popd
+  popd >/dev/null || exit 1
 
   echo "--------------------------------------------------------"
   echo "| Building $fileName zip file for iOS"
   echo "--------------------------------------------------------"
 
-  pushd $product
+  pushd $product >/dev/null || exit 1
   zip -r "ios_tests.zip" "Release-iphoneos" "Runner_iphoneos$dev_target-arm64.xctestrun"
-  popd
+  popd >/dev/null || exit 1
 
 #  echo "--------------------------------------------------------"
 #  echo "| Running $fileName locally" requires --simulator on build
@@ -70,8 +71,10 @@ for file in $(find integration_test -maxdepth 1 -type f); do
 
   # Upload zip to firebase
   gcloud firebase test ios run --test "$product/ios_tests.zip" \
-    --device model=iphone8,version=14.7,locale=en_US,orientation=portrait \
+    --device model=iphone8,version=15.7,locale=en_US,orientation=portrait \
     --timeout 30m \
     --num-flaky-test-attempts 3 \
-    --results-history-name "${branchName}_${fileName%%_test.dart}" || exit 1
+    --results-history-name "${branchName}_${fileName%%_test.dart}" \
+    --quiet \
+    || exit 1
 done

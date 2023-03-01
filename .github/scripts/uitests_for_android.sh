@@ -31,12 +31,12 @@ for file in $(find integration_test -maxdepth 1 -type f); do
   echo "--------------------------------------------------------"
 
   # Build apk file for Android
-  pushd android
+  pushd android >/dev/null || exit 1
   # flutter build generates files in android/ for building the app
   flutter build apk
   ./gradlew app:assembleAndroidTest || exit 1
   ./gradlew app:assembleDebug -Ptarget="$file" || exit 1
-  popd
+  popd >/dev/null || exit 1
 
   echo "--------------------------------------------------------"
   echo "| Publishing $fileName to Firebase for Android"
@@ -49,5 +49,7 @@ for file in $(find integration_test -maxdepth 1 -type f); do
     --use-orchestrator \
     --timeout 30m \
     --num-flaky-test-attempts 3 \
-    --results-history-name "${branchName}_${fileName%%_test.dart}" || exit 1
+    --results-history-name "${branchName}_${fileName%%_test.dart}" \
+    --quiet \
+    || exit 1
 done
