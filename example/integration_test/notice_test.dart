@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk_example/testapps/sample_for_notice_tests.dart' as app;
@@ -11,6 +13,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
+  final setupUIBtnFinder = find.byKey(Key("setupUI"));
   final showNoticeBtnFinder = find.byKey(Key("showNotice"));
   final hideNoticeCbFinder = find.byKey(Key("hideNotice"));
 
@@ -54,7 +57,7 @@ void main() {
       assert(noticeWasShown == false);
     });
 
-    testWidgets("Show Notice with initialization", (WidgetTester tester) async {
+    testWidgets("Show Notice with initialization then close it", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -66,31 +69,18 @@ void main() {
       assert(noticeWasHidden == false);
       assert(noticeWasShown == false);
 
-      await tester.tap(showNoticeBtnFinder);
-      await tester.pumpAndSettle();
-
-      // Check for dialog
-      assert(isError == false);
-      assert(isReady == true);
-      assert(noticeWasHidden == false);
-      assert(noticeWasShown == true);
-    });
-
-    testWidgets("Show Notice with initialization then close it", (WidgetTester tester) async {
-      // Start app
-      app.main();
-      await tester.pumpAndSettle();
-
-      assert(isError == false);
-      assert(isReady == true);
-      assert(noticeWasHidden == false);
-      assert(noticeWasShown == true);
-
       await tester.tap(hideNoticeCbFinder);
       await tester.pumpAndSettle();
 
+      // Trigger delay before closing the notice / display the notice for Android
       await tester.tap(showNoticeBtnFinder);
       await tester.pumpAndSettle();
+
+      // iOS requires setupUI for view controller
+      if (Platform.isIOS) {
+        await tester.tap(setupUIBtnFinder);
+        await tester.pumpAndSettle();
+      }
 
       // Check for dialog
       assert(isError == false);
