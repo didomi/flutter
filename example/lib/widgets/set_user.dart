@@ -65,9 +65,12 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
       case AuthType.invalid:
         if (setUserAndSetupUI) {
           await DidomiSdk.setUserWithAuthParamsAndSetupUI(
-              new UserAuthWithEncryptionParams(userId, "hash-md5", secretId, initializationVector, expiration));
+              new UserAuthWithEncryptionParams(userId, "hash-md6", secretId, initializationVector, expiration)
+          );
         } else {
-          await DidomiSdk.setUserWithAuthParams(new UserAuthWithEncryptionParams(userId, "hash-md5", secretId, initializationVector, expiration));
+          await DidomiSdk.setUserWithAuthParams(
+              new UserAuthWithEncryptionParams(userId, "hash-md6", secretId, initializationVector, expiration)
+          );
         }
         break;
     }

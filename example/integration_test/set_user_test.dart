@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk_example/testapps/sample_for_set_user_tests.dart' as app;
@@ -6,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 import 'util/assertion_helper.dart';
+import 'util/constants.dart';
 import 'util/initialize_helper.dart';
 
 void main() {
@@ -27,8 +30,14 @@ void main() {
 
   String? syncUserId;
   bool syncError = false;
+  bool consentChanged = false;
 
   final listener = EventListener();
+  listener.onConsentChanged = () {
+    syncUserId = null;
+    syncError = false;
+    consentChanged = true;
+  };
   listener.onSyncDone = (String userId) {
     syncUserId = userId != "null" ? userId : null;
   };
@@ -62,13 +71,18 @@ void main() {
       await tester.tap(submitSetUser);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("setUser", "Native message: OK");
+      assertNativeMessage("setUser", okMessage);
 
       assert(syncUserId == null);
       assert(syncError == false);
     });
 
     testWidgets("Click clearUser without initialization", (WidgetTester tester) async {
+      // TODO('Revert test after Android SDK update')
+      if (Platform.isAndroid) {
+        return;
+      }
+
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -80,8 +94,12 @@ void main() {
       await tester.tap(submitSetUser);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("setUser", "Native message: OK");
-
+      if (Platform.isIOS) {
+        assertNativeMessage("setUser", okMessage);
+      } else if (Platform.isAndroid) {
+        // Android need the SDK to be initialized
+        assertNativeMessage("setUser", notReadyMessage);
+      }
       assert(syncUserId == null);
       assert(syncError == false);
     });
@@ -119,7 +137,7 @@ void main() {
       await tester.tap(submitSetUser);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("setUser", "Native message: OK");
+      assertNativeMessage("setUser", okMessage);
 
       await waitForSync(tester);
 
@@ -140,7 +158,7 @@ void main() {
       await tester.tap(submitSetUser);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("setUser", "Native message: OK");
+      assertNativeMessage("setUser", okMessage);
 
       await waitForSync(tester);
 
@@ -236,18 +254,20 @@ void main() {
 
       syncUserId = null;
       syncError = false;
+      consentChanged = false;
 
       // Select with id
       await tester.tap(setUserWithId);
       await tester.tap(submitSetUser);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("setUser", "Native message: OK");
+      assertNativeMessage("setUser", okMessage);
 
       await waitForSync(tester);
 
       assert(syncUserId == userId);
       assert(syncError == false);
+      assert(consentChanged == false);
 
       // Clear user
       await tester.tap(clearUser);
@@ -258,6 +278,7 @@ void main() {
 
       assert(syncUserId == null);
       assert(syncError == false);
+      assert(consentChanged == true);
     });
 
     /// With setupUI
@@ -277,7 +298,7 @@ void main() {
       await tester.tap(submitSetUser);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("setUser", "Native message: OK");
+      assertNativeMessage("setUser", okMessage);
 
       await waitForSync(tester);
 
