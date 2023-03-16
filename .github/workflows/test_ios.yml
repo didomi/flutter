@@ -61,22 +61,13 @@ jobs:
         working-directory: ./example/ios
         run: pod update
 
-      # unlock keychain
-      - name: Unlock key chain
-        run: security unlock-keychain -p ${{ secrets.KEYCHAIN_PWD }} login.keychain
+      # Build & run all tests
+      - name: Build & run all tests
+        run: sh .github/scripts/uitests_for_ios.sh
 
-      # Connect to GCloud
-      - id: 'auth'
-        uses: 'google-github-actions/auth@v1'
+      # Archive logs
+      - name: Archive test results
+        uses: actions/upload-artifact@v3
         with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
-
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v1'
-
-      - name: 'Use gcloud CLI'
-        run: 'gcloud info'
-
-      # Build and upload each scenarios to firebase
-      - name: Run UI tests
-        run: sh .github/scripts/uitests_for_ios.sh ${GITHUB_HEAD_REF}
+          name: logs
+          path: example/machine.log
