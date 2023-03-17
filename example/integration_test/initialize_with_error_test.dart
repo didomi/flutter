@@ -86,10 +86,10 @@ void main() {
         assert(isReady == false);
       } else if (Platform.isIOS) {
         /// iOS doesn't
-        assert(errorMessage == "");
+        assert(errorMessage == "The initialization parameter API Key () is invalid.");
 
-        assert(isError == false);
-        assert(isReady == true);
+        assert(isError == true);
+        assert(isReady == false);
       }
     });
   });
