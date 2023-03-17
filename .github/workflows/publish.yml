@@ -6,6 +6,11 @@ on:
     types:
       - created
   workflow_dispatch:
+    inputs:
+      increment:
+        description: "Use Dry Run"
+        required: true
+        default: "false"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -26,4 +31,4 @@ jobs:
           credential: ${{ secrets.PUB_DEV_CREDENTIALS }}
           flutter_package: true
           skip_test: true
-          dry_run: false
+          dry_run: github.event.inputs.force == 'true'
