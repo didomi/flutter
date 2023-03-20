@@ -1,5 +1,9 @@
 # Release Note
 
+## 1.8.0
+- Update latest versions of native Android (1.76.0) and iOS (1.86.0) sdks
+- Throw error log (iOS) / Exception (Android) when calling `setUser` before SDK initialization
+
 ## 1.7.0
 - Update latest versions of native Android (1.70.1) and iOS (1.79.1) sdks
 - Update Android Build Config (Kotlin version 1.7.20)

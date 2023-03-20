@@ -78,11 +78,6 @@ void main() {
     });
 
     testWidgets("Click clearUser without initialization", (WidgetTester tester) async {
-      // TODO('Revert test after Android SDK update')
-      if (Platform.isAndroid) {
-        return;
-      }
-
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -95,6 +90,7 @@ void main() {
       await tester.pumpAndSettle();
 
       if (Platform.isIOS) {
+        // iOS will trigger a log warning if the SDK is not initialized
         assertNativeMessage("setUser", okMessage);
       } else if (Platform.isAndroid) {
         // Android need the SDK to be initialized
