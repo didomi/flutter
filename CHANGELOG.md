@@ -2,7 +2,7 @@
 
 ## 1.8.0
 - Update latest versions of native Android (1.76.0) and iOS (1.86.0) sdks
-- Throw error log (iOS) / Exception when calling setUser before SDK initialization
+- Throw error log (iOS) / Exception (Android) when calling `setUser` before SDK initialization
 
 ## 1.7.0
 - Update latest versions of native Android (1.70.1) and iOS (1.79.1) sdks
