@@ -3,14 +3,17 @@ class EventListener {
   /*
    * SDK lifecycle events
    */
+
   /// SDK is ready
   dynamic Function() onReady = () {};
 
   /// SDK encountered an error
   dynamic Function(String message) onError = (message) {};
+
   /*
    * Notice events
    */
+
   /// Notice was displayed or should be displayed
   dynamic Function() onShowNotice = () {};
 
@@ -32,14 +35,19 @@ class EventListener {
   /// Vendors screen was opened from the notice
   dynamic Function() onNoticeClickViewVendors = () {};
 
+  /// SPI screen was opened from the notice
+  dynamic Function() onNoticeClickViewSPIPurposes = () {};
+
   /// Preferences screen was opened from the notice
   dynamic Function() onNoticeClickMoreInfo = () {};
 
   /// Privacy policy was opened from the notice (TV)
   dynamic Function() onNoticeClickPrivacyPolicy = () {};
+
   /*
    * Preferences screen events
    */
+
   /// Agree to all was clicked from the preferences screen
   dynamic Function() onPreferencesClickAgreeToAll = () {};
 
@@ -61,6 +69,9 @@ class EventListener {
   /// Vendors screen was opened from preferences screen
   dynamic Function() onPreferencesClickViewVendors = () {};
 
+  /// SPI screen was opened from preferences screen
+  dynamic Function() onPreferencesClickViewSPIPurposes = () {};
+
   /// Save button was clicked from preferences screen
   dynamic Function() onPreferencesClickSaveChoices = () {};
 
@@ -72,9 +83,11 @@ class EventListener {
 
   /// Purposes bulk action was switched to neutral
   dynamic Function() onPreferencesClickResetAllPurposes = () {};
+
   /*
    * Vendors screen events
    */
+
   /// User switched a vendor status to Agree
   dynamic Function(String vendorId) onPreferencesClickVendorAgree = (vendorId) {};
 
@@ -92,9 +105,30 @@ class EventListener {
 
   /// Vendors bulk action was switched to Disagree
   dynamic Function() onPreferencesClickDisagreeToAllVendors = () {};
+
+  /*
+   * SPI screen events
+   */
+
+  /// User switched a SPI purpose status to Agree
+  dynamic Function(String purposeId) onPreferencesClickSPIPurposeAgree = (purposeId) {};
+
+  /// User switched a SPI purpose status to Disagree
+  dynamic Function(String purposeId) onPreferencesClickSPIPurposeDisagree = (purposeId) {};
+
+  /// User switched a SPI category status to Agree
+  dynamic Function(String categoryId) onPreferencesClickSPICategoryAgree = (categoryId) {};
+
+  /// User switched a SPI category status to Disagree
+  dynamic Function(String categoryId) onPreferencesClickSPICategoryDisagree = (categoryId) {};
+
+  /// Save button was clicked from SPI screen
+  dynamic Function() onPreferencesClickSPIPurposeSaveChoices = () {};
+
   /*
    * Consent events
    */
+
   /// User consent was updated
   dynamic Function() onConsentChanged = () {};
 
@@ -103,9 +137,11 @@ class EventListener {
 
   /// User consent synchronization failed
   dynamic Function(String error) onSyncError = (error) {};
+
   /*
    * Language change events
    */
+
   /// The language update is complete
   dynamic Function(String languageCode) onLanguageUpdated = (languageCode) {};
 

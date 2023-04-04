@@ -92,7 +92,7 @@ jobs:
 
       # Connect to GCloud
       - id: 'auth'
-        uses: 'google-github-actions/auth@v0'
+        uses: 'google-github-actions/auth@v1'
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
@@ -130,12 +130,12 @@ jobs:
 
       # Connect to GCloud
       - id: 'auth'
-        uses: 'google-github-actions/auth@v0'
+        uses: 'google-github-actions/auth@v1'
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v0'
+        uses: 'google-github-actions/setup-gcloud@v1'
 
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
@@ -171,11 +171,11 @@ jobs:
           echo "Flutter version is: ${{ env.flutter_version }}"
 
       - name: Create tag
-        uses: actions/github-script@v3
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }} # Use custom token to trigger following workflows
           script: |
-            github.git.createRef({
+            github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: "refs/tags/${{ env.flutter_version }}",

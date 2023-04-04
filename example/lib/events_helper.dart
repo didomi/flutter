@@ -9,12 +9,15 @@ class EventsHelper {
 
   EventsHelper() {
 
+    // SDK lifecycle events
     didomiListener.onReady = () {
       onEvent("SDK Ready");
     };
     didomiListener.onError = (message) {
       onEvent("Error : $message");
     };
+
+    // Notice events
     didomiListener.onShowNotice = () {
       onEvent("Notice displayed");
     };
@@ -36,12 +39,17 @@ class EventsHelper {
     didomiListener.onNoticeClickViewVendors = () {
       onEvent("Click View vendors from Notice");
     };
+    didomiListener.onNoticeClickViewSPIPurposes = () {
+      onEvent("Click View SPI from Notice");
+    };
     didomiListener.onNoticeClickMoreInfo = () {
       onEvent("Click More info from Notice");
     };
     didomiListener.onNoticeClickPrivacyPolicy = () {
       onEvent("Click Privacy policy from Notice");
     };
+
+    // Preferences screen events
     didomiListener.onPreferencesClickAgreeToAll = () {
       onEvent("Click Agree to all from Preferences");
     };
@@ -60,15 +68,26 @@ class EventsHelper {
     didomiListener.onPreferencesClickCategoryDisagree = (categoryId) {
       onEvent("Click Disagree to category $categoryId from Preferences");
     };
-    didomiListener.onPreferencesClickPurposeAgree = (purposeId) {
-      onEvent("Click Agree to $purposeId from Preferences");
-    };
     didomiListener.onPreferencesClickViewVendors = () {
       onEvent("Click View vendors from Preferences");
+    };
+    didomiListener.onPreferencesClickViewSPIPurposes = () {
+      onEvent("Click View SPI from Preferences");
     };
     didomiListener.onPreferencesClickSaveChoices = () {
       onEvent("Click Save choices from Preferences");
     };
+    didomiListener.onPreferencesClickAgreeToAllPurposes = () {
+      onEvent("Click Agree to all purposes from Preferences");
+    };
+    didomiListener.onPreferencesClickDisagreeToAllPurposes = () {
+      onEvent("Click Disagree to all purposes from Preferences");
+    };
+    didomiListener.onPreferencesClickResetAllPurposes = () {
+      onEvent("Click Reset all purposes from Preferences");
+    };
+
+    // Vendors screen events
     didomiListener.onPreferencesClickVendorAgree = (vendorId) {
       onEvent("Click Agree to vendor $vendorId from Preferences");
     };
@@ -81,23 +100,33 @@ class EventsHelper {
     didomiListener.onPreferencesClickViewPurposes = () {
       onEvent("Click View purposes from Preferences");
     };
-    didomiListener.onConsentChanged = () {
-      onEvent("Consent has changed");
-    };
-    didomiListener.onPreferencesClickAgreeToAllPurposes = () {
-      onEvent("Click Agree to all purposes from Preferences");
-    };
-    didomiListener.onPreferencesClickDisagreeToAllPurposes = () {
-      onEvent("Click Disagree to all purposes from Preferences");
-    };
-    didomiListener.onPreferencesClickResetAllPurposes = () {
-      onEvent("Click Reset all purposes from Preferences");
-    };
     didomiListener.onPreferencesClickAgreeToAllVendors = () {
       onEvent("Click Agree to all vendors from Preferences");
     };
     didomiListener.onPreferencesClickDisagreeToAllVendors = () {
       onEvent("Click Disagree to all vendors from Preferences");
+    };
+
+    // SPI screen events
+    didomiListener.onPreferencesClickSPIPurposeAgree = (purposeId) {
+      onEvent("Click Agree to SPI purpose $purposeId from Preferences");
+    };
+    didomiListener.onPreferencesClickSPIPurposeDisagree = (purposeId) {
+      onEvent("Click Disagree to SPI purpose $purposeId from Preferences");
+    };
+    didomiListener.onPreferencesClickSPICategoryAgree = (categoryId) {
+      onEvent("Click Agree to SPI category $categoryId from Preferences");
+    };
+    didomiListener.onPreferencesClickSPICategoryDisagree = (categoryId) {
+      onEvent("Click Disagree to SPI category $categoryId from Preferences");
+    };
+    didomiListener.onPreferencesClickSPIPurposeSaveChoices = () {
+      onEvent("Click Save SPI choices from Preferences");
+    };
+
+    // Consent events
+    didomiListener.onConsentChanged = () {
+      onEvent("Consent has changed");
     };
     didomiListener.onSyncDone = (organizationUserId) {
       onEvent("Sync has been done for user $organizationUserId");
@@ -105,6 +134,8 @@ class EventsHelper {
     didomiListener.onSyncError = (error) {
       onEvent("Sync failed with error $error");
     };
+
+    // Language change events
     didomiListener.onLanguageUpdated = (languageCode) {
       onEvent("Language has changed ($languageCode)");
     };

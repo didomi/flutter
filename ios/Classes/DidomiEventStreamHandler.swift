@@ -16,13 +16,16 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
     
     override init() {
         super.init()
-        
+
+        // SDK lifecycle events
         eventListener.onReady = { [weak self] event in
             self?.sendEvent(eventType: "onReady")
         }
         eventListener.onError = { [weak self] event in
             self?.sendEvent(eventType: "onError", arguments: ["message": event.descriptionText])
         }
+
+        // Notice events
         eventListener.onShowNotice = { [weak self] event in
             self?.sendEvent(eventType: "onShowNotice")
         }
@@ -44,12 +47,17 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
         eventListener.onNoticeClickViewVendors = { [weak self] event in
             self?.sendEvent(eventType: "onNoticeClickViewVendors")
         }
+        eventListener.onNoticeClickViewSPIPurposes = { [weak self] event in
+            self?.sendEvent(eventType: "onNoticeClickViewSPIPurposes")
+        }
         eventListener.onNoticeClickMoreInfo = { [weak self] event in
             self?.sendEvent(eventType: "onNoticeClickMoreInfo")
         }
         eventListener.onNoticeClickPrivacyPolicy = { [weak self] event in
             self?.sendEvent(eventType: "onNoticeClickPrivacyPolicy")
         }
+
+        // Preferences screen events
         eventListener.onPreferencesClickAgreeToAll = { [weak self] event in
             self?.sendEvent(eventType: "onPreferencesClickAgreeToAll")
         }
@@ -71,9 +79,23 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
         eventListener.onPreferencesClickViewVendors = { [weak self] event in
             self?.sendEvent(eventType: "onPreferencesClickViewVendors")
         }
+        eventListener.onPreferencesClickViewSPIPurposes = { [weak self] event in
+            self?.sendEvent(eventType: "onPreferencesClickViewSPIPurposes")
+        }
         eventListener.onPreferencesClickSaveChoices = { [weak self] event in
             self?.sendEvent(eventType: "onPreferencesClickSaveChoices")
         }
+        eventListener.onPreferencesClickAgreeToAllPurposes = { [weak self] event in
+            self?.sendEvent(eventType: "onPreferencesClickAgreeToAllPurposes")
+        }
+        eventListener.onPreferencesClickDisagreeToAllPurposes = { [weak self] event in
+            self?.sendEvent(eventType: "onPreferencesClickDisagreeToAllPurposes")
+        }
+        eventListener.onPreferencesClickResetAllPurposes = { [weak self] event in
+            self?.sendEvent(eventType: "onPreferencesClickResetAllPurposes")
+        }
+
+        // Vendors screen events
         eventListener.onPreferencesClickVendorAgree = { [weak self] event, vendorId in
             self?.sendEvent(eventType: "onPreferencesClickVendorAgree", arguments: ["vendorId": vendorId])
         }
@@ -86,23 +108,33 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
         eventListener.onPreferencesClickViewPurposes = { [weak self] event in
             self?.sendEvent(eventType: "onPreferencesClickViewPurposes")
         }
-        eventListener.onConsentChanged = { [weak self] event in
-            self?.sendEvent(eventType: "onConsentChanged")
-        }
-        eventListener.onPreferencesClickAgreeToAllPurposes = { [weak self] event in
-            self?.sendEvent(eventType: "onPreferencesClickAgreeToAllPurposes")
-        }
-        eventListener.onPreferencesClickDisagreeToAllPurposes = { [weak self] event in
-            self?.sendEvent(eventType: "onPreferencesClickDisagreeToAllPurposes")
-        }
-        eventListener.onPreferencesClickResetAllPurposes = { [weak self] event in
-            self?.sendEvent(eventType: "onPreferencesClickResetAllPurposes")
-        }
         eventListener.onPreferencesClickAgreeToAllVendors = { [weak self] event in
             self?.sendEvent(eventType: "onPreferencesClickAgreeToAllVendors")
         }
         eventListener.onPreferencesClickDisagreeToAllVendors = { [weak self] event in
             self?.sendEvent(eventType: "onPreferencesClickDisagreeToAllVendors")
+        }
+
+        // SPI screen events
+        eventListener.onPreferencesClickSPIPurposeAgree = { [weak self] event, purposeId in
+            self?.sendEvent(eventType: "onPreferencesClickSPIPurposeAgree", arguments: ["purposeId": purposeId])
+        }
+        eventListener.onPreferencesClickSPIPurposeDisagree = { [weak self] event, purposeId in
+            self?.sendEvent(eventType: "onPreferencesClickSPIPurposeDisagree", arguments: ["purposeId": purposeId])
+        }
+        eventListener.onPreferencesClickSPICategoryAgree = { [weak self] event, categoryId in
+            self?.sendEvent(eventType: "onPreferencesClickSPICategoryAgree", arguments: ["categoryId": categoryId])
+        }
+        eventListener.onPreferencesClickSPICategoryDisagree = { [weak self] event, categoryId in
+            self?.sendEvent(eventType: "onPreferencesClickSPICategoryDisagree", arguments: ["categoryId": categoryId])
+        }
+        eventListener.onPreferencesClickSPIPurposeSaveChoices = { [weak self] event in
+            self?.sendEvent(eventType: "onPreferencesClickSPIPurposeSaveChoices")
+        }
+
+        // Consent events
+        eventListener.onConsentChanged = { [weak self] event in
+            self?.sendEvent(eventType: "onConsentChanged")
         }
         eventListener.onSyncDone = { [weak self] event, organizationUserId in
             self?.sendEvent(eventType: "onSyncDone", arguments: ["organizationUserId": organizationUserId])
@@ -110,6 +142,8 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
         eventListener.onSyncError = { [weak self] event, error in
             self?.sendEvent(eventType: "onSyncError", arguments: ["error": error])
         }
+
+        // Language change events
         eventListener.onLanguageUpdated = { [weak self] event, languageCode in
             self?.sendEvent(eventType: "onLanguageUpdated", arguments: ["languageCode": languageCode])
         }
