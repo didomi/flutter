@@ -8,7 +8,7 @@ import org.json.JSONObject
 /**
  * Handler for SDK events
  */
-class DidomiEventStreamHandler: EventChannel.StreamHandler, DidomiEventListener {
+class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener {
 
     private var eventSink: EventChannel.EventSink? = null
 
@@ -20,12 +20,44 @@ class DidomiEventStreamHandler: EventChannel.StreamHandler, DidomiEventListener 
         this.eventSink = null
     }
 
+    /*
+     * SDK lifecycle events
+     */
+
+    override fun ready(event: ReadyEvent) {
+        sendEvent("onReady")
+    }
+
+    fun onReadyCallback() {
+        sendEvent("onReadyCallback")
+    }
+
+    override fun error(event: ErrorEvent) {
+        sendEvent("onError", mapOf("message" to event.errorMessage))
+    }
+
+    fun onErrorCallback() {
+        sendEvent("onErrorCallback")
+    }
+
+    /*
+     * Notice events
+     */
+
     override fun showNotice(event: ShowNoticeEvent) {
         sendEvent("onShowNotice")
     }
 
+    override fun hideNotice(event: HideNoticeEvent) {
+        sendEvent("onHideNotice")
+    }
+
     override fun showPreferences(event: ShowPreferencesEvent) {
         sendEvent("onShowPreferences")
+    }
+
+    override fun hidePreferences(event: HidePreferencesEvent) {
+        sendEvent("onHidePreferences")
     }
 
     override fun noticeClickAgree(event: NoticeClickAgreeEvent) {
@@ -40,6 +72,10 @@ class DidomiEventStreamHandler: EventChannel.StreamHandler, DidomiEventListener 
         sendEvent("onNoticeClickViewVendors")
     }
 
+    override fun noticeClickViewSPIPurposes(event: NoticeClickViewSPIPurposesEvent) {
+        sendEvent("noticeClickViewSPIPurposes")
+    }
+
     override fun noticeClickMoreInfo(event: NoticeClickMoreInfoEvent) {
         sendEvent("onNoticeClickMoreInfo")
     }
@@ -47,6 +83,10 @@ class DidomiEventStreamHandler: EventChannel.StreamHandler, DidomiEventListener 
     override fun noticeClickPrivacyPolicy(event: NoticeClickPrivacyPolicyEvent) {
         sendEvent("onNoticeClickPrivacyPolicy")
     }
+
+    /*
+     * Preferences screen events
+     */
 
     override fun preferencesClickAgreeToAll(event: PreferencesClickAgreeToAllEvent) {
         sendEvent("onPreferencesClickAgreeToAll")
@@ -76,9 +116,29 @@ class DidomiEventStreamHandler: EventChannel.StreamHandler, DidomiEventListener 
         sendEvent("onPreferencesClickViewVendors")
     }
 
+    override fun preferencesClickViewSPIPurposes(event: PreferencesClickViewSPIPurposesEvent) {
+        sendEvent("preferencesClickViewSPIPurposes")
+    }
+
     override fun preferencesClickSaveChoices(event: PreferencesClickSaveChoicesEvent) {
         sendEvent("onPreferencesClickSaveChoices")
     }
+
+    override fun preferencesClickAgreeToAllPurposes(event: PreferencesClickAgreeToAllPurposesEvent) {
+        sendEvent("onPreferencesClickAgreeToAllPurposes")
+    }
+
+    override fun preferencesClickDisagreeToAllPurposes(event: PreferencesClickDisagreeToAllPurposesEvent) {
+        sendEvent("onPreferencesClickDisagreeToAllPurposes")
+    }
+
+    override fun preferencesClickResetAllPurposes(event: PreferencesClickResetAllPurposesEvent) {
+        sendEvent("onPreferencesClickResetAllPurposes")
+    }
+
+    /*
+     * Vendors screen events
+     */
 
     override fun preferencesClickVendorAgree(event: PreferencesClickVendorAgreeEvent) {
         sendEvent("onPreferencesClickVendorAgree", mapOf("vendorId" to event.vendorId))
@@ -96,44 +156,44 @@ class DidomiEventStreamHandler: EventChannel.StreamHandler, DidomiEventListener 
         sendEvent("onPreferencesClickViewPurposes")
     }
 
-    override fun hideNotice(event: HideNoticeEvent) {
-        sendEvent("onHideNotice")
-    }
-
-    override fun hidePreferences(event: HidePreferencesEvent) {
-        sendEvent("onHidePreferences")
-    }
-
-    override fun consentChanged(event: ConsentChangedEvent) {
-        sendEvent("onConsentChanged")
-    }
-
-    override fun ready(event: ReadyEvent) {
-        sendEvent("onReady")
-    }
-
-    override fun error(event: ErrorEvent) {
-        sendEvent("onError", mapOf("message" to event.errorMessage))
-    }
-
-    override fun preferencesClickAgreeToAllPurposes(event: PreferencesClickAgreeToAllPurposesEvent) {
-        sendEvent("onPreferencesClickAgreeToAllPurposes")
-    }
-
-    override fun preferencesClickDisagreeToAllPurposes(event: PreferencesClickDisagreeToAllPurposesEvent) {
-        sendEvent("onPreferencesClickDisagreeToAllPurposes")
-    }
-
-    override fun preferencesClickResetAllPurposes(event: PreferencesClickResetAllPurposesEvent) {
-        sendEvent("onPreferencesClickResetAllPurposes")
-    }
-
     override fun preferencesClickAgreeToAllVendors(event: PreferencesClickAgreeToAllVendorsEvent) {
         sendEvent("onPreferencesClickAgreeToAllVendors")
     }
 
     override fun preferencesClickDisagreeToAllVendors(event: PreferencesClickDisagreeToAllVendorsEvent) {
         sendEvent("onPreferencesClickDisagreeToAllVendors")
+    }
+
+    /*
+     * SPI screen events
+     */
+
+    override fun preferencesClickSPIPurposeAgree(event: PreferencesClickSPIPurposeAgreeEvent) {
+        sendEvent("preferencesClickSPIPurposeAgree", mapOf("purposeId" to event.purposeId))
+    }
+
+    override fun preferencesClickSPIPurposeDisagree(event: PreferencesClickSPIPurposeDisagreeEvent) {
+        sendEvent("onPreferencesClickSPIPurposeDisagree", mapOf("purposeId" to event.purposeId))
+    }
+
+    override fun preferencesClickSPICategoryAgree(event: PreferencesClickSPICategoryAgreeEvent) {
+        sendEvent("onPreferencesClickSPICategoryAgree", mapOf("categoryId" to event.categoryId))
+    }
+
+    override fun preferencesClickSPICategoryDisagree(event: PreferencesClickSPICategoryDisagreeEvent) {
+        sendEvent("onPreferencesClickSPICategoryDisagree", mapOf("categoryId" to event.categoryId))
+    }
+
+    override fun preferencesClickSPIPurposeSaveChoices(event: PreferencesClickSPIPurposeSaveChoicesEvent) {
+        sendEvent("preferencesClickSPIPurposeSaveChoices")
+    }
+
+    /*
+     * Consent events
+     */
+
+    override fun consentChanged(event: ConsentChangedEvent) {
+        sendEvent("onConsentChanged")
     }
 
     override fun syncDone(event: SyncDoneEvent) {
@@ -144,20 +204,16 @@ class DidomiEventStreamHandler: EventChannel.StreamHandler, DidomiEventListener 
         sendEvent("onSyncError", mapOf("error" to event.error))
     }
 
+    /*
+     * Language change events
+     */
+
     override fun languageUpdated(event: LanguageUpdatedEvent) {
         sendEvent("onLanguageUpdated", mapOf("languageCode" to event.languageCode))
     }
 
     override fun languageUpdateFailed(event: LanguageUpdateFailedEvent) {
         sendEvent("onLanguageUpdateFailed", mapOf("reason" to event.reason))
-    }
-
-    fun onReadyCallback() {
-        sendEvent("onReadyCallback")
-    }
-
-    fun onErrorCallback() {
-        sendEvent("onErrorCallback")
     }
 
     private fun sendEvent(eventType: String, arguments: Map<String, String?>? = null) {

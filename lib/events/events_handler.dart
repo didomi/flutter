@@ -109,6 +109,12 @@ class EventsHandler {
         }
         break;
 
+      case "onNoticeClickViewSPIPurposes":
+        for (var listener in listeners) {
+          listener.onNoticeClickViewSPIPurposes();
+        }
+        break;
+
       case "onNoticeClickMoreInfo":
         for (var listener in listeners) {
           listener.onNoticeClickMoreInfo();
@@ -167,6 +173,12 @@ class EventsHandler {
         }
         break;
 
+      case "onPreferencesClickViewSPIPurposes":
+        for (var listener in listeners) {
+          listener.onPreferencesClickViewSPIPurposes();
+        }
+        break;
+
       case "onPreferencesClickSaveChoices":
         for (var listener in listeners) {
           listener.onPreferencesClickSaveChoices();
@@ -199,12 +211,6 @@ class EventsHandler {
         }
         break;
 
-      case "onConsentChanged":
-        for (var listener in listeners) {
-          listener.onConsentChanged();
-        }
-        break;
-
       case "onPreferencesClickAgreeToAllPurposes":
         for (var listener in listeners) {
           listener.onPreferencesClickAgreeToAllPurposes();
@@ -232,6 +238,46 @@ class EventsHandler {
       case "onPreferencesClickDisagreeToAllVendors":
         for (var listener in listeners) {
           listener.onPreferencesClickDisagreeToAllVendors();
+        }
+        break;
+
+      case "onPreferencesClickSPIPurposeAgree":
+        final String purposeId = jsonEvent["purposeId"].toString();
+        for (var listener in listeners) {
+          listener.onPreferencesClickSPIPurposeAgree(purposeId);
+        }
+        break;
+
+      case "onPreferencesClickSPIPurposeDisagree":
+        final String purposeId = jsonEvent["purposeId"].toString();
+        for (var listener in listeners) {
+          listener.onPreferencesClickSPIPurposeDisagree(purposeId);
+        }
+        break;
+
+      case "onPreferencesClickSPICategoryAgree":
+        final String categoryId = jsonEvent["categoryId"].toString();
+        for (var listener in listeners) {
+          listener.onPreferencesClickSPICategoryAgree(categoryId);
+        }
+        break;
+
+      case "onPreferencesClickSPICategoryDisagree":
+        final String categoryId = jsonEvent["categoryId"].toString();
+        for (var listener in listeners) {
+          listener.onPreferencesClickSPICategoryDisagree(categoryId);
+        }
+        break;
+
+      case "onPreferencesClickSPIPurposeSaveChoices":
+        for (var listener in listeners) {
+          listener.onPreferencesClickSPIPurposeSaveChoices();
+        }
+        break;
+
+      case "onConsentChanged":
+        for (var listener in listeners) {
+          listener.onConsentChanged();
         }
         break;
 
