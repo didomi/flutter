@@ -62,5 +62,7 @@ jobs:
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 31
+          api-level: 29
+          arch: x86_64
+          working-directory: example
           script: flutter test --machine -d 'test' -r expanded integration_test
