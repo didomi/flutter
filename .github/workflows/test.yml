@@ -36,7 +36,7 @@ jobs:
       matrix:
         device:
           # The available simulators are listed by the "xcrun xctrace list devices" command
-          - "iPhone 13 Simulator (15.5)" # the name of the simulator could be different depending on the macos version you are using
+          - "iPhone 14 Simulator (16.2)" # the name of the simulator could be different depending on the macos version you are using
       # if one of the jobs in the matrix expansion fails, the rest of the jobs will be cancelled
       fail-fast: true
 #    needs: analyse
