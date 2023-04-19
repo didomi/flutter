@@ -32,13 +32,6 @@ jobs:
 
   # job responsible for running Flutter tests on iOS devices
   ios:
-    strategy:
-      matrix:
-        device:
-          # The available simulators are listed by the "xcrun xctrace list devices" command
-          - "iPhone 14 Simulator (16.2)" # the name of the simulator could be different depending on the macos version you are using
-      # if one of the jobs in the matrix expansion fails, the rest of the jobs will be cancelled
-      fail-fast: true
 #    needs: analyse
     runs-on: macos-latest
     steps:
@@ -50,7 +43,7 @@ jobs:
         # the assignment of the UDID variable consists of retrieving the ID of the simulator
         # by extracting it from the command "xcrun xctrace list devices"
         run: |
-          UDID=$(xcrun xctrace list devices | grep "^${{ matrix.device }}" | awk '{gsub(/[()]/,""); print $NF}')
+          UDID=$(xcrun xctrace list devices | grep "^iPhone SE (3rd generation) Simulator" | awk '{gsub(/[()]/,""); print $NF}')
           echo $UDID
           xcrun simctl boot "${UDID:?No Simulator with this name found}"
 
@@ -65,17 +58,12 @@ jobs:
 
       - name: Run integration tests
         run: flutter test integration_test --verbose
+        working-directory: ./example
 
   # job responsible for running Flutter tests on Android devices
   android:
 #    needs: analyse
     runs-on: macos-latest
-    strategy:
-      matrix:
-        api-level:
-          - 29
-      # if one of the jobs in the matrix expansion fails, the rest of the jobs will be cancelled
-      fail-fast: true
     steps:
       - uses: actions/checkout@v3
       - name: Setup Flutter SDK
@@ -90,7 +78,8 @@ jobs:
         # more info on https://github.com/ReactiveCircus/android-emulator-runner
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: ${{ matrix.api-level }}
+          api-level: 29
           arch: x86_64
           profile: Nexus 6
           script: flutter test integration_test --verbose
+          working-directory: ./example
