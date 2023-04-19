@@ -65,13 +65,13 @@ jobs:
         with:
           api-level: 29
           arch: x86_64
-          working-directory: example/android
+          working-directory: ./example/android
 #          script: flutter test --machine -d 'emulator-5554' -r expanded integration_test > machine.log
           script: ./gradlew bulk
 
-      # Archive logs
-      - name: Archive test results
-        uses: actions/upload-artifact@v3
-        with:
-          name: logs
-          path: example/machine.log
+#      # Archive logs
+#      - name: Archive test results
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: logs
+#          path: example/machine.log
