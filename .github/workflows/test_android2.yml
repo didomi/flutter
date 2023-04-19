@@ -59,10 +59,18 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # Build & run all tests
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
           arch: x86_64
           working-directory: example
-          script: flutter test --machine -d 'test' -r expanded integration_test
+          script: flutter test --machine -d 'emulator-5554' -r expanded integration_test > machine.log
+
+      # Archive logs
+      - name: Archive test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: logs
+          path: example/machine.log
