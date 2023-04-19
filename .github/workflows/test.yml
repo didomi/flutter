@@ -57,7 +57,7 @@ jobs:
         run: flutter pub get
 
       - name: Run integration tests
-        run: bash .github/scripts/tests.sh "${UDID}"
+        run: bash .github/scripts/test.sh "${UDID}"
 
   # job responsible for running Flutter tests on Android devices
   android:
@@ -85,4 +85,4 @@ jobs:
           api-level: 29
           arch: x86_64
           profile: Nexus 6
-          script: bash .github/scripts/tests.sh "emulator-5554"
+          script: bash .github/scripts/test.sh "emulator-5554"
