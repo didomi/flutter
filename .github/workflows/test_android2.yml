@@ -65,8 +65,9 @@ jobs:
         with:
           api-level: 29
           arch: x86_64
-          working-directory: example
-          script: flutter test --machine -d 'emulator-5554' -r expanded integration_test > machine.log
+          working-directory: example/android
+#          script: flutter test --machine -d 'emulator-5554' -r expanded integration_test > machine.log
+          script: ./gradlew bulk
 
       # Archive logs
       - name: Archive test results
