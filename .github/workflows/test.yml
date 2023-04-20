@@ -56,6 +56,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+          architecture: arm64 # optional value for v2 (use self-hosted mac mini)
 
       - name: Install Flutter dependencies
         run: flutter pub get
@@ -80,6 +81,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+          architecture: arm64 # optional value for v2 (use self-hosted mac mini)
 
       - name: Install Flutter dependencies
         run: flutter pub get
@@ -88,8 +90,7 @@ jobs:
         # more info on https://github.com/ReactiveCircus/android-emulator-runner
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 29
-          arch: x86_64
-          profile: Nexus 6
+          api-level: 33
+          arch: arm64-v8a
           script: flutter test integration_test
           working-directory: ./example
