@@ -46,7 +46,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          architecture: arm64 # optional value for v2 (use self-hosted mac mini)
+#          architecture: arm64 # optional value for v2 (use self-hosted mac mini)
 
       - name: Install dependencies
         run: flutter pub get
@@ -69,6 +69,7 @@ jobs:
 
   # job responsible for running Flutter tests on Android devices
   android:
+    name: Testing Android
 #    needs: analyse
     runs-on: macos-latest
 #    runs-on: self-hosted
@@ -83,7 +84,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-          architecture: arm64 # optional value for v2 (use self-hosted mac mini)
+#          architecture: arm64 # optional value for v2 (use self-hosted mac mini)
 
       - name: Install Flutter dependencies
         run: flutter pub get
