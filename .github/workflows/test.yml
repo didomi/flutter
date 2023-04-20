@@ -42,8 +42,11 @@ jobs:
         # the command "xcrun simctl boot" expects a device identifier
         # the assignment of the UDID variable consists of retrieving the ID of the simulator
         # by extracting it from the command "xcrun xctrace list devices"
+        env:
+#          DEVICE: "^iPhone SE (3rd generation) Simulator"
+          DEVICE: "^iPhone 14 Simulator (16.2) ("
         run: |
-          UDID=$(xcrun xctrace list devices | grep "^iPhone SE (3rd generation) Simulator" | awk '{gsub(/[()]/,""); print $NF}')
+          UDID=$(xcrun xctrace list devices | grep "${DEVICE}" | awk '{gsub(/[()]/,""); print $NF}')
           echo $UDID
           xcrun simctl boot "${UDID:?No Simulator with this name found}"
 
@@ -83,7 +86,7 @@ jobs:
         # more info on https://github.com/ReactiveCircus/android-emulator-runner
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 29
+          api-level: 30
           arch: x86_64
           profile: Nexus 6
           script: flutter test integration_test
