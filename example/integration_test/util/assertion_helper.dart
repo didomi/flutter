@@ -1,4 +1,3 @@
-// Assert the text of the native message associated to a button.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 

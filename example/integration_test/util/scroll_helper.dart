@@ -1,4 +1,3 @@
-// Tap on a button that will scroll the list to the last element.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 
