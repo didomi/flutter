@@ -1,53 +1,47 @@
 #!/bin/bash
 
 #----------------------------------------------------------
-# Loop UI test files in order to build and upload
-# Scenarios to Firebase Test App
+# Launch UI tests for Android
 #----------------------------------------------------------
 
-# Project settings
-if [[ -z $1 ]]; then
-  # Doesn't work anymore on github action?
-  branchName=$(git rev-parse --abbrev-ref HEAD)
-else
-  branchName="$1"
-fi
+# Search for device name
+DEVICE=$(emulator -list-avds | head -n 1)
+
+echo "$DEVICE"
+
+# (re)Launch emulator
+adb -s emulator-5554 emu kill
+emulator "@$DEVICE" -no-window -wipe-data &
+#emulator "@$DEVICE" &
+
+# Wait for emulator to start
+sleep 30
 
 # Move to sample folder
 cd ./example || exit 1
 
-# Compute UI tests scenarios
-for file in $(find integration_test -maxdepth 1 -type f); do
-  # Extract file name from path
-  fileName=$(echo "$file" | cut -d"/" -f 2)
+# Cleanup workspace
+flutter clean || exit 1
 
-  echo "--------------------------------------------------------"
-  echo "| Scenario (file): $fileName ($file)"
-  echo "| Git branch: $branchName"
-  echo "--------------------------------------------------------"
+# Delete logs (for local usage)
+rm machine.log
 
-  echo "--------------------------------------------------------"
-  echo "| Building $fileName Test App for Android"
-  echo "--------------------------------------------------------"
+# Run tests and print logs
+flutter test --machine -d emulator-5554 -r expanded integration_test >machine.log || exit 1
 
-  # Build apk file for Android
-  pushd android
-  # flutter build generates files in android/ for building the app
-  flutter build apk
-  ./gradlew app:assembleAndroidTest || exit 1
-  ./gradlew app:assembleDebug -Ptarget="$file" || exit 1
-  popd
+# Shutdown emulator
+adb -s emulator-5554 emu kill
 
-  echo "--------------------------------------------------------"
-  echo "| Publishing $fileName to Firebase for Android"
-  echo "--------------------------------------------------------"
+# Extract log information
+RESULT="$(tail -n1 'machine.log')"
+SUCCESS="$(echo "$RESULT" | jq -r '.success')"
+TIME="$(echo "$RESULT" | jq -r '.time')"
+TIME=$((TIME / 1000))
 
-  # Upload apk to firebase
-  gcloud firebase test android run --type instrumentation \
-    --app build/app/outputs/apk/debug/app-debug.apk \
-    --test build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
-    --use-orchestrator \
-    --timeout 30m \
-    --num-flaky-test-attempts 3 \
-    --results-history-name "${branchName}_${fileName%%_test.dart}" || exit 1
-done
+if [[ ${SUCCESS} != "true" ]]; then
+  echo "Tests FAILED in $((TIME / 60)) minutes $((TIME % 60)) seconds"
+  exit 1
+else
+  echo "Tests SUCCEEDED in $((TIME / 60)) minutes $((TIME % 60)) seconds"
+  exit 0
+fi
