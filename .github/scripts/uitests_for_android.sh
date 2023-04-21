@@ -11,8 +11,7 @@ echo "$DEVICE"
 
 # (re)Launch emulator
 adb -s emulator-5554 emu kill
-emulator "@$DEVICE" -no-window -wipe-data &
-#emulator "@$DEVICE" &
+~/Library/Android/sdk/emulator/emulator "@$DEVICE" -no-window -wipe-data &
 
 # Wait for emulator to start
 sleep 30
