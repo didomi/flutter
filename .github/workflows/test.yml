@@ -1,10 +1,7 @@
-name: Test iOS
+name: Test Android & iOS
 
-# Triggered on pull request or manually
-on:
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
+# Trigger the workflow manually or after push a commit
+on: [ pull_request, workflow_dispatch ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -19,8 +16,8 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: "temurin"
+          java-version: "17"
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
@@ -37,8 +34,45 @@ jobs:
       - name: Analyze project source
         run: flutter analyze --no-fatal-infos
 
-  test_ios:
+  # job responsible for running Flutter tests on iOS devices
+  ios:
     name: Testing iOS
+    needs: analyse
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          architecture: arm64 # optional value for v2 (use self-hosted mac mini)
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run pod update
+        working-directory: ./example/ios
+        run: pod update
+
+      - name: List all simulators
+        run: xcrun xctrace list devices
+
+      - name: Build & run all tests
+        run: sh .github/scripts/uitests_for_ios.sh
+
+      - name: Archive test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: logs_ios
+          path: example/machine.log
+
+  # job responsible for running Flutter tests on Android devices
+  android:
+    name: Testing Android
     needs: analyse
     runs-on: self-hosted
 
@@ -56,18 +90,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # pod update
-      - name: Run pod update
-        working-directory: ./example/ios
-        run: pod update
-
-      # Build & run all tests
       - name: Build & run all tests
-        run: sh .github/scripts/uitests_for_ios.sh
+        run: sh .github/scripts/uitests_for_android.sh
 
-      # Archive logs
       - name: Archive test results
         uses: actions/upload-artifact@v3
         with:
-          name: logs
+          name: logs_android
           path: example/machine.log

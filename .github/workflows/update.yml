@@ -26,8 +26,8 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: "temurin"
+          java-version: "17"
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
@@ -60,8 +60,8 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: "temurin"
+          java-version: "17"
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
@@ -75,30 +75,30 @@ jobs:
   test_android:
     name: Testing Android
     needs: analyse
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: "temurin"
+          java-version: "17"
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          architecture: arm64 # optional value for v2 (use self-hosted mac mini)
 
       - name: Install dependencies
         run: flutter pub get
 
-      # Connect to GCloud
-      - id: 'auth'
-        uses: 'google-github-actions/auth@v1'
-        with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+      - name: Build & run all tests
+        run: sh .github/scripts/uitests_for_android.sh
 
-      # Build and upload each scenarios to firebase
-      - name: Run UI tests
-        run: bash .github/scripts/uitests_for_android.sh ${GITHUB_HEAD_REF}
+      - name: Archive test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: logs
+          path: example/machine.log
 
   test_ios:
     name: Testing iOS
@@ -109,40 +109,31 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
-      - uses: subosito/flutter-action@v1 # v1 required for mac mini
+          distribution: "temurin"
+          java-version: "17"
+      - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          architecture: arm64
+          architecture: arm64 # optional value for v2 (use self-hosted mac mini)
 
       - name: Install dependencies
         run: flutter pub get
 
-      # pod update
       - name: Run pod update
         working-directory: ./example/ios
         run: pod update
 
-      # unlock keychain
-      - name: Unlock key chain
-        run: security unlock-keychain -p ${{ secrets.KEYCHAIN_PWD }} login.keychain
+      - name: List all simulators
+        run: xcrun xctrace list devices
 
-      # Connect to GCloud
-      - id: 'auth'
-        uses: 'google-github-actions/auth@v1'
+      - name: Build & run all tests
+        run: sh .github/scripts/uitests_for_ios.sh
+
+      - name: Archive test results
+        uses: actions/upload-artifact@v3
         with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
-
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v1'
-
-      - name: 'Use gcloud CLI'
-        run: 'gcloud info'
-
-      # Build and upload each scenarios to firebase
-      - name: Run UI tests
-        run: sh .github/scripts/uitests_for_ios.sh ${GITHUB_HEAD_REF}
+          name: logs
+          path: example/machine.log
 
   tag:
     name: Tag
@@ -153,8 +144,8 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: "temurin"
+          java-version: "17"
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
