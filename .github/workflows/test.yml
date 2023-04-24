@@ -3,6 +3,10 @@ name: Test Android & iOS
 # Trigger the workflow manually or after push a commit
 on: [ pull_request, workflow_dispatch ]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   analyse:
     name: Analyse Flutter
