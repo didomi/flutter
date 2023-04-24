@@ -1,5 +1,8 @@
 # Release Note
 
+## 1.10.0
+- Update latest versions of native Android (1.78.0) and iOS (1.88.0) sdks
+
 ## 1.9.0
 - Update latest versions of native Android (1.77.0) and iOS (1.87.0) sdks
 - Add `CPRA` regulation support
