@@ -47,9 +47,9 @@ jobs:
             github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              name: ${{ env.flutter_version }},
-              tag_name: ${{ env.flutter_version }},
+              name: "${{ env.flutter_version }}",
+              tag_name: "${{ env.flutter_version }}",
               draft: true,
               prerelease: false,
-              body: '- Update latest versions of native Android (${{ env.android_sdk_version }}) and iOS (${{ env.ios_sdk_version }}) sdks\n\nMore info: https://developers.didomi.io/cmp/mobile-sdk'
+              body: "- Update latest versions of native Android (${{ env.android_sdk_version }}) and iOS (${{ env.ios_sdk_version }}) sdks\n\nMore info: https://developers.didomi.io/cmp/mobile-sdk"
             });
