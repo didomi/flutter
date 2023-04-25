@@ -31,6 +31,14 @@ jobs:
         run: |
           echo "iOS SDK version is: ${{ env.ios_sdk_version }}"
 
+      - name: Set Flutter version as ENV
+        run: |
+          echo "flutter_version=$(sh .github/scripts/extract_flutter_version.sh)" >> $GITHUB_ENV
+
+      - name: Print Flutter Version
+        run: |
+          echo "Flutter version is: ${{ env.flutter_version }}"
+
       - name: Create Release
         uses: actions/github-script@v6
         with:
@@ -39,8 +47,8 @@ jobs:
             github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              name: ${{ github.ref }},
-              tag_name: ${{ github.ref }},
+              name: ${{ env.flutter_version }},
+              tag_name: ${{ env.flutter_version }},
               draft: true,
               prerelease: false,
               body: '- Update latest versions of native Android (${{ env.android_sdk_version }}) and iOS (${{ env.ios_sdk_version }}) sdks\n\nMore info: https://developers.didomi.io/cmp/mobile-sdk'
