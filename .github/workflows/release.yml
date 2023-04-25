@@ -32,16 +32,19 @@ jobs:
           echo "iOS SDK version is: ${{ env.ios_sdk_version }}"
 
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }} # Use custom token to trigger following workflows
+        uses: actions/github-script@v6
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          body: |
-            - Update latest versions of native Android (${{ env.android_sdk_version }}) and iOS (${{ env.ios_sdk_version }}) sdks
+          github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }} # Use custom token to trigger following workflows
+          script: |
+            github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: ${{ github.ref }},
+              tag_name: ${{ github.ref }},
+              draft: true,
+              prerelease: false,
+              body: |
+                - Update latest versions of native Android (${{ env.android_sdk_version }}) and iOS (${{ env.ios_sdk_version }}) sdks
             
-            More info: https://developers.didomi.io/cmp/mobile-sdk
-          draft: false
-          prerelease: false
+                More info: https://developers.didomi.io/cmp/mobile-sdk
+            });
