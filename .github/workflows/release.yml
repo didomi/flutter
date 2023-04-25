@@ -43,8 +43,5 @@ jobs:
               tag_name: ${{ github.ref }},
               draft: true,
               prerelease: false,
-              body: |
-                - Update latest versions of native Android (${{ env.android_sdk_version }}) and iOS (${{ env.ios_sdk_version }}) sdks
-            
-                More info: https://developers.didomi.io/cmp/mobile-sdk
+              body: '- Update latest versions of native Android (${{ env.android_sdk_version }}) and iOS (${{ env.ios_sdk_version }}) sdks\n\nMore info: https://developers.didomi.io/cmp/mobile-sdk'
             });
