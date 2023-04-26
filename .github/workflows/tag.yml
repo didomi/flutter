@@ -1,0 +1,37 @@
+name: Create TAG
+
+# Triggered manually or from Update
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  on-success:
+    name: Create TAG
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set Flutter version as ENV
+        run: |
+          echo "flutter_version=$(sh .github/scripts/extract_flutter_version.sh)" >> $GITHUB_ENV
+
+      - name: Print Flutter Version
+        run: |
+          echo "Flutter version is: ${{ env.flutter_version }}"
+
+      - name: Create tag
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }} # Use custom token to trigger following workflows
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/${{ env.flutter_version }}",
+              sha: context.sha
+            })

@@ -24,10 +24,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+
       - uses: actions/setup-java@v3
         with:
           distribution: "temurin"
           java-version: "17"
+
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
@@ -45,130 +51,15 @@ jobs:
       - name: Commit & Push changes
         uses: actions-js/push@master
         with:
-          author_email: "cmp-mobile@didomi.io"
-          author_name: "Auto-Bot"
+          author_email: ${{ secrets.AUTHOR_EMAIL }}
+          author_name: ${{ secrets.AUTHOR_NAME }}
           branch: ${{ github.ref }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           message: "Update Dependencies and increment ${{ github.event.inputs.increment }} version"
 
-  analyse:
-    name: Analyse Flutter
-    needs: update
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
-        with:
-          distribution: "temurin"
-          java-version: "17"
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Analyze project source
-        run: flutter analyze --no-fatal-infos
-
-  test_android:
-    name: Testing Android
-    needs: analyse
-    runs-on: self-hosted
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
-        with:
-          distribution: "temurin"
-          java-version: "17"
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-          architecture: arm64 # optional value for v2 (use self-hosted mac mini)
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Build & run all tests
-        run: sh .github/scripts/uitests_for_android.sh
-
-      - name: Archive test results
-        uses: actions/upload-artifact@v3
-        with:
-          name: logs
-          path: example/machine.log
-
-  test_ios:
-    name: Testing iOS
-    needs: analyse
-    runs-on: self-hosted
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
-        with:
-          distribution: "temurin"
-          java-version: "17"
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-          architecture: arm64 # optional value for v2 (use self-hosted mac mini)
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Run pod update
-        working-directory: ./example/ios
-        run: pod update
-
-      - name: List all simulators
-        run: xcrun xctrace list devices
-
-      - name: Build & run all tests
-        run: sh .github/scripts/uitests_for_ios.sh
-
-      - name: Archive test results
-        uses: actions/upload-artifact@v3
-        with:
-          name: logs
-          path: example/machine.log
-
-  tag:
-    name: Tag
-    needs: [ test_ios, test_android ]
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
-        with:
-          distribution: "temurin"
-          java-version: "17"
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Set Flutter version as ENV
+      - name: Trigger Tag
         run: |
-          echo "flutter_version=$(sh .github/scripts/extract_flutter_version.sh)" >> $GITHUB_ENV
-
-      - name: Print Flutter Version
-        run: |
-          echo "Flutter version is: ${{ env.flutter_version }}"
-
-      - name: Create tag
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }} # Use custom token to trigger following workflows
-          script: |
-            github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: "refs/tags/${{ env.flutter_version }}",
-              sha: context.sha
-            })
+          curl --request POST \
+              --url 'https://api.github.com/repos/didomi/flutter/actions/workflows/tag.yml/dispatches' \
+              --header 'authorization: Bearer ${{ secrets.CUSTOM_GITHUB_TOKEN }}' \
+              --data '{ "ref": "${{ github.ref }}" }'
