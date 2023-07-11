@@ -1,4 +1,4 @@
-package io.didomi.sample;
+package example.android.app.src.androidTest.java.io.didomi.flutter.sample;
 
 import androidx.test.rule.ActivityTestRule;
 
