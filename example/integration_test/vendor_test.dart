@@ -4,7 +4,6 @@ import 'package:didomi_sdk_example/testapps/sample_for_vendor_tests.dart' as app
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'dart:io';
 
 import 'util/assertion_helper.dart';
 import 'util/constants.dart';
@@ -22,8 +21,7 @@ void main() {
   const disabledVendorMessage = "Native message: Disabled Vendors: $suffixVendorMessage";
   const enabledVendorMessage = "Native message: Enabled Vendors: $suffixVendorMessage";
   const requiredVendorMessage = "Native message: Required Vendors: $suffixVendorMessage";
-  const vendorNamesAndroid = "Exponential Interactive, Inc d/b/a VDX.tv, Index Exchange Inc. , Fifty Technology Limited,";
-  const vendorNamesIOS = "Exponential Interactive, Inc d/b/a VDX.tv, Index Exchange Inc., Fifty Technology Limited,";
+  const vendorNames = "Exponential Interactive, Inc d/b/a VDX.tv, Index Exchange Inc., Fifty Technology Limited,";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final agreeToAllBtnFinder = find.byKey(Key("setUserAgreeToAll"));
@@ -49,13 +47,6 @@ void main() {
   };
 
   DidomiSdk.addEventListener(listener);
-
-  final vendorNames;
-  if (Platform.isIOS) {
-    vendorNames = vendorNamesIOS;
-  } else {
-    vendorNames = vendorNamesAndroid;
-  }
 
   group("Vendor", () {
     /// Without initialization
