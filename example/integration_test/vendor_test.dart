@@ -21,7 +21,7 @@ void main() {
   const disabledVendorMessage = "Native message: Disabled Vendors: $suffixVendorMessage";
   const enabledVendorMessage = "Native message: Enabled Vendors: $suffixVendorMessage";
   const requiredVendorMessage = "Native message: Required Vendors: $suffixVendorMessage";
-  const vendorNames = "Exponential Interactive, Inc d/b/a VDX.tv, Index Exchange Inc. , Fifty Technology Limited,";
+  const vendorNames = "Exponential Interactive, Inc d/b/a VDX.tv, Index Exchange Inc., Fifty Technology Limited,";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final agreeToAllBtnFinder = find.byKey(Key("setUserAgreeToAll"));
