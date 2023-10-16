@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:didomi_sdk/entities/entities_helper.dart';
 import 'package:didomi_sdk/entities/purpose.dart';
@@ -36,7 +37,7 @@ class DidomiSdk {
         "remoteConfigurationURL": remoteConfigurationURL,
         "providerId": providerId,
         "disableDidomiRemoteConfig": disableDidomiRemoteConfig,
-        "languageCode": languageCode,
+        "languageCode": languageCode ?? Platform.localeName,
         "noticeId": noticeId,
         "androidTvNoticeId": androidTvNoticeId,
         "androidTvEnabled": androidTvEnabled
