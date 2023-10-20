@@ -62,6 +62,7 @@ void main() {
       assertMatchesDatePattern(result.created);
       assertMatchesDatePattern(result.updated);
       assert(result.regulation == "gdpr");
+      assert(result.didomiDCS == null); // DCS feature flag not enabled
 
       assertListEmpty(result.purposes?.consent?.enabled);
       assertListEmpty(result.purposes?.consent?.disabled);
@@ -93,6 +94,7 @@ void main() {
       assertMatchesDatePattern(result.created);
       assertMatchesDatePattern(result.updated);
       assert(result.regulation == "gdpr");
+      assert(result.didomiDCS == null); // DCS feature flag not enabled
 
       assertListContains(result.purposes?.consent?.enabled, "cookies");
       assertListEmpty(result.purposes?.consent?.disabled);
@@ -133,6 +135,7 @@ void main() {
       assertMatchesDatePattern(result.created);
       assertMatchesDatePattern(result.updated);
       assert(result.regulation == "gdpr");
+      assert(result.didomiDCS == null); // DCS feature flag not enabled
 
       assertListEmpty(result.purposes?.consent?.enabled);
       assertListContains(result.purposes?.consent?.disabled, "cookies");
