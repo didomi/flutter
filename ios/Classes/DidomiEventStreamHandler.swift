@@ -182,9 +182,9 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
         }
         if let jsonEvent = try? JSONSerialization.data(withJSONObject: eventDictionary) {
             let jsonString = String(data: jsonEvent, encoding: String.Encoding.utf8)
-			DispatchQueue.main.async {
-				self.eventSink?(jsonString)
-			}
+            DispatchQueue.main.async {
+                self.eventSink?(jsonString)
+            }
         }
     }
 }
