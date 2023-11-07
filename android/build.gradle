@@ -1,7 +1,7 @@
 //noinspection GrPackage
 
 group = "io.didomi.fluttersdk"
-version = "1.14.0"
+version = "1.15.0"
 
 buildscript {
     ext.kotlin_version = "1.7.20"
