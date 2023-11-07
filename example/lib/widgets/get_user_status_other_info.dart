@@ -23,9 +23,11 @@ class _GetUserStatusOtherInfo extends BaseSampleWidgetState<GetUserStatusOtherIn
     final UserStatus result = await DidomiSdk.userStatus;
     return "Other info in status: \n"
         "- User id ${result.userId}\n"
-        "- Created ${result.created}, updated ${result.updated}\n"
+        "- Created ${result.created}\n"
+        "- Updated ${result.updated}\n"
         "- Additional consent: ${result.additionalConsent}\n"
         "- Consent String: ${result.consentString}\n"
+        "- DCS: ${result.didomiDCS}\n"
         "- Regulation: ${result.regulation}";
   }
 }

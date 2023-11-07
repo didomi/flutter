@@ -27,6 +27,9 @@ class UserStatus {
   /// Additional consent
   String? additionalConsent;
 
+  /// Didomi DCS
+  String? didomiDCS;
+
   /// Regulation applied
   String? regulation;
 
@@ -38,6 +41,7 @@ class UserStatus {
         updated = json["updated"],
         consentString = json["consent_string"],
         additionalConsent = json["addtl_consent"],
+        didomiDCS = json["didomi_dcs"],
         regulation = json["regulation"];
 }
 
