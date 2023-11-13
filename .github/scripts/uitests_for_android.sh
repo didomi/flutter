@@ -4,6 +4,13 @@
 # Launch UI tests for Android
 #----------------------------------------------------------
 
+# Set up environment variables for Mac Mini M2
+export ANDROID_SDK_ROOT=/Users/administrator/Library/Android/sdk
+export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
+export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+export PATH=$PATH:$ANDROID_SDK_ROOT/tools
+export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
+
 # Search for device name
 DEVICE=$(emulator -list-avds | head -n 1)
 
@@ -22,8 +29,10 @@ cd ./example || exit 1
 # Cleanup workspace
 flutter clean || exit 1
 
-# Delete logs (for local usage)
-rm machine.log
+# Delete logs if exists (for local usage)
+if [ -f machine.log ]; then
+  rm machine.log
+fi
 
 # Run tests and print logs
 flutter test --machine -d emulator-5554 -r expanded integration_test >machine.log || exit 1
