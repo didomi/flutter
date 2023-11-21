@@ -1,5 +1,8 @@
 # Release Note
 
+## 1.16.0
+- Update latest versions of native Android (1.86.0) and iOS (1.95.0) sdks
+
 ## 1.15.0
 - Update latest versions of native Android (1.85.0) and iOS (1.94.0) sdks
 - Apply fix to avoid error `channel sent a message from native to Flutter on a non-platform thread`
