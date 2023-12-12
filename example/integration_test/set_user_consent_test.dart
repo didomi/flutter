@@ -143,6 +143,9 @@ void main() {
 
       // Second click returns false
       await tester.tap(agreeToAllBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserAgreeToAll", consentNotUpdatedMessage);
@@ -166,6 +169,9 @@ void main() {
 
       // First click returns false (already clicked before)
       await tester.tap(agreeToAllBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserAgreeToAll", consentNotUpdatedMessage);
@@ -179,6 +185,9 @@ void main() {
 
       // Click after reset returns true
       await tester.tap(agreeToAllBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserAgreeToAll", consentUpdatedMessage);
@@ -202,6 +211,9 @@ void main() {
 
       // First click returns true
       await tester.tap(disagreeToAllBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserDisagreeToAll", consentUpdatedMessage);
@@ -211,6 +223,9 @@ void main() {
 
       // Second click returns false
       await tester.tap(disagreeToAllBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserDisagreeToAll", consentNotUpdatedMessage);
@@ -234,6 +249,9 @@ void main() {
 
       // First click returns false (already clicked before)
       await tester.tap(disagreeToAllBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserDisagreeToAll", consentNotUpdatedMessage);
@@ -243,10 +261,16 @@ void main() {
 
       // Reset user consent
       await tester.tap(resetBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       // Click after reset returns true
       await tester.tap(disagreeToAllBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserDisagreeToAll", consentUpdatedMessage);
@@ -270,6 +294,9 @@ void main() {
 
       // First click returns true
       await tester.tap(userStatusBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserStatus", consentUpdatedMessage);
@@ -290,6 +317,9 @@ void main() {
 
       // Second click returns false
       await tester.tap(userStatusBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       consentChanged = false;
@@ -317,6 +347,9 @@ void main() {
       consentChanged = false;
       // First click returns false (already clicked before)
       await tester.tap(userStatusBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserStatus", consentNotUpdatedMessage);
@@ -327,10 +360,16 @@ void main() {
 
       // Reset user consent
       await tester.tap(resetBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       // Click after reset returns true
       await tester.tap(userStatusBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserStatus", consentUpdatedMessage);
@@ -355,6 +394,9 @@ void main() {
 
       // First click returns true
       await tester.tap(userStatusGloballyBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserStatusGlobally", consentUpdatedMessage);
@@ -375,6 +417,9 @@ void main() {
 
       // Second click returns false
       await tester.tap(userStatusGloballyBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       consentChanged = false;
@@ -402,6 +447,9 @@ void main() {
       consentChanged = false;
       // First click returns false (already clicked before)
       await tester.tap(userStatusGloballyBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserStatusGlobally", consentNotUpdatedMessage);
@@ -412,10 +460,16 @@ void main() {
 
       // Reset user consent
       await tester.tap(resetBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       // Click after reset returns true
       await tester.tap(userStatusGloballyBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserStatusGlobally", consentUpdatedMessage);

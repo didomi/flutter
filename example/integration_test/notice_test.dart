@@ -82,6 +82,9 @@ void main() {
         await tester.pumpAndSettle();
       }
 
+      // Wait for notice to be shown
+      await Future.delayed(Duration(seconds: 1));
+
       // Check for dialog
       assert(isError == false);
       assert(isReady == true);

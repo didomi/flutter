@@ -125,6 +125,9 @@ void main() {
 
       // Agree
       await tester.tap(agreeToAllBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserAgreeToAll", "Native message: Consent updated: true.");
@@ -195,6 +198,9 @@ void main() {
 
       // Disagree
       await tester.tap(disagreeToAllBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserDisagreeToAll", "Native message: Consent updated: true.");
