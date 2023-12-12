@@ -1,5 +1,8 @@
 # Release Note
 
+## 1.18.0
+- Update latest versions of native Android (1.87.0) and iOS (1.96.0) sdks
+
 ## 1.17.0
 - Update latest versions of native Android (1.86.1) and iOS (1.95.1) sdks
 
