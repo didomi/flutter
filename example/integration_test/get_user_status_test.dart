@@ -109,15 +109,15 @@ void main() {
       assertListContains(result.purposes?.global?.enabled, "cookies");
       assertListEmpty(result.purposes?.global?.disabled);
 
-      assertListContains(result.vendors?.consent?.enabled, "google");
+      assertListContains(result.vendors?.consent?.enabled, "217");
       assertListEmpty(result.vendors?.consent?.disabled);
-      assertListContains(result.vendors?.legitimateInterest?.enabled, "google");
+      assertListContains(result.vendors?.legitimateInterest?.enabled, "217");
       assertListEmpty(result.vendors?.legitimateInterest?.disabled);
-      assertListContains(result.vendors?.global?.enabled, "google");
+      assertListContains(result.vendors?.global?.enabled, "217");
       assertListEmpty(result.vendors?.global?.disabled);
-      assertListContains(result.vendors?.globalConsent?.enabled, "google");
+      assertListContains(result.vendors?.globalConsent?.enabled, "217");
       assertListEmpty(result.vendors?.globalConsent?.disabled);
-      assertListContains(result.vendors?.globalLegitimateInterest?.enabled, "google");
+      assertListContains(result.vendors?.globalLegitimateInterest?.enabled, "217");
       assertListEmpty(result.vendors?.globalLegitimateInterest?.disabled);
     });
 
@@ -154,15 +154,15 @@ void main() {
       assertListContains(result.purposes?.global?.disabled, "cookies");
 
       assertListEmpty(result.vendors?.consent?.enabled);
-      assertListContains(result.vendors?.consent?.disabled, "google");
+      assertListContains(result.vendors?.consent?.disabled, "217");
       assertListEmpty(result.vendors?.legitimateInterest?.enabled);
-      assertListContains(result.vendors?.legitimateInterest?.disabled, "google");
-      assertListDoesNotContain(result.vendors?.global?.enabled, "google");
-      assertListContains(result.vendors?.global?.disabled, "google");
+      assertListContains(result.vendors?.legitimateInterest?.disabled, "217");
+      assertListDoesNotContain(result.vendors?.global?.enabled, "217");
+      assertListContains(result.vendors?.global?.disabled, "217");
       assertListEmpty(result.vendors?.globalConsent?.enabled);
-      assertListContains(result.vendors?.globalConsent?.disabled, "google");
+      assertListContains(result.vendors?.globalConsent?.disabled, "217");
       assertListEmpty(result.vendors?.globalLegitimateInterest?.enabled);
-      assertListContains(result.vendors?.globalLegitimateInterest?.disabled, "google");
+      assertListContains(result.vendors?.globalLegitimateInterest?.disabled, "217");
     });
   });
 }

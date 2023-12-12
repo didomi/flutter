@@ -13,7 +13,7 @@ class GetUserStatusForVendor extends StatefulWidget {
 
 class _GetUserStatusForVendorState extends BaseSampleWidgetState<GetUserStatusForVendor> {
   // Vendor id for sample
-  final String vendorId = "738";  // Adbility Media
+  final String vendorId = "1111";  // 152 Media LLC
 
   @override
   String getButtonName() => "GetUserStatusForVendor\n$vendorId";

@@ -16,7 +16,6 @@ void main() {
   // Messages
   const enabledForPurposeMessage = "Native message: User status is 'Enabled' for purpose 'cookies'.";
   const enabledForVendorMessage = "Native message: User status is 'Enabled' for vendor 'google'.";
-  const disabledForVendorMessage = "Native message: User status is 'Disabled' for vendor 'google'.";
   const enabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Enabled' for vendor 'google' and required purposes.";
   const disabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Disabled' for vendor 'google' and required purposes.";
 
@@ -210,7 +209,7 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("getUserLegitimateInterestStatusForVendor", disabledForVendorMessage);
+      assertNativeMessage("getUserLegitimateInterestStatusForVendor", enabledForVendorMessage);
 
       await scrollDown(tester, listKey);
 
