@@ -16,11 +16,11 @@ void main() {
   const disabledStatusForPurposeMessage = "Native message: User status is 'Disabled' for purpose 'cookies'.";
   const enabledStatusForPurposeMessage = "Native message: User status is 'Enabled' for purpose 'cookies'.";
   const noStatusForPurposeMessage = "Native message: No user status for purpose 'cookies'.";
-  const disabledStatusForVendorMessage = "Native message: User status is 'Disabled' for vendor '738'.";
-  const enabledStatusForVendorMessage = "Native message: User status is 'Enabled' for vendor '738'.";
-  const noStatusForVendorMessage = "Native message: No user status for vendor '738'.";
-  const disabledStatusForVendorAndRequiredPurposesMessage = "Native message: User status is 'Disabled' for vendor '738' and required purposes.";
-  const enabledStatusForVendorAndRequiredPurposesMessage = "Native message: User status is 'Enabled' for vendor '738' and required purposes.";
+  const disabledStatusForVendorMessage = "Native message: User status is 'Disabled' for vendor '1111'.";
+  const enabledStatusForVendorMessage = "Native message: User status is 'Enabled' for vendor '1111'.";
+  const noStatusForVendorMessage = "Native message: No user status for vendor '1111'.";
+  const disabledStatusForVendorAndRequiredPurposesMessage = "Native message: User status is 'Disabled' for vendor '1111' and required purposes.";
+  const enabledStatusForVendorAndRequiredPurposesMessage = "Native message: User status is 'Enabled' for vendor '1111' and required purposes.";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final agreeToAllBtnFinder = find.byKey(Key("setUserAgreeToAll"));
@@ -82,7 +82,10 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      await InitializeHelper.initialize(tester, initializeBtnFinder);
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -115,6 +118,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -180,6 +188,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);

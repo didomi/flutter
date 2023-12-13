@@ -15,10 +15,8 @@ void main() {
 
   // Messages
   const enabledForPurposeMessage = "Native message: User status is 'Enabled' for purpose 'cookies'.";
-  const enabledForVendorMessage = "Native message: User status is 'Enabled' for vendor 'google'.";
-  const disabledForVendorMessage = "Native message: User status is 'Disabled' for vendor 'google'.";
-  const enabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Enabled' for vendor 'google' and required purposes.";
-  const disabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Disabled' for vendor 'google' and required purposes.";
+  const enabledForVendorMessage = "Native message: User status is 'Enabled' for vendor '1111'.";
+  const enabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Enabled' for vendor '1111' and required purposes.";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final agreeToAllBtnFinder = find.byKey(Key("setUserAgreeToAll"));
@@ -82,7 +80,10 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      await InitializeHelper.initialize(tester, initializeBtnFinder);
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -113,11 +114,19 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
       // Agree
       await tester.tap(agreeToAllBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserAgreeToAll", "Native message: Consent updated: true.");
@@ -178,11 +187,19 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
       // Disagree
       await tester.tap(disagreeToAllBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage("setUserDisagreeToAll", "Native message: Consent updated: true.");
@@ -197,7 +214,7 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("getUserLegitimateInterestStatusForVendor", disabledForVendorMessage);
+      assertNativeMessage("getUserLegitimateInterestStatusForVendor", enabledForVendorMessage);
 
       await scrollDown(tester, listKey);
 
@@ -205,7 +222,7 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", disabledForVendorAndRequiredPurposesMessage);
+      assertNativeMessage("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", enabledForVendorAndRequiredPurposesMessage);
 
       assert(isError == false);
       assert(isReady == true);

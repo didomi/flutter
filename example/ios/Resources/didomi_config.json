@@ -12,6 +12,8 @@
                 "exclude": [],
                 "include": [],
                 "version": 2,
+                "minorVersion": 2,
+                "gvlSpecificationVersion": 3,
                 "restrictions": []
             },
             "didomi": [

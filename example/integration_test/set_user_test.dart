@@ -29,10 +29,14 @@ void main() {
   final submitSetUser = find.byKey(Key("setUser"));
 
   String? syncUserId;
+  bool isReady = false;
   bool syncError = false;
   bool consentChanged = false;
 
   final listener = EventListener();
+  listener.onReady = () {
+    isReady = true;
+  };
   listener.onConsentChanged = () {
     syncUserId = null;
     syncError = false;
@@ -107,7 +111,10 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      await InitializeHelper.initialize(tester, initializeBtnFinder);
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       await tester.tap(setUserWithInvalidParams);
       await tester.tap(submitSetUser);
@@ -124,6 +131,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       syncUserId = null;
       syncError = false;
@@ -146,6 +158,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       syncUserId = null;
       syncError = false;
 
@@ -166,6 +183,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       syncUserId = null;
       syncError = false;
@@ -200,6 +222,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       syncUserId = null;
       syncError = false;
@@ -248,6 +275,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       syncUserId = null;
       syncError = false;
       consentChanged = false;
@@ -284,6 +316,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       syncUserId = null;
       syncError = false;
 
@@ -306,6 +343,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       syncUserId = null;
       syncError = false;
@@ -340,6 +382,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       syncUserId = null;
       syncError = false;

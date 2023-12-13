@@ -21,7 +21,7 @@ class _GetVendorState
 
   @override
   Future<String> callDidomiPlugin() async {
-    final Vendor? result = await DidomiSdk.getVendor("google");
+    final Vendor? result = await DidomiSdk.getVendor("1111");
 
     if (result == null) {
       return "Vendor does not exist.";

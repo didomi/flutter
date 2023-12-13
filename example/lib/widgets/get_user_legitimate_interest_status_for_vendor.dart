@@ -13,7 +13,7 @@ class GetUserLegitimateInterestStatusForVendor extends StatefulWidget {
 
 class _GetUserLegitimateInterestStatusForVendorState extends BaseSampleWidgetState<GetUserLegitimateInterestStatusForVendor> {
   // Vendor id for sample
-  final String vendorId = "google";
+  final String vendorId = "1111"; // 152 Media LLC
 
   @override
   String getButtonName() => "GetUserLegitimateInterestStatusForVendor\n$vendorId";

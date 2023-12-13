@@ -16,12 +16,12 @@ void main() {
   // Native message strings.
   const emptyDisabledVendorMessage = "Native message: Disabled Vendor list is empty.";
   const emptyEnabledVendorMessage = "Native message: Enabled Vendor list is empty.";
-  const vendorIdListInMessage = ["google", "827", "1000"];
+  const vendorIdListInMessage = ["1111", "217", "272"];
   const suffixVendorMessage = "([^,]+,\\s)+[^,]+\\.";
   const disabledVendorMessage = "Native message: Disabled Vendors: $suffixVendorMessage";
   const enabledVendorMessage = "Native message: Enabled Vendors: $suffixVendorMessage";
   const requiredVendorMessage = "Native message: Required Vendors: $suffixVendorMessage";
-  const vendorNames = "Exponential Interactive, Inc d/b/a VDX.tv, Index Exchange Inc., Fifty Technology Limited,";
+  const vendorNames = "152 Media LLC, 2KDirect, Inc. (dba iPromote), A.Mob.";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final agreeToAllBtnFinder = find.byKey(Key("setUserAgreeToAll"));
@@ -183,7 +183,10 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      await InitializeHelper.initialize(tester, initializeBtnFinder);
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -202,6 +205,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -218,6 +226,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -237,6 +250,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -255,6 +273,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -272,6 +295,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -292,6 +320,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -301,7 +334,7 @@ void main() {
       await tester.tap(getVendorBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Vendor: Google Advertising Products.";
+      final expected = "Native message: Vendor: 152 Media LLC.";
       assertNativeMessage("getVendor", expected);
 
       assert(isError == false);
@@ -314,6 +347,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       await tester.tap(agreeToAllBtnFinder);
       await tester.pumpAndSettle();
@@ -335,6 +373,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -352,6 +395,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -371,6 +419,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -388,6 +441,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -408,6 +466,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -427,6 +490,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -436,7 +504,7 @@ void main() {
       await tester.tap(getVendorBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Vendor: Google Advertising Products.";
+      final expected = "Native message: Vendor: 152 Media LLC.";
       assertNativeMessage("getVendor", expected);
 
       assert(isError == false);
@@ -449,6 +517,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       await tester.tap(disagreeToAllBtnFinder);
       await tester.pumpAndSettle();
@@ -471,6 +544,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -487,6 +565,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -505,6 +588,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -525,6 +613,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -542,6 +635,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -562,6 +660,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -571,7 +674,7 @@ void main() {
       await tester.tap(getVendorBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Vendor: Google Advertising Products.";
+      final expected = "Native message: Vendor: 152 Media LLC.";
       assertNativeMessage("getVendor", expected);
 
       assert(isError == false);

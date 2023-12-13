@@ -12,9 +12,9 @@ class SetUserStatus extends StatefulWidget {
 
 class _SetUserStatusState extends BaseSampleWidgetState<SetUserStatus> {
 
-  final String vendor1 = "738"; // Adbility Media
-  final String vendor2 = "331"; // ad6media
-  final String vendor3 = "318"; // Accorp Sp. z o.o.
+  final String vendor1 = "1111"; // 152 Media LLC
+  final String vendor2 = "217"; // 2K Direct, Inc
+  final String vendor3 = "318"; // A.Mob
 
   final String purpose1 = "cookies";
   final String purpose2 = "advertising_personalization";

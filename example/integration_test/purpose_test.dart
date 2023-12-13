@@ -15,12 +15,15 @@ void main() {
 
   // Native message strings.
   const purpose1Name = "Store and/or access information on a device";
-  const purposeNames = "$purpose1Name, Create a personalised ads profile, Create a personalised content profile, "
-      "Actively scan device characteristics for identification, Use precise geolocation data, Develop and improve products, "
-      "Apply market research to generate audience insights, Measure ad performance, Measure content performance, Select basic ads, "
-      "Select personalised ads, Select personalised content.";
-  const purposeIds = "cookies, create_ads_profile, create_content_profile, device_characteristics, geolocation_data, improve_products, market_research, "
-      "measure_ad_performance, measure_content_performance, select_basic_ads, select_personalized_ads, select_personalized_content.";
+  const purposeNames = "$purpose1Name, Create profiles for personalised advertising, "
+      "Actively scan device characteristics for identification, Use precise geolocation data, "
+      "Develop and improve services, Understand audiences through statistics or combinations of data "
+      "from different sources, Measure advertising performance, Measure content performance, "
+      "Use limited data to select advertising, Use profiles to select personalised advertising, "
+      "Use limited data to select content.";
+  const purposeIds = "cookies, create_ads_profile, device_characteristics, geolocation_data, improve_products, "
+      "market_research, measure_ad_performance, measure_content_performance, select_basic_ads, "
+      "select_personalized_ads, use_limited_data_to_select_content.";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final agreeToAllBtnFinder = find.byKey(Key("setUserAgreeToAll"));
@@ -180,7 +183,10 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      await InitializeHelper.initialize(tester, initializeBtnFinder);
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -200,6 +206,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -218,6 +229,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -235,6 +251,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -255,6 +276,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -274,6 +300,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -292,6 +323,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -314,6 +350,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -335,6 +376,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -353,6 +399,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -370,6 +421,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -390,6 +446,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -409,6 +470,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -427,6 +493,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -449,6 +520,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       await tester.tap(disagreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
@@ -470,6 +546,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -488,6 +569,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -505,6 +591,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
@@ -525,6 +616,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -544,6 +640,11 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
       assert(isError == false);
       assert(isReady == true);
 
@@ -562,6 +663,11 @@ void main() {
       // Start app
       app.main();
       await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
 
       assert(isError == false);
       assert(isReady == true);
