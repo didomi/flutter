@@ -15,9 +15,8 @@ void main() {
 
   // Messages
   const enabledForPurposeMessage = "Native message: User status is 'Enabled' for purpose 'cookies'.";
-  const enabledForVendorMessage = "Native message: User status is 'Enabled' for vendor 'google'.";
-  const enabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Enabled' for vendor 'google' and required purposes.";
-  const disabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Disabled' for vendor 'google' and required purposes.";
+  const enabledForVendorMessage = "Native message: User status is 'Enabled' for vendor '1111'.";
+  const enabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Enabled' for vendor '1111' and required purposes.";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final agreeToAllBtnFinder = find.byKey(Key("setUserAgreeToAll"));
@@ -223,7 +222,7 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForVendorAndRequiredPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", disabledForVendorAndRequiredPurposesMessage);
+      assertNativeMessage("getUserLegitimateInterestStatusForVendorAndRequiredPurposes", enabledForVendorAndRequiredPurposesMessage);
 
       assert(isError == false);
       assert(isReady == true);

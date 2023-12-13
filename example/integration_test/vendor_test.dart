@@ -334,7 +334,7 @@ void main() {
       await tester.tap(getVendorBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Vendor: Google Advertising Products.";
+      final expected = "Native message: Vendor: 152 Media LLC.";
       assertNativeMessage("getVendor", expected);
 
       assert(isError == false);
@@ -504,7 +504,7 @@ void main() {
       await tester.tap(getVendorBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Vendor: Google Advertising Products.";
+      final expected = "Native message: Vendor: 152 Media LLC.";
       assertNativeMessage("getVendor", expected);
 
       assert(isError == false);
@@ -674,7 +674,7 @@ void main() {
       await tester.tap(getVendorBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Vendor: Google Advertising Products.";
+      final expected = "Native message: Vendor: 152 Media LLC.";
       assertNativeMessage("getVendor", expected);
 
       assert(isError == false);
