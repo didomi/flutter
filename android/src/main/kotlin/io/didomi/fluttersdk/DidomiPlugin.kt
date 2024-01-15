@@ -92,6 +92,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "isUserLegitimateInterestStatusPartial" -> result.success(didomi.isUserLegitimateInterestStatusPartial)
 
+                "isUserStatusPartial" -> result.success(didomi.isUserStatusPartial)
+
                 "reset" -> reset(result)
 
                 "setupUI" -> {

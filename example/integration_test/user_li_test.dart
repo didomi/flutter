@@ -14,7 +14,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   // Messages
-  const enabledForPurposeMessage = "Native message: User status is 'Enabled' for purpose 'cookies'.";
+  const unknownForPurposeMessage = "Native message: No user status for purpose 'cookies'.";
   const enabledForVendorMessage = "Native message: User status is 'Enabled' for vendor '1111'.";
   const enabledForVendorAndRequiredPurposesMessage = "Native message: User status is 'Enabled' for vendor '1111' and required purposes.";
 
@@ -74,7 +74,6 @@ void main() {
       assert(isReady == false);
     });
 
-
     testWidgets("Click LI with initialization", (WidgetTester tester) async {
       // Start app
       app.main();
@@ -92,7 +91,7 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", enabledForPurposeMessage);
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", unknownForPurposeMessage);
 
       // UserLegitimateInterestStatusForVendor
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
@@ -135,7 +134,7 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", enabledForPurposeMessage);
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", unknownForPurposeMessage);
 
       // getUserLegitimateInterestStatusForVendor
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
@@ -165,7 +164,7 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", enabledForPurposeMessage);
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", unknownForPurposeMessage);
 
       // UserLegitimateInterestStatusForVendor
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
@@ -208,7 +207,7 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", enabledForPurposeMessage);
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", unknownForPurposeMessage);
 
       // UserLegitimateInterestStatusForVendor
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
@@ -238,7 +237,7 @@ void main() {
       await tester.tap(getUserLegitimateInterestStatusForPurposeBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", enabledForPurposeMessage);
+      assertNativeMessage("getUserLegitimateInterestStatusForPurpose", unknownForPurposeMessage);
 
       // UserLegitimateInterestStatusForVendor
       await tester.tap(getUserLegitimateInterestStatusForVendorBtnFinder);
