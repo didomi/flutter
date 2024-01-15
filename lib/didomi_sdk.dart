@@ -53,7 +53,7 @@ class DidomiSdk {
     return result;
   }
 
-  /// Check if the User Status (consent) should be collected if:
+  /// Determine if the User Status (consent) should be collected or not. User Status should be collected if:
   /// - Regulation is different from NONE and
   /// - User status is partial and
   /// - The number of days before displaying the notice again has exceeded the limit specified on the Console or no User Status has been saved
