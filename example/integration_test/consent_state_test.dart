@@ -54,6 +54,7 @@ void main() {
             'Native message: '
                 '- Is user consent required? false'
                 '- Should consent be collected? false'
+                '- Should User Status be collected? false'
                 '- Is status partial? consent => false, LI => false'
                 '- Is user status partial? false');
         assert(isError == true);
@@ -86,6 +87,7 @@ void main() {
           'Native message: '
               '- Is user consent required? true'
               '- Should consent be collected? true'
+              '- Should User Status be collected? true'
               '- Is status partial? consent => true, LI => true'
               '- Is user status partial? true');
     });
@@ -120,6 +122,7 @@ void main() {
           'Native message: '
               '- Is user consent required? true'
               '- Should consent be collected? false'
+              '- Should User Status be collected? false'
               '- Is status partial? consent => false, LI => false'
               '- Is user status partial? false');
 
@@ -134,6 +137,9 @@ void main() {
       assert(isReady == true);
 
       await tester.tap(checkConsentStateBtnFinder);
+
+      // Wait consent to be reset
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage(
@@ -141,6 +147,7 @@ void main() {
           'Native message: '
               '- Is user consent required? true'
               '- Should consent be collected? true'
+              '- Should User Status be collected? true'
               '- Is status partial? consent => true, LI => true'
               '- Is user status partial? true');
     });
@@ -175,6 +182,7 @@ void main() {
           'Native message: '
               '- Is user consent required? true'
               '- Should consent be collected? false'
+              '- Should User Status be collected? false'
               '- Is status partial? consent => false, LI => false'
               '- Is user status partial? false');
 
@@ -189,6 +197,9 @@ void main() {
       assert(isReady == true);
 
       await tester.tap(checkConsentStateBtnFinder);
+
+      // Wait consent to be reset
+      await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
       assertNativeMessage(
@@ -196,6 +207,7 @@ void main() {
           'Native message: '
               '- Is user consent required? true'
               '- Should consent be collected? true'
+              '- Should User Status be collected? true'
               '- Is status partial? consent => true, LI => true'
               '- Is user status partial? true');
     });
