@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk_example/testapps/sample_for_consent_state_tests.dart' as app;
@@ -43,9 +45,23 @@ void main() {
       await tester.tap(checkConsentStateBtnFinder);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("checkConsentState", notReadyMessage);
+      if (Platform.isAndroid) {
+        assertNativeMessage("checkConsentState", notReadyMessage);
+        assert(isError == false);
+      } else if (Platform.isIOS) {
+        assertNativeMessage(
+            "checkConsentState",
+            'Native message: '
+                '- Is user consent required? false'
+                '- Should consent be collected? false'
+                '- Is status partial? consent => false, LI => false'
+                '- Is user status partial? false');
+        assert(isError == true);
 
-      assert(isError == false);
+        // Reset error only for iOS
+        isError = false;
+      }
+
       assert(isReady == false);
     });
 
