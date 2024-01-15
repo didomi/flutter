@@ -73,7 +73,7 @@ class DidomiSdk {
     return result;
   }
 
-  /// Determine if consent or legitimate interest status is partial
+  /// Determine if the user status is partial
   static Future<bool> get isUserStatusPartial async {
     final bool result = await _channel.invokeMethod('isUserStatusPartial');
     return result;
