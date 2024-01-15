@@ -52,6 +52,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             result(Didomi.shared.isUserConsentStatusPartial())
         case "isUserLegitimateInterestStatusPartial":
             result(Didomi.shared.isUserLegitimateInterestStatusPartial())
+        case "isUserStatusPartial":
+            result(Didomi.shared.isUserStatusPartial())
         case "reset":
             reset(result: result)
         case "setupUI":
