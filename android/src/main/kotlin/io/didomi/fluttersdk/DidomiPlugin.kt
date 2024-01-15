@@ -86,6 +86,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "shouldConsentBeCollected" -> result.success(didomi.shouldConsentBeCollected())
 
+                "shouldUserStatusBeCollected" -> result.success(didomi.shouldUserStatusBeCollected())
+
                 "isConsentRequired" -> result.success(didomi.isConsentRequired)
 
                 "isUserConsentStatusPartial" -> result.success(didomi.isUserConsentStatusPartial)
