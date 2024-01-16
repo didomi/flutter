@@ -1,5 +1,10 @@
 # Release Note
 
+## 1.19.0
+- Update latest versions of native Android (1.88.0) and iOS (1.97.0) sdks
+- Implement new public function `isUserStatusPartial()`.
+- Implement new public function `shouldUserStatusBeCollected()`.
+
 ## 1.18.0
 - Update latest versions of native Android (1.87.0) and iOS (1.96.0) sdks
 
