@@ -46,6 +46,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             }
         case "shouldConsentBeCollected":
             result(Didomi.shared.shouldConsentBeCollected())
+        case "shouldUserStatusBeCollected":
+            result(Didomi.shared.shouldUserStatusBeCollected())
         case "isConsentRequired":
             result(Didomi.shared.isConsentRequired())
         case "isUserConsentStatusPartial":

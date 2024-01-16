@@ -47,8 +47,18 @@ class DidomiSdk {
   static Future<bool> get isReady async => await _channel.invokeMethod('isReady');
 
   /// Check if user consent are partial or not set
+  @Deprecated("Use shouldUserStatusBeCollected instead.")
   static Future<bool> get shouldConsentBeCollected async {
     final bool result = await _channel.invokeMethod('shouldConsentBeCollected');
+    return result;
+  }
+
+  /// Determine if the User Status (consent) should be collected or not. User Status should be collected if:
+  /// - Regulation is different from NONE and
+  /// - User status is partial and
+  /// - The number of days before displaying the notice again has exceeded the limit specified on the Console or no User Status has been saved
+  static Future<bool> get shouldUserStatusBeCollected async {
+    final bool result = await _channel.invokeMethod('shouldUserStatusBeCollected');
     return result;
   }
 

@@ -27,11 +27,13 @@ class _CheckConsentState extends BaseSampleWidgetState<CheckConsent> {
   Future<String> callDidomiPlugin() async {
     final bool consentRequired = await DidomiSdk.isConsentRequired;
     final bool shouldConsentBeCollected = await DidomiSdk.shouldConsentBeCollected;
+    final bool shouldUserStatusBeCollected = await DidomiSdk.shouldUserStatusBeCollected;
     final bool consentStatusPartial = await DidomiSdk.isUserConsentStatusPartial;
     final bool liStatusPartial = await DidomiSdk.isUserLegitimateInterestStatusPartial;
     final bool isUserStatusPartial = await DidomiSdk.isUserStatusPartial;
     return '\n- Is user consent required? $consentRequired\n'
         '- Should consent be collected? $shouldConsentBeCollected\n'
+        '- Should User Status be collected? $shouldUserStatusBeCollected\n'
         '- Is status partial? consent => $consentStatusPartial, LI => $liStatusPartial\n'
         '- Is user status partial? $isUserStatusPartial';
   }
