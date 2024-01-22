@@ -133,6 +133,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "getTranslatedText" -> getTranslatedText(call, result)
 
+                "getCurrentUserStatus" -> getCurrentUserStatus(result)
+
                 "getUserStatus" -> getUserStatus(result)
 
                 "getDisabledPurposeIds" -> getDisabledPurposeIds(result)
@@ -316,7 +318,22 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     /**
+     * Get the CurrentUserStatus object
+     */
+    private fun getCurrentUserStatus(result: Result) {
+        try {
+            val currentUserStatus = Didomi.getInstance().currentUserStatus
+            val map = EntitiesHelper.toMap(currentUserStatus)
+            result.success(map)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getCurrentUserStatus", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
      * Get the IDs of the disabled purposes
+    /**
+     * Get the UserStatus object
      */
     private fun getUserStatus(result: Result) {
         try {

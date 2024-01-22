@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:didomi_sdk/entities/current_user_status.dart';
 import 'package:didomi_sdk/entities/entities_helper.dart';
 import 'package:didomi_sdk/entities/purpose.dart';
 import 'package:didomi_sdk/entities/user_status.dart';
+import 'package:didomi_sdk/entities/vendor.dart';
 import 'package:didomi_sdk/parameters/user_auth_params.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'consent_status.dart';
 import 'constants.dart';
-import 'entities/vendor.dart';
 import 'events/event_listener.dart';
 import 'events/events_handler.dart';
 import 'log_level.dart';
@@ -118,7 +118,7 @@ class DidomiSdk {
 
   /// Show the preferences screen
   static Future<void> showPreferences({PreferencesView view = PreferencesView.purposes}) async {
-    await _channel.invokeMethod("showPreferences", {"view": describeEnum(view)});
+    await _channel.invokeMethod("showPreferences", {"view": view.toString().split('.').last});
   }
 
   /// Hide the preferences screen
@@ -184,6 +184,12 @@ class DidomiSdk {
   /// { preferences: ... } and { texts: ... }, giving the latter the highest priority in case of duplicates.
   static Future<String> getTranslatedText(String key) async =>
       await _channel.invokeMethod("getTranslatedText", {"key": key});
+
+  /// Get the user consent status as a UserStatus object
+  static Future<CurrentUserStatus> get currentUserStatus async {
+    final dynamic result = await _channel.invokeMethod("getCurrentUserStatus");
+    return CurrentUserStatus.fromJson(result);
+  }
 
   /// Get the user consent status as a UserStatus object
   static Future<UserStatus> get userStatus async {

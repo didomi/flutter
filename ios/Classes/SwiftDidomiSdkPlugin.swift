@@ -82,6 +82,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             getText(call, result: result)
         case "getTranslatedText":
             getTranslatedText(call, result: result)
+        case "getCurrentUserStatus":
+            getCurrentUserStatus(result: result)
         case "getUserStatus":
             getUserStatus(result: result)
         case "getDisabledPurposeIds":
@@ -370,6 +372,20 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     }
 
     /**
+     * Get the current user status object
+     - Returns: json describing the current user status
+     */
+    func getCurrentUserStatus(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let currentUserStatus = Didomi.shared.getCurrentUserStatus()
+        let encoded = EntitiesHelper.dictionary(from: currentUserStatus)
+        result(encoded)
+    }
+
+    /**
      * Get the user status object
      - Returns: json describing the user status
      */
@@ -383,7 +399,6 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(encoded)
     }
 
-    
     /**
      * Get the disabled purpose IDs
      - Returns: Array of purpose ids
