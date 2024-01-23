@@ -45,17 +45,17 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
                 SwiftDidomiSdkPlugin.eventStreamHandler?.onErrorCallback()
             }
         case "shouldConsentBeCollected":
-            result(Didomi.shared.shouldConsentBeCollected())
+            shouldConsentBeCollected(result: result)
         case "shouldUserStatusBeCollected":
-            result(Didomi.shared.shouldUserStatusBeCollected())
+            shouldUserStatusBeCollected(result: result)
         case "isConsentRequired":
-            result(Didomi.shared.isConsentRequired())
+            isConsentRequired(result: result)
         case "isUserConsentStatusPartial":
-            result(Didomi.shared.isUserConsentStatusPartial())
+            isUserConsentStatusPartial(result: result)
         case "isUserLegitimateInterestStatusPartial":
-            result(Didomi.shared.isUserLegitimateInterestStatusPartial())
+            isUserLegitimateInterestStatusPartial(result: result)
         case "isUserStatusPartial":
-            result(Didomi.shared.isUserStatusPartial())
+            isUserStatusPartial(result: result)
         case "reset":
             reset(result: result)
         case "setupUI":
@@ -63,17 +63,15 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         case "showNotice":
             showNotice(result: result)
         case "hideNotice":
-            Didomi.shared.hideNotice()
-            result(nil)
+            hideNotice(result: result)
         case "isNoticeVisible":
-            result(Didomi.shared.isNoticeVisible())
+            isNoticeVisible(result: result)
         case "showPreferences":
             showPreferences(call, result: result)
         case "hidePreferences":
-            Didomi.shared.hidePreferences()
-            result(nil)
+            hidePreferences(result: result)
         case "isPreferencesVisible":
-            result(Didomi.shared.isPreferencesVisible())
+            isPreferencesVisible(result: result)
         case "getJavaScriptForWebView":
             getJavaScriptForWebView(result: result)
         case "getQueryStringForWebView":
@@ -182,6 +180,54 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         Didomi.shared.initialize(parameters)
         result(nil)
     }
+
+    func shouldConsentBeCollected(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        result(Didomi.shared.shouldConsentBeCollected())
+    }
+
+    func shouldUserStatusBeCollected(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        result(Didomi.shared.shouldUserStatusBeCollected())
+    }
+
+    func isConsentRequired(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        result(Didomi.shared.isConsentRequired())
+    }
+
+    func isUserLegitimateInterestStatusPartial(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        result(Didomi.shared.isUserLegitimateInterestStatusPartial())
+    }
+
+    func isUserConsentStatusPartial(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        result(Didomi.shared.isUserConsentStatusPartial())
+    }
+
+    func isUserStatusPartial(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        result(Didomi.shared.isUserStatusPartial())
+    }
     
     func setupUI(result: @escaping FlutterResult) {
         let viewController: UIViewController =
@@ -208,6 +254,23 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(nil)
     }
 
+    func hideNotice(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        Didomi.shared.hideNotice()
+        result(nil)
+    }
+
+    func isNoticeVisible(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        result(Didomi.shared.isNoticeVisible())
+    }
+
     func showPreferences(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         if !Didomi.shared.isReady() {
             result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
@@ -226,6 +289,23 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         }
         Didomi.shared.showPreferences(controller: viewController, view: view)
         result(nil)
+    }
+
+    func hidePreferences(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        Didomi.shared.hidePreferences()
+        result(nil)
+    }
+
+    func isPreferencesVisible(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        result(Didomi.shared.isPreferencesVisible())
     }
 
     func updateSelectedLanguage(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
