@@ -21,6 +21,10 @@ class CurrentUserStatus {
         additionalConsent = json["addtl_consent"],
         didomiDcs = json["didomi_dcs"],
         regulation = json["regulation"];
+
+  Map<String, dynamic>? purposesAsJson() => purposes?.map((key, value) => MapEntry(key, value.toJson()));
+
+  Map<String, dynamic>? vendorsAsJson() => vendors?.map((key, value) => MapEntry(key, value.toJson()));
 }
 
 class PurposeStatus {
@@ -32,6 +36,11 @@ class PurposeStatus {
   PurposeStatus.fromJson(dynamic json)
       : id = json["id"],
         enabled = json["enabled"] as bool;
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "enabled": enabled,
+      };
 }
 
 class VendorStatus {
@@ -43,4 +52,9 @@ class VendorStatus {
   VendorStatus.fromJson(dynamic json)
       : id = json["id"],
         enabled = json["enabled"] as bool;
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "enabled": enabled,
+      };
 }

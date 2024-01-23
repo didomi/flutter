@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import io.didomi.sdk.Didomi
 import io.didomi.sdk.DidomiInitializeParameters
 import io.didomi.sdk.exceptions.DidomiNotReadyException
+import io.didomi.sdk.models.CurrentUserStatus
 import io.didomi.sdk.user.UserAuthWithEncryptionParams
 import io.didomi.sdk.user.UserAuthWithHashParams
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -134,6 +135,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 "getTranslatedText" -> getTranslatedText(call, result)
 
                 "getCurrentUserStatus" -> getCurrentUserStatus(result)
+
+                "setCurrentUserStatus" -> setCurrentUserStatus(call, result)
 
                 "getUserStatus" -> getUserStatus(result)
 
@@ -331,7 +334,34 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     /**
-     * Get the IDs of the disabled purposes
+     * Set the CurrentUserStatus object
+     */
+    private fun setCurrentUserStatus(call: MethodCall, result: Result) {
+        val map = call.arguments as? Map<*, *>
+        map?.also {
+            val purposes = (it["purposes"] as? Map<String, Map<*, *>>)?.mapValues { (_, value) ->
+                EntitiesHelper.toPurposeStatus(value)
+            }
+            val vendors = (it["vendors"] as? Map<String, Map<*, *>>)?.mapValues { (_, value) ->
+                EntitiesHelper.toVendorStatus(value)
+            }
+
+            val currentUserStatus = CurrentUserStatus(
+                purposes = purposes ?: emptyMap(),
+                vendors = vendors ?: emptyMap(),
+            )
+
+            try {
+                val statusSet = Didomi.getInstance().setCurrentUserStatus(currentUserStatus)
+                result.success(statusSet)
+            } catch (e: DidomiNotReadyException) {
+                result.error("setCurrentUserStatus", e.message.orEmpty(), e)
+            }
+        } ?: run {
+            result.error("setCurrentUserStatus", "Missing arguments", null)
+        }
+    }
+
     /**
      * Get the UserStatus object
      */

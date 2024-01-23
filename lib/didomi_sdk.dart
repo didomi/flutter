@@ -191,6 +191,13 @@ class DidomiSdk {
     return CurrentUserStatus.fromJson(result);
   }
 
+  /// Set the user consent status as a UserStatus object
+  static Future<bool> setCurrentUserStatus(CurrentUserStatus currentUserStatus) async =>
+      await _channel.invokeMethod("setCurrentUserStatus", {
+        "purposes": currentUserStatus.purposesAsJson(),
+        "vendors": currentUserStatus.vendorsAsJson(),
+      });
+
   /// Get the user consent status as a UserStatus object
   static Future<UserStatus> get userStatus async {
     final dynamic result = await _channel.invokeMethod("getUserStatus");
