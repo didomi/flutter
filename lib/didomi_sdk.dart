@@ -185,13 +185,13 @@ class DidomiSdk {
   static Future<String> getTranslatedText(String key) async =>
       await _channel.invokeMethod("getTranslatedText", {"key": key});
 
-  /// Get the user consent status as a UserStatus object
+  /// Get the current user consent status as a CurrentUserStatus object
   static Future<CurrentUserStatus> get currentUserStatus async {
     final dynamic result = await _channel.invokeMethod("getCurrentUserStatus");
     return CurrentUserStatus.fromJson(result);
   }
 
-  /// Set the user consent status as a UserStatus object
+  /// Set the current user consent status as a CurrentUserStatus object
   static Future<bool> setCurrentUserStatus(CurrentUserStatus currentUserStatus) async =>
       await _channel.invokeMethod("setCurrentUserStatus", {
         "purposes": currentUserStatus.purposesAsJson(),
