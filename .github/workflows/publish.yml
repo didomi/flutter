@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Publish
         # Version 1.4.1 will fail because of `Potential leak of Google OAuth Refresh Token detected.`
