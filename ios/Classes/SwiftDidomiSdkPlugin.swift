@@ -82,6 +82,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             getText(call, result: result)
         case "getTranslatedText":
             getTranslatedText(call, result: result)
+        case "getCurrentUserStatus":
+            getCurrentUserStatus(result: result)
+        case "setCurrentUserStatus":
+            setCurrentUserStatus(call, result: result)
         case "getUserStatus":
             getUserStatus(result: result)
         case "getDisabledPurposeIds":
@@ -370,6 +374,67 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     }
 
     /**
+     * Get the current user status object
+     - Returns: json describing the current user status
+     */
+    func getCurrentUserStatus(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let currentUserStatus = Didomi.shared.getCurrentUserStatus()
+        let encoded = EntitiesHelper.dictionary(from: currentUserStatus)
+        result(encoded)
+    }
+
+    /**
+     * Set the current user status object
+     - Returns: true if the status has been updated, false otherwise
+     */
+    func setCurrentUserStatus(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setCurrentUserStatus", details: nil))
+            return
+        }
+
+        var purposes = [String: CurrentUserStatus.PurposeStatus]()
+        let purposesDict = args["purposes"] as? [String: [String: Any]]
+        purposesDict?.forEach { dict in
+            guard let id = dict.value["id"] as? String,
+                  let enabled = dict.value["enabled"] as? Bool else {
+                return
+            }
+            purposes[dict.key] = CurrentUserStatus.PurposeStatus(id: id, enabled: enabled)
+            return
+        }
+
+        var vendors = [String: CurrentUserStatus.VendorStatus]()
+        let vendorsDict = args["vendors"] as? [String: [String: Any]]
+        vendorsDict?.forEach { dict in
+            guard let id = dict.value["id"] as? String,
+                  let enabled = dict.value["enabled"] as? Bool else {
+                return
+            }
+            vendors[dict.key] = CurrentUserStatus.VendorStatus(id: id, enabled: enabled)
+            return
+        }
+
+        result(
+            Didomi.shared.setCurrentUserStatus(
+                currentUserStatus: CurrentUserStatus(
+                    purposes: purposes,
+                    vendors: vendors
+                )
+            )
+        )
+    }
+
+    /**
      * Get the user status object
      - Returns: json describing the user status
      */
@@ -383,7 +448,6 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(encoded)
     }
 
-    
     /**
      * Get the disabled purpose IDs
      - Returns: Array of purpose ids

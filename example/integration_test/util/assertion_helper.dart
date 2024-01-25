@@ -1,3 +1,4 @@
+import 'package:didomi_sdk/entities/current_user_status.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -68,4 +69,14 @@ void assertMatchesUuidPattern(String? text, {String? message}) {
 void assertMatchesDatePattern(String? text, {String? message}) {
   RegExp exp = RegExp(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:.\d{3})?Z");
   assert(exp.hasMatch(text ?? ""), "$text should be a date");
+}
+
+void assertPurposeStatusMapContains(Map? map, PurposeStatus? purposeStatus) {
+  expect(map?[purposeStatus?.id].id, purposeStatus?.id, reason: "Purpose status map should contain ${purposeStatus?.id}");
+  expect(map?[purposeStatus?.id].enabled, purposeStatus?.enabled, reason: "Purpose status item ${purposeStatus?.id} is expected to be ${purposeStatus?.enabled}");
+}
+
+void assertVendorStatusMapContains(Map? map, VendorStatus? vendorStatus) {
+  expect(map?[vendorStatus?.id].id, vendorStatus?.id, reason: "Vendor status map should contain ${vendorStatus?.id}");
+  expect(map?[vendorStatus?.id].enabled, vendorStatus?.enabled, reason: "Vendor status item ${vendorStatus?.id} is expected to be ${vendorStatus?.enabled}");
 }
