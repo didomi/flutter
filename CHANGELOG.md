@@ -1,5 +1,10 @@
 # Release Note
 
+## 1.20.0
+- Update latest versions of native Android (1.89.0) and iOS (1.98.0) sdks
+- Implement new public function `getCurrentUserStatus()`.
+- Implement new public function `setCurrentUserStatus()`.
+
 ## 1.19.0
 - Update latest versions of native Android (1.88.0) and iOS (1.97.0) sdks
 - Implement new public function `isUserStatusPartial()`.
