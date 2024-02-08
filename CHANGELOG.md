@@ -1,5 +1,8 @@
 # Release Note
 
+## 1.21.0
+- Update latest versions of native Android (1.90.0) and iOS (1.99.0) sdks
+
 ## 1.20.0
 - Update latest versions of native Android (1.89.0) and iOS (1.98.0) sdks
 - Implement new public function `getCurrentUserStatus()`.
