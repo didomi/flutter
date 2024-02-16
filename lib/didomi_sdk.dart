@@ -9,7 +9,6 @@ import 'package:didomi_sdk/entities/vendor.dart';
 import 'package:didomi_sdk/parameters/user_auth_params.dart';
 import 'package:flutter/services.dart';
 
-import 'consent_status.dart';
 import 'constants.dart';
 import 'events/event_listener.dart';
 import 'events/events_handler.dart';
