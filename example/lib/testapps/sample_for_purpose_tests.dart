@@ -23,9 +23,6 @@ class HomePage extends StatelessWidget {
           key: Key("components_list"),
           children: [
             InitializeSmall(),
-            // Actions
-            SetUserAgreeToAll(),
-            SetUserDisagreeToAll(),
             // Purposes
             GetRequiredPurposeIds(),
             GetRequiredPurposes(),
