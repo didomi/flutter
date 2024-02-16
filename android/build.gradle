@@ -28,14 +28,14 @@ apply plugin: "kotlin-android"
 
 android {
     compileSdkVersion(33)
-    buildToolsVersion = "33.0.2"
+    buildToolsVersion("33.0.2")
 
     sourceSets {
         main.java.srcDirs += "src/main/kotlin"
     }
 
     defaultConfig {
-        minSdkVersion = 19
+        minSdkVersion(19)
         targetSdkVersion(33)
         multiDexEnabled = true
 
