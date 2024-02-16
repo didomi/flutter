@@ -1,9 +1,5 @@
-import 'package:didomi_sdk_example/widgets/get_disabled_purpose_ids.dart';
-import 'package:didomi_sdk_example/widgets/get_enabled_purpose_ids.dart';
 import 'package:didomi_sdk_example/widgets/get_purpose.dart';
 import 'package:didomi_sdk_example/widgets/get_required_purpose_ids.dart';
-import 'package:didomi_sdk_example/widgets/get_disabled_purposes.dart';
-import 'package:didomi_sdk_example/widgets/get_enabled_purposes.dart';
 import 'package:didomi_sdk_example/widgets/get_required_purposes.dart';
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
 import 'package:didomi_sdk_example/widgets/set_user_agree_to_all.dart';
@@ -31,11 +27,7 @@ class HomePage extends StatelessWidget {
             SetUserAgreeToAll(),
             SetUserDisagreeToAll(),
             // Purposes
-            GetDisabledPurposeIds(),
-            GetEnabledPurposeIds(),
             GetRequiredPurposeIds(),
-            GetDisabledPurposes(),
-            GetEnabledPurposes(),
             GetRequiredPurposes(),
             GetPurpose()
           ],

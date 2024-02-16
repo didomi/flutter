@@ -1,7 +1,3 @@
-import 'package:didomi_sdk_example/widgets/get_disabled_vendor_ids.dart';
-import 'package:didomi_sdk_example/widgets/get_disabled_vendors.dart';
-import 'package:didomi_sdk_example/widgets/get_enabled_vendor_ids.dart';
-import 'package:didomi_sdk_example/widgets/get_enabled_vendors.dart';
 import 'package:didomi_sdk_example/widgets/get_required_vendor_ids.dart';
 import 'package:didomi_sdk_example/widgets/get_required_vendors.dart';
 import 'package:didomi_sdk_example/widgets/get_vendor.dart';
@@ -31,11 +27,7 @@ class HomePage extends StatelessWidget {
             SetUserAgreeToAll(),
             SetUserDisagreeToAll(),
             // Vendors
-            GetDisabledVendorIds(),
-            GetEnabledVendorIds(),
             GetRequiredVendorIds(),
-            GetDisabledVendors(),
-            GetEnabledVendors(),
             GetRequiredVendors(),
             GetVendor(),
           ],
