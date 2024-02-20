@@ -280,17 +280,25 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
             return
         }
+
         let viewController: UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!
         guard let args = call.arguments as? Dictionary<String, Any> else {
             result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for initialize", details: nil))
             return
         }
+
         let view: Didomi.Views
-        if let viewArgument = args["view"] as? String, viewArgument == "vendors" {
+        let viewArgument = args["view"] as? String
+
+        switch viewArgument {
+        case "vendors":
             view = .vendors
-        } else {
+        case "sensitive-personal-information":
+            view = .sensitivePersonalInformation
+        default:
             view = .purposes
         }
+
         Didomi.shared.showPreferences(controller: viewController, view: view)
         result(nil)
     }
