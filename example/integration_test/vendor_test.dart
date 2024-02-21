@@ -17,7 +17,7 @@ void main() {
   const vendorIdListInMessage = ["1111", "217", "272"];
   const suffixVendorMessage = "([^,]+,\\s)+[^,]+\\.";
   const requiredVendorMessage = "Native message: Required Vendors: $suffixVendorMessage";
-  const vendorNames = "152 Media LLC, 2KDirect, Inc. (dba iPromote), A.Mob.";
+  const vendorNames = "152 Media LLC, A.Mob, 2KDirect, Inc. (dba iPromote).";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final requiredVendorIdsBtnFinder = find.byKey(Key("getRequiredVendorIds"));

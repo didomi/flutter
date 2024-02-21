@@ -19,7 +19,6 @@ void main() {
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final clearUser = find.byKey(Key("clearUser"));
   final setUserWithId = find.byKey(Key("setUserWithId"));
-  final setUserAuthDeprecated = find.byKey(Key("setUserWithAuthDeprecated"));
   final setUserAuthWithHash = find.byKey(Key("setUserAuthWithHash"));
   final setUserAuthWithEncryption = find.byKey(Key("setUserAuthWithEncryption"));
   final setUserWithInvalidParams = find.byKey(Key("setUserWithInvalidParams"));
@@ -142,32 +141,6 @@ void main() {
 
       // Select with id
       await tester.tap(setUserWithId);
-      await tester.tap(submitSetUser);
-      await tester.pumpAndSettle();
-
-      assertNativeMessage("setUser", okMessage);
-
-      await waitForSync(tester);
-
-      assert(syncUserId == userId);
-      assert(syncError == false);
-    });
-
-    testWidgets("Click deprecated setUser", (WidgetTester tester) async {
-      // Start app
-      app.main();
-      await tester.pumpAndSettle();
-
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
-
-      syncUserId = null;
-      syncError = false;
-
-      // Select with deprecated method
-      await tester.tap(setUserAuthDeprecated);
       await tester.tap(submitSetUser);
       await tester.pumpAndSettle();
 
