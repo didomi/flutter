@@ -117,7 +117,7 @@ class DidomiSdk {
 
   /// Show the preferences screen
   static Future<void> showPreferences({PreferencesView view = PreferencesView.purposes}) async {
-    await _channel.invokeMethod("showPreferences", {"view": view.toString().split('.').last});
+    await _channel.invokeMethod("showPreferences", {"view": view.name});
   }
 
   /// Hide the preferences screen

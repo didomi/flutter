@@ -18,7 +18,7 @@ cd ./example || exit 1
 flutter clean || exit 1
 
 # Run tests and print logs
-flutter test --machine -d "${DEVICE}" -r expanded integration_test
+flutter test --machine -d "${DEVICE}" -r expanded integration_test >machine.log
 
 # Shutdown simulator
 xcrun simctl shutdown "${DEVICE}"

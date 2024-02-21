@@ -31,10 +31,6 @@ class _ShowHidePreferencesState extends BaseSampleWidgetState<ShowHidePreference
     if (requestedView != null) {
       if (_hideAfterAWhile) {
         Future.delayed(const Duration(seconds: HIDE_DELAY_SECONDS), () {
-          // TODO('Remove this once hide preference is fixed on native sdks')
-          if (requestedView == PreferencesView.vendors) {
-            DidomiSdk.hidePreferences();
-          }
           return DidomiSdk.hidePreferences();
         });
       }
@@ -83,6 +79,17 @@ class _ShowHidePreferencesState extends BaseSampleWidgetState<ShowHidePreference
               key: Key("PreferencesForPurposes"),
               title: const Text("Purposes"),
               value: PreferencesView.purposes,
+              groupValue: _requestedView,
+              onChanged: (PreferencesView? value) {
+                setState(() {
+                  _requestedView = value;
+                });
+              },
+            ),
+            RadioListTile<PreferencesView>(
+              key: Key("PreferencesForSensitivePersonalInformation"),
+              title: const Text("Sensitive Personal Information"),
+              value: PreferencesView.sensitivePersonalInformation,
               groupValue: _requestedView,
               onChanged: (PreferencesView? value) {
                 setState(() {
