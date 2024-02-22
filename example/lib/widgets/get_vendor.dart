@@ -21,12 +21,14 @@ class _GetVendorState
 
   @override
   Future<String> callDidomiPlugin() async {
-    final Vendor? result = await DidomiSdk.getVendor("1111");
+    final Vendor? result = await DidomiSdk.getVendor("217");
 
     if (result == null) {
       return "Vendor does not exist.";
     } else {
-      return "Vendor: ${result.name}.";
+      return "Vendor: ${result.name}. Purposes: ${result.purposeIds.length} consent, "
+          "${result.legIntPurposeIds.length} LI, ${result.featureIds.length} features, "
+          "${result.specialPurposeIds.length} special purposes, ${result.specialFeatureIds.length} special features.";
     }
   }
 }

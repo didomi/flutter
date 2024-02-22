@@ -35,19 +35,17 @@ class Vendor implements Comparable<Vendor> {
       this.specialFeatureIds,
       this.urls);
 
-  // When parsing a Vendor, we need to consider that some properties are parsed differently on Android and iOS,
-  // mainly because TCFv1 used properties such as purposeIds and TCFv2 uses properties such as purposes.
   Vendor.fromJson(dynamic json)
       : id = json["id"],
         name = json["name"],
         policyUrl = json["policyUrl"],
         namespaces = json["namespaces"]?.cast<Namespaces>(),
-        purposeIds = (json["purposeIds"] ?? json["purposes"]).cast<String>(),
-        legIntPurposeIds = (json["legIntPurposeIds"] ?? json["legIntPurposes"]).cast<String>(),
-        featureIds = (json["featureIds"] ?? json["features"]).cast<String>(),
-        flexiblePurposeIds = (json["flexiblePurposeIds"] ?? json["flexiblePurposes"]).cast<String>(),
-        specialPurposeIds = (json["specialPurposeIds"] ?? json["specialPurposes"]).cast<String>(),
-        specialFeatureIds = (json["specialFeatureIds"] ?? json["specialFeatures"]).cast<String>(),
+        purposeIds = json["purposeIds"].cast<String>(),
+        legIntPurposeIds = json["legIntPurposeIds"].cast<String>(),
+        featureIds = json["featureIds"].cast<String>(),
+        flexiblePurposeIds = json["flexiblePurposeIds"].cast<String>(),
+        specialPurposeIds = json["specialPurposeIds"].cast<String>(),
+        specialFeatureIds = json["specialFeatureIds"].cast<String>(),
         urls = json["urls"]?.cast<Url>();
 
   @override

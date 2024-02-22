@@ -76,7 +76,7 @@ void main() {
       assert(isReady == false);
     });
 
-    testWidgets("Get a vendor name without initialization", (WidgetTester tester) async {
+    testWidgets("Get a vendor info without initialization", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -145,7 +145,7 @@ void main() {
       assert(isReady == true);
     });
 
-    testWidgets("Get a vendor name with initialization", (WidgetTester tester) async {
+    testWidgets("Get a vendor info with initialization", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -164,7 +164,8 @@ void main() {
       await tester.tap(getVendorBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Vendor: 152 Media LLC.";
+      final expected = "Native message: Vendor: 2KDirect, Inc. (dba iPromote). "
+          "Purposes: 3 consent, 4 LI, 0 features, 2 special purposes, 0 special features.";
       assertNativeMessage("getVendor", expected);
 
       assert(isError == false);
