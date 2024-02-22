@@ -15,6 +15,7 @@ void main() {
 
   // Native message strings.
   const purpose1Name = "Store and/or access information on a device";
+  const purpose1Description = "Cookies, device or similar onl...";
   const purposeNames = "$purpose1Name, Create profiles for personalised advertising, "
       "Actively scan device characteristics for identification, Use precise geolocation data, "
       "Develop and improve services, Understand audiences through statistics or combinations of data "
@@ -82,7 +83,7 @@ void main() {
       assert(isReady == false);
     });
 
-    testWidgets("Get a purpose name without initialization", (WidgetTester tester) async {
+    testWidgets("Get a purpose info without initialization", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -149,7 +150,7 @@ void main() {
       assert(isReady == true);
     });
 
-    testWidgets("Get a purpose name with initialization", (WidgetTester tester) async {
+    testWidgets("Get a purpose info with initialization", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -166,7 +167,7 @@ void main() {
       await tester.tap(getPurposesBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Purpose: $purpose1Name.";
+      final expected = "Native message: Purpose: $purpose1Name. Description: $purpose1Description";
       assertNativeMessage("getPurpose", expected);
 
       assert(isError == false);
