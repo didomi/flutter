@@ -1,13 +1,7 @@
-import 'package:didomi_sdk_example/widgets/get_disabled_vendor_ids.dart';
-import 'package:didomi_sdk_example/widgets/get_disabled_vendors.dart';
-import 'package:didomi_sdk_example/widgets/get_enabled_vendor_ids.dart';
-import 'package:didomi_sdk_example/widgets/get_enabled_vendors.dart';
 import 'package:didomi_sdk_example/widgets/get_required_vendor_ids.dart';
 import 'package:didomi_sdk_example/widgets/get_required_vendors.dart';
 import 'package:didomi_sdk_example/widgets/get_vendor.dart';
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
-import 'package:didomi_sdk_example/widgets/set_user_agree_to_all.dart';
-import 'package:didomi_sdk_example/widgets/set_user_disagree_to_all.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(SampleForVendorTestsApp());
@@ -27,15 +21,8 @@ class HomePage extends StatelessWidget {
           key: Key("components_list"),
           children: [
             InitializeSmall(),
-            // Actions
-            SetUserAgreeToAll(),
-            SetUserDisagreeToAll(),
             // Vendors
-            GetDisabledVendorIds(),
-            GetEnabledVendorIds(),
             GetRequiredVendorIds(),
-            GetDisabledVendors(),
-            GetEnabledVendors(),
             GetRequiredVendors(),
             GetVendor(),
           ],

@@ -26,7 +26,9 @@ class _GetPurposeState
     if (result == null) {
       return "Purpose does not exist.";
     } else {
-      return "Purpose: ${result.name}.";
+      String description = result.descriptionText ?? "";
+      String shortDescription = description.length > 30 ? "${description.substring(0, 30)}..." : description;
+      return "Purpose: ${result.name}. Description: $shortDescription";
     }
   }
 }

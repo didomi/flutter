@@ -43,9 +43,6 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
           await DidomiSdk.setUser(userId);
         }
         break;
-      case AuthType.deprecatedAuth:
-        await DidomiSdk.setUserWithAuthentication(userId, "hash-md5", secretId, salt, "test-digest");
-        break;
       case AuthType.withHash:
         if (setUserAndSetupUI) {
           await DidomiSdk.setUserWithAuthParamsAndSetupUI(new UserAuthWithHashParams(userId, "hash-md5", secretId, "test-digest", salt, expiration));
@@ -102,19 +99,6 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
         key: Key("setUserWithId"),
         title: const Text("User id only"),
         value: AuthType.userId,
-        groupValue: _authenticationType,
-        onChanged: (AuthType? value) {
-          if (value != null) {
-            setState(() {
-              _authenticationType = value;
-            });
-          }
-        },
-      ),
-      RadioListTile<AuthType>(
-        key: Key("setUserWithAuthDeprecated"),
-        title: const Text("Deprecated authentication"),
-        value: AuthType.deprecatedAuth,
         groupValue: _authenticationType,
         onChanged: (AuthType? value) {
           if (value != null) {
@@ -207,4 +191,4 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
   }
 }
 
-enum AuthType { invalid, userId, deprecatedAuth, withHash, withEncryption, clearUser }
+enum AuthType { invalid, userId, withHash, withEncryption, clearUser }
