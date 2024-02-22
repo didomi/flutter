@@ -1,5 +1,27 @@
 # Release Note
 
+## 2.0.0
+- Update latest versions of native Android (2.0.0) and iOS (2.0.1) sdks
+- Remove deprecated methods (breaking changes)
+  - `disabledPurposeIds`
+  - `disabledPurposes`
+  - `disabledVendorIds`
+  - `disabledVendors`
+  - `enabledPurposeIds`
+  - `enabledPurposes`
+  - `enabledVendorIds`
+  - `enabledVendors`
+  - `initialize` (without DidomiInitializeParameters)
+  - `setUserWithAuthentication` (with authentication parameters instead of UserAuthParams)
+  - `getUserConsentStatusForPurpose`
+  - `getUserConsentStatusForVendor`
+  - `getUserConsentStatusForVendorAndRequiredPurposes`
+  - `getUserLegitimateInterestStatusForPurpose`
+  - `getUserLegitimateInterestStatusForVendor`
+  - `getUserLegitimateInterestStatusForVendorAndRequiredPurposes`
+  - `getUserStatusForVendor`
+- Refactor `purpose` and `vendor` objects (breaking changes)
+
 ## 1.21.0
 - Update latest versions of native Android (1.90.0) and iOS (1.99.0) sdks
 

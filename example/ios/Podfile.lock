@@ -1,7 +1,7 @@
 PODS:
-  - Didomi-XCFramework (2.0.0)
+  - Didomi-XCFramework (2.0.1)
   - didomi_sdk (1.21.0):
-    - Didomi-XCFramework (= 2.0.0)
+    - Didomi-XCFramework (= 2.0.1)
     - Flutter
   - Flutter (1.0.0)
   - integration_test (0.0.1):
