@@ -20,7 +20,7 @@
   - `getUserLegitimateInterestStatusForVendor`
   - `getUserLegitimateInterestStatusForVendorAndRequiredPurposes`
   - `getUserStatusForVendor`
-- Refactor `purpose` and `vendor` objects (breaking changes)
+- Refactor `Purpose` and `Vendor` objects (breaking changes)
 
 ## 1.21.0
 - Update latest versions of native Android (1.90.0) and iOS (1.99.0) sdks
