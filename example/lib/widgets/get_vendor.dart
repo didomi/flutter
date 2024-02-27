@@ -26,13 +26,14 @@ class _GetVendorState
     if (result == null) {
       return "Vendor does not exist.";
     } else {
-      Url url = result.urls?.find((element) => element.langId == "en") ?? result.urls![0];
-
-      return "Vendor: ${result.name}. Purposes: ${result.purposeIds.length} consent, "
-          "${result.legIntPurposeIds.length} LI, ${result.featureIds.length} features, "
-          "${result.specialPurposeIds.length} special purposes, ${result.specialFeatureIds.length} special features."
-          "URL 0: ${result.urls?[0].langId} -> ${result.urls?[0].privacy} - ${result.urls?[0].legIntClaim}."
-          "IAB2 = ${result.namespaces?.iab2}";
+      return "Vendor: ${result.name} / ${result.id}."
+          "\nPurposes: ${result.purposeIds.length} consent, "
+          "${result.legIntPurposeIds.length} LI, "
+          "${result.featureIds.length} features, "
+          "${result.specialPurposeIds.length} special purposes, "
+          "${result.specialFeatureIds.length} special features."
+          "\nURL 0: ${result.urls?[0].langId} -> ${result.urls?[0].privacy} - ${result.urls?[0].legIntClaim}."
+          "\nIAB2 = ${result.namespaces?.iab2}";
     }
   }
 }
