@@ -39,30 +39,39 @@ class Vendor implements Comparable<Vendor> {
       : id = json["id"],
         name = json["name"],
         policyUrl = json["policyUrl"],
-        namespaces = json["namespaces"]?.cast<Namespaces>(),
+        namespaces = json["namespaces"] != null ? Namespaces.fromJson(json["namespaces"]) : null,
         purposeIds = json["purposeIds"].cast<String>(),
         legIntPurposeIds = json["legIntPurposeIds"].cast<String>(),
         featureIds = json["featureIds"].cast<String>(),
         flexiblePurposeIds = json["flexiblePurposeIds"].cast<String>(),
         specialPurposeIds = json["specialPurposeIds"].cast<String>(),
         specialFeatureIds = json["specialFeatureIds"].cast<String>(),
-        urls = json["urls"]?.cast<Url>();
+        urls = (json["urls"] as List?)?.map((json) => Url.fromJson(json)).toList();
 
   @override
   int compareTo(Vendor other) => (id ?? "").compareTo(other.id ?? "");
 }
 
 class Namespaces {
-  String iab2;
-  int num;
+  String? iab2;
+  int? num;
 
   Namespaces(this.iab2, this.num);
+
+  Namespaces.fromJson(dynamic json)
+      : iab2 = json["iab2"],
+        num = json["num"];
 }
 
 class Url {
   String langId;
-  String privacy;
-  String legIntClaim;
+  String? privacy;
+  String? legIntClaim;
 
   Url(this.langId, this.privacy, this.legIntClaim);
+
+  Url.fromJson(dynamic json)
+      : langId = json["langId"],
+        privacy = json["privacy"],
+        legIntClaim = json["legIntClaim"];
 }

@@ -26,9 +26,14 @@ class _GetVendorState
     if (result == null) {
       return "Vendor does not exist.";
     } else {
-      return "Vendor: ${result.name}. Purposes: ${result.purposeIds.length} consent, "
-          "${result.legIntPurposeIds.length} LI, ${result.featureIds.length} features, "
-          "${result.specialPurposeIds.length} special purposes, ${result.specialFeatureIds.length} special features.";
+      return "Vendor: ${result.name} / ${result.id}."
+          "\nPurposes: ${result.purposeIds.length} consent, "
+          "${result.legIntPurposeIds.length} LI, "
+          "${result.featureIds.length} features, "
+          "${result.specialPurposeIds.length} special purposes, "
+          "${result.specialFeatureIds.length} special features."
+          "\nURL 0: ${result.urls?[0].langId} -> ${result.urls?[0].privacy} - ${result.urls?[0].legIntClaim}."
+          "\nIAB2 = ${result.namespaces?.iab2}";
     }
   }
 }

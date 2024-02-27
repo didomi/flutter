@@ -164,8 +164,10 @@ void main() {
       await tester.tap(getVendorBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: Vendor: 2KDirect, Inc. (dba iPromote). "
-          "Purposes: 3 consent, 4 LI, 0 features, 2 special purposes, 0 special features.";
+      final expected = "Native message: Vendor: 2KDirect, Inc. (dba iPromote) / ipromote."
+          "Purposes: 3 consent, 4 LI, 0 features, 2 special purposes, 0 special features."
+          "URL 0: en -> https://www.ipromote.com/privacy-policy/ - https://www.ipromote.com/privacy-policy/."
+          "IAB2 = null";
       assertNativeMessage("getVendor", expected);
 
       assert(isError == false);
