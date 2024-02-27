@@ -53,8 +53,8 @@ class Vendor implements Comparable<Vendor> {
 }
 
 class Namespaces {
-  String iab2;
-  int num;
+  String? iab2;
+  int? num;
 
   Namespaces(this.iab2, this.num);
 
@@ -65,8 +65,8 @@ class Namespaces {
 
 class Url {
   String langId;
-  String privacy;
-  String legIntClaim;
+  String? privacy;
+  String? legIntClaim;
 
   Url(this.langId, this.privacy, this.legIntClaim);
 
