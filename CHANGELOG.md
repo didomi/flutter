@@ -1,5 +1,9 @@
 # Release Note
 
+## 2.0.1
+- Update latest versions of native Android (2.0.1) and iOS (2.0.2) sdks
+- fix event handler for `onPreferencesClickDisagreeToAll`
+
 ## 2.0.0
 - Update latest versions of native Android (2.0.0) and iOS (2.0.1) sdks
 - Remove deprecated methods (breaking changes)

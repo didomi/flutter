@@ -135,7 +135,7 @@ class EventsHandler {
 
       case "onPreferencesClickDisagreeToAll":
         for (var listener in listeners) {
-          listener.onPreferencesClickAgreeToAll();
+          listener.onPreferencesClickDisagreeToAll();
         }
         break;
 
