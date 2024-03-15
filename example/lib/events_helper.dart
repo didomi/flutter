@@ -146,6 +146,18 @@ class EventsHelper {
     DidomiSdk.addEventListener(didomiListener);
   }
 
+  void listenToVendor(String vendorId) {
+    DidomiSdk.removeEventListener(didomiListener);
+    DidomiSdk.addVendorStatusListener("ipromote", (vendorStatus) => {
+      onEvent("${vendorStatus.id} status has changed: ${vendorStatus.enabled}")
+    });
+  }
+
+  void listenToEvents() {
+    DidomiSdk.removeVendorStatusListener("ipromote");
+    DidomiSdk.addEventListener(didomiListener);
+  }
+
   void onEvent(eventDescription) {
     uiCallback?.call(eventDescription);
   }

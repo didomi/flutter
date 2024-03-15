@@ -4,6 +4,7 @@ import io.didomi.sdk.events.*
 import io.didomi.sdk.functionalinterfaces.DidomiEventListener
 import io.flutter.plugin.common.EventChannel
 import org.json.JSONObject
+import io.didomi.sdk.models.CurrentUserStatus.VendorStatus
 
 /**
  * Handler for SDK events
@@ -216,13 +217,22 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
         sendEvent("onLanguageUpdateFailed", mapOf("reason" to event.reason))
     }
 
-    private fun sendEvent(eventType: String, arguments: Map<String, String?>? = null) {
-        val jsonEvent = JSONObject()
-        jsonEvent.put("type", eventType)
-        arguments?.entries?.forEach {
-            jsonEvent.put(it.key, it.value)
-        }
-        val toString = jsonEvent.toString()
-        this.eventSink?.success(toString)
+    /*
+     * Vendor status change event
+     */
+
+    fun onVendorStatusChanged(vendorStatus: VendorStatus) {
+        val vendorStatusMap = EntitiesHelper.toMap(vendorStatus)
+        sendEvent("onVendorStatusChanged", mapOf("vendorStatus" to vendorStatusMap))
+    }
+
+    /*
+     * Common method
+     */
+
+    private fun sendEvent(eventType: String, arguments: Map<String, *>? = null) {
+        val event = mutableMapOf<String, Any?>("type" to eventType)
+        arguments?.also { event.putAll(it) }
+        this.eventSink?.success(event)
     }
 }

@@ -136,6 +136,18 @@ class DidomiSdk {
     _eventsHandler.removeEventListener(listener);
   }
 
+  /// Add a listener to be triggered when the user status for the selected vendor changes
+  static addVendorStatusListener(String vendorId, Function(VendorStatus) listener) {
+    _eventsHandler.addVendorStatusListener(vendorId, listener);
+    _channel.invokeMethod("listenToVendorStatus", {"vendorId": vendorId});
+  }
+
+  /// Remove one or multiple previously added listeners for the selected vendor status
+  static removeVendorStatusListener(String vendorId) {
+    _eventsHandler.removeVendorStatusListener(vendorId);
+    _channel.invokeMethod("stopListeningToVendorStatus", {"vendorId": vendorId});
+  }
+
   /// Provide a function to be called once SDK is ready.
   /// Automatically calls the function if SDK is already ready.
   static onReady(Function() callback) {

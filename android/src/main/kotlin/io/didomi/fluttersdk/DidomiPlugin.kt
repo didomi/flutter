@@ -26,6 +26,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var eventChannel: EventChannel
     private val eventStreamHandler = DidomiEventStreamHandler()
 
+    private val vendorStatusListeners = mutableSetOf<String>()
+
     /// The Activity used to interact with the Didomi SDK.
     ///
     /// This is always the current displayed Activity, as activities can not be passed through Flutter channels
@@ -175,6 +177,10 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 "setUserWithEncryptionAuthentication" -> setUserWithEncryptionAuthentication(call, result)
 
                 "setUserWithEncryptionAuthenticationAndSetupUI" -> setUserWithEncryptionAuthenticationAndSetupUI(call, result)
+
+                "listenToVendorStatus" -> listenToVendorStatus(call, result)
+
+                "stopListeningToVendorStatus" -> stopListeningToVendorStatus(call, result)
 
                 else -> result.notImplemented()
             }
@@ -623,6 +629,29 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         )
         result.success(null)
     }
+
+    private fun listenToVendorStatus(call: MethodCall, result: Result) {
+        val methodName = "listenToVendorStatus"
+        val vendorId = argumentOrError("vendorId", methodName, call, result)
+            ?: return
+
+        if (!vendorStatusListeners.contains(vendorId)) {
+            Didomi.getInstance().addVendorStatusListener(vendorId) { vendorStatus ->
+                eventStreamHandler.onVendorStatusChanged(vendorStatus)
+            }
+            vendorStatusListeners.add(vendorId)
+        }
+        result.success(null)
+    }
+
+   private fun stopListeningToVendorStatus(call: MethodCall, result: Result) {
+       val methodName = "stopListeningToVendorStatus"
+       val vendorId = argumentOrError("vendorId", methodName, call, result)
+           ?: return
+
+       vendorStatusListeners.remove(vendorId)
+       result.success(null)
+   }
 
     /**
      * Return the requested argument as non-empty String, or raise an error in result and return null

@@ -159,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Text("Webviews:"),
                 WebviewStrings(),
                 // Events
-                SdkEventsLogger(_sdkEvents),
+                SdkEventsLogger(_sdkEvents, eventsHelper)
               ],
             ),
           ),
