@@ -17,7 +17,7 @@ class SdkEventsLogger extends StatefulWidget {
 
 class _SdkEventsLoggerState extends BaseSampleWidgetState<SdkEventsLogger> {
   String _sdkEvents = "";
-  bool _listenToVendor = false;
+  late bool _isListeningToVendorStatus;
   late EventsHelper _eventsHelper;
 
   @override
@@ -26,6 +26,7 @@ class _SdkEventsLoggerState extends BaseSampleWidgetState<SdkEventsLogger> {
   _SdkEventsLoggerState(String sdkEvents, EventsHelper eventsHelper) {
     _sdkEvents = sdkEvents;
     _eventsHelper = eventsHelper;
+    _isListeningToVendorStatus = eventsHelper.isListeningToVendorStatus;
   }
 
   @override
@@ -43,12 +44,12 @@ class _SdkEventsLoggerState extends BaseSampleWidgetState<SdkEventsLogger> {
 
   @override
   Future<String> callDidomiPlugin() async {
-    if (_listenToVendor) {
+    if (_isListeningToVendorStatus) {
       _eventsHelper.listenToEvents();
     } else {
-      _eventsHelper.listenToVendor("ipromote");
+      _eventsHelper.listenToVendorStatus("ipromote");
     }
-    setState(() => _listenToVendor = !_listenToVendor);
+    setState(() => _isListeningToVendorStatus = !_isListeningToVendorStatus);
     return ""; // Not used
   }
 
@@ -59,6 +60,6 @@ class _SdkEventsLoggerState extends BaseSampleWidgetState<SdkEventsLogger> {
 
   @override
   String getButtonName() {
-    return _listenToVendor ? "Listen to events" : "Listen to vendor ipromote";
+    return _isListeningToVendorStatus ? "Listen to events" : "Listen to vendor ipromote";
   }
 }

@@ -6,6 +6,7 @@ class EventsHelper {
 
   EventListener didomiListener = EventListener();
   dynamic Function(String eventDescription)? uiCallback;
+  bool isListeningToVendorStatus = false;
 
   EventsHelper() {
 
@@ -146,16 +147,18 @@ class EventsHelper {
     DidomiSdk.addEventListener(didomiListener);
   }
 
-  void listenToVendor(String vendorId) {
+  void listenToVendorStatus(String vendorId) {
     DidomiSdk.removeEventListener(didomiListener);
     DidomiSdk.addVendorStatusListener("ipromote", (vendorStatus) => {
       onEvent("${vendorStatus.id} status has changed: ${vendorStatus.enabled}")
     });
+    isListeningToVendorStatus = true;
   }
 
   void listenToEvents() {
     DidomiSdk.removeVendorStatusListener("ipromote");
     DidomiSdk.addEventListener(didomiListener);
+    isListeningToVendorStatus = false;
   }
 
   void onEvent(eventDescription) {
