@@ -40,6 +40,13 @@ class EntitiesHelper {
         let data = try? encoder.encode(currentUserStatus)
         return dictionary(from: data)
     }
+    
+    // Convert an instance of VendorStatus into a dictionary.
+    static func dictionary(from vendorStatus: CurrentUserStatus.VendorStatus?) -> [String: Any]? {
+        let encoder = JSONEncoder()
+        let data = try? encoder.encode(vendorStatus)
+        return dictionary(from: data)
+    }
 
     // Convert an instance of UserStatus into a dictionary.
     static func dictionary(from userStatus: UserStatus?) -> [String: Any]? {

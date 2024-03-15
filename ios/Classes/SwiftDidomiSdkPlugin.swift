@@ -8,7 +8,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     private static let didomiNotReadyException: String = "Didomi SDK is not ready. Use the onReady callback to access this method."
 
     static var eventStreamHandler: DidomiEventStreamHandler? = nil
-    
+    private var vendorStatusListeners = Set<String>()
+
     override init() {
         super.init()
         
@@ -124,6 +125,11 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             setUserWithEncryptionAuthentication(call, result: result)
         case "setUserWithEncryptionAuthenticationAndSetupUI":
             setUserWithEncryptionAuthenticationAndSetupUI(call, result: result)
+        case "listenToVendorStatus":
+            listenToVendorStatus(call, result: result)
+        case "stopListeningToVendorStatus":
+            stopListeningToVendorStatus(call, result: result)
+
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -833,7 +839,45 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         }
         result(nil)
     }
+    
+    func listenToVendorStatus(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for listenToVendorStatus", details: nil))
+            return
+        }
 
+        guard let vendorId = argumentOrError(argumentName: "vendorId", methodName: "listenToVendorStatus", args: args, result: result) else {
+            return
+        }
+        
+        if !vendorStatusListeners.contains(vendorId) {
+            Didomi.shared.addVendorStatusListener(id: vendorId) { vendorStatus in
+                let encoded = EntitiesHelper.dictionary(from: vendorStatus)
+                SwiftDidomiSdkPlugin.eventStreamHandler?.sendEvent(eventType: "onVendorStatusChanged", arguments: ["vendorStatus": encoded])
+            }
+            vendorStatusListeners.insert(vendorId)
+        }
+        result(nil)
+    }
+
+    func stopListeningToVendorStatus(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for stopListeningToVendorStatus", details: nil))
+            return
+        }
+
+        guard let vendorId = argumentOrError(argumentName: "vendorId", methodName: "stopListeningToVendorStatus", args: args, result: result) else {
+            return
+        }
+        
+        if vendorStatusListeners.contains(vendorId) {
+            vendorStatusListeners.remove(vendorId)
+            Didomi.shared.removeVendorStatusListener(id: vendorId)
+        }
+        result(nil)
+    }
+
+    
     /// Return the requested argument as non-empty String, or raise an error in result and return null
     private func argumentOrError(argumentName: String, methodName: String, args: Dictionary<String, Any>, result: FlutterResult) -> String? {
         let argument = args[argumentName] as? String ?? ""
