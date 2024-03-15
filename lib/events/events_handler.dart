@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:didomi_sdk/constants.dart';
 import 'package:didomi_sdk/entities/current_user_status.dart';
 import 'package:flutter/services.dart';
