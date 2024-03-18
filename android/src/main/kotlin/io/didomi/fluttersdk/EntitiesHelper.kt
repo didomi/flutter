@@ -19,7 +19,7 @@ object EntitiesHelper {
 
     // Convert an object into a map.
     @Throws(JsonParseException::class)
-    fun toMap(sourceObject: Any?): HashMap<*, *>? {
+    fun toMap(sourceObject: Any?): Map<*, *>? {
         val valid = sourceObject ?: return null
         val json = gson.toJsonTree(valid)
         return gson.fromJson(json, HashMap::class.java)

@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:didomi_sdk/constants.dart';
+import 'package:didomi_sdk/entities/current_user_status.dart';
 import 'package:flutter/services.dart';
 
 import 'event_listener.dart';
@@ -14,20 +13,14 @@ class EventsHandler {
 
   List<Function()> onErrorCallbacks = [];
 
+  Map<String, List<Function(VendorStatus)>> vendorStatusListeners = {};
+
   EventsHandler() {
     _eventChannel.receiveBroadcastStream().listen(handleDidomiEvent, onError: handleDidomiErrorEvent);
   }
 
   handleDidomiEvent(dynamic event) {
-    try {
-      handleDecodedEvent(json.decode(event));
-    } on FormatException catch (e) {
-      print("Error while decoding event $event: $e");
-    }
-  }
-
-  handleDecodedEvent(Map jsonEvent) {
-    final String eventType = jsonEvent["type"].toString();
+    final String eventType = event["type"].toString();
 
     switch (eventType) {
       case "onReady":
@@ -49,7 +42,7 @@ class EventsHandler {
         break;
 
       case "onError":
-        final String message = jsonEvent["message"].toString();
+        final String message = event["message"].toString();
         for (var listener in listeners) {
           listener.onError(message);
         }
@@ -140,28 +133,28 @@ class EventsHandler {
         break;
 
       case "onPreferencesClickPurposeAgree":
-        final String purposeId = jsonEvent["purposeId"].toString();
+        final String purposeId = event["purposeId"].toString();
         for (var listener in listeners) {
           listener.onPreferencesClickPurposeAgree(purposeId);
         }
         break;
 
       case "onPreferencesClickPurposeDisagree":
-        final String purposeId = jsonEvent["purposeId"].toString();
+        final String purposeId = event["purposeId"].toString();
         for (var listener in listeners) {
           listener.onPreferencesClickPurposeDisagree(purposeId);
         }
         break;
 
       case "onPreferencesClickCategoryAgree":
-        final String categoryId = jsonEvent["categoryId"].toString();
+        final String categoryId = event["categoryId"].toString();
         for (var listener in listeners) {
           listener.onPreferencesClickCategoryAgree(categoryId);
         }
         break;
 
       case "onPreferencesClickCategoryDisagree":
-        final String categoryId = jsonEvent["categoryId"].toString();
+        final String categoryId = event["categoryId"].toString();
         for (var listener in listeners) {
           listener.onPreferencesClickCategoryDisagree(categoryId);
         }
@@ -186,14 +179,14 @@ class EventsHandler {
         break;
 
       case "onPreferencesClickVendorAgree":
-        final String vendorId = jsonEvent["vendorId"].toString();
+        final String vendorId = event["vendorId"].toString();
         for (var listener in listeners) {
           listener.onPreferencesClickVendorAgree(vendorId);
         }
         break;
 
       case "onPreferencesClickVendorDisagree":
-        final String vendorId = jsonEvent["vendorId"].toString();
+        final String vendorId = event["vendorId"].toString();
         for (var listener in listeners) {
           listener.onPreferencesClickVendorDisagree(vendorId);
         }
@@ -242,28 +235,28 @@ class EventsHandler {
         break;
 
       case "onPreferencesClickSPIPurposeAgree":
-        final String purposeId = jsonEvent["purposeId"].toString();
+        final String purposeId = event["purposeId"].toString();
         for (var listener in listeners) {
           listener.onPreferencesClickSPIPurposeAgree(purposeId);
         }
         break;
 
       case "onPreferencesClickSPIPurposeDisagree":
-        final String purposeId = jsonEvent["purposeId"].toString();
+        final String purposeId = event["purposeId"].toString();
         for (var listener in listeners) {
           listener.onPreferencesClickSPIPurposeDisagree(purposeId);
         }
         break;
 
       case "onPreferencesClickSPICategoryAgree":
-        final String categoryId = jsonEvent["categoryId"].toString();
+        final String categoryId = event["categoryId"].toString();
         for (var listener in listeners) {
           listener.onPreferencesClickSPICategoryAgree(categoryId);
         }
         break;
 
       case "onPreferencesClickSPICategoryDisagree":
-        final String categoryId = jsonEvent["categoryId"].toString();
+        final String categoryId = event["categoryId"].toString();
         for (var listener in listeners) {
           listener.onPreferencesClickSPICategoryDisagree(categoryId);
         }
@@ -282,30 +275,38 @@ class EventsHandler {
         break;
 
       case "onSyncDone":
-        final String organizationUserId = jsonEvent["organizationUserId"].toString();
+        final String organizationUserId = event["organizationUserId"].toString();
         for (var listener in listeners) {
           listener.onSyncDone(organizationUserId);
         }
         break;
 
       case "onSyncError":
-        final String error = jsonEvent["error"].toString();
+        final String error = event["error"].toString();
         for (var listener in listeners) {
           listener.onSyncError(error);
         }
         break;
 
       case "onLanguageUpdated":
-        final String languageCode = jsonEvent["languageCode"].toString();
+        final String languageCode = event["languageCode"].toString();
         for (var listener in listeners) {
           listener.onLanguageUpdated(languageCode);
         }
         break;
 
       case "onLanguageUpdateFailed":
-        final String reason = jsonEvent["reason"].toString();
+        final String reason = event["reason"].toString();
         for (var listener in listeners) {
           listener.onLanguageUpdateFailed(reason);
+        }
+        break;
+
+      case "onVendorStatusChanged":
+        final VendorStatus vendorStatus = VendorStatus.fromJson(event["vendorStatus"]);
+        final List<Function(VendorStatus)> callbacks = vendorStatusListeners[vendorStatus.id] ?? [];
+        for (var callback in callbacks) {
+          callback(vendorStatus);
         }
         break;
 
@@ -327,5 +328,20 @@ class EventsHandler {
   /// Remove an event listener
   removeEventListener(EventListener listener) {
     listeners.remove(listener);
+  }
+
+  /// Add a vendor status listener
+  addVendorStatusListener(String vendorId, Function(VendorStatus) listener) {
+    List<Function(VendorStatus)>? listeners = vendorStatusListeners[vendorId];
+    if (listeners == null) {
+      vendorStatusListeners[vendorId] = [listener];
+    } else {
+      listeners.add(listener);
+    }
+  }
+
+  /// Remove listeners for the vendor status
+  removeVendorStatusListener(String vendorId) {
+    vendorStatusListeners.remove(vendorId);
   }
 }
