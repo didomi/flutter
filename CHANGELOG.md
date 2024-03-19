@@ -3,6 +3,7 @@
 ## 2.1.0
 - Update latest versions of native Android (2.2.0) and iOS (2.2.0) sdks
 - Support new methods `addVendorStatusListener` and `removeVendorStatusListener`
+- Update Kotlin version from `1.7.20` to `1.8.20`
 
 ## 2.0.1
 - Update latest versions of native Android (2.0.1) and iOS (2.0.2) sdks
