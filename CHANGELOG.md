@@ -2,7 +2,7 @@
 
 ## 2.1.0
 - Update latest versions of native Android (2.2.0) and iOS (2.2.0) sdks
-- Support new methods `addVendorStatusListener`, `removeVendorStatusListener`
+- Support new methods `addVendorStatusListener` and `removeVendorStatusListener`
 
 ## 2.0.1
 - Update latest versions of native Android (2.0.1) and iOS (2.0.2) sdks
