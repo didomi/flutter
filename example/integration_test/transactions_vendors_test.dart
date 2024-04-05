@@ -31,7 +31,7 @@ void main() {
   DidomiSdk.addEventListener(listener);
 
   group("CurrentUserStatusTransaction - Single Vendors", () {
-    testWidgets("Enable Single Vendors With Changes", (WidgetTester tester) async {
+    testWidgets("Enable a single vendor updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -55,7 +55,7 @@ void main() {
       assertNativeMessage("enableVendorTransaction", "Native message: Updated: true, Enabled: true.");
     });
 
-    testWidgets("Enable Single Vendors Without Changes", (WidgetTester tester) async {
+    testWidgets("Enable a single vendor without updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -79,7 +79,7 @@ void main() {
       assertNativeMessage("enableVendorTransaction", "Native message: Updated: false, Enabled: true.");
     });
 
-    testWidgets("Disable Single Vendor With Changes", (WidgetTester tester) async {
+    testWidgets("Disable a single vendor updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -103,7 +103,7 @@ void main() {
       assertNativeMessage("disableVendorTransaction", "Native message: Updated: true, Enabled: false.");
     });
 
-    testWidgets("Disable Single Vendor Without Changes", (WidgetTester tester) async {
+    testWidgets("Disable a single vendor without updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -129,7 +129,7 @@ void main() {
   });
 
   group("CurrentUserStatusTransaction - Multiple Vendors", () {
-    testWidgets("Enable Multiple Vendors With Changes", (WidgetTester tester) async {
+    testWidgets("Enable multiple vendors updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -154,7 +154,7 @@ void main() {
       assertNativeMessage("enableVendorsTransaction", "Native message: Updated: true, Enabled: true.");
     });
 
-    testWidgets("Enable Multiple Vendors Without Changes", (WidgetTester tester) async {
+    testWidgets("Enable multiple vendors without updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -178,7 +178,7 @@ void main() {
       assertNativeMessage("enableVendorsTransaction", "Native message: Updated: false, Enabled: true.");
     });
 
-    testWidgets("Disable Multiple Vendors With Changes", (WidgetTester tester) async {
+    testWidgets("Disable multiple vendors updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -202,7 +202,7 @@ void main() {
       assertNativeMessage("disableVendorsTransaction", "Native message: Updated: true, Enabled: false.");
     });
 
-    testWidgets("Disable Multiple Vendors Without Changes", (WidgetTester tester) async {
+    testWidgets("Disable multiple vendors without updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();

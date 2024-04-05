@@ -30,8 +30,8 @@ void main() {
 
   DidomiSdk.addEventListener(listener);
 
-  group("CurrentUserStatusTransaction - Single Purposes", () {
-    testWidgets("Enable Single Purposes With Changes", (WidgetTester tester) async {
+  group("CurrentUserStatusTransaction - single purposes", () {
+    testWidgets("Enable a single purpose updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -55,7 +55,7 @@ void main() {
       assertNativeMessage("enablePurposeTransaction", "Native message: Updated: true, Enabled: true.");
     });
 
-    testWidgets("Enable Single Purposes Without Changes", (WidgetTester tester) async {
+    testWidgets("Enable a single purpose without updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -79,7 +79,7 @@ void main() {
       assertNativeMessage("enablePurposeTransaction", "Native message: Updated: false, Enabled: true.");
     });
 
-    testWidgets("Disable Single Purpose With Changes", (WidgetTester tester) async {
+    testWidgets("Disable a single purpose updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -103,7 +103,7 @@ void main() {
       assertNativeMessage("disablePurposeTransaction", "Native message: Updated: true, Enabled: false.");
     });
 
-    testWidgets("Disable Single Purpose Without Changes", (WidgetTester tester) async {
+    testWidgets("Disable a single purpose without updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -129,7 +129,7 @@ void main() {
   });
 
   group("CurrentUserStatusTransaction - Multiple Purposes", () {
-    testWidgets("Enable Multiple Purposes With Changes", (WidgetTester tester) async {
+    testWidgets("Enable multiple purposes updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -153,7 +153,7 @@ void main() {
       assertNativeMessage("enablePurposesTransaction", "Native message: Updated: true, Enabled: true.");
     });
 
-    testWidgets("Enable Multiple Purposes Without Changes", (WidgetTester tester) async {
+    testWidgets("Enable multiple purposes without updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -177,7 +177,7 @@ void main() {
       assertNativeMessage("enablePurposesTransaction", "Native message: Updated: false, Enabled: true.");
     });
 
-    testWidgets("Disable Multiple Purposes With Changes", (WidgetTester tester) async {
+    testWidgets("Disable multiple purposes updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -201,7 +201,7 @@ void main() {
       assertNativeMessage("disablePurposesTransaction", "Native message: Updated: true, Enabled: false.");
     });
 
-    testWidgets("Disable Multiple Purposes Without Changes", (WidgetTester tester) async {
+    testWidgets("Disable multiple purposes without updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
