@@ -1,12 +1,8 @@
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
 import 'package:didomi_sdk_example/widgets/transactions/disable_purpose_transaction.dart';
 import 'package:didomi_sdk_example/widgets/transactions/disable_purposes_transaction.dart';
-import 'package:didomi_sdk_example/widgets/transactions/disable_vendor_transaction.dart';
-import 'package:didomi_sdk_example/widgets/transactions/disable_vendors_transaction.dart';
 import 'package:didomi_sdk_example/widgets/transactions/enable_purpose_transaction.dart';
 import 'package:didomi_sdk_example/widgets/transactions/enable_purposes_transaction.dart';
-import 'package:didomi_sdk_example/widgets/transactions/enable_vendor_transaction.dart';
-import 'package:didomi_sdk_example/widgets/transactions/enable_vendors_transaction.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(SampleForTransactionsPurposesTestsApp());
