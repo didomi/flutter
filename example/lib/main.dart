@@ -2,6 +2,10 @@ import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk/log_level.dart';
 import 'package:didomi_sdk_example/events_helper.dart';
+import 'package:didomi_sdk_example/widgets/transactions/disable_purpose_transaction.dart';
+import 'package:didomi_sdk_example/widgets/transactions/disable_purposes_transaction.dart';
+import 'package:didomi_sdk_example/widgets/transactions/enable_purpose_transaction.dart';
+import 'package:didomi_sdk_example/widgets/transactions/enable_purposes_transaction.dart';
 import 'package:didomi_sdk_example/widgets/get_current_user_status_other_info.dart';
 import 'package:didomi_sdk_example/widgets/get_current_user_status_purposes.dart';
 import 'package:didomi_sdk_example/widgets/get_current_user_status_vendors.dart';
@@ -159,7 +163,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 Text("Webviews:"),
                 WebviewStrings(),
                 // Events
-                SdkEventsLogger(_sdkEvents, eventsHelper)
+                SdkEventsLogger(_sdkEvents, eventsHelper),
+                // Transactions
+                Text("Transactions:"),
+                EnablePurposeTransaction(),
+                DisablePurposeTransaction(),
+                EnablePurposesTransaction(),
+                DisablePurposesTransaction()
               ],
             ),
           ),

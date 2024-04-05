@@ -129,6 +129,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             listenToVendorStatus(call, result: result)
         case "stopListeningToVendorStatus":
             stopListeningToVendorStatus(call, result: result)
+        case "commitCurrentUserStatusTransaction":
+            commitCurrentUserStatusTransaction(call, result: result)
 
         default:
             result(FlutterMethodNotImplemented)
@@ -886,5 +888,25 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             return nil
         }
         return argument
+    }
+
+    /// Receives all the modified status related to vendors and purposes and passes them to a new native transaction.
+    /// Then it calls the `commit` method of this newly created transaction which saves these changes into the user status.
+    func commitCurrentUserStatusTransaction(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, [String]> else {
+            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for commitCurrentUserStatusTransaction", details: nil))
+            return
+        }
+
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let transaction = Didomi.shared.openCurrentUserStatusTransaction()
+        transaction.enablePurposes(args["enabledPurposes"] ?? [])
+        transaction.disablePurposes(args["disabledPurposes"] ?? [])
+        transaction.enableVendors(args["enabledVendors"] ?? [])
+        transaction.disableVendors(args["disabledVendors"] ?? [])
+        result(transaction.commit())
     }
 }
