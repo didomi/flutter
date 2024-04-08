@@ -677,14 +677,13 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             val enabledVendors = argumentAsArray("enabledVendors", call)
             val disabledVendors = argumentAsArray("disabledVendors", call)
 
-            val transaction = Didomi.getInstance().openCurrentUserStatusTransaction()
-
-            transaction.enablePurposes(*enabledPurposes)
-            transaction.disablePurposes(*disabledPurposes)
-            transaction.enableVendors(*enabledVendors)
-            transaction.disableVendors(*disabledVendors)
-
-            val updated = transaction.commit()
+            val updated = Didomi.getInstance().openCurrentUserStatusTransaction()
+                .enablePurposes(*enabledPurposes)
+                .disablePurposes(*disabledPurposes)
+                .enableVendors(*enabledVendors)
+                .disableVendors(*disabledVendors)
+                .commit()
+            
             result.success(updated)
 
         } catch (e: DidomiNotReadyException) {

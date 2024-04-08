@@ -902,11 +902,14 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
             return
         }
-        let transaction = Didomi.shared.openCurrentUserStatusTransaction()
-        transaction.enablePurposes(args["enabledPurposes"] ?? [])
-        transaction.disablePurposes(args["disabledPurposes"] ?? [])
-        transaction.enableVendors(args["enabledVendors"] ?? [])
-        transaction.disableVendors(args["disabledVendors"] ?? [])
-        result(transaction.commit())
+        
+        let updated = Didomi.shared.openCurrentUserStatusTransaction()
+            .enablePurposes(args["enabledPurposes"] ?? [])
+            .disablePurposes(args["disabledPurposes"] ?? [])
+            .enableVendors(args["enabledVendors"] ?? [])
+            .disableVendors(args["disabledVendors"] ?? [])
+            .commit()
+        
+        result(updated)
     }
 }

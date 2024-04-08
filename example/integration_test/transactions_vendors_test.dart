@@ -16,6 +16,8 @@ void main() {
   final disableVendorTransactionBtnFinder = find.byKey(Key("disableVendorTransaction"));
   final enableVendorsTransactionBtnFinder = find.byKey(Key("enableVendorsTransaction"));
   final disableVendorsTransactionBtnFinder = find.byKey(Key("disableVendorsTransaction"));
+  final enableVendorChainTransactionsBtnFinder = find.byKey(Key("enableVendorChainTransactions"));
+  final disableVendorChainTransactionsBtnFinder = find.byKey(Key("disableVendorChainTransactions"));
 
   bool isError = false;
   bool isReady = false;
@@ -224,6 +226,108 @@ void main() {
       await tester.pumpAndSettle();
 
       assertNativeMessage("disableVendorsTransaction", "Native message: Updated: false, Enabled: false.");
+    });
+  });
+
+  group("CurrentUserStatusTransaction - Chain Vendor Transactions", () {
+    testWidgets("Enable vendors by chaining calls updating the user status", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await DidomiSdk.setUserDisagreeToAll();
+      // Agree
+      await tester.tap(enableVendorChainTransactionsBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      const vendors = "(152media-Aa6Z6mLC, ipromote, amob-txzcQCyq)";
+      assertNativeMessage("enableVendorChainTransactions", "Native message: Updated: true, Enabled: $vendors.");
+    });
+
+    testWidgets("Disable vendors by chaining calls updating the user status", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await DidomiSdk.setUserAgreeToAll();
+      // Disagree
+      await tester.tap(disableVendorChainTransactionsBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      const vendors = "(152media-Aa6Z6mLC, ipromote, amob-txzcQCyq)";
+      assertNativeMessage("disableVendorChainTransactions", "Native message: Updated: true, Disabled: $vendors.");
+    });
+
+    testWidgets("Enable vendors by chaining calls without updating the user status", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await DidomiSdk.setUserAgreeToAll();
+      // Agree
+      await tester.tap(enableVendorChainTransactionsBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      const vendors = "(152media-Aa6Z6mLC, ipromote, amob-txzcQCyq)";
+      assertNativeMessage("enableVendorChainTransactions", "Native message: Updated: false, Enabled: $vendors.");
+    });
+
+    testWidgets("Disable vendors by chaining calls without updating the user status", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await DidomiSdk.setUserDisagreeToAll();
+      // Disagree
+      await tester.tap(disableVendorChainTransactionsBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      const vendors = "(152media-Aa6Z6mLC, ipromote, amob-txzcQCyq)";
+      assertNativeMessage("disableVendorChainTransactions", "Native message: Updated: false, Disabled: $vendors.");
     });
   });
 }

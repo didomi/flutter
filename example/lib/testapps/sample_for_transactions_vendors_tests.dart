@@ -1,4 +1,6 @@
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
+import 'package:didomi_sdk_example/widgets/transactions/chains/disable_vendor_chain_transactions.dart';
+import 'package:didomi_sdk_example/widgets/transactions/chains/enable_vendor_chain_transactions.dart';
 import 'package:didomi_sdk_example/widgets/transactions/disable_vendor_transaction.dart';
 import 'package:didomi_sdk_example/widgets/transactions/disable_vendors_transaction.dart';
 import 'package:didomi_sdk_example/widgets/transactions/enable_vendor_transaction.dart';
@@ -27,7 +29,9 @@ class HomePage extends StatelessWidget {
             EnableVendorTransaction(),
             DisableVendorTransaction(),
             EnableVendorsTransaction(),
-            DisableVendorsTransaction()
+            DisableVendorsTransaction(),
+            EnableVendorChainTransactions(),
+            DisableVendorChainTransactions(),
           ],
         ),
       );

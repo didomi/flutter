@@ -16,6 +16,8 @@ void main() {
   final disablePurposeTransactionBtnFinder = find.byKey(Key("disablePurposeTransaction"));
   final enablePurposesTransactionBtnFinder = find.byKey(Key("enablePurposesTransaction"));
   final disablePurposesTransactionBtnFinder = find.byKey(Key("disablePurposesTransaction"));
+  final enablePurposeChainTransactionsBtnFinder = find.byKey(Key("enablePurposeChainTransactions"));
+  final disablePurposeChainTransactionsBtnFinder = find.byKey(Key("disablePurposeChainTransactions"));
 
   bool isError = false;
   bool isReady = false;
@@ -223,6 +225,108 @@ void main() {
       await tester.pumpAndSettle();
 
       assertNativeMessage("disablePurposesTransaction", "Native message: Updated: false, Enabled: false.");
+    });
+  });
+
+  group("CurrentUserStatusTransaction - Chain Purpose Transactions", () {
+    testWidgets("Enable purposes by chaining calls updating the user status", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await DidomiSdk.setUserDisagreeToAll();
+      // Agree
+      await tester.tap(enablePurposeChainTransactionsBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      const purposes = "(cookies, select_basic_ads, create_ads_profile, select_personalized_ads)";
+      assertNativeMessage("enablePurposeChainTransactions", "Native message: Updated: true, Enabled: $purposes.");
+    });
+
+    testWidgets("Disable purposes by chaining calls updating the user status", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await DidomiSdk.setUserAgreeToAll();
+      // Disagree
+      await tester.tap(disablePurposeChainTransactionsBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      const purposes = "(cookies, select_basic_ads, create_ads_profile, select_personalized_ads)";
+      assertNativeMessage("disablePurposeChainTransactions", "Native message: Updated: true, Disabled: $purposes.");
+    });
+
+    testWidgets("Enable purposes by chaining calls without updating the user status", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await DidomiSdk.setUserAgreeToAll();
+      // Agree
+      await tester.tap(enablePurposeChainTransactionsBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      const purposes = "(cookies, select_basic_ads, create_ads_profile, select_personalized_ads)";
+      assertNativeMessage("enablePurposeChainTransactions", "Native message: Updated: false, Enabled: $purposes.");
+    });
+
+    testWidgets("Disable purposes by chaining calls without updating the user status", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await DidomiSdk.setUserDisagreeToAll();
+      // Disagree
+      await tester.tap(disablePurposeChainTransactionsBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      const purposes = "(cookies, select_basic_ads, create_ads_profile, select_personalized_ads)";
+      assertNativeMessage("disablePurposeChainTransactions", "Native message: Updated: false, Disabled: $purposes.");
     });
   });
 }

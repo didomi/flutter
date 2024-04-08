@@ -1,18 +1,19 @@
-typedef NativeCallback = Future<bool> Function(
+/// Callback to be called when the changes made through a transaction need to be sent to the native SDK.
+typedef CurrentUserStatusTransactionCallback = Future<bool> Function(
     List<String> enabledPurposes, List<String> disabledPurposes, List<String> enabledVendors, List<String> disabledVendors);
 
 /// Class used to contain all the operations related to transactions.
 /// All the changes regarding the status of purposes and vendors will
 /// only be communicated to the native SDKs once the `commit` method is called.
 class CurrentUserStatusTransaction {
-  final Map<String, bool> purposesStatus = {};
-  final Map<String, bool> vendorsStatus = {};
+  final Map<String, bool> _purposesStatus = {};
+  final Map<String, bool> _vendorsStatus = {};
 
   /// Callback used to communicate the updates made through this transaction to
   /// the native SDKs.
-  final NativeCallback nativeCallback;
+  final CurrentUserStatusTransactionCallback _nativeCallback;
 
-  CurrentUserStatusTransaction(this.nativeCallback);
+  CurrentUserStatusTransaction(this._nativeCallback);
 
   /// Enable multiple purposes.
   CurrentUserStatusTransaction enablePurposes(List<String> ids) {
@@ -22,7 +23,7 @@ class CurrentUserStatusTransaction {
 
   /// Enable a single purpose.
   CurrentUserStatusTransaction enablePurpose(String id) {
-    purposesStatus[id] = true;
+    _purposesStatus[id] = true;
     return this;
   }
 
@@ -34,7 +35,7 @@ class CurrentUserStatusTransaction {
 
   /// Disable a single purpose.
   CurrentUserStatusTransaction disablePurpose(String id) {
-    purposesStatus[id] = false;
+    _purposesStatus[id] = false;
     return this;
   }
 
@@ -46,7 +47,7 @@ class CurrentUserStatusTransaction {
 
   /// Enable a single vendor.
   CurrentUserStatusTransaction enableVendor(String id) {
-    vendorsStatus[id] = true;
+    _vendorsStatus[id] = true;
     return this;
   }
 
@@ -58,17 +59,17 @@ class CurrentUserStatusTransaction {
 
   /// Disable a single vendor.
   CurrentUserStatusTransaction disableVendor(String id) {
-    vendorsStatus[id] = false;
+    _vendorsStatus[id] = false;
     return this;
   }
 
   /// Communicate changes made through this class to the native SDK.
   Future<bool> commit() async {
-    final enabledPurposes = purposesStatus.entries.where((e) => e.value).map((e) => e.key).toList();
-    final disabledPurposes = purposesStatus.entries.where((e) => !e.value).map((e) => e.key).toList();
-    final enabledVendors = vendorsStatus.entries.where((e) => e.value).map((e) => e.key).toList();
-    final disabledVendors = vendorsStatus.entries.where((e) => !e.value).map((e) => e.key).toList();
+    final enabledPurposes = _purposesStatus.entries.where((e) => e.value).map((e) => e.key).toList();
+    final disabledPurposes = _purposesStatus.entries.where((e) => !e.value).map((e) => e.key).toList();
+    final enabledVendors = _vendorsStatus.entries.where((e) => e.value).map((e) => e.key).toList();
+    final disabledVendors = _vendorsStatus.entries.where((e) => !e.value).map((e) => e.key).toList();
 
-    return await nativeCallback(enabledPurposes, disabledPurposes, enabledVendors, disabledVendors);
+    return await _nativeCallback(enabledPurposes, disabledPurposes, enabledVendors, disabledVendors);
   }
 }
