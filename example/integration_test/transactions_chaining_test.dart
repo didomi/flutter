@@ -1,6 +1,6 @@
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
-import 'package:didomi_sdk_example/testapps/sample_for_transactions_vendors_tests.dart' as app;
+import 'package:didomi_sdk_example/testapps/sample_for_chaining_transactions_tests.dart' as app;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -11,11 +11,10 @@ import 'util/initialize_helper.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
-  // Vendors buttons
-  final enableVendorTransactionBtnFinder = find.byKey(Key("enableVendorTransaction"));
-  final disableVendorTransactionBtnFinder = find.byKey(Key("disableVendorTransaction"));
-  final enableVendorsTransactionBtnFinder = find.byKey(Key("enableVendorsTransaction"));
-  final disableVendorsTransactionBtnFinder = find.byKey(Key("disableVendorsTransaction"));
+  final enablePurposeChainTransactionsBtnFinder = find.byKey(Key("enablePurposeChainTransactions"));
+  final disablePurposeChainTransactionsBtnFinder = find.byKey(Key("disablePurposeChainTransactions"));
+  final enableVendorChainTransactionsBtnFinder = find.byKey(Key("enableVendorChainTransactions"));
+  final disableVendorChainTransactionsBtnFinder = find.byKey(Key("disableVendorChainTransactions"));
 
   bool isError = false;
   bool isReady = false;
@@ -30,8 +29,8 @@ void main() {
 
   DidomiSdk.addEventListener(listener);
 
-  group("CurrentUserStatusTransaction - Single Vendors", () {
-    testWidgets("Enable a single vendor updating the user status", (WidgetTester tester) async {
+  group("CurrentUserStatusTransaction - Chain Purpose Transactions", () {
+    testWidgets("Enable purposes by chaining calls updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -46,16 +45,42 @@ void main() {
 
       await DidomiSdk.setUserDisagreeToAll();
       // Agree
-      await tester.tap(enableVendorTransactionBtnFinder);
+      await tester.tap(enablePurposeChainTransactionsBtnFinder);
 
       // Wait consent to be updated
       await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
-      assertNativeMessage("enableVendorTransaction", "Native message: Updated: true, Enabled: true.");
+      const purposes = "(cookies, select_basic_ads, create_ads_profile, select_personalized_ads)";
+      assertNativeMessage("enablePurposeChainTransactions", "Native message: Updated: true, Enabled: $purposes.");
     });
 
-    testWidgets("Enable a single vendor without updating the user status", (WidgetTester tester) async {
+    testWidgets("Disable purposes by chaining calls updating the user status", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await DidomiSdk.setUserAgreeToAll();
+      // Disagree
+      await tester.tap(disablePurposeChainTransactionsBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      const purposes = "(cookies, select_basic_ads, create_ads_profile, select_personalized_ads)";
+      assertNativeMessage("disablePurposeChainTransactions", "Native message: Updated: true, Disabled: $purposes.");
+    });
+
+    testWidgets("Enable purposes by chaining calls without updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -70,40 +95,17 @@ void main() {
 
       await DidomiSdk.setUserAgreeToAll();
       // Agree
-      await tester.tap(enableVendorTransactionBtnFinder);
+      await tester.tap(enablePurposeChainTransactionsBtnFinder);
 
       // Wait consent to be updated
       await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
-      assertNativeMessage("enableVendorTransaction", "Native message: Updated: false, Enabled: true.");
+      const purposes = "(cookies, select_basic_ads, create_ads_profile, select_personalized_ads)";
+      assertNativeMessage("enablePurposeChainTransactions", "Native message: Updated: false, Enabled: $purposes.");
     });
 
-    testWidgets("Disable a single vendor updating the user status", (WidgetTester tester) async {
-      // Start app
-      app.main();
-      await tester.pumpAndSettle();
-
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
-
-      assert(isError == false);
-      assert(isReady == true);
-
-      await DidomiSdk.setUserAgreeToAll();
-      // Disagree
-      await tester.tap(disableVendorTransactionBtnFinder);
-
-      // Wait consent to be updated
-      await Future.delayed(Duration(seconds: 1));
-      await tester.pumpAndSettle();
-
-      assertNativeMessage("disableVendorTransaction", "Native message: Updated: true, Enabled: false.");
-    });
-
-    testWidgets("Disable a single vendor without updating the user status", (WidgetTester tester) async {
+    testWidgets("Disable purposes by chaining calls without updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -118,18 +120,19 @@ void main() {
 
       await DidomiSdk.setUserDisagreeToAll();
       // Disagree
-      await tester.tap(disableVendorTransactionBtnFinder);
+      await tester.tap(disablePurposeChainTransactionsBtnFinder);
 
       // Wait consent to be updated
       await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
-      assertNativeMessage("disableVendorTransaction", "Native message: Updated: false, Enabled: false.");
+      const purposes = "(cookies, select_basic_ads, create_ads_profile, select_personalized_ads)";
+      assertNativeMessage("disablePurposeChainTransactions", "Native message: Updated: false, Disabled: $purposes.");
     });
   });
 
-  group("CurrentUserStatusTransaction - Multiple Vendors", () {
-    testWidgets("Enable multiple vendors updating the user status", (WidgetTester tester) async {
+  group("CurrentUserStatusTransaction - Chain Vendor Transactions", () {
+    testWidgets("Enable vendors by chaining calls updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -144,17 +147,42 @@ void main() {
 
       await DidomiSdk.setUserDisagreeToAll();
       // Agree
-      await tester.ensureVisible(enableVendorsTransactionBtnFinder);
-      await tester.tap(enableVendorsTransactionBtnFinder);
+      await tester.tap(enableVendorChainTransactionsBtnFinder);
 
       // Wait consent to be updated
       await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
-      assertNativeMessage("enableVendorsTransaction", "Native message: Updated: true, Enabled: true.");
+      const vendors = "(152media-Aa6Z6mLC, ipromote, amob-txzcQCyq)";
+      assertNativeMessage("enableVendorChainTransactions", "Native message: Updated: true, Enabled: $vendors.");
     });
 
-    testWidgets("Enable multiple vendors without updating the user status", (WidgetTester tester) async {
+    testWidgets("Disable vendors by chaining calls updating the user status", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      await DidomiSdk.setUserAgreeToAll();
+      // Disagree
+      await tester.tap(disableVendorChainTransactionsBtnFinder);
+
+      // Wait consent to be updated
+      await Future.delayed(Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      const vendors = "(152media-Aa6Z6mLC, ipromote, amob-txzcQCyq)";
+      assertNativeMessage("disableVendorChainTransactions", "Native message: Updated: true, Disabled: $vendors.");
+    });
+
+    testWidgets("Enable vendors by chaining calls without updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -169,40 +197,17 @@ void main() {
 
       await DidomiSdk.setUserAgreeToAll();
       // Agree
-      await tester.tap(enableVendorsTransactionBtnFinder);
+      await tester.tap(enableVendorChainTransactionsBtnFinder);
 
       // Wait consent to be updated
       await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
-      assertNativeMessage("enableVendorsTransaction", "Native message: Updated: false, Enabled: true.");
+      const vendors = "(152media-Aa6Z6mLC, ipromote, amob-txzcQCyq)";
+      assertNativeMessage("enableVendorChainTransactions", "Native message: Updated: false, Enabled: $vendors.");
     });
 
-    testWidgets("Disable multiple vendors updating the user status", (WidgetTester tester) async {
-      // Start app
-      app.main();
-      await tester.pumpAndSettle();
-
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
-
-      assert(isError == false);
-      assert(isReady == true);
-
-      await DidomiSdk.setUserAgreeToAll();
-      // Disagree
-      await tester.tap(disableVendorsTransactionBtnFinder);
-
-      // Wait for consent to be updated
-      await Future.delayed(Duration(seconds: 1));
-      await tester.pumpAndSettle();
-
-      assertNativeMessage("disableVendorsTransaction", "Native message: Updated: true, Enabled: false.");
-    });
-
-    testWidgets("Disable multiple vendors without updating the user status", (WidgetTester tester) async {
+    testWidgets("Disable vendors by chaining calls without updating the user status", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -217,13 +222,14 @@ void main() {
 
       await DidomiSdk.setUserDisagreeToAll();
       // Disagree
-      await tester.tap(disableVendorsTransactionBtnFinder);
+      await tester.tap(disableVendorChainTransactionsBtnFinder);
 
-      // Wait for consent to be updated
+      // Wait consent to be updated
       await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
-      assertNativeMessage("disableVendorsTransaction", "Native message: Updated: false, Enabled: false.");
+      const vendors = "(152media-Aa6Z6mLC, ipromote, amob-txzcQCyq)";
+      assertNativeMessage("disableVendorChainTransactions", "Native message: Updated: false, Disabled: $vendors.");
     });
   });
 }

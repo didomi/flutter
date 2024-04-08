@@ -1,6 +1,4 @@
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
-import 'package:didomi_sdk_example/widgets/transactions/chains/disable_purpose_chain_transactions.dart';
-import 'package:didomi_sdk_example/widgets/transactions/chains/enable_purpose_chain_transactions.dart';
 import 'package:didomi_sdk_example/widgets/transactions/disable_purpose_transaction.dart';
 import 'package:didomi_sdk_example/widgets/transactions/disable_purposes_transaction.dart';
 import 'package:didomi_sdk_example/widgets/transactions/enable_purpose_transaction.dart';
@@ -30,8 +28,6 @@ class HomePage extends StatelessWidget {
             DisablePurposeTransaction(),
             EnablePurposesTransaction(),
             DisablePurposesTransaction(),
-            EnablePurposeChainTransactions(),
-            DisablePurposeChainTransactions()
           ],
         ),
       );
