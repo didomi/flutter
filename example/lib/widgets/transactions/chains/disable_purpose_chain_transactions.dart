@@ -1,6 +1,5 @@
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
-import 'package:didomi_sdk_example/widgets/transactions/constants.dart';
 import 'package:flutter/material.dart';
 
 class DisablePurposeChainTransactions extends StatefulWidget {
