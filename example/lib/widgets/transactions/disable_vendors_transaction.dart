@@ -4,7 +4,7 @@ import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
 import 'package:flutter/material.dart';
 
-/// Widget to call DidomiSdk.openCurrentUserStatusTransaction and disable multiple vendors from the transaction returned.
+/// Widget used to call DidomiSdk.openCurrentUserStatusTransaction and disable multiple vendors from the transaction returned.
 class DisableVendorsTransaction extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _DisableVendorsTransactionState();
@@ -19,12 +19,15 @@ class _DisableVendorsTransactionState extends BaseSampleWidgetState<DisableVendo
 
   @override
   Future<String> callDidomiPlugin() async {
-    final transaction = await DidomiSdk.openCurrentUserStatusTransaction();
     final entity = "ipromote";
-    transaction.disableVendors([entity]);
-    final updated = await transaction.commit();
+
+    final updated = await DidomiSdk.openCurrentUserStatusTransaction()
+        .disableVendors([entity])
+        .commit();
+
     final status = await DidomiSdk.currentUserStatus;
     final enabled = status.vendors?[entity]?.enabled;
+
     return "Updated: $updated, Enabled: $enabled.";
   }
 }

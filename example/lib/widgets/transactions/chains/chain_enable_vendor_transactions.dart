@@ -3,17 +3,18 @@ import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
 import 'package:didomi_sdk_example/widgets/transactions/constants.dart';
 import 'package:flutter/material.dart';
 
-class EnableVendorChainTransactions extends StatefulWidget {
+/// Widget used to call DidomiSdk.openCurrentUserStatusTransaction and enable vendors using chain calls from the transaction returned.
+class ChainEnableVendorTransactions extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _EnableVendorChainTransactionsState();
+  State<StatefulWidget> createState() => _ChainEnableVendorTransactionsState();
 }
 
-class _EnableVendorChainTransactionsState extends BaseSampleWidgetState<EnableVendorChainTransactions> {
+class _ChainEnableVendorTransactionsState extends BaseSampleWidgetState<ChainEnableVendorTransactions> {
   @override
-  String getButtonName() => "EnableVendorChainTransactions";
+  String getButtonName() => "ChainEnableVendorTransactions";
 
   @override
-  String getActionId() => "enableVendorChainTransactions";
+  String getActionId() => "chainEnableVendorTransactions";
 
   @override
   Future<String> callDidomiPlugin() async {
@@ -22,7 +23,8 @@ class _EnableVendorChainTransactionsState extends BaseSampleWidgetState<EnableVe
     final vendor1 = "152media-Aa6Z6mLC";
     final vendor2 = "ipromote";
     final vendor3 = "amob-txzcQCyq";
-    final vendors = [vendor1, vendor2, vendor3];
+
+    final ids = [vendor1, vendor2, vendor3];
 
     final updated = await transaction.enableVendor(vendor1)
         .enableVendor(vendor2)
@@ -31,7 +33,8 @@ class _EnableVendorChainTransactionsState extends BaseSampleWidgetState<EnableVe
         .commit();
 
     final status = await DidomiSdk.currentUserStatus;
-    final enabled = vendors.map((e) => status.vendors?[e]?.enabled == true ? e : "");
-    return "Updated: $updated, Enabled: $enabled.";
+    final enabledIds = ids.map((id) => status.vendors?[id]?.enabled == true ? id : "");
+
+    return "Updated: $updated, Enabled: $enabledIds.";
   }
 }

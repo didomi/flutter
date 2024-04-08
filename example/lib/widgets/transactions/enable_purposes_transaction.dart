@@ -4,7 +4,7 @@ import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
 import 'package:flutter/material.dart';
 
-/// Widget to call DidomiSdk.openCurrentUserStatusTransaction and enable multiple purposes from the transaction returned.
+/// Widget used to call DidomiSdk.openCurrentUserStatusTransaction and enable multiple purposes from the transaction returned.
 class EnablePurposesTransaction extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _EnablePurposesTransactionState();
@@ -19,10 +19,12 @@ class _EnablePurposesTransactionState extends BaseSampleWidgetState<EnablePurpos
 
   @override
   Future<String> callDidomiPlugin() async {
-    final transaction = await DidomiSdk.openCurrentUserStatusTransaction();
     final entity = "cookies";
-    transaction.enablePurposes([entity]);
-    final updated = await transaction.commit();
+
+    final updated = await DidomiSdk.openCurrentUserStatusTransaction()
+        .enablePurposes([entity])
+        .commit();
+
     final status = await DidomiSdk.currentUserStatus;
     final enabled = status.purposes?[entity]?.enabled;
     return "Updated: $updated, Enabled: $enabled.";

@@ -1,8 +1,8 @@
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
-import 'package:didomi_sdk_example/widgets/transactions/chains/disable_purpose_chain_transactions.dart';
-import 'package:didomi_sdk_example/widgets/transactions/chains/disable_vendor_chain_transactions.dart';
-import 'package:didomi_sdk_example/widgets/transactions/chains/enable_purpose_chain_transactions.dart';
-import 'package:didomi_sdk_example/widgets/transactions/chains/enable_vendor_chain_transactions.dart';
+import 'package:didomi_sdk_example/widgets/transactions/chains/chain_disable_purpose_transactions.dart';
+import 'package:didomi_sdk_example/widgets/transactions/chains/chain_disable_vendor_transactions.dart';
+import 'package:didomi_sdk_example/widgets/transactions/chains/chain_enable_purpose_transactions.dart';
+import 'package:didomi_sdk_example/widgets/transactions/chains/chain_enable_vendor_transactions.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(SampleForChainingTransactionsTestsApp());
@@ -24,10 +24,10 @@ class HomePage extends StatelessWidget {
             InitializeSmall(),
             // Transactions
             Text("Transactions:"),
-            EnablePurposeChainTransactions(),
-            DisablePurposeChainTransactions(),
-            EnableVendorChainTransactions(),
-            DisableVendorChainTransactions(),
+            ChainEnablePurposeTransactions(),
+            ChainDisablePurposeTransactions(),
+            ChainEnableVendorTransactions(),
+            ChainDisableVendorTransactions(),
           ],
         ),
       );

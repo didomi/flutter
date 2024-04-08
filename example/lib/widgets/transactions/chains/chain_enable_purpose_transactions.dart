@@ -2,17 +2,18 @@ import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
 import 'package:flutter/material.dart';
 
-class EnablePurposeChainTransactions extends StatefulWidget {
+/// Widget used to call DidomiSdk.openCurrentUserStatusTransaction and enable purposes using chain calls from the transaction returned.
+class ChainEnablePurposeTransactions extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _EnablePurposeChainTransactionsState();
+  State<StatefulWidget> createState() => _ChainEnablePurposeTransactionsState();
 }
 
-class _EnablePurposeChainTransactionsState extends BaseSampleWidgetState<EnablePurposeChainTransactions> {
+class _ChainEnablePurposeTransactionsState extends BaseSampleWidgetState<ChainEnablePurposeTransactions> {
   @override
-  String getButtonName() => "EnablePurposeChainTransactions";
+  String getButtonName() => "ChainEnablePurposeTransactions";
 
   @override
-  String getActionId() => "enablePurposeChainTransactions";
+  String getActionId() => "chainEnablePurposeTransactions";
 
   @override
   Future<String> callDidomiPlugin() async {
@@ -22,7 +23,8 @@ class _EnablePurposeChainTransactionsState extends BaseSampleWidgetState<EnableP
     final purpose2 = "select_basic_ads";
     final purpose3 = "create_ads_profile";
     final purpose4 = "select_personalized_ads";
-    final purposes = [purpose1, purpose2, purpose3, purpose4];
+
+    final ids = [purpose1, purpose2, purpose3, purpose4];
 
     final updated = await transaction.enablePurpose(purpose1)
         .enablePurpose(purpose2)
@@ -30,7 +32,8 @@ class _EnablePurposeChainTransactionsState extends BaseSampleWidgetState<EnableP
         .commit();
 
     final status = await DidomiSdk.currentUserStatus;
-    final enabled = purposes.map((e) => status.purposes?[e]?.enabled == true ? e : "");
-    return "Updated: $updated, Enabled: $enabled.";
+    final enabledIds = ids.map((id) => status.purposes?[id]?.enabled == true ? id : "");
+
+    return "Updated: $updated, Enabled: $enabledIds.";
   }
 }

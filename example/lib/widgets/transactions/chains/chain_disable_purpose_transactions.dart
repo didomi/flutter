@@ -2,17 +2,18 @@ import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
 import 'package:flutter/material.dart';
 
-class DisablePurposeChainTransactions extends StatefulWidget {
+/// Widget used to call DidomiSdk.openCurrentUserStatusTransaction and disable purposes using chain calls from the transaction returned.
+class ChainDisablePurposeTransactions extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _DisablePurposeChainTransactionsState();
+  State<StatefulWidget> createState() => _ChainDisablePurposeTransactionsState();
 }
 
-class _DisablePurposeChainTransactionsState extends BaseSampleWidgetState<DisablePurposeChainTransactions> {
+class _ChainDisablePurposeTransactionsState extends BaseSampleWidgetState<ChainDisablePurposeTransactions> {
   @override
-  String getButtonName() => "DisablePurposeChainTransactions";
+  String getButtonName() => "ChainDisablePurposeTransactions";
 
   @override
-  String getActionId() => "disablePurposeChainTransactions";
+  String getActionId() => "chainDisablePurposeTransactions";
 
   @override
   Future<String> callDidomiPlugin() async {
@@ -22,7 +23,8 @@ class _DisablePurposeChainTransactionsState extends BaseSampleWidgetState<Disabl
     final purpose2 = "select_basic_ads";
     final purpose3 = "create_ads_profile";
     final purpose4 = "select_personalized_ads";
-    final purposes = [purpose1, purpose2, purpose3, purpose4];
+
+    final ids = [purpose1, purpose2, purpose3, purpose4];
 
     final updated = await transaction.disablePurpose(purpose1)
         .disablePurpose(purpose2)
@@ -30,7 +32,8 @@ class _DisablePurposeChainTransactionsState extends BaseSampleWidgetState<Disabl
         .commit();
 
     final status = await DidomiSdk.currentUserStatus;
-    final disabled = purposes.map((e) => status.purposes?[e]?.enabled == false ? e : "");
-    return "Updated: $updated, Disabled: $disabled.";
+    final disabledIds = ids.map((id) => status.purposes?[id]?.enabled == false ? id : "");
+
+    return "Updated: $updated, Disabled: $disabledIds.";
   }
 }
