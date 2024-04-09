@@ -182,6 +182,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "stopListeningToVendorStatus" -> stopListeningToVendorStatus(call, result)
 
+                "commitCurrentUserStatusTransaction" -> commitCurrentUserStatusTransaction(call, result)
+
                 else -> result.notImplemented()
             }
         } catch (e: Exception) {
@@ -663,5 +665,40 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             return null
         }
         return argument
+    }
+
+    /**
+     * Here all the changes to the user status related to purposes and vendors are applied and committed at once.
+     */
+    private fun commitCurrentUserStatusTransaction(call: MethodCall, result: Result) {
+        try {
+            val enabledPurposes = argumentAsArray("enabledPurposes", call)
+            val disabledPurposes = argumentAsArray("disabledPurposes", call)
+            val enabledVendors = argumentAsArray("enabledVendors", call)
+            val disabledVendors = argumentAsArray("disabledVendors", call)
+
+            val updated = Didomi.getInstance().openCurrentUserStatusTransaction()
+                .enablePurposes(*enabledPurposes)
+                .disablePurposes(*disabledPurposes)
+                .enableVendors(*enabledVendors)
+                .disableVendors(*disabledVendors)
+                .commit()
+            
+            result.success(updated)
+
+        } catch (e: DidomiNotReadyException) {
+            result.error("openCurrentUserStatusTransaction", e.message.orEmpty(), e)
+        }
+    }
+
+    private fun argumentAsArray(argumentName: String, call: MethodCall): Array<String> {
+        val argument = call.argument<List<String>?>(argumentName)
+        val array = argument?.toTypedArray()
+
+        if (array.isNullOrEmpty()) {
+            return emptyArray()
+        }
+
+        return array
     }
 }

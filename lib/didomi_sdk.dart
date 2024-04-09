@@ -7,6 +7,7 @@ import 'package:didomi_sdk/entities/purpose.dart';
 import 'package:didomi_sdk/entities/user_status.dart';
 import 'package:didomi_sdk/entities/vendor.dart';
 import 'package:didomi_sdk/parameters/user_auth_params.dart';
+import 'package:didomi_sdk/transactions/current_user_status_transaction.dart';
 import 'package:flutter/services.dart';
 
 import 'constants.dart';
@@ -354,5 +355,29 @@ class DidomiSdk {
         "expiration": parameters.expiration
       });
     }
+  }
+
+  /// Creates a `CurrentUserStatusTransaction` object.
+  /// This object provides mechanisms to stage updates to the user status regarding purposes and vendors, allowing for batch operations.
+  /// Updates made through its methods are queued and applied simultaneously to the user status only once the commit method of the returned object is called.
+  ///
+  /// Returns a new `CurrentUserStatusTransaction` object.
+  static CurrentUserStatusTransaction openCurrentUserStatusTransaction() {
+    // Callback used to pass the changes made through a transaction object to the native SDK.
+    Future<bool> _transactionCallback(
+      List<String> enabledPurposes,
+      List<String> disabledPurposes,
+      List<String> enabledVendors,
+      List<String> disabledVendors,
+    ) async {
+      return await _channel.invokeMethod("commitCurrentUserStatusTransaction", {
+        "enabledPurposes": enabledPurposes,
+        "disabledPurposes": disabledPurposes,
+        "enabledVendors": enabledVendors,
+        "disabledVendors": disabledVendors,
+      });
+    }
+
+    return CurrentUserStatusTransaction(_transactionCallback);
   }
 }
