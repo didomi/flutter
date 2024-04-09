@@ -363,19 +363,21 @@ class DidomiSdk {
   ///
   /// Returns a new `CurrentUserStatusTransaction` object.
   static CurrentUserStatusTransaction openCurrentUserStatusTransaction() {
-    return new CurrentUserStatusTransaction(_transactionCallback);
-  }
-
-  static Future<bool> _transactionCallback(
+    // Callback used to pass the changes made through a transaction object to the native SDK.
+    Future<bool> _transactionCallback(
       List<String> enabledPurposes,
       List<String> disabledPurposes,
       List<String> enabledVendors,
-      List<String> disabledVendors) async {
-    return await _channel.invokeMethod("commitCurrentUserStatusTransaction", {
-      "enabledPurposes": enabledPurposes,
-      "disabledPurposes": disabledPurposes,
-      "enabledVendors": enabledVendors,
-      "disabledVendors": disabledVendors
-    });
+      List<String> disabledVendors,
+    ) async {
+      return await _channel.invokeMethod("commitCurrentUserStatusTransaction", {
+        "enabledPurposes": enabledPurposes,
+        "disabledPurposes": disabledPurposes,
+        "enabledVendors": enabledVendors,
+        "disabledVendors": disabledVendors,
+      });
+    }
+
+    return CurrentUserStatusTransaction(_transactionCallback);
   }
 }
