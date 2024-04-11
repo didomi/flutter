@@ -1,5 +1,9 @@
 # Release Note
 
+## 2.2.0
+- Update latest versions of native Android (2.4.0) and iOS (2.4.0) sdks
+- Implement new public function `openCurrentUserStatusTransaction()`.
+
 ## 2.1.0
 - Update latest versions of native Android (2.2.0) and iOS (2.2.0) sdks
 - Support new methods `addVendorStatusListener` and `removeVendorStatusListener`
