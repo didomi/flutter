@@ -212,10 +212,22 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     }
     
     func setupUI(result: @escaping FlutterResult) {
-        let viewController: UIViewController =
-            (UIApplication.shared.delegate?.window??.rootViewController)!
-        Didomi.shared.setupUI(containerController: viewController)
+        let viewController: UIViewController? = getViewController()
+        if(viewController == nil) {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return;
+        }
+        Didomi.shared.setupUI(containerController: viewController!)
         result(nil)
+    }
+    
+    private func getViewController() -> UIViewController? {
+        guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }),
+                  let viewController = window.rootViewController else {
+            return nil;
+            }
+        
+        return viewController
     }
 
     func reset(result: @escaping FlutterResult) {
@@ -259,7 +271,11 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             return
         }
 
-        let viewController: UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!
+        let viewController: UIViewController? = getViewController()
+        if(viewController == nil) {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return;
+        }
         guard let args = call.arguments as? Dictionary<String, Any> else {
             result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for initialize", details: nil))
             return
@@ -277,7 +293,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             view = .purposes
         }
 
-        Didomi.shared.showPreferences(controller: viewController, view: view)
+        Didomi.shared.showPreferences(controller: viewController!, view: view)
         result(nil)
     }
 
@@ -667,7 +683,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             return
         }
 
-        if let viewController: UIViewController = UIApplication.shared.delegate?.window??.rootViewController {
+        if let viewController: UIViewController = getViewController() {
             Didomi.shared.setUser(id: userId, containerController: viewController)
         } else {
             Didomi.shared.setUser(id: userId)
@@ -754,7 +770,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
                 salt: salt)
         }
 
-        if let viewController: UIViewController = UIApplication.shared.delegate?.window??.rootViewController {
+        if let viewController: UIViewController = getViewController() {
             Didomi.shared.setUser(userAuthParams: parameters, containerController: viewController)
         } else {
             Didomi.shared.setUser(userAuthParams: parameters)
@@ -834,7 +850,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
                 secretID: secretId,
                 initializationVector: initializationVector)
         }
-        if let viewController: UIViewController = UIApplication.shared.delegate?.window??.rootViewController {
+        if let viewController: UIViewController = getViewController() {
             Didomi.shared.setUser(userAuthParams: parameters, containerController: viewController)
         } else {
             Didomi.shared.setUser(userAuthParams: parameters)
