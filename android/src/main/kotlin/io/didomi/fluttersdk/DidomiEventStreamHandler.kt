@@ -12,6 +12,10 @@ import io.didomi.sdk.models.CurrentUserStatus.VendorStatus
 class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener {
 
     private var eventSink: EventChannel.EventSink? = null
+    // We keep reference of all the Sync Ready events being registered so we can call their respective syncAcknowledged callback from the Flutter side through a method channel.
+    private var syncReadyEventReferences: MutableMap<Int, SyncReadyEvent> = mutableMapOf()
+    // Index used to keep track of the Sync Ready events being registered.
+    private var syncReadyEventIndex: Int = 0
 
     override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
         this.eventSink = events
@@ -197,6 +201,12 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
         sendEvent("onConsentChanged")
     }
 
+    override fun syncReady(event: SyncReadyEvent) {
+        syncReadyEventIndex++
+        syncReadyEventReferences.put(syncReadyEventIndex, event)
+        sendEvent("onSyncReady", mapOf("statusApplied" to event.statusApplied, "syncReadyEventIndex" to syncReadyEventIndex))
+    }
+
     override fun syncDone(event: SyncDoneEvent) {
         sendEvent("onSyncDone", mapOf("organizationUserId" to event.organizationUserId))
     }
@@ -234,5 +244,19 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
         val event = mutableMapOf<String, Any?>("type" to eventType)
         arguments?.also { event.putAll(it) }
         this.eventSink?.success(event)
+    }
+
+    fun executeSyncAcknowledgedCallback(index: Int): Boolean {
+        val eventWasSet = syncReadyEventReferences[index]?.syncAcknowledged?.invoke()
+        clearSyncReadyEventReference(index)
+        return eventWasSet ?: false
+    }
+
+    fun clearSyncReadyEventReference(index: Int) {
+        syncReadyEventReferences.remove(index)
+    }
+
+    fun clearSyncReadyEventReferences() {
+        syncReadyEventReferences.clear()
     }
 }

@@ -131,6 +131,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             stopListeningToVendorStatus(call, result: result)
         case "commitCurrentUserStatusTransaction":
             commitCurrentUserStatusTransaction(call, result: result)
+        case "executeSyncAcknowledgedCallback":
+            executeSyncAcknowledgedCallback(call, result: result)
 
         default:
             result(FlutterMethodNotImplemented)
@@ -639,6 +641,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     }
 
     func clearUser(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        SwiftDidomiSdkPlugin.eventStreamHandler?.clearSyncReadyEventReferences()
         Didomi.shared.clearUser()
         result(nil)
     }
@@ -911,5 +914,22 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             .commit()
         
         result(updated)
+    }
+
+    /// Execute the syncAcknowledgedCallback method of the Didomi SDK
+    func executeSyncAcknowledgedCallback(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+            guard let args = call.arguments as? Dictionary<String, Int>,
+            let callbackIndex = args["syncReadyEventIndex"] else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for commitCurrentUserStatusTransaction", details: nil))
+                return
+            }
+
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+
+        let eventWasSent = SwiftDidomiSdkPlugin.eventStreamHandler?.executeSyncAcknowledgedCallback(index: callbackIndex) ?? false
+        result(eventWasSent)
     }
 }

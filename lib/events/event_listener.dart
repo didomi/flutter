@@ -1,3 +1,5 @@
+import 'package:didomi_sdk/events/sync_ready_event.dart';
+
 /// Listener to events sent by the Didomi SDK
 class EventListener {
   /*
@@ -132,7 +134,11 @@ class EventListener {
   /// User consent was updated
   dynamic Function() onConsentChanged = () {};
 
+  /// User consent synchronization is ready
+  dynamic Function(SyncReadyEvent event) onSyncReady = (event) {};
+
   /// User consent synchronization was done
+  @Deprecated('Use [onSyncReady] instead')
   dynamic Function(String organizationUserId) onSyncDone = (organizationUserId) {};
 
   /// User consent synchronization failed

@@ -1,5 +1,6 @@
 import 'package:didomi_sdk/constants.dart';
 import 'package:didomi_sdk/entities/current_user_status.dart';
+import 'package:didomi_sdk/events/sync_ready_event.dart';
 import 'package:flutter/services.dart';
 
 import 'event_listener.dart';
@@ -7,6 +8,8 @@ import 'event_listener.dart';
 /// Handler for events emitted by native SDK
 class EventsHandler {
   static const EventChannel _eventChannel = EventChannel(eventsChannelName);
+  // Reference to the channel so we can call methods on the native side.
+  MethodChannel _channel;
   List<EventListener> listeners = [];
 
   List<Function()> onReadyCallbacks = [];
@@ -15,7 +18,7 @@ class EventsHandler {
 
   Map<String, List<Function(VendorStatus)>> vendorStatusListeners = {};
 
-  EventsHandler() {
+  EventsHandler(this._channel) {
     _eventChannel.receiveBroadcastStream().listen(handleDidomiEvent, onError: handleDidomiErrorEvent);
   }
 
@@ -271,6 +274,20 @@ class EventsHandler {
       case "onConsentChanged":
         for (var listener in listeners) {
           listener.onConsentChanged();
+        }
+        break;
+
+      case "onSyncReady":
+        for (var listener in listeners) {
+          final SyncReadyEvent newEvent = SyncReadyEvent(
+            event["statusApplied"],
+            () async {
+              // This method allows us to call syncAcknowledged from the flutter side.
+              // We need to send the Sync Ready Event Index to the native side so native knows which event needs to trigger the syncAcknowledged callback.
+              return await _channel.invokeMethod("executeSyncAcknowledgedCallback", {"syncReadyEventIndex": event["syncReadyEventIndex"]});
+            }
+          );
+          listener.onSyncReady(newEvent);
         }
         break;
 

@@ -19,7 +19,7 @@ import 'preferences_view.dart';
 /// Didomi SDK Plugin
 class DidomiSdk {
   static const MethodChannel _channel = const MethodChannel(methodsChannelName);
-  static EventsHandler _eventsHandler = EventsHandler();
+  static EventsHandler _eventsHandler = EventsHandler(_channel);
 
   /// Initialize the SDK
   static Future<void> initialize(String apiKey,
