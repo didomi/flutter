@@ -924,8 +924,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     /// Execute the syncAcknowledgedCallback method of the Didomi SDK
     func executeSyncAcknowledgedCallback(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
             guard let args = call.arguments as? Dictionary<String, Int>,
-            let callbackIndex = args["syncReadyEventIndex"] else {
-                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for commitCurrentUserStatusTransaction", details: nil))
+                  let syncReadyEventIndex = args["syncReadyEventIndex"] else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for executeSyncAcknowledgedCallback", details: nil))
                 return
             }
 
@@ -934,7 +934,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             return
         }
 
-        let eventWasSent = SwiftDidomiSdkPlugin.eventStreamHandler?.executeSyncAcknowledgedCallback(index: callbackIndex) ?? false
+        let eventWasSent = SwiftDidomiSdkPlugin.eventStreamHandler?.executeSyncAcknowledgedCallback(index: syncReadyEventIndex) ?? false
         result(eventWasSent)
     }
 }

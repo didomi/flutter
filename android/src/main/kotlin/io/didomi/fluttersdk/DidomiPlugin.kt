@@ -694,10 +694,11 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
     }
 
+    // Execute the syncAcknowledgedCallback method of the Didomi SDK
     private fun executeSyncAcknowledgedCallback(call: MethodCall, result: Result) {
         try {
-            val argument = call.argument("syncReadyEventIndex") as? Int
-            argument?.also {
+            val syncReadyEventIndex = call.argument("syncReadyEventIndex") as? Int
+            syncReadyEventIndex?.also {
                 result.success(eventStreamHandler.executeSyncAcknowledgedCallback(it))
             } ?: run {
                 result.error("executeSyncAcknowledgedCallback", "Missing argument syncReadyEventIndex", null)

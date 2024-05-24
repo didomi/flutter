@@ -12,7 +12,7 @@ import io.didomi.sdk.models.CurrentUserStatus.VendorStatus
 class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener {
 
     private var eventSink: EventChannel.EventSink? = null
-    // We keep reference of all the Sync Ready events being registered so we can call their respective syncAcknowledged callback from the Flutter side through a method channel.
+    // We keep references to all the Sync Ready events being registered so we can call their respective syncAcknowledged callback from the Flutter side through a method channel.
     private var syncReadyEventReferences: MutableMap<Int, SyncReadyEvent> = mutableMapOf()
     // Index used to keep track of the Sync Ready events being registered.
     private var syncReadyEventIndex: Int = 0
@@ -246,16 +246,19 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
         this.eventSink?.success(event)
     }
 
+    // Request to execute a specific syncAcknowledged callback. It returns **true** if the API Event was sent, **false** otherwise.
     fun executeSyncAcknowledgedCallback(index: Int): Boolean {
-        val eventWasSet = syncReadyEventReferences[index]?.syncAcknowledged?.invoke()
+        val eventWasSent = syncReadyEventReferences[index]?.syncAcknowledged?.invoke()
         clearSyncReadyEventReference(index)
-        return eventWasSet ?: false
+        return eventWasSent ?: false
     }
 
+    // Remove a specific reference to a Sync Ready Event
     fun clearSyncReadyEventReference(index: Int) {
         syncReadyEventReferences.remove(index)
     }
 
+    // Clear all the references to the Sync Ready Events
     fun clearSyncReadyEventReferences() {
         syncReadyEventReferences.clear()
     }

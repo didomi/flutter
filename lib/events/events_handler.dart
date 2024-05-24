@@ -282,7 +282,7 @@ class EventsHandler {
           final SyncReadyEvent newEvent = SyncReadyEvent(
             event["statusApplied"],
             () async {
-              // This method allows us to call syncAcknowledged from the flutter side.
+              // This method allows us to execute the syncAcknowledged callback from the flutter side.
               // We need to send the Sync Ready Event Index to the native side so native knows which event needs to trigger the syncAcknowledged callback.
               return await _channel.invokeMethod("executeSyncAcknowledgedCallback", {"syncReadyEventIndex": event["syncReadyEventIndex"]});
             }

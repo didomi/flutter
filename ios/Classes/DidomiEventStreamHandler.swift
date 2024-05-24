@@ -12,7 +12,7 @@ import Didomi
 class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
     
     private var eventSink: FlutterEventSink?
-    // We keep reference of all the Sync Ready events being registered so we can call their respective syncAcknowledged callback from the Flutter side through a method channel.
+    // We keep references to all the Sync Ready events being registered so we can call their respective syncAcknowledged callback from the Flutter side through a method channel.
     private var syncReadyEventReferences: [Int: SyncReadyEvent] = [:]
     // Index used to keep track of the Sync Ready events being registered.
     private var syncReadyEventIndex: Int = 0
@@ -197,11 +197,11 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
         }
     }
 
-    // Request to execute the syncAcknowledged callback.
+    // Request to execute a specific syncAcknowledged callback. It returns **true** if the API Event was sent, **false** otherwise.
     func executeSyncAcknowledgedCallback(index: Int) -> Bool {
-        let returnValue: Bool? = syncReadyEventReferences[index]?.syncAcknowledged()
+        let eventWasSent: Bool? = syncReadyEventReferences[index]?.syncAcknowledged()
         clearSyncReadyEventReference(index: index)
-        return returnValue ?? false
+        return eventWasSent ?? false
     }
 
     // Nullify a specific reference to a Sync Ready Event
