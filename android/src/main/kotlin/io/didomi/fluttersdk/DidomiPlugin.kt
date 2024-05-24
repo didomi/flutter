@@ -583,6 +583,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 salt = call.argument("salt") as? String,
                 expiration = call.argument("expiration") as? Long
             ),
+            null,
             getFragmentActivity(result)
         )
         result.success(null)
@@ -630,6 +631,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 initializationVector = initializationVector,
                 expiration = call.argument("expiration") as? Long
             ),
+            null,
             getFragmentActivity(result)
         )
         result.success(null)
