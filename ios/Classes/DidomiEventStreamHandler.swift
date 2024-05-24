@@ -12,6 +12,10 @@ import Didomi
 class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
     
     private var eventSink: FlutterEventSink?
+    // We keep references to all the Sync Ready events being registered so we can call their respective syncAcknowledged callback from the Flutter side through a method channel.
+    private var syncReadyEventReferences: [Int: SyncReadyEvent] = [:]
+    // Index used to keep track of the Sync Ready events being registered.
+    private var syncReadyEventIndex: Int = 0
     let eventListener = EventListener()
     
     override init() {
@@ -136,6 +140,14 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
         eventListener.onConsentChanged = { [weak self] event in
             self?.sendEvent(eventType: "onConsentChanged")
         }
+        eventListener.onSyncReady = { [weak self] event in
+            guard let strongSelf = self else {
+                return
+            }
+            strongSelf.syncReadyEventIndex += 1
+            strongSelf.syncReadyEventReferences[strongSelf.syncReadyEventIndex] = event
+            strongSelf.sendEvent(eventType: "onSyncReady", arguments: ["statusApplied": event.statusApplied, "syncReadyEventIndex": strongSelf.syncReadyEventIndex])
+        }
         eventListener.onSyncDone = { [weak self] event, organizationUserId in
             self?.sendEvent(eventType: "onSyncDone", arguments: ["organizationUserId": organizationUserId])
         }
@@ -183,5 +195,22 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
         DispatchQueue.main.async {
             self.eventSink?(eventDictionary)
         }
+    }
+
+    // Request to execute a specific syncAcknowledged callback. It returns **true** if the API Event was sent, **false** otherwise.
+    func executeSyncAcknowledgedCallback(index: Int) -> Bool {
+        let eventWasSent: Bool? = syncReadyEventReferences[index]?.syncAcknowledged()
+        clearSyncReadyEventReference(index: index)
+        return eventWasSent ?? false
+    }
+
+    // Nullify a specific reference to a Sync Ready Event
+    func clearSyncReadyEventReference(index: Int) {
+        syncReadyEventReferences[index] = nil
+    }
+
+    // Nullify all the references to the Sync Ready Events
+    func clearSyncReadyEventReferences() {
+        syncReadyEventReferences = [:]
     }
 }

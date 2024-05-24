@@ -131,6 +131,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             stopListeningToVendorStatus(call, result: result)
         case "commitCurrentUserStatusTransaction":
             commitCurrentUserStatusTransaction(call, result: result)
+        case "executeSyncAcknowledgedCallback":
+            executeSyncAcknowledgedCallback(call, result: result)
 
         default:
             result(FlutterMethodNotImplemented)
@@ -212,10 +214,12 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     }
     
     func setupUI(result: @escaping FlutterResult) {
-        let viewController: UIViewController =
-            (UIApplication.shared.delegate?.window??.rootViewController)!
-        Didomi.shared.setupUI(containerController: viewController)
-        result(nil)
+        if let viewController = UIApplication.shared.rootViewController {
+            Didomi.shared.setupUI(containerController: viewController)
+            result(nil)
+        } else {
+            result(FlutterError.init(code: "nil_root_view_controller", message: "Root view controller is nil", details: nil))
+        }
     }
 
     func reset(result: @escaping FlutterResult) {
@@ -259,7 +263,6 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             return
         }
 
-        let viewController: UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!
         guard let args = call.arguments as? Dictionary<String, Any> else {
             result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for initialize", details: nil))
             return
@@ -277,8 +280,12 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             view = .purposes
         }
 
-        Didomi.shared.showPreferences(controller: viewController, view: view)
-        result(nil)
+        if let viewController = UIApplication.shared.rootViewController {
+            Didomi.shared.showPreferences(controller: viewController, view: view)
+            result(nil)
+        } else {
+            result(FlutterError.init(code: "nil_root_view_controller", message: "Root view controller is nil", details: nil))
+        }
     }
 
     func hidePreferences(result: @escaping FlutterResult) {
@@ -639,6 +646,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     }
 
     func clearUser(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        SwiftDidomiSdkPlugin.eventStreamHandler?.clearSyncReadyEventReferences()
         Didomi.shared.clearUser()
         result(nil)
     }
@@ -667,7 +675,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             return
         }
 
-        if let viewController: UIViewController = UIApplication.shared.delegate?.window??.rootViewController {
+        if let viewController: UIViewController = UIApplication.shared.rootViewController {
             Didomi.shared.setUser(id: userId, containerController: viewController)
         } else {
             Didomi.shared.setUser(id: userId)
@@ -754,7 +762,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
                 salt: salt)
         }
 
-        if let viewController: UIViewController = UIApplication.shared.delegate?.window??.rootViewController {
+        if let viewController: UIViewController = UIApplication.shared.rootViewController {
             Didomi.shared.setUser(userAuthParams: parameters, containerController: viewController)
         } else {
             Didomi.shared.setUser(userAuthParams: parameters)
@@ -834,7 +842,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
                 secretID: secretId,
                 initializationVector: initializationVector)
         }
-        if let viewController: UIViewController = UIApplication.shared.delegate?.window??.rootViewController {
+        if let viewController: UIViewController = UIApplication.shared.rootViewController {
             Didomi.shared.setUser(userAuthParams: parameters, containerController: viewController)
         } else {
             Didomi.shared.setUser(userAuthParams: parameters)
@@ -911,5 +919,35 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             .commit()
         
         result(updated)
+    }
+
+    /// Execute the syncAcknowledgedCallback method of the Didomi SDK
+    func executeSyncAcknowledgedCallback(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+            guard let args = call.arguments as? Dictionary<String, Int>,
+                  let syncReadyEventIndex = args["syncReadyEventIndex"] else {
+                result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for executeSyncAcknowledgedCallback", details: nil))
+                return
+            }
+
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+
+        let eventWasSent = SwiftDidomiSdkPlugin.eventStreamHandler?.executeSyncAcknowledgedCallback(index: syncReadyEventIndex) ?? false
+        result(eventWasSent)
+    }
+}
+
+extension UIApplication {
+    // Computed property to get the root view controller of the application
+    var rootViewController: UIViewController? {
+        if let viewController = UIApplication.shared.delegate?.window??.rootViewController {
+            return viewController
+        }
+        if let viewController = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController {
+            return viewController
+        }
+        return nil
     }
 }

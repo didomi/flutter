@@ -129,6 +129,9 @@ class EventsHelper {
     didomiListener.onConsentChanged = () {
       onEvent("Consent has changed");
     };
+    didomiListener.onSyncReady = (event) async {
+      onEvent("Sync is ready. StatusApplied: ${event.statusApplied}");
+    };
     didomiListener.onSyncDone = (organizationUserId) {
       onEvent("Sync has been done for user $organizationUserId");
     };

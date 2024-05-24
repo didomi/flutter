@@ -32,7 +32,7 @@ android {
     buildToolsVersion = "33.0.2"
 
     defaultConfig {
-        minSdkVersion = 19
+        minSdkVersion = 21
         targetSdkVersion(33)
 
         versionCode = flutterVersionCode.toInteger()

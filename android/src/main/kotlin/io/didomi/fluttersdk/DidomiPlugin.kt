@@ -184,6 +184,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "commitCurrentUserStatusTransaction" -> commitCurrentUserStatusTransaction(call, result)
 
+                "executeSyncAcknowledgedCallback" -> executeSyncAcknowledgedCallback(call, result)
+
                 else -> result.notImplemented()
             }
         } catch (e: Exception) {
@@ -518,6 +520,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun getListArgAsSet(call: MethodCall, key: String) = (call.argument(key) as? List<String>)?.toSet() ?: emptySet()
 
     private fun clearUser(call: MethodCall, result: Result) {
+        eventStreamHandler.clearSyncReadyEventReferences();
         Didomi.getInstance().clearUser()
         result.success(null)
     }
@@ -580,6 +583,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 salt = call.argument("salt") as? String,
                 expiration = call.argument("expiration") as? Long
             ),
+            null,
             getFragmentActivity(result)
         )
         result.success(null)
@@ -627,6 +631,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 initializationVector = initializationVector,
                 expiration = call.argument("expiration") as? Long
             ),
+            null,
             getFragmentActivity(result)
         )
         result.success(null)
@@ -688,6 +693,21 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
         } catch (e: DidomiNotReadyException) {
             result.error("openCurrentUserStatusTransaction", e.message.orEmpty(), e)
+        }
+    }
+
+    // Execute the syncAcknowledgedCallback method of the Didomi SDK
+    private fun executeSyncAcknowledgedCallback(call: MethodCall, result: Result) {
+        try {
+            val syncReadyEventIndex = call.argument("syncReadyEventIndex") as? Int
+            syncReadyEventIndex?.also {
+                result.success(eventStreamHandler.executeSyncAcknowledgedCallback(it))
+            } ?: run {
+                result.error("executeSyncAcknowledgedCallback", "Missing argument syncReadyEventIndex", null)
+            }
+
+        } catch (e: DidomiNotReadyException) {
+            result.error("executeSyncAcknowledgedCallback", e.message.orEmpty(), e)
         }
     }
 

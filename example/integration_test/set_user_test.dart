@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
+import 'package:didomi_sdk/events/sync_ready_event.dart';
 import 'package:didomi_sdk_example/testapps/sample_for_set_user_tests.dart' as app;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -26,11 +27,13 @@ void main() {
   final withExpiration = find.byKey(Key("setUserWithExpiration"));
   final withSetupUI = find.byKey(Key("setUserAndSetupUI"));
   final submitSetUser = find.byKey(Key("setUser"));
+  final reset = find.byKey(Key("reset"));
 
   String? syncUserId;
   bool isReady = false;
   bool syncError = false;
   bool consentChanged = false;
+  SyncReadyEvent? syncReadyEvent;
 
   final listener = EventListener();
   listener.onReady = () {
@@ -40,12 +43,17 @@ void main() {
     syncUserId = null;
     syncError = false;
     consentChanged = true;
+    syncReadyEvent = null;
+  };
+  listener.onSyncReady = (SyncReadyEvent event) {
+    syncReadyEvent = event;
   };
   listener.onSyncDone = (String userId) {
     syncUserId = userId != "null" ? userId : null;
   };
   listener.onSyncError = (String error) {
     syncError = true;
+    syncReadyEvent = null;
   };
 
   DidomiSdk.addEventListener(listener);
@@ -59,7 +67,53 @@ void main() {
     });
   }
 
+  // Assert sync event is triggered correctly.
+  Future<void> assertSyncEvent(WidgetTester tester) async {
+    // First time the sync event is triggered. Status is applied and API Event triggered only once.
+    assert(syncReadyEvent?.statusApplied == true);
+    assert((await syncReadyEvent?.syncAcknowledged()) == true);
+    assert((await syncReadyEvent?.syncAcknowledged()) == false);
+
+    // We reinitialize the SDK to re-trigger the sync event.
+    await tester.tap(initializeBtnFinder);
+    await tester.pumpAndSettle();
+    await waitForSync(tester);
+
+    // Second time the sync event is triggered. Status is not applied and API Event not triggered.
+    assert(syncReadyEvent?.statusApplied == false);
+    assert((await syncReadyEvent?.syncAcknowledged()) == false);
+    assert((await syncReadyEvent?.syncAcknowledged()) == false);
+  }
+
+  // Reset all variables used for assertion.
+  void resetExpectedSyncValues() {
+    syncUserId = null;
+    syncError = false;
+    consentChanged = false;
+    syncReadyEvent = null;
+  }
+
+  // Assert that all the expected sync variables are populated.
+  void assertExpectedSyncValuesArePopulated() {
+    assert(syncUserId == userId);
+    assert(syncError == false);
+    assert(syncReadyEvent != null);
+  }
+
+  // Assert that all the expected sync variables are empty.
+  void assertExpectedSyncValuesAreEmpty() {
+    assert(syncUserId == null);
+    assert(syncError == false);
+    assert(syncReadyEvent == null);
+  }
+
   group("Set User", () {
+
+    // Run before each test.
+    setUp(() {
+      syncReadyEvent = null;
+    });
+
     /// Without initialization
 
     testWidgets("Click setUser without initialization", (WidgetTester tester) async {
@@ -69,6 +123,7 @@ void main() {
 
       assert(syncUserId == null);
       assert(syncError == false);
+      assert(syncReadyEvent == null);
 
       await tester.tap(setUserWithInvalidParams);
       await tester.tap(submitSetUser);
@@ -76,8 +131,7 @@ void main() {
 
       assertNativeMessage("setUser", okMessage);
 
-      assert(syncUserId == null);
-      assert(syncError == false);
+      assertExpectedSyncValuesAreEmpty();
     });
 
     testWidgets("Click clearUser without initialization", (WidgetTester tester) async {
@@ -85,8 +139,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      assert(syncUserId == null);
-      assert(syncError == false);
+      assertExpectedSyncValuesAreEmpty();
 
       await tester.tap(clearUser);
       await tester.tap(submitSetUser);
@@ -99,8 +152,7 @@ void main() {
         // Android need the SDK to be initialized
         assertNativeMessage("setUser", notReadyMessage);
       }
-      assert(syncUserId == null);
-      assert(syncError == false);
+      assertExpectedSyncValuesAreEmpty();
     });
 
     /// With initialization
@@ -124,6 +176,7 @@ void main() {
       // Encryption parameters are not valid
       assert(syncUserId == null);
       assert(syncError == true);
+      assert(syncReadyEvent == null);
     });
 
     testWidgets("Click setUser with id", (WidgetTester tester) async {
@@ -136,8 +189,11 @@ void main() {
         await InitializeHelper.initialize(tester, initializeBtnFinder);
       }
 
-      syncUserId = null;
-      syncError = false;
+      resetExpectedSyncValues();
+
+      // Reset
+      await tester.tap(reset);
+      await tester.pumpAndSettle();
 
       // Select with id
       await tester.tap(setUserWithId);
@@ -150,6 +206,8 @@ void main() {
 
       assert(syncUserId == userId);
       assert(syncError == false);
+
+      await assertSyncEvent(tester);
     });
 
     testWidgets("Click setUser with encryption", (WidgetTester tester) async {
@@ -162,8 +220,7 @@ void main() {
         await InitializeHelper.initialize(tester, initializeBtnFinder);
       }
 
-      syncUserId = null;
-      syncError = false;
+      resetExpectedSyncValues();
 
       // Select Encryption auth
       await tester.tap(setUserAuthWithEncryption);
@@ -174,11 +231,9 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncUserId == userId);
-      assert(syncError == false);
+      assertExpectedSyncValuesArePopulated();
 
-      syncUserId = null;
-      syncError = false;
+      resetExpectedSyncValues();
 
       // Uncheck expiration parameter
       await tester.tap(withExpiration);
@@ -187,8 +242,7 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncUserId == userId);
-      assert(syncError == false);
+      assertExpectedSyncValuesArePopulated();
     });
 
     testWidgets("Click setUser with hash", (WidgetTester tester) async {
@@ -201,8 +255,7 @@ void main() {
         await InitializeHelper.initialize(tester, initializeBtnFinder);
       }
 
-      syncUserId = null;
-      syncError = false;
+      resetExpectedSyncValues();
 
       // Click on expiration and salt so it becomes checked
       await tester.tap(setUserAuthWithHash);
@@ -213,24 +266,20 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncUserId == userId);
-      assert(syncError == false);
+      assertExpectedSyncValuesArePopulated();
 
-      syncUserId = null;
-      syncError = false;
+      resetExpectedSyncValues();
 
       // Uncheck salt parameter
       await tester.tap(withSalt);
       await tester.tap(submitSetUser);
       await tester.pumpAndSettle();
 
-      assert(syncUserId == userId);
-      assert(syncError == false);
+      assertExpectedSyncValuesArePopulated();
 
       await waitForSync(tester);
 
-      syncUserId = null;
-      syncError = false;
+      resetExpectedSyncValues();
 
       // Uncheck expiration parameter
       await tester.tap(withExpiration);
@@ -239,8 +288,7 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncUserId == userId);
-      assert(syncError == false);
+      assertExpectedSyncValuesArePopulated();
     });
 
     testWidgets("Click clearUser", (WidgetTester tester) async {
@@ -253,9 +301,7 @@ void main() {
         await InitializeHelper.initialize(tester, initializeBtnFinder);
       }
 
-      syncUserId = null;
-      syncError = false;
-      consentChanged = false;
+      resetExpectedSyncValues();
 
       // Select with id
       await tester.tap(setUserWithId);
@@ -266,8 +312,7 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncUserId == userId);
-      assert(syncError == false);
+      assertExpectedSyncValuesArePopulated();
       assert(consentChanged == false);
 
       // Clear user
@@ -277,8 +322,7 @@ void main() {
 
       assertNativeMessage("setUser", "Native message: OK");
 
-      assert(syncUserId == null);
-      assert(syncError == false);
+      assertExpectedSyncValuesAreEmpty();
       assert(consentChanged == true);
     });
 
@@ -294,8 +338,7 @@ void main() {
         await InitializeHelper.initialize(tester, initializeBtnFinder);
       }
 
-      syncUserId = null;
-      syncError = false;
+      resetExpectedSyncValues();
 
       // Select with id
       await tester.tap(setUserWithId);
@@ -308,8 +351,7 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncUserId == userId);
-      assert(syncError == false);
+      assertExpectedSyncValuesArePopulated();
     });
 
     testWidgets("Click setUser with encryption and setupUI", (WidgetTester tester) async {
@@ -322,8 +364,7 @@ void main() {
         await InitializeHelper.initialize(tester, initializeBtnFinder);
       }
 
-      syncUserId = null;
-      syncError = false;
+      resetExpectedSyncValues();
 
       // Select Encryption auth
       await tester.tap(setUserAuthWithEncryption);
@@ -334,11 +375,9 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncUserId == userId);
-      assert(syncError == false);
+      assertExpectedSyncValuesArePopulated();
 
-      syncUserId = null;
-      syncError = false;
+      resetExpectedSyncValues();
 
       // Uncheck expiration parameter
       await tester.tap(withExpiration);
@@ -347,8 +386,7 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncUserId == userId);
-      assert(syncError == false);
+      assertExpectedSyncValuesArePopulated();
     });
 
     testWidgets("Click setUser with hash and setupUI", (WidgetTester tester) async {
@@ -361,8 +399,7 @@ void main() {
         await InitializeHelper.initialize(tester, initializeBtnFinder);
       }
 
-      syncUserId = null;
-      syncError = false;
+      resetExpectedSyncValues();
 
       // Click on expiration and salt so it becomes checked
       await tester.tap(setUserAuthWithHash);
@@ -373,24 +410,20 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncUserId == userId);
-      assert(syncError == false);
+      assertExpectedSyncValuesArePopulated();
 
-      syncUserId = null;
-      syncError = false;
+      resetExpectedSyncValues();
 
       // Uncheck salt parameter
       await tester.tap(withSalt);
       await tester.tap(submitSetUser);
       await tester.pumpAndSettle();
 
-      assert(syncUserId == userId);
-      assert(syncError == false);
+      assertExpectedSyncValuesArePopulated();
 
       await waitForSync(tester);
 
-      syncUserId = null;
-      syncError = false;
+      resetExpectedSyncValues();
 
       // Uncheck expiration parameter
       await tester.tap(withExpiration);
@@ -399,8 +432,7 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncUserId == userId);
-      assert(syncError == false);
+      assertExpectedSyncValuesArePopulated();
     });
   });
 }
