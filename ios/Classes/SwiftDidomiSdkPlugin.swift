@@ -214,10 +214,12 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     }
     
     func setupUI(result: @escaping FlutterResult) {
-        let viewController: UIViewController =
-            (UIApplication.shared.delegate?.window??.rootViewController)!
-        Didomi.shared.setupUI(containerController: viewController)
-        result(nil)
+        if let viewController = UIApplication.shared.rootViewController {
+            Didomi.shared.setupUI(containerController: viewController)
+            result(nil)
+        } else {
+            result(FlutterError.init(code: "nil_root_view_controller", message: "Root view controller is nil", details: nil))
+        }
     }
 
     func reset(result: @escaping FlutterResult) {
@@ -261,7 +263,6 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             return
         }
 
-        let viewController: UIViewController = (UIApplication.shared.delegate?.window??.rootViewController)!
         guard let args = call.arguments as? Dictionary<String, Any> else {
             result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for initialize", details: nil))
             return
@@ -279,8 +280,12 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             view = .purposes
         }
 
-        Didomi.shared.showPreferences(controller: viewController, view: view)
-        result(nil)
+        if let viewController = UIApplication.shared.rootViewController {
+            Didomi.shared.showPreferences(controller: viewController, view: view)
+            result(nil)
+        } else {
+            result(FlutterError.init(code: "nil_root_view_controller", message: "Root view controller is nil", details: nil))
+        }
     }
 
     func hidePreferences(result: @escaping FlutterResult) {
@@ -670,7 +675,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             return
         }
 
-        if let viewController: UIViewController = UIApplication.shared.delegate?.window??.rootViewController {
+        if let viewController: UIViewController = UIApplication.shared.rootViewController {
             Didomi.shared.setUser(id: userId, containerController: viewController)
         } else {
             Didomi.shared.setUser(id: userId)
@@ -757,7 +762,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
                 salt: salt)
         }
 
-        if let viewController: UIViewController = UIApplication.shared.delegate?.window??.rootViewController {
+        if let viewController: UIViewController = UIApplication.shared.rootViewController {
             Didomi.shared.setUser(userAuthParams: parameters, containerController: viewController)
         } else {
             Didomi.shared.setUser(userAuthParams: parameters)
@@ -837,7 +842,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
                 secretID: secretId,
                 initializationVector: initializationVector)
         }
-        if let viewController: UIViewController = UIApplication.shared.delegate?.window??.rootViewController {
+        if let viewController: UIViewController = UIApplication.shared.rootViewController {
             Didomi.shared.setUser(userAuthParams: parameters, containerController: viewController)
         } else {
             Didomi.shared.setUser(userAuthParams: parameters)
@@ -931,5 +936,18 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
 
         let eventWasSent = SwiftDidomiSdkPlugin.eventStreamHandler?.executeSyncAcknowledgedCallback(index: callbackIndex) ?? false
         result(eventWasSent)
+    }
+}
+
+extension UIApplication {
+    // Computed property to get the root view controller of the application
+    var rootViewController: UIViewController? {
+        if let viewController = UIApplication.shared.delegate?.window??.rootViewController {
+            return viewController
+        }
+        if let viewController = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController {
+            return viewController
+        }
+        return nil
     }
 }
