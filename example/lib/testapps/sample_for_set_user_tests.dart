@@ -21,8 +21,8 @@ class HomePage extends StatelessWidget {
           children: [
             InitializeSmall(),
             // Actions
-            SetUser(),
             Reset(),
+            SetUser(),
           ],
         ),
       );

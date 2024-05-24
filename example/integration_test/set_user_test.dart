@@ -94,14 +94,14 @@ void main() {
   }
 
   // Assert that all the expected sync variables are populated.
-  Future<void> assertExpectedSyncValuesArePopulated() async {
+  void assertExpectedSyncValuesArePopulated() {
     assert(syncUserId == userId);
     assert(syncError == false);
     assert(syncReadyEvent != null);
   }
 
   // Assert that all the expected sync variables are empty.
-  Future<void> assertExpectedSyncValuesAreEmpty() async {
+  void assertExpectedSyncValuesAreEmpty() {
     assert(syncUserId == null);
     assert(syncError == false);
     assert(syncReadyEvent == null);
