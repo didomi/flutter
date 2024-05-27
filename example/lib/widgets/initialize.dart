@@ -35,8 +35,8 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
         noticeId: noticeId,
         androidTvNoticeId: androidTvNoticeId,
         androidTvEnabled: _androidTvEnabled,
-        countryCode: _countryCodeController.text,
-        regionCode: _regionCodeController.text
+        countryCode: _countryCodeController.text.isEmpty ? null : _countryCodeController.text,
+        regionCode: _regionCodeController.text.isEmpty ? null : _regionCodeController.text
     );
 
     return "OK";

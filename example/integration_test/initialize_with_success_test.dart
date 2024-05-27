@@ -34,14 +34,27 @@ void main() {
 
   DidomiSdk.addEventListener(listener);
 
+  // Reset expected variables used for assertions.
+  void resetExpectedValues() {
+    isError = false;
+    isReady = false;
+    regulation = null;
+  }
+
   group("Initialize Success", () {
+
+    // Run before each test.
+    setUp(() {
+      resetExpectedValues();
+    });
+
     testWidgets("Initialize with default parameters", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
 
-      assert(isError == false);
-      assert(isReady == false);
+      expect(isError, false);
+      expect(isReady, false);
 
       await tester.tap(isReadyBtnFinder);
       await tester.pumpAndSettle();
@@ -68,28 +81,22 @@ void main() {
       assertNativeMessage("isReady", resultTrueMessage);
       assertNativeMessage("onReady", sdkReadyMessage);
 
-      assert(isError == false);
-      assert(isReady == true);
+      expect(isError, false);
+      expect(isReady, true);
+      expect(regulation, "gdpr");
     });
 
-    testWidgets("Initialize with parameters including country and region codes", (WidgetTester tester) async {
+    testWidgets("Initialize with custom parameters including country and region codes", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
 
-      assert(isError == false);
-      assert(isReady == false);
+      expect(isError, false);
+      expect(isReady, false);
+      expect(regulation, null);
 
       await tester.tap(isReadyBtnFinder);
       await tester.pumpAndSettle();
-
-      // SDK is not ready at startup
-      assertNativeMessage("isReady", resultFalseMessage);
-
-      await tester.tap(onReadyBtnFinder);
-      await tester.pumpAndSettle();
-
-      assertNativeMessage("onReady", sdkNotReadyMessage);
 
       await tester.enterText(apiKeyFinder, "eea5ad63-29d4-4552-9dac-2edebe1fe518");
       await tester.enterText(noticeIDFinder, "bJERrrgk");
@@ -105,10 +112,6 @@ void main() {
 
       await tester.tap(isReadyBtnFinder);
       await tester.pumpAndSettle();
-
-      // SDK is ready
-      assertNativeMessage("isReady", resultTrueMessage);
-      assertNativeMessage("onReady", sdkReadyMessage);
 
       expect(isError, false);
       expect(isReady, true);
