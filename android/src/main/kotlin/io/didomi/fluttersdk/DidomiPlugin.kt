@@ -210,7 +210,9 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     call.argument("languageCode"),
                     call.argument("noticeId"),
                     call.argument("androidTvNoticeId"),
-                    androidTvEnabled
+                    androidTvEnabled,
+                    call.argument("countryCode"),
+                    call.argument("regionCode")
                 )
             )
             result.success(null)

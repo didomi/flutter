@@ -30,7 +30,9 @@ class DidomiSdk {
           String? languageCode,
           String? noticeId,
           String? androidTvNoticeId,
-          bool androidTvEnabled = false}) async =>
+          bool androidTvEnabled = false,
+          String? countryCode,
+          String? regionCode}) async =>
       await _channel.invokeMethod("initialize", {
         "apiKey": apiKey,
         "localConfigurationPath": localConfigurationPath,
@@ -40,7 +42,9 @@ class DidomiSdk {
         "languageCode": languageCode ?? Platform.localeName,
         "noticeId": noticeId,
         "androidTvNoticeId": androidTvNoticeId,
-        "androidTvEnabled": androidTvEnabled
+        "androidTvEnabled": androidTvEnabled,
+        "countryCode": countryCode,
+        "regionCode": regionCode
       });
 
   /// Check if Didomi SDK was successfully initialized

@@ -160,7 +160,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             providerID: args["providerId"] as? String,
             disableDidomiRemoteConfig: disableDidomiRemoteConfig,
             languageCode: args["languageCode"] as? String,
-            noticeID: args["noticeId"] as? String)
+            noticeID: args["noticeId"] as? String,
+            countryCode: args["countryCode"] as? String,
+            regionCode: args["regionCode"] as? String
+        )
         Didomi.shared.initialize(parameters)
         result(nil)
     }
