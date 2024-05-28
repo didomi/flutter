@@ -294,6 +294,7 @@ class EventsHandler {
       case "onSyncDone":
         final String organizationUserId = event["organizationUserId"].toString();
         for (var listener in listeners) {
+          // ignore: deprecated_member_use_from_same_package
           listener.onSyncDone(organizationUserId);
         }
         break;
