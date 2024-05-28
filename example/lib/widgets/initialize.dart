@@ -34,7 +34,9 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
         languageCode: languageCode,
         noticeId: noticeId,
         androidTvNoticeId: androidTvNoticeId,
-        androidTvEnabled: _androidTvEnabled
+        androidTvEnabled: _androidTvEnabled,
+        countryCode: _countryCodeController.text.isEmpty ? null : _countryCodeController.text,
+        regionCode: _regionCodeController.text.isEmpty ? null : _regionCodeController.text
     );
 
     return "OK";
@@ -47,6 +49,10 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
   TextEditingController _androidTvNoticeIdController = TextEditingController(text: "DirGCFKy");
 
   TextEditingController _languageController = TextEditingController();
+
+  TextEditingController _countryCodeController = TextEditingController();
+
+  TextEditingController _regionCodeController = TextEditingController();
 
   bool _disableRemoteConfigValue = false;
 
@@ -64,6 +70,8 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
         TextFormField(controller: _noticeIdController, key: Key("noticeId"), decoration: InputDecoration(labelText: 'Notice id')),
         TextFormField(controller: _androidTvNoticeIdController, key: Key("androidTvNoticeId"), decoration: InputDecoration(labelText: 'AndroidTV Notice id')),
         TextFormField(controller: _languageController, key: Key("languageCode"), decoration: InputDecoration(labelText: 'Language code')),
+        TextFormField(controller: _countryCodeController, key: Key("countryCode"), decoration: InputDecoration(labelText: 'Country code')),
+        TextFormField(controller: _regionCodeController, key: Key("regionCode"), decoration: InputDecoration(labelText: 'Region code')),
         CheckboxListTile(
           title: Text("Disable remote config"),
           key: Key('disableRemoteConfig'),

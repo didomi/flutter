@@ -14,28 +14,47 @@ void main() {
   final isReadyBtnFinder = find.byKey(Key("isReady"));
   final onReadyBtnFinder = find.byKey(Key("onReady"));
   final initializeBtnFinder = find.byKey(Key("initialize"));
+  final apiKeyFinder = find.byKey(Key("apiKey"));
+  final noticeIDFinder = find.byKey(Key("noticeId"));
+  final countryCodeFinder = find.byKey(Key("countryCode"));
+  final regionCodeFinder = find.byKey(Key("regionCode"));
 
   bool isError = false;
   bool isReady = false;
+  String? regulation = null;
 
   final listener = EventListener();
   listener.onError = (String message) {
     isError = true;
   };
-  listener.onReady = () {
+  listener.onReady = () async {
     isReady = true;
+    regulation = (await DidomiSdk.currentUserStatus).regulation;
   };
 
   DidomiSdk.addEventListener(listener);
 
+  // Reset expected variables used for assertions.
+  void resetExpectedValues() {
+    isError = false;
+    isReady = false;
+    regulation = null;
+  }
+
   group("Initialize Success", () {
+
+    // Run before each test.
+    setUp(() {
+      resetExpectedValues();
+    });
+
     testWidgets("Initialize with default parameters", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
 
-      assert(isError == false);
-      assert(isReady == false);
+      expect(isError, false);
+      expect(isReady, false);
 
       await tester.tap(isReadyBtnFinder);
       await tester.pumpAndSettle();
@@ -62,8 +81,44 @@ void main() {
       assertNativeMessage("isReady", resultTrueMessage);
       assertNativeMessage("onReady", sdkReadyMessage);
 
-      assert(isError == false);
-      assert(isReady == true);
+      expect(isError, false);
+      expect(isReady, true);
+      expect(regulation, "gdpr");
+    });
+
+    testWidgets("Initialize with custom parameters including country and region codes", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      expect(isError, false);
+      expect(isReady, false);
+      expect(regulation, null);
+
+      await tester.tap(isReadyBtnFinder);
+      await tester.pumpAndSettle();
+
+      await tester.enterText(apiKeyFinder, "eea5ad63-29d4-4552-9dac-2edebe1fe518");
+      await tester.enterText(noticeIDFinder, "bJERrrgk");
+      await tester.enterText(countryCodeFinder, "US");
+      await tester.enterText(regionCodeFinder, "CA");
+      // This makes sure the on-screen keyboard is closed.
+      FocusManager.instance.primaryFocus?.unfocus();
+      await tester.pumpAndSettle();
+
+      await tester.tap(initializeBtnFinder);
+      await tester.pumpAndSettle();
+
+      await Future.delayed(Duration(seconds: 4));
+
+      assertNativeMessage("initialize", okMessage);
+
+      await tester.tap(isReadyBtnFinder);
+      await tester.pumpAndSettle();
+
+      expect(isError, false);
+      expect(isReady, true);
+      expect(regulation, "cpra");
     });
   });
 }
