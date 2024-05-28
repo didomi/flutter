@@ -2,10 +2,10 @@
 
 ## 2.3.0
 - Update latest versions of native Android (2.6.0) and iOS (2.7.0) sdks
-- Add support for SyncReady event
-- Add new parameters to initialize method to override the user location determined by the SDK when getting the notice configuration:
-  - countryCode: Force the user country used to get the notice configuration
-  - regionCode : Force the user region used to get the notice configuration
+- Add support for `SyncReady` event
+- Add new parameters to the `initialize` method to override the user location determined by the SDK when getting the notice configuration:
+  - `countryCode`: Force the user country used to get the notice configuration
+  - `regionCode`: Force the user region used to get the notice configuration
 - Stop force unwrapping when getting the root view controller
 
 ## 2.2.0
