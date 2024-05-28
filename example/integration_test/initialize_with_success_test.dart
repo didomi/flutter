@@ -102,6 +102,9 @@ void main() {
       await tester.enterText(noticeIDFinder, "bJERrrgk");
       await tester.enterText(countryCodeFinder, "US");
       await tester.enterText(regionCodeFinder, "CA");
+      // This makes sure the on-screen keyboard is closed.
+      FocusManager.instance.primaryFocus?.unfocus();
+      await tester.pumpAndSettle();
 
       await tester.tap(initializeBtnFinder);
       await tester.pumpAndSettle();
