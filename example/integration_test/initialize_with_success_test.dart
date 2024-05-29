@@ -21,7 +21,7 @@ void main() {
 
   bool isError = false;
   bool isReady = false;
-  String? regulation = null;
+  String? regulation;
 
   final listener = EventListener();
   listener.onError = (String message) {
