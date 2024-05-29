@@ -18,7 +18,7 @@ class _ChainEnableVendorTransactionsState extends BaseSampleWidgetState<ChainEna
 
   @override
   Future<String> callDidomiPlugin() async {
-    final transaction = await DidomiSdk.openCurrentUserStatusTransaction();
+    final transaction = DidomiSdk.openCurrentUserStatusTransaction();
 
     final vendor1 = "152media-Aa6Z6mLC";
     final vendor2 = "ipromote";

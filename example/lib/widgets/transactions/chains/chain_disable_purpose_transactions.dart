@@ -17,7 +17,7 @@ class _ChainDisablePurposeTransactionsState extends BaseSampleWidgetState<ChainD
 
   @override
   Future<String> callDidomiPlugin() async {
-    final transaction = await DidomiSdk.openCurrentUserStatusTransaction();
+    final transaction = DidomiSdk.openCurrentUserStatusTransaction();
 
     final purpose1 = "cookies";
     final purpose2 = "select_basic_ads";
