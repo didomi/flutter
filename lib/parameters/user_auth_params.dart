@@ -12,6 +12,15 @@ abstract class UserAuthParams {
   int? expiration;
 
   UserAuthParams(this.id, this.algorithm, this.secretId, this.expiration);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'algorithm': algorithm,
+      'secretId': secretId,
+      'expiration': expiration,
+    };
+  }
 }
 
 class UserAuthWithEncryptionParams extends UserAuthParams {
@@ -21,6 +30,15 @@ class UserAuthWithEncryptionParams extends UserAuthParams {
   UserAuthWithEncryptionParams(String id, String algorithm, String secretId, this.initializationVector,
       [int? expiration])
       : super(id, algorithm, secretId, expiration);
+
+  @override
+  Map<String, dynamic> toJson() {
+    var map = super.toJson();
+    map.addAll({
+      'initializationVector': initializationVector,
+    });
+    return map;
+  }
 }
 
 class UserAuthWithHashParams extends UserAuthParams {
@@ -32,4 +50,14 @@ class UserAuthWithHashParams extends UserAuthParams {
 
   UserAuthWithHashParams(String id, String algorithm, String secretId, this.digest, this.salt, [int? expiration])
       : super(id, algorithm, secretId, expiration);
+
+  @override
+  Map<String, dynamic> toJson() {
+    var map = super.toJson();
+    map.addAll({
+      'digest': digest,
+      'salt': salt,
+    });
+    return map;
+  }
 }

@@ -6,6 +6,7 @@ import io.didomi.sdk.Didomi
 import io.didomi.sdk.DidomiInitializeParameters
 import io.didomi.sdk.exceptions.DidomiNotReadyException
 import io.didomi.sdk.models.CurrentUserStatus
+import io.didomi.sdk.user.UserAuthParams
 import io.didomi.sdk.user.UserAuthWithEncryptionParams
 import io.didomi.sdk.user.UserAuthWithHashParams
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -170,13 +171,9 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "setUserAndSetupUI" -> setUserAndSetupUI(call, result)
 
-                "setUserWithHashAuthentication" -> setUserWithHashAuthentication(call, result)
+                "setUserWithAuthParams" -> setUserWithAuthParams(call, result)
 
-                "setUserWithHashAuthenticationAndSetupUI" -> setUserWithHashAuthenticationAndSetupUI(call, result)
-
-                "setUserWithEncryptionAuthentication" -> setUserWithEncryptionAuthentication(call, result)
-
-                "setUserWithEncryptionAuthenticationAndSetupUI" -> setUserWithEncryptionAuthenticationAndSetupUI(call, result)
+                "setUserWithAuthParamsAndSetupUI" -> setUserWithAuthParamsAndSetupUI(call, result)
 
                 "listenToVendorStatus" -> listenToVendorStatus(call, result)
 
@@ -541,101 +538,61 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         result.success(null)
     }
 
-    private fun setUserWithHashAuthentication(call: MethodCall, result: Result) {
-        val methodName = "setUserWithHashAuthentication"
-        val userId = argumentOrError("organizationUserId", methodName, call, result)
-                ?: return
-        val algorithm = argumentOrError("algorithm", methodName, call, result)
-                ?: return
-        val secretId = argumentOrError("secretId", methodName, call, result)
-                ?: return
-        val digest = argumentOrError("digest", methodName, call, result)
-                ?: return
+    private fun buildUserAuthParams(jsonParameters: Map<String, Any>): UserAuthParams {
 
-        Didomi.getInstance().setUser(
-            UserAuthWithHashParams(
-                id = userId,
+        val id = jsonParameters["id"] as String
+        val algorithm = jsonParameters["algorithm"] as String
+        val secretId = jsonParameters["secretId"] as String
+        val expiration = jsonParameters["expiration"] as? Int
+        val initializationVector = jsonParameters["initializationVector"] as? String
+        val digest = jsonParameters["digest"] as? String
+        val salt = jsonParameters["salt"] as? String
+
+        return if (initializationVector.isNullOrBlank()) {
+           UserAuthWithHashParams(
+                id = id,
                 algorithm = algorithm,
                 secretId = secretId,
-                digest = digest,
-                salt = call.argument("salt") as? String,
-                expiration = call.argument("expiration") as? Long
+                digest = digest as String,
+                salt = salt,
+                expiration = expiration?.toLong()
             )
-        )
-        result.success(null)
-    }
-
-    private fun setUserWithHashAuthenticationAndSetupUI(call: MethodCall, result: Result) {
-        val methodName = "setUserWithHashAuthentication"
-        val userId = argumentOrError("organizationUserId", methodName, call, result)
-                ?: return
-        val algorithm = argumentOrError("algorithm", methodName, call, result)
-                ?: return
-        val secretId = argumentOrError("secretId", methodName, call, result)
-                ?: return
-        val digest = argumentOrError("digest", methodName, call, result)
-                ?: return
-
-        Didomi.getInstance().setUser(
-            UserAuthWithHashParams(
-                id = userId,
-                algorithm = algorithm,
-                secretId = secretId,
-                digest = digest,
-                salt = call.argument("salt") as? String,
-                expiration = call.argument("expiration") as? Long
-            ),
-            null,
-            getFragmentActivity(result)
-        )
-        result.success(null)
-    }
-
-    private fun setUserWithEncryptionAuthentication(call: MethodCall, result: Result) {
-        val methodName = "setUserWithEncryptionAuthentication"
-        val userId = argumentOrError("organizationUserId", methodName, call, result)
-            ?: return
-        val algorithm = argumentOrError("algorithm", methodName, call, result)
-            ?: return
-        val secretId = argumentOrError("secretId", methodName, call, result)
-            ?: return
-        val initializationVector = argumentOrError("initializationVector", methodName, call, result)
-            ?: return
-
-        Didomi.getInstance().setUser(
+        } else {
             UserAuthWithEncryptionParams(
-                id = userId,
+                id = id,
                 algorithm = algorithm,
                 secretId = secretId,
-                initializationVector = initializationVector,
-                expiration = call.argument("expiration") as? Long
+                initializationVector = initializationVector as String,
+                expiration = expiration?.toLong()
             )
-        )
+        }
+    }
+
+    private fun setUserWithAuthParams(call: MethodCall, result: Result) {
+        val jsonUserAuthParams: Map<String, Any>? = call.argument("jsonUserAuthParams")
+        if (jsonUserAuthParams == null) {
+            result.error("setUser", "Missing parameters", null)
+            return
+        }
+
+        val userAuthParams = buildUserAuthParams(jsonUserAuthParams)
+
+        Didomi.getInstance().setUser(userAuthParams)
+
         result.success(null)
     }
 
-    private fun setUserWithEncryptionAuthenticationAndSetupUI(call: MethodCall, result: Result) {
-        val methodName = "setUserWithEncryptionAuthentication"
-        val userId = argumentOrError("organizationUserId", methodName, call, result)
-            ?: return
-        val algorithm = argumentOrError("algorithm", methodName, call, result)
-            ?: return
-        val secretId = argumentOrError("secretId", methodName, call, result)
-            ?: return
-        val initializationVector = argumentOrError("initializationVector", methodName, call, result)
-            ?: return
+    private fun setUserWithAuthParamsAndSetupUI(call: MethodCall, result: Result) {
+        val jsonUserAuthParams: Map<String, Any>? = call.argument("jsonUserAuthParams")
+        if (jsonUserAuthParams == null) {
+            result.error("setUser", "Missing parameters", null)
+            return
+        }
 
-        Didomi.getInstance().setUser(
-            UserAuthWithEncryptionParams(
-                id = userId,
-                algorithm = algorithm,
-                secretId = secretId,
-                initializationVector = initializationVector,
-                expiration = call.argument("expiration") as? Long
-            ),
-            null,
-            getFragmentActivity(result)
-        )
+        val userAuthParams = buildUserAuthParams(jsonUserAuthParams)
+
+        Didomi.getInstance().setUser(userAuthParams, null, getFragmentActivity(result))
+
         result.success(null)
     }
 
