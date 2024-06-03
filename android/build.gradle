@@ -11,7 +11,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:7.3.1")
+        classpath("com.android.tools.build:gradle:8.4.1")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
@@ -28,7 +28,8 @@ apply plugin: "kotlin-android"
 
 android {
     compileSdkVersion(33)
-    buildToolsVersion("33.0.2")
+    buildToolsVersion("33.0.3")
+    namespace = "io.didomi.fluttersdk"
 
     sourceSets {
         main.java.srcDirs += "src/main/kotlin"
@@ -43,9 +44,13 @@ android {
         buildConfigField("String", "USER_AGENT_NAME", "\"Didomi Flutter SDK\"")
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     packagingOptions {
