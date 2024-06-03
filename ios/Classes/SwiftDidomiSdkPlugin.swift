@@ -749,8 +749,16 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             return
         }
 
+        let jsonSynchronizedUsers = args["jsonSynchronizedUsers"] as? [[String: Any]]
+
         let userAuthParams = buildUserAuthParams(jsonParameters: jsonUserAuthParams)
-        Didomi.shared.setUser(userAuthParams: userAuthParams)
+        let synchronizedUsers = jsonSynchronizedUsers?.map { buildUserAuthParams(jsonParameters: $0) }
+
+        if let synchronizedUsers = synchronizedUsers {
+            Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers)
+        } else {
+            Didomi.shared.setUser(userAuthParams: userAuthParams)
+        }
 
         result(nil)
     }
@@ -766,13 +774,22 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             return
         }
 
+        let jsonSynchronizedUsers = args["jsonSynchronizedUsers"] as? [[String: Any]]
+
         let userAuthParams = buildUserAuthParams(jsonParameters: jsonUserAuthParams)
+        let synchronizedUsers = jsonSynchronizedUsers?.map { buildUserAuthParams(jsonParameters: $0) }
 
         if let viewController: UIViewController = UIApplication.shared.rootViewController {
-            Didomi.shared.setUser(userAuthParams: userAuthParams, containerController: viewController)
-        } else {
-            Didomi.shared.setUser(userAuthParams: userAuthParams)
-        }
+            if let synchronizedUsers = synchronizedUsers {
+                Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers, containerController: viewController)
+            } else {
+                Didomi.shared.setUser(userAuthParams: userAuthParams, containerController: viewController)
+            }
+        } else if let synchronizedUsers = synchronizedUsers {
+           Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers)
+       } else {
+           Didomi.shared.setUser(userAuthParams: userAuthParams)
+       }
 
         result(nil)
     }

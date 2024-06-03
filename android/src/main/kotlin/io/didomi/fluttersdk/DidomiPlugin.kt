@@ -575,9 +575,12 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             return
         }
 
-        val userAuthParams = buildUserAuthParams(jsonUserAuthParams)
+        val jsonSynchronizedUsers: List<Map<String, Any>>? = call.argument("jsonSynchronizedUsers")
 
-        Didomi.getInstance().setUser(userAuthParams)
+        val userAuthParams = buildUserAuthParams(jsonUserAuthParams)
+        val synchronizedUsers = jsonSynchronizedUsers?.map { buildUserAuthParams(it) }
+
+        Didomi.getInstance().setUser(userAuthParams, synchronizedUsers)
 
         result.success(null)
     }
@@ -589,9 +592,12 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             return
         }
 
-        val userAuthParams = buildUserAuthParams(jsonUserAuthParams)
+        val jsonSynchronizedUsers: List<Map<String, Any>>? = call.argument("jsonSynchronizedUsers")
 
-        Didomi.getInstance().setUser(userAuthParams, null, getFragmentActivity(result))
+        val userAuthParams = buildUserAuthParams(jsonUserAuthParams)
+        val synchronizedUsers = jsonSynchronizedUsers?.map { buildUserAuthParams(it) }
+
+        Didomi.getInstance().setUser(userAuthParams, synchronizedUsers, getFragmentActivity(result))
 
         result.success(null)
     }

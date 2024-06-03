@@ -318,15 +318,21 @@ class DidomiSdk {
       await _channel.invokeMethod("setUserAndSetupUI", {"organizationUserId": organizationUserId});
 
   /// Set user information with authentication
-  static Future<void> setUserWithAuthParams(UserAuthParams userAuthParams) async {
+  static Future<void> setUserWithAuthParams(UserAuthParams userAuthParams,
+      [List<UserAuthParams>? synchronizedUsers]) async {
     Map<String, dynamic> jsonUserAuthParams = userAuthParams.toJson();
-    return await _channel.invokeMethod("setUserWithAuthParams", {"jsonUserAuthParams": jsonUserAuthParams});
+    List<Map<String, dynamic>>? jsonSynchronizedUsers = synchronizedUsers?.map((user) => user.toJson()).toList();
+    return await _channel.invokeMethod("setUserWithAuthParams",
+        {"jsonUserAuthParams": jsonUserAuthParams, "jsonSynchronizedUsers": jsonSynchronizedUsers});
   }
 
   /// Set user information with authentication and check for missing consent
-  static Future<void> setUserWithAuthParamsAndSetupUI(UserAuthParams userAuthParams) async {
+  static Future<void> setUserWithAuthParamsAndSetupUI(UserAuthParams userAuthParams,
+      [List<UserAuthParams>? synchronizedUsers]) async {
     Map<String, dynamic> jsonUserAuthParams = userAuthParams.toJson();
-    return await _channel.invokeMethod("setUserWithAuthParamsAndSetupUI", {"jsonUserAuthParams": jsonUserAuthParams});
+    List<Map<String, dynamic>>? jsonSynchronizedUsers = synchronizedUsers?.map((user) => user.toJson()).toList();
+    return await _channel.invokeMethod("setUserWithAuthParamsAndSetupUI",
+        {"jsonUserAuthParams": jsonUserAuthParams, "jsonSynchronizedUsers": jsonSynchronizedUsers});
   }
 
   /// Creates a `CurrentUserStatusTransaction` object.
