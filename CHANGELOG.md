@@ -1,5 +1,10 @@
 # Release Note
 
+## 2.4.0
+- Update latest versions of native Android (2.6.1) and iOS (2.7.1) sdks
+- Update Android's build configuration (required for Flutter 3.22)
+  - ! Compiling for Android will now requires Flutter 3.16.0 or higher !
+
 ## 2.3.0
 - Update latest versions of native Android (2.6.0) and iOS (2.7.0) sdks
 - Add support for `SyncReady` event
