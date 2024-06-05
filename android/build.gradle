@@ -1,7 +1,7 @@
 //noinspection GrPackage
 
 group = "io.didomi.fluttersdk"
-version = "2.3.0"
+version = "2.4.0"
 
 buildscript {
     ext.kotlin_version = "1.8.20"
@@ -60,6 +60,6 @@ android {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    implementation("io.didomi.sdk:android:2.6.0")
+    implementation("io.didomi.sdk:android:2.6.1")
     implementation("androidx.multidex:multidex:2.0.1")
 }

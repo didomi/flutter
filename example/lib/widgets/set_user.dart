@@ -16,6 +16,7 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
   bool _withSalt = false;
   bool _withExpiration = false;
   bool _withSetupUI = false;
+  bool _withSynchronizedUsers = false;
 
   @override
   String getButtonName() => "Set User";
@@ -26,11 +27,15 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
   @override
   Future<String> callDidomiPlugin() async {
     String userId = "d13e49f6255c8729cbb201310f49d70d65f365415a67f034b567b7eac962b944eda131376594ef5e23b025fada4e4259e953ceb45ea57a2ced7872c567e6d1fae8dcc3a9772ead783d8513032e77d3fd";
+    String userId1 = "d13e49f6255c8729cbb201310f49d70d65f365415a67f034b567b7eac962b944eda131376594ef5e23b025fada4e4259e953ceb45ea57a2ced7872c567e6d1fae8dcc3a9772ead783d8513032e77d3f1";
+    String userId2 = "d13e49f6255c8729cbb201310f49d70d65f365415a67f034b567b7eac962b944eda131376594ef5e23b025fada4e4259e953ceb45ea57a2ced7872c567e6d1fae8dcc3a9772ead783d8513032e77d3f2";
     String secretId = "testsdks-PEap2wBx";
     String initializationVector = "3ff223854400259e5592cbb992be93cf";
     String? salt = _withSalt ? "test-digest" : null;
     int? expiration = _withExpiration ? 3600 : null;
     bool setUserAndSetupUI = _withSetupUI;
+    bool hasSynchronizedUsers = _withSynchronizedUsers;
+    List<UserAuthParams>? synchronizedUsers = null;
 
     switch (_authenticationType) {
       case AuthType.clearUser:
@@ -44,29 +49,59 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
         }
         break;
       case AuthType.withHash:
-        if (setUserAndSetupUI) {
-          await DidomiSdk.setUserWithAuthParamsAndSetupUI(new UserAuthWithHashParams(userId, "hash-md5", secretId, "test-digest", salt, expiration));
-        } else {
-          await DidomiSdk.setUserWithAuthParams(new UserAuthWithHashParams(userId, "hash-md5", secretId, "test-digest", salt, expiration));
+        if (hasSynchronizedUsers) {
+          synchronizedUsers = [
+            new UserAuthWithHashParams(userId1, "hash-md5", secretId, "test-digest", salt, expiration),
+            new UserAuthWithEncryptionParams(userId2, "aes-256-cbc", secretId, initializationVector, expiration)
+          ];
         }
-        break;
-      case AuthType.withEncryption:
         if (setUserAndSetupUI) {
           await DidomiSdk.setUserWithAuthParamsAndSetupUI(
-              new UserAuthWithEncryptionParams(userId, "aes-256-cbc", secretId, initializationVector, expiration));
-        } else {
-          await DidomiSdk.setUserWithAuthParams(
-              new UserAuthWithEncryptionParams(userId, "aes-256-cbc", secretId, initializationVector, expiration));
-        }
-        break;
-      case AuthType.invalid:
-        if (setUserAndSetupUI) {
-          await DidomiSdk.setUserWithAuthParamsAndSetupUI(
-              new UserAuthWithEncryptionParams(userId, "hash-md6", secretId, initializationVector, expiration)
+              new UserAuthWithHashParams(userId, "hash-md5", secretId, "test-digest", salt, expiration),
+              synchronizedUsers
           );
         } else {
           await DidomiSdk.setUserWithAuthParams(
-              new UserAuthWithEncryptionParams(userId, "hash-md6", secretId, initializationVector, expiration)
+              new UserAuthWithHashParams(userId, "hash-md5", secretId, "test-digest", salt, expiration),
+              synchronizedUsers
+          );
+        }
+        break;
+      case AuthType.withEncryption:
+        if (hasSynchronizedUsers) {
+          synchronizedUsers = [
+            new UserAuthWithHashParams(userId1, "hash-md5", secretId, "test-digest", salt, expiration),
+            new UserAuthWithEncryptionParams(userId2, "aes-256-cbc", secretId, initializationVector, expiration)
+          ];
+        }
+        if (setUserAndSetupUI) {
+          await DidomiSdk.setUserWithAuthParamsAndSetupUI(
+              new UserAuthWithEncryptionParams(userId, "aes-256-cbc", secretId, initializationVector, expiration),
+              synchronizedUsers
+          );
+        } else {
+          await DidomiSdk.setUserWithAuthParams(
+              new UserAuthWithEncryptionParams(userId, "aes-256-cbc", secretId, initializationVector, expiration),
+              synchronizedUsers
+          );
+        }
+        break;
+      case AuthType.invalid:
+        if (hasSynchronizedUsers) {
+          synchronizedUsers = [
+            new UserAuthWithHashParams(userId1, "error", secretId, "test-digest-fail", salt, expiration),
+            new UserAuthWithEncryptionParams(userId2, "hash-md6", secretId, initializationVector, expiration)
+          ];
+        }
+        if (setUserAndSetupUI) {
+          await DidomiSdk.setUserWithAuthParamsAndSetupUI(
+              new UserAuthWithEncryptionParams(userId, "hash-md6", secretId, initializationVector, expiration),
+              synchronizedUsers
+          );
+        } else {
+          await DidomiSdk.setUserWithAuthParams(
+              new UserAuthWithEncryptionParams(userId, "hash-md6", secretId, initializationVector, expiration),
+              synchronizedUsers
           );
         }
         break;
@@ -181,6 +216,19 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
           if (newValue != null) {
             setState(() {
               _withSetupUI = newValue;
+            });
+          }
+        },
+        controlAffinity: ListTileControlAffinity.leading, //  <-- leading Checkbox
+      ),
+      CheckboxListTile(
+        title: Text("With synchronized users"),
+        key: Key('withSynchronizedUsers'),
+        value: _withSynchronizedUsers,
+        onChanged: (newValue) {
+          if (newValue != null) {
+            setState(() {
+              _withSynchronizedUsers = newValue;
             });
           }
         },

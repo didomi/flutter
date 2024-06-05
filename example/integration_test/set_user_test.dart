@@ -26,6 +26,7 @@ void main() {
   final withSalt = find.byKey(Key("setUserWithSalt"));
   final withExpiration = find.byKey(Key("setUserWithExpiration"));
   final withSetupUI = find.byKey(Key("setUserAndSetupUI"));
+  final withSynchronizedUsers = find.byKey(Key("withSynchronizedUsers"));
   final submitSetUser = find.byKey(Key("setUser"));
   final reset = find.byKey(Key("reset"));
 
@@ -390,6 +391,176 @@ void main() {
     });
 
     testWidgets("Click setUser with hash and setupUI", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Click on expiration and salt so it becomes checked
+      await tester.tap(setUserAuthWithHash);
+      await tester.tap(withExpiration);
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck salt parameter
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertExpectedSyncValuesArePopulated();
+
+      await waitForSync(tester);
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    /// With synchronized users and SetupUI
+
+    testWidgets("Click setUser with encryption and Synchronized Users and setupUI", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Select Encryption auth
+      await tester.tap(setUserAuthWithEncryption);
+      // Select withSynchronizedUsers
+      await tester.tap(withSynchronizedUsers);
+      // Click on expiration so it becomes checked
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    testWidgets("Click setUser with hash and Synchronized Users and setupUI", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Click on expiration and salt so it becomes checked
+      await tester.tap(setUserAuthWithHash);
+      await tester.tap(withExpiration);
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck salt parameter
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertExpectedSyncValuesArePopulated();
+
+      await waitForSync(tester);
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    /// With synchronized users only
+
+    testWidgets("Click setUser with encryption and Synchronized Users", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Select Encryption auth
+      await tester.tap(setUserAuthWithEncryption);
+      // UnSelect setUserAndSetupUI
+      await tester.tap(withSetupUI);
+      // Click on expiration so it becomes checked
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    testWidgets("Click setUser with hash and Synchronized Users", (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();

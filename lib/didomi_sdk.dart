@@ -318,47 +318,21 @@ class DidomiSdk {
       await _channel.invokeMethod("setUserAndSetupUI", {"organizationUserId": organizationUserId});
 
   /// Set user information with authentication
-  static Future<void> setUserWithAuthParams(UserAuthParams parameters) async {
-    if (parameters is UserAuthWithEncryptionParams) {
-      return await _channel.invokeMethod("setUserWithEncryptionAuthentication", {
-        "organizationUserId": parameters.id,
-        "algorithm": parameters.algorithm,
-        "secretId": parameters.secretId,
-        "initializationVector": parameters.initializationVector,
-        "expiration": parameters.expiration
-      });
-    } else if (parameters is UserAuthWithHashParams) {
-      return await _channel.invokeMethod("setUserWithHashAuthentication", {
-        "organizationUserId": parameters.id,
-        "algorithm": parameters.algorithm,
-        "secretId": parameters.secretId,
-        "digest": parameters.digest,
-        "salt": parameters.salt,
-        "expiration": parameters.expiration
-      });
-    }
+  static Future<void> setUserWithAuthParams(UserAuthParams userAuthParams,
+      [List<UserAuthParams>? synchronizedUsers]) async {
+    Map<String, dynamic> jsonUserAuthParams = userAuthParams.toJson();
+    List<Map<String, dynamic>>? jsonSynchronizedUsers = synchronizedUsers?.map((user) => user.toJson()).toList();
+    return await _channel.invokeMethod("setUserWithAuthParams",
+        {"jsonUserAuthParams": jsonUserAuthParams, "jsonSynchronizedUsers": jsonSynchronizedUsers});
   }
 
   /// Set user information with authentication and check for missing consent
-  static Future<void> setUserWithAuthParamsAndSetupUI(UserAuthParams parameters) async {
-    if (parameters is UserAuthWithEncryptionParams) {
-      return await _channel.invokeMethod("setUserWithEncryptionAuthenticationAndSetupUI", {
-        "organizationUserId": parameters.id,
-        "algorithm": parameters.algorithm,
-        "secretId": parameters.secretId,
-        "initializationVector": parameters.initializationVector,
-        "expiration": parameters.expiration
-      });
-    } else if (parameters is UserAuthWithHashParams) {
-      return await _channel.invokeMethod("setUserWithHashAuthenticationAndSetupUI", {
-        "organizationUserId": parameters.id,
-        "algorithm": parameters.algorithm,
-        "secretId": parameters.secretId,
-        "digest": parameters.digest,
-        "salt": parameters.salt,
-        "expiration": parameters.expiration
-      });
-    }
+  static Future<void> setUserWithAuthParamsAndSetupUI(UserAuthParams userAuthParams,
+      [List<UserAuthParams>? synchronizedUsers]) async {
+    Map<String, dynamic> jsonUserAuthParams = userAuthParams.toJson();
+    List<Map<String, dynamic>>? jsonSynchronizedUsers = synchronizedUsers?.map((user) => user.toJson()).toList();
+    return await _channel.invokeMethod("setUserWithAuthParamsAndSetupUI",
+        {"jsonUserAuthParams": jsonUserAuthParams, "jsonSynchronizedUsers": jsonSynchronizedUsers});
   }
 
   /// Creates a `CurrentUserStatusTransaction` object.
