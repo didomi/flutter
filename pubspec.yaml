@@ -5,7 +5,8 @@ repository: https://github.com/didomi/flutter
 
 environment:
   sdk: ">=2.12.0 <4.0.0"
-  flutter: ">=3.16.0"
+  # Flutter version 3.7.7 is required by the publication plugin but Android app will require 3.16.0 or higher
+  flutter: ">=3.7.7"
 
 dependencies:
   flutter:
