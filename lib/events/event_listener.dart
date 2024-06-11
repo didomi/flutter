@@ -138,7 +138,7 @@ class EventListener {
   dynamic Function(SyncReadyEvent event) onSyncReady = (event) {};
 
   /// User consent synchronization was done
-  @Deprecated('Use ‘onSyncReady‘ instead')
+  @Deprecated("Use ‘onSyncReady‘ instead")
   dynamic Function(String organizationUserId) onSyncDone = (organizationUserId) {};
 
   /// User consent synchronization failed
