@@ -51,7 +51,7 @@ class DidomiSdk {
   static Future<bool> get isReady async => await _channel.invokeMethod('isReady');
 
   /// Check if user consent are partial or not set
-  @Deprecated("Use ‘shouldUserStatusBeCollected‘ instead")
+  @Deprecated("Use 'shouldUserStatusBeCollected' instead")
   static Future<bool> get shouldConsentBeCollected async {
     final bool result = await _channel.invokeMethod('shouldConsentBeCollected');
     return result;
@@ -70,21 +70,21 @@ class DidomiSdk {
   /// - The user country is in the EU
   /// - The company is from the EU
   /// - The user country is unknown and the app has chosen to collect consent when unknown
-  @Deprecated("Use ‘shouldUserStatusBeCollected‘ instead")
+  @Deprecated("Use 'shouldUserStatusBeCollected' instead")
   static Future<bool> get isConsentRequired async {
     final bool result = await _channel.invokeMethod('isConsentRequired');
     return result;
   }
 
   /// Determine if consent information is available for all purposes and vendors that are required
-  @Deprecated("Use ‘isUserStatusPartial‘ instead")
+  @Deprecated("Use 'isUserStatusPartial' instead")
   static Future<bool> get isUserConsentStatusPartial async {
     final bool result = await _channel.invokeMethod('isUserConsentStatusPartial');
     return result;
   }
 
   /// Determine if legitimate interest information is available for all purposes and vendors that are required
-  @Deprecated("Use ‘isUserStatusPartial‘ instead")
+  @Deprecated("Use 'isUserStatusPartial' instead")
   static Future<bool> get isUserLegitimateInterestStatusPartial async {
     final bool result = await _channel.invokeMethod('isUserLegitimateInterestStatusPartial');
     return result;
@@ -218,21 +218,21 @@ class DidomiSdk {
       });
 
   /// Get the user consent status as a UserStatus object
-  @Deprecated("Use ‘currentUserStatus‘ instead")
+  @Deprecated("Use 'currentUserStatus' instead")
   static Future<UserStatus> get userStatus async {
     final dynamic result = await _channel.invokeMethod("getUserStatus");
     return UserStatus.fromJson(result);
   }
 
   /// Get the IDs of the required purposes
-  @Deprecated("Use ‘requiredPurposes‘ instead")
+  @Deprecated("Use 'requiredPurposes' instead")
   static Future<List<String>> get requiredPurposeIds async {
     final List<dynamic> result = await _channel.invokeMethod('getRequiredPurposeIds');
     return result.cast();
   }
 
   /// Get the IDs of the required vendors
-  @Deprecated("Use ‘requiredVendors‘ instead")
+  @Deprecated("Use 'requiredVendors' instead")
   static Future<List<String>> get requiredVendorIds async {
     final List<dynamic> result = await _channel.invokeMethod('getRequiredVendorIds');
     return result.cast();
@@ -292,7 +292,7 @@ class DidomiSdk {
       });
 
   /// Set the user status
-  @Deprecated("Use ‘setCurrentUserStatus‘ instead")
+  @Deprecated("Use 'setCurrentUserStatus' instead")
   static Future<bool> setUserStatus(
           List<String> enabledConsentPurposeIds,
           List<String> disabledConsentPurposeIds,
@@ -355,6 +355,7 @@ class DidomiSdk {
       List<String> enabledVendors,
       List<String> disabledVendors,
     ) async {
+      UserStatus status = await userStatus;
       return await _channel.invokeMethod("commitCurrentUserStatusTransaction", {
         "enabledPurposes": enabledPurposes,
         "disabledPurposes": disabledPurposes,
