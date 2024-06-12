@@ -49,6 +49,7 @@ void main() {
   listener.onSyncReady = (SyncReadyEvent event) {
     syncReadyEvent = event;
   };
+  // ignore: deprecated_member_use
   listener.onSyncDone = (String userId) {
     syncUserId = userId != "null" ? userId : null;
   };

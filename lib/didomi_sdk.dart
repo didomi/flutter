@@ -355,7 +355,6 @@ class DidomiSdk {
       List<String> enabledVendors,
       List<String> disabledVendors,
     ) async {
-      UserStatus status = await userStatus;
       return await _channel.invokeMethod("commitCurrentUserStatusTransaction", {
         "enabledPurposes": enabledPurposes,
         "disabledPurposes": disabledPurposes,

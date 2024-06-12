@@ -21,6 +21,7 @@ class _GetUserStatusPurposesState extends BaseSampleWidgetState<GetUserStatusPur
 
   @override
   Future<String> callDidomiPlugin() async {
+    // ignore: deprecated_member_use
     final UserStatus result = await DidomiSdk.userStatus;
     return "Enabled purposes: ${result.purposes?.global?.enabled?.joinToString() ?? "--"}";
   }

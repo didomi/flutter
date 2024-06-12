@@ -132,6 +132,7 @@ class EventsHelper {
     didomiListener.onSyncReady = (event) async {
       onEvent("Sync is ready. StatusApplied: ${event.statusApplied}");
     };
+    // ignore: deprecated_member_use
     didomiListener.onSyncDone = (organizationUserId) {
       onEvent("Sync has been done for user $organizationUserId");
     };

@@ -20,6 +20,7 @@ class _GetRequiredVendorIdsState extends BaseSampleWidgetState<GetRequiredVendor
 
   @override
   Future<String> callDidomiPlugin() async {
+    // ignore: deprecated_member_use
     final List<String> result = await DidomiSdk.requiredVendorIds;
     result.sort(); // Required for UI tests
     if (result.isEmpty) {

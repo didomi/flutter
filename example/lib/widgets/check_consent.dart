@@ -25,10 +25,14 @@ class _CheckConsentState extends BaseSampleWidgetState<CheckConsent> {
 
   @override
   Future<String> callDidomiPlugin() async {
+    // ignore: deprecated_member_use
     final bool consentRequired = await DidomiSdk.isConsentRequired;
+    // ignore: deprecated_member_use
     final bool shouldConsentBeCollected = await DidomiSdk.shouldConsentBeCollected;
     final bool shouldUserStatusBeCollected = await DidomiSdk.shouldUserStatusBeCollected;
+    // ignore: deprecated_member_use
     final bool consentStatusPartial = await DidomiSdk.isUserConsentStatusPartial;
+    // ignore: deprecated_member_use
     final bool liStatusPartial = await DidomiSdk.isUserLegitimateInterestStatusPartial;
     final bool isUserStatusPartial = await DidomiSdk.isUserStatusPartial;
     return '\n- Is user consent required? $consentRequired\n'
