@@ -20,6 +20,7 @@ class _GetUserStatusOtherInfo extends BaseSampleWidgetState<GetUserStatusOtherIn
 
   @override
   Future<String> callDidomiPlugin() async {
+    // ignore: deprecated_member_use
     final UserStatus result = await DidomiSdk.userStatus;
     return "Other info in status: \n"
         "- User id ${result.userId}\n"

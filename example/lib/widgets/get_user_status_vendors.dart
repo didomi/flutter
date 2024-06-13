@@ -21,6 +21,7 @@ class _GetUserStatusVendorsState extends BaseSampleWidgetState<GetUserStatusVend
 
   @override
   Future<String> callDidomiPlugin() async {
+    // ignore: deprecated_member_use
     final UserStatus result = await DidomiSdk.userStatus;
     return "Enabled vendors: ${result.vendors?.global?.enabled?.joinToString() ?? "--"}";
   }

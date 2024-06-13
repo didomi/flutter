@@ -20,6 +20,7 @@ class _GetRequiredPurposeIdsState extends BaseSampleWidgetState<GetRequiredPurpo
 
   @override
   Future<String> callDidomiPlugin() async {
+    // ignore: deprecated_member_use
     final List<String> result = await DidomiSdk.requiredPurposeIds;
     result.sort(); // Required for UI tests
     if (result.isEmpty) {

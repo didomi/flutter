@@ -29,6 +29,7 @@ class _SetUserStatusState extends BaseSampleWidgetState<SetUserStatus> {
 
   @override
   Future<String> callDidomiPlugin() async {
+    // ignore: deprecated_member_use
     final bool result = await DidomiSdk.setUserStatus(
         [purpose1, purpose2],
         [purpose3],

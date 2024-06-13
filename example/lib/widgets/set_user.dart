@@ -35,7 +35,7 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
     int? expiration = _withExpiration ? 3600 : null;
     bool setUserAndSetupUI = _withSetupUI;
     bool hasSynchronizedUsers = _withSynchronizedUsers;
-    List<UserAuthParams>? synchronizedUsers = null;
+    List<UserAuthParams>? synchronizedUsers;
 
     switch (_authenticationType) {
       case AuthType.clearUser:

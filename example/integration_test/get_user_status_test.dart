@@ -36,6 +36,7 @@ void main() {
 
       var exceptionThrown = false;
       try {
+        // ignore: deprecated_member_use
         await DidomiSdk.userStatus;
       } on PlatformException {
         exceptionThrown = true;
@@ -59,6 +60,7 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
+      // ignore: deprecated_member_use
       var result = await DidomiSdk.userStatus;
       assertMatchesUuidPattern(result.userId);
       assertTextNotEmpty(result.consentString);
@@ -93,6 +95,7 @@ void main() {
       var statusSet = await DidomiSdk.setUserAgreeToAll();
       assert(statusSet);
 
+      // ignore: deprecated_member_use
       var result = await DidomiSdk.userStatus;
 
       assertMatchesUuidPattern(result.userId);
@@ -137,6 +140,7 @@ void main() {
       var statusSet = await DidomiSdk.setUserDisagreeToAll();
       assert(statusSet);
 
+      // ignore: deprecated_member_use
       var result = await DidomiSdk.userStatus;
 
       assertMatchesUuidPattern(result.userId);
