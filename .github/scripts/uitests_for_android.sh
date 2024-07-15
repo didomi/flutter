@@ -4,17 +4,25 @@
 # Launch UI tests for Android
 #----------------------------------------------------------
 
-# Set up environment variables for Mac Mini M2
-export ANDROID_SDK_ROOT=/Users/administrator/Library/Android/sdk
-export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
-export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
-export PATH=$PATH:$ANDROID_SDK_ROOT/tools
-export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
+# Get current user ('administrator' for the CI)
+USER=$(whoami)
 
-# Search for device name
-DEVICE=$(emulator -list-avds | head -n 1)
+if [[ $USER == "administrator" ]]; then
+  # Set up environment variables for Mac Mini M2
+  export ANDROID_SDK_ROOT=/Users/administrator/Library/Android/sdk
+  export PATH=$PATH:$ANDROID_SDK_ROOT/emulator
+  export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+  export PATH=$PATH:$ANDROID_SDK_ROOT/tools
+  export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
 
-echo "$DEVICE"
+  # Use specific name
+  DEVICE="Medium_Phone_API_31"
+else
+  # Search for device name
+  DEVICE=$(emulator -list-avds | head -n 1)
+fi
+
+echo "Using $DEVICE"
 
 # (re)Launch emulator
 adb -s emulator-5554 emu kill

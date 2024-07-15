@@ -87,9 +87,7 @@ void main() {
             "cookies",
             "select_basic_ads",
             "measure_ad_performance",
-            "measure_content_performance",
             "improve_products",
-            "use_limited_data_to_select_content",
             "create_ads_profile",
             "select_personalized_ads",
             "market_research",
@@ -100,9 +98,7 @@ void main() {
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "cookies", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "select_basic_ads", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "measure_ad_performance", enabled: false));
-      assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "measure_content_performance", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "improve_products", enabled: false));
-      assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "use_limited_data_to_select_content", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "create_ads_profile", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "select_personalized_ads", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "market_research", enabled: false));
@@ -159,9 +155,7 @@ void main() {
             "cookies",
             "select_basic_ads",
             "measure_ad_performance",
-            "measure_content_performance",
             "improve_products",
-            "use_limited_data_to_select_content",
             "create_ads_profile",
             "select_personalized_ads",
             "market_research",
@@ -172,9 +166,7 @@ void main() {
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "cookies", enabled: true));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "select_basic_ads", enabled: true));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "measure_ad_performance", enabled: false));
-      assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "measure_content_performance", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "improve_products", enabled: false));
-      assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "use_limited_data_to_select_content", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "create_ads_profile", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "select_personalized_ads", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "market_research", enabled: false));
@@ -231,9 +223,7 @@ void main() {
             "cookies",
             "select_basic_ads",
             "measure_ad_performance",
-            "measure_content_performance",
             "improve_products",
-            "use_limited_data_to_select_content",
             "create_ads_profile",
             "select_personalized_ads",
             "market_research",
@@ -244,9 +234,7 @@ void main() {
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "cookies", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "select_basic_ads", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "measure_ad_performance", enabled: false));
-      assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "measure_content_performance", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "improve_products", enabled: false));
-      assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "use_limited_data_to_select_content", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "create_ads_profile", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "select_personalized_ads", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "market_research", enabled: false));
@@ -310,9 +298,7 @@ void main() {
             "cookies",
             "select_basic_ads",
             "measure_ad_performance",
-            "measure_content_performance",
             "improve_products",
-            "use_limited_data_to_select_content",
             "create_ads_profile",
             "select_personalized_ads",
             "market_research",
@@ -323,9 +309,7 @@ void main() {
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "cookies", enabled: true));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "select_basic_ads", enabled: true));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "measure_ad_performance", enabled: true));
-      assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "measure_content_performance", enabled: true));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "improve_products", enabled: true));
-      assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "use_limited_data_to_select_content", enabled: true));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "create_ads_profile", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "select_personalized_ads", enabled: true));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "market_research", enabled: false));
@@ -389,9 +373,7 @@ void main() {
             "cookies",
             "select_basic_ads",
             "measure_ad_performance",
-            "measure_content_performance",
             "improve_products",
-            "use_limited_data_to_select_content",
             "create_ads_profile",
             "select_personalized_ads",
             "market_research",
@@ -402,9 +384,7 @@ void main() {
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "cookies", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "select_basic_ads", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "measure_ad_performance", enabled: true));
-      assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "measure_content_performance", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "improve_products", enabled: false));
-      assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "use_limited_data_to_select_content", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "create_ads_profile", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "select_personalized_ads", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "market_research", enabled: false));
@@ -472,9 +452,7 @@ void main() {
             "cookies",
             "select_basic_ads",
             "measure_ad_performance",
-            "measure_content_performance",
             "improve_products",
-            "use_limited_data_to_select_content",
             "create_ads_profile",
             "select_personalized_ads",
             "market_research",
@@ -485,9 +463,7 @@ void main() {
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "cookies", enabled: true));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "select_basic_ads", enabled: true));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "measure_ad_performance", enabled: true));
-      assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "measure_content_performance", enabled: true));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "improve_products", enabled: true));
-      assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "use_limited_data_to_select_content", enabled: true));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "create_ads_profile", enabled: false));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "select_personalized_ads", enabled: true));
       assertPurposeStatusMapContains(result.purposes, PurposeStatus(id: "market_research", enabled: false));

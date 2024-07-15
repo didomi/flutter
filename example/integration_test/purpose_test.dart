@@ -19,12 +19,11 @@ void main() {
   const purposeNames = "$purpose1Name, Create profiles for personalised advertising, "
       "Actively scan device characteristics for identification, Use precise geolocation data, "
       "Develop and improve services, Understand audiences through statistics or combinations of data "
-      "from different sources, Measure advertising performance, Measure content performance, "
-      "Use limited data to select advertising, Use profiles to select personalised advertising, "
-      "Use limited data to select content.";
+      "from different sources, Measure advertising performance, "
+      "Use limited data to select advertising, Use profiles to select personalised advertising.";
   const purposeIds = "cookies, create_ads_profile, device_characteristics, geolocation_data, improve_products, "
-      "market_research, measure_ad_performance, measure_content_performance, select_basic_ads, "
-      "select_personalized_ads, use_limited_data_to_select_content.";
+      "market_research, measure_ad_performance, select_basic_ads, "
+      "select_personalized_ads.";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final requiredPurposeIdsBtnFinder = find.byKey(Key("getRequiredPurposeIds"));
