@@ -17,7 +17,7 @@ DEVICE=$(emulator -list-avds | head -n 1)
 echo "$DEVICE"
 
 # (re)Launch emulator
-adb -s emulator-5554 emu kill
+adb -s emulator-5037 emu kill
 ~/Library/Android/sdk/emulator/emulator "@$DEVICE" -no-window -wipe-data &
 
 # Wait for emulator to start
@@ -35,10 +35,10 @@ if [ -f machine.log ]; then
 fi
 
 # Run tests and print logs
-flutter test --machine -d emulator-5554 -r expanded integration_test >machine.log
+flutter test --machine -d emulator-5037 -r expanded integration_test >machine.log
 
 # Shutdown emulator
-adb -s emulator-5554 emu kill
+adb -s emulator-5037 emu kill
 
 # Extract log information
 RESULT="$(tail -n1 'machine.log')"

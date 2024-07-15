@@ -5,7 +5,7 @@
 #----------------------------------------------------------
 
 # Search for device ID
-DEVICE=$(xcrun simctl list devices | grep -m 1 'iPhone 14 Pro' | grep -E -o -i '([0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12})')
+DEVICE=$(xcrun simctl list devices | grep -m 1 'iPhone 15 Pro' | grep -E -o -i '([0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12})')
 
 # (re)Launch simulator
 xcrun simctl shutdown "${DEVICE}"
