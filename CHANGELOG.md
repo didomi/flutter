@@ -1,5 +1,8 @@
 # Release Note
 
+## 2.5.0
+- Update latest versions of native Android (2.9.0) and iOS (2.9.2) sdks
+
 ## 2.4.0
 - Update latest versions of native Android (2.7.0) and iOS (2.8.0) sdks
 - Update Android's build configuration (required for Flutter 3.22)
