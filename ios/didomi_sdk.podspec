@@ -4,15 +4,15 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'didomi_sdk'
-  s.version          = '2.5.0'
+  s.version          = '2.6.0'
   s.summary          = 'Didomi CMP Plugin.'
   s.homepage         = 'https://github.com/didomi/flutter'
   s.license          = { :type => 'BSD', :file => '../LICENSE' }
   s.author           = { 'Didomi ' => 'tech@didomi.io' }
-  s.source           = { :path => 'git@github.com:didomi/flutter.git', :tag => '2.5.0' }
+  s.source           = { :path => 'git@github.com:didomi/flutter.git', :tag => '2.6.0' }
   s.source_files     = 'Classes/**/*'
   s.dependency       'Flutter'
-  s.dependency       'Didomi-XCFramework', '2.9.2'
+  s.dependency       'Didomi-XCFramework', '2.11.0'
   s.platform         = :ios, '9.0'
 
   # Flutter.framework does not contain a i386 slice.
