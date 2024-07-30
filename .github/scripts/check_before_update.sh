@@ -33,9 +33,9 @@ if [[ -z $currentVersion ]]; then
   exit 1
 fi
 
-lastVersion=$(curl -s 'https://search.maven.org/solrsearch/select?q=didomi' | sed -n 's|.*"latestVersion":"\([^"]*\)".*|\1|p')
-if [[ -z $lastVersion ]]; then
-  echo "Error while getting android SDK latest version"
+lastVersion=$(curl -s 'https://repo.maven.apache.org/maven2/io/didomi/sdk/android/maven-metadata.xml' | sed -ne '/release/{s/.*<release>\(.*\)<\/release>.*/\1/p;q;}')
+if [[ ! $lastVersion =~ ^[0-9]+.[0-9]+.[0-9]+$ ]]; then
+  echo "Error while getting android SDK version"
   exit 1
 fi
 
