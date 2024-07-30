@@ -29,7 +29,7 @@ android {
     namespace = "io.didomi.flutter.sample"
 
     defaultConfig {
-        minSdkVersion = 21
+        minSdkVersion 21
         targetSdkVersion(34)
 
         versionCode = flutterVersionCode.toInteger()
