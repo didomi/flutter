@@ -25,7 +25,6 @@ if (flutterVersionName == null) {
 
 android {
     compileSdkVersion(34)
-    buildToolsVersion = "34.0.0"
     namespace = "io.didomi.flutter.sample"
 
     defaultConfig {
@@ -58,8 +57,10 @@ android {
     }
 
     packagingOptions {
-        // Required for minSdkVersion < 21
-        exclude("androidsupportmultidexversion.txt")
+        resources {
+            // Required for minSdkVersion < 21
+            excludes += ['androidsupportmultidexversion.txt']
+        }
     }
 
     sourceSets {
