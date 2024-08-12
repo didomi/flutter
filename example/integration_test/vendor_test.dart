@@ -23,6 +23,7 @@ void main() {
   final requiredVendorIdsBtnFinder = find.byKey(Key("getRequiredVendorIds"));
   final requiredVendorsBtnFinder = find.byKey(Key("getRequiredVendors"));
   final getVendorBtnFinder = find.byKey(Key("getVendor"));
+  final getVendorCountBtnFinder = find.byKey(Key("getVendorCount"));
   final listKey = Key("components_list");
 
   bool isError = false;
@@ -169,6 +170,32 @@ void main() {
           "URL 0: en -> https://www.ipromote.com/privacy-policy/ - https://www.ipromote.com/privacy-policy/."
           "IAB2 = null";
       assertNativeMessage("getVendor", expected);
+
+      assert(isError == false);
+      assert(isReady == true);
+    });
+
+    testWidgets("Get vendor count", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      // Depending on the screen size, we might need to scroll more than once
+      // in order to reach the widgets at the bottom of the list.
+      await scrollDown(tester, listKey, offsetY: 600);
+      await tester.tap(getVendorCountBtnFinder);
+      await tester.pumpAndSettle();
+
+      final expected = "Native message: 3 vendors in total, 3 IAB vendors, 0 non-IAB vendors";
+      assertNativeMessage("getVendorCount", expected);
 
       assert(isError == false);
       assert(isReady == true);

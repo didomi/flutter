@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.source           = { :path => 'git@github.com:didomi/flutter.git', :tag => '2.4.0' }
   s.source_files     = 'Classes/**/*'
   s.dependency       'Flutter'
-  s.dependency       'Didomi-XCFramework', '2.8.0'
+  s.dependency       'Didomi-XCFramework', '2.9.2'
   s.platform         = :ios, '9.0'
 
   # Flutter.framework does not contain a i386 slice.
