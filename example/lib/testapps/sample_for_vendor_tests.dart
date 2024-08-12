@@ -1,6 +1,7 @@
 import 'package:didomi_sdk_example/widgets/get_required_vendor_ids.dart';
 import 'package:didomi_sdk_example/widgets/get_required_vendors.dart';
 import 'package:didomi_sdk_example/widgets/get_vendor.dart';
+import 'package:didomi_sdk_example/widgets/get_vendor_count.dart';
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,7 @@ class HomePage extends StatelessWidget {
             GetRequiredVendorIds(),
             GetRequiredVendors(),
             GetVendor(),
+            GetVendorCount(),
           ],
         ),
       );
