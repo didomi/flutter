@@ -194,7 +194,7 @@ void main() {
       await tester.tap(getVendorCountBtnFinder);
       await tester.pumpAndSettle();
 
-      final expected = "Native message: 3 vendors in total, 3 IAB vendors, 0 non-IAB vendors";
+      final expected = "Native message: 3 vendors in total, 3 IAB vendors, 0 non-IAB vendors.";
       assertNativeMessage("getVendorCount", expected);
 
       assert(isError == false);
