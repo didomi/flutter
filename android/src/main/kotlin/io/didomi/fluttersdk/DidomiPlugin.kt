@@ -183,6 +183,12 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "executeSyncAcknowledgedCallback" -> executeSyncAcknowledgedCallback(call, result)
 
+                "getTotalVendorCount" -> getTotalVendorCount(result)
+
+                "getIabVendorCount" -> getIabVendorCount(result)
+
+                "getNonIabVendorCount" -> getNonIabVendorCount(result)
+
                 else -> result.notImplemented()
             }
         } catch (e: Exception) {
@@ -675,6 +681,43 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.error("executeSyncAcknowledgedCallback", e.message.orEmpty(), e)
         }
     }
+
+    /**
+     * Get the number of vendors
+     */
+    private fun getTotalVendorCount(result: Result) {
+        try {
+            val count = Didomi.getInstance().getTotalVendorCount()
+            result.success(count)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getTotalVendorCount", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the number of IAB vendors
+     */
+    private fun getIabVendorCount(result: Result) {
+        try {
+            val count = Didomi.getInstance().getIabVendorCount()
+            result.success(count)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getIabVendorCount", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the number of non-IAB vendors
+     */
+    private fun getNonIabVendorCount(result: Result) {
+        try {
+            val count = Didomi.getInstance().getNonIabVendorCount()
+            result.success(count)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getNonIabVendorCount", e.message.orEmpty(), e)
+        }
+    }
+
 
     private fun argumentAsArray(argumentName: String, call: MethodCall): Array<String> {
         val argument = call.argument<List<String>?>(argumentName)

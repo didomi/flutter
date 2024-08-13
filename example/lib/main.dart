@@ -2,6 +2,7 @@ import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk/log_level.dart';
 import 'package:didomi_sdk_example/events_helper.dart';
+import 'package:didomi_sdk_example/widgets/get_vendor_count.dart';
 import 'package:didomi_sdk_example/widgets/transactions/disable_purpose_transaction.dart';
 import 'package:didomi_sdk_example/widgets/transactions/disable_purposes_transaction.dart';
 import 'package:didomi_sdk_example/widgets/transactions/enable_purpose_transaction.dart';
@@ -154,6 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 GetRequiredVendorIds(),
                 GetRequiredVendors(),
                 GetVendor(),
+                GetVendorCount(),
                 // Languages,
                 Text("Languages:"),
                 UpdateSelectedLanguage(),

@@ -129,6 +129,12 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             commitCurrentUserStatusTransaction(call, result: result)
         case "executeSyncAcknowledgedCallback":
             executeSyncAcknowledgedCallback(call, result: result)
+        case "getTotalVendorCount":
+            getTotalVendorCount(result: result)
+        case "getIabVendorCount":
+            getIABVendorCount(result: result)
+        case "getNonIabVendorCount":
+            getNonIABVendorCount(result: result)
 
         default:
             result(FlutterMethodNotImplemented)
@@ -831,7 +837,6 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(nil)
     }
 
-    
     /// Return the requested argument as non-empty String, or raise an error in result and return null
     private func argumentOrError(argumentName: String, methodName: String, args: Dictionary<String, Any>, result: FlutterResult) -> String? {
         let argument = args[argumentName] as? String ?? ""
@@ -880,6 +885,36 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
 
         let eventWasSent = SwiftDidomiSdkPlugin.eventStreamHandler?.executeSyncAcknowledgedCallback(index: syncReadyEventIndex) ?? false
         result(eventWasSent)
+    }
+    
+    // Get total vendor count.
+    func getTotalVendorCount(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let count = Didomi.shared.getTotalVendorCount()
+        result(count)
+    }
+    
+    // Get IAB vendor count.
+    func getIABVendorCount(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let count = Didomi.shared.getIABVendorCount()
+        result(count)
+    }
+    
+    // Get non-IAB vendor count.
+    func getNonIABVendorCount(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let count = Didomi.shared.getNonIABVendorCount()
+        result(count)
     }
 }
 

@@ -264,6 +264,24 @@ class DidomiSdk {
     return Vendor.fromJson(result);
   }
 
+  /// Get nuber of vendors
+  static Future<int> getTotalVendorCount() async {
+    final int result = await _channel.invokeMethod('getTotalVendorCount');
+    return result;
+  }
+
+  /// Get number of IAB vendors
+  static Future<int> getIabVendorCount() async {
+    final int result = await _channel.invokeMethod('getIabVendorCount');
+    return result;
+  }
+
+  /// Get number of non-IAB vendors
+  static Future<int> getNonIabVendorCount() async {
+    final int result = await _channel.invokeMethod('getNonIabVendorCount');
+    return result;
+  }
+
   /// Set the minimum level of messages to log
   static setLogLevel(LogLevel minLevel) {
     _channel.invokeMethod("setLogLevel", {"minLevel": minLevel.platformLevel});
