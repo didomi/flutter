@@ -4,14 +4,14 @@ group = "io.didomi.fluttersdk"
 version = "2.7.0"
 
 buildscript {
-    ext.kotlin_version = "1.8.20"
+    ext.kotlin_version = "1.9.20"
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:8.4.1")
+        classpath("com.android.tools.build:gradle:8.4.2")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
@@ -19,6 +19,7 @@ buildscript {
 rootProject.allprojects {
     repositories {
         google()
+        mavenLocal()
         mavenCentral()
     }
 }
@@ -27,8 +28,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
 android {
-    compileSdkVersion(33)
-    buildToolsVersion("33.0.3")
+    compileSdk(34)
     namespace = "io.didomi.fluttersdk"
 
     sourceSets {
@@ -37,7 +37,7 @@ android {
 
     defaultConfig {
         minSdkVersion(19)
-        targetSdkVersion(33)
+        targetSdkVersion(34)
         multiDexEnabled = true
 
         buildConfigField("String", "PLUGIN_VERSION", "\"" + version + "\"")
