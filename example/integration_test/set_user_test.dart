@@ -15,7 +15,8 @@ import 'util/initialize_helper.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  const String userId = "d13e49f6255c8729cbb201310f49d70d65f365415a67f034b567b7eac962b944eda131376594ef5e23b025fada4e4259e953ceb45ea57a2ced7872c567e6d1fae8dcc3a9772ead783d8513032e77d3fd";
+  const String userId =
+      "d13e49f6255c8729cbb201310f49d70d65f365415a67f034b567b7eac962b944eda131376594ef5e23b025fada4e4259e953ceb45ea57a2ced7872c567e6d1fae8dcc3a9772ead783d8513032e77d3fd";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final clearUser = find.byKey(Key("clearUser"));
@@ -27,6 +28,7 @@ void main() {
   final withExpiration = find.byKey(Key("setUserWithExpiration"));
   final withSetupUI = find.byKey(Key("setUserAndSetupUI"));
   final withSynchronizedUsers = find.byKey(Key("withSynchronizedUsers"));
+  final underageFinder = find.byKey(Key("isUnderage"));
   final submitSetUser = find.byKey(Key("setUser"));
   final reset = find.byKey(Key("reset"));
 
@@ -110,7 +112,6 @@ void main() {
   }
 
   group("Set User", () {
-
     // Run before each test.
     setUp(() {
       syncReadyEvent = null;
@@ -212,6 +213,84 @@ void main() {
       await assertSyncEvent(tester);
     });
 
+    testWidgets("Click setUser with id and underage false", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Reset
+      await tester.tap(reset);
+      await tester.pumpAndSettle();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "false")
+      await tester.tap(find.text("false").last);
+      await tester.pumpAndSettle();
+
+      // Select with id
+      await tester.tap(setUserWithId);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertNativeMessage("setUser", okMessage);
+
+      await waitForSync(tester);
+
+      assert(syncUserId == userId);
+      assert(syncError == false);
+
+      await assertSyncEvent(tester);
+    });
+
+    testWidgets("Click setUser with id and underage true", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Reset
+      await tester.tap(reset);
+      await tester.pumpAndSettle();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "false")
+      await tester.tap(find.text("true").last);
+      await tester.pumpAndSettle();
+
+      // Select with id
+      await tester.tap(setUserWithId);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertNativeMessage("setUser", okMessage);
+
+      await waitForSync(tester);
+
+      assert(syncUserId == userId);
+      assert(syncError == false);
+
+      await assertSyncEvent(tester);
+    });
+
     testWidgets("Click setUser with encryption", (WidgetTester tester) async {
       // Start app
       app.main();
@@ -247,6 +326,92 @@ void main() {
       assertExpectedSyncValuesArePopulated();
     });
 
+    testWidgets("Click setUser with encryption and underage false", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "false")
+      await tester.tap(find.text("false").last);
+      await tester.pumpAndSettle();
+
+      // Select Encryption auth
+      await tester.tap(setUserAuthWithEncryption);
+      // Click on expiration so it becomes checked
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    testWidgets("Click setUser with encryption and underage true", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "false")
+      await tester.tap(find.text("true").last);
+      await tester.pumpAndSettle();
+
+      // Select Encryption auth
+      await tester.tap(setUserAuthWithEncryption);
+      // Click on expiration so it becomes checked
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
     testWidgets("Click setUser with hash", (WidgetTester tester) async {
       // Start app
       app.main();
@@ -258,6 +423,114 @@ void main() {
       }
 
       resetExpectedSyncValues();
+
+      // Click on expiration and salt so it becomes checked
+      await tester.tap(setUserAuthWithHash);
+      await tester.tap(withExpiration);
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck salt parameter
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertExpectedSyncValuesArePopulated();
+
+      await waitForSync(tester);
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    testWidgets("Click setUser with hash and underage false", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "false")
+      await tester.tap(find.text("false").last);
+      await tester.pumpAndSettle();
+
+      // Click on expiration and salt so it becomes checked
+      await tester.tap(setUserAuthWithHash);
+      await tester.tap(withExpiration);
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck salt parameter
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertExpectedSyncValuesArePopulated();
+
+      await waitForSync(tester);
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    testWidgets("Click setUser with hash and underage true", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "false")
+      await tester.tap(find.text("true").last);
+      await tester.pumpAndSettle();
 
       // Click on expiration and salt so it becomes checked
       await tester.tap(setUserAuthWithHash);
@@ -356,6 +629,74 @@ void main() {
       assertExpectedSyncValuesArePopulated();
     });
 
+    testWidgets("Click setUser with id and setupUI and underage false", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "false")
+      await tester.tap(find.text("false").last);
+      await tester.pumpAndSettle();
+
+      // Select with id
+      await tester.tap(setUserWithId);
+      // Select setUserAndSetupUI
+      await tester.tap(withSetupUI);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertNativeMessage("setUser", okMessage);
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    testWidgets("Click setUser with id and setupUI and underage true", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "true")
+      await tester.tap(find.text("true").last);
+      await tester.pumpAndSettle();
+
+      // Select with id
+      await tester.tap(setUserWithId);
+      // Select setUserAndSetupUI
+      await tester.tap(withSetupUI);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertNativeMessage("setUser", okMessage);
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
     testWidgets("Click setUser with encryption and setupUI", (WidgetTester tester) async {
       // Start app
       app.main();
@@ -391,6 +732,92 @@ void main() {
       assertExpectedSyncValuesArePopulated();
     });
 
+    testWidgets("Click setUser with encryption and setupUI and underage false", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "false")
+      await tester.tap(find.text("false").last);
+      await tester.pumpAndSettle();
+
+      // Select Encryption auth
+      await tester.tap(setUserAuthWithEncryption);
+      // Click on expiration so it becomes checked
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    testWidgets("Click setUser with encryption and setupUI and underage true", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "true")
+      await tester.tap(find.text("true").last);
+      await tester.pumpAndSettle();
+
+      // Select Encryption auth
+      await tester.tap(setUserAuthWithEncryption);
+      // Click on expiration so it becomes checked
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
     testWidgets("Click setUser with hash and setupUI", (WidgetTester tester) async {
       // Start app
       app.main();
@@ -402,6 +829,114 @@ void main() {
       }
 
       resetExpectedSyncValues();
+
+      // Click on expiration and salt so it becomes checked
+      await tester.tap(setUserAuthWithHash);
+      await tester.tap(withExpiration);
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck salt parameter
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertExpectedSyncValuesArePopulated();
+
+      await waitForSync(tester);
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    testWidgets("Click setUser with hash and setupUI and underage false", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "false")
+      await tester.tap(find.text("false").last);
+      await tester.pumpAndSettle();
+
+      // Click on expiration and salt so it becomes checked
+      await tester.tap(setUserAuthWithHash);
+      await tester.tap(withExpiration);
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck salt parameter
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertExpectedSyncValuesArePopulated();
+
+      await waitForSync(tester);
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    testWidgets("Click setUser with hash and setupUI and underage true", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "true")
+      await tester.tap(find.text("true").last);
+      await tester.pumpAndSettle();
 
       // Click on expiration and salt so it becomes checked
       await tester.tap(setUserAuthWithHash);
@@ -476,6 +1011,98 @@ void main() {
       assertExpectedSyncValuesArePopulated();
     });
 
+    testWidgets("Click setUser with encryption and Synchronized Users and setupUI and underage false",
+        (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "false")
+      await tester.tap(find.text("false").last);
+      await tester.pumpAndSettle();
+
+      // Select Encryption auth
+      await tester.tap(setUserAuthWithEncryption);
+      // Select withSynchronizedUsers
+      await tester.tap(withSynchronizedUsers);
+      // Click on expiration so it becomes checked
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    testWidgets("Click setUser with encryption and Synchronized Users and setupUI and underage true",
+        (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "true")
+      await tester.tap(find.text("true").last);
+      await tester.pumpAndSettle();
+
+      // Select Encryption auth
+      await tester.tap(setUserAuthWithEncryption);
+      // Select withSynchronizedUsers
+      await tester.tap(withSynchronizedUsers);
+      // Click on expiration so it becomes checked
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
     testWidgets("Click setUser with hash and Synchronized Users and setupUI", (WidgetTester tester) async {
       // Start app
       app.main();
@@ -487,6 +1114,116 @@ void main() {
       }
 
       resetExpectedSyncValues();
+
+      // Click on expiration and salt so it becomes checked
+      await tester.tap(setUserAuthWithHash);
+      await tester.tap(withExpiration);
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck salt parameter
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertExpectedSyncValuesArePopulated();
+
+      await waitForSync(tester);
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    testWidgets("Click setUser with hash and Synchronized Users and setupUI and underage false",
+        (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "false")
+      await tester.tap(find.text("false").last);
+      await tester.pumpAndSettle();
+
+      // Click on expiration and salt so it becomes checked
+      await tester.tap(setUserAuthWithHash);
+      await tester.tap(withExpiration);
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck salt parameter
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertExpectedSyncValuesArePopulated();
+
+      await waitForSync(tester);
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    testWidgets("Click setUser with hash and Synchronized Users and setupUI and underage true",
+        (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "true")
+      await tester.tap(find.text("true").last);
+      await tester.pumpAndSettle();
 
       // Click on expiration and salt so it becomes checked
       await tester.tap(setUserAuthWithHash);
@@ -561,6 +1298,96 @@ void main() {
       assertExpectedSyncValuesArePopulated();
     });
 
+    testWidgets("Click setUser with encryption and Synchronized Users and underage false", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "false")
+      await tester.tap(find.text("false").last);
+      await tester.pumpAndSettle();
+
+      // Select Encryption auth
+      await tester.tap(setUserAuthWithEncryption);
+      // UnSelect setUserAndSetupUI
+      await tester.tap(withSetupUI);
+      // Click on expiration so it becomes checked
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    testWidgets("Click setUser with encryption and Synchronized Users and underage true", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "true")
+      await tester.tap(find.text("true").last);
+      await tester.pumpAndSettle();
+
+      // Select Encryption auth
+      await tester.tap(setUserAuthWithEncryption);
+      // UnSelect setUserAndSetupUI
+      await tester.tap(withSetupUI);
+      // Click on expiration so it becomes checked
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
     testWidgets("Click setUser with hash and Synchronized Users", (WidgetTester tester) async {
       // Start app
       app.main();
@@ -572,6 +1399,114 @@ void main() {
       }
 
       resetExpectedSyncValues();
+
+      // Click on expiration and salt so it becomes checked
+      await tester.tap(setUserAuthWithHash);
+      await tester.tap(withExpiration);
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck salt parameter
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertExpectedSyncValuesArePopulated();
+
+      await waitForSync(tester);
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    testWidgets("Click setUser with hash and Synchronized Users and underage false", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "false")
+      await tester.tap(find.text("false").last);
+      await tester.pumpAndSettle();
+
+      // Click on expiration and salt so it becomes checked
+      await tester.tap(setUserAuthWithHash);
+      await tester.tap(withExpiration);
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+
+      resetExpectedSyncValues();
+
+      // Uncheck salt parameter
+      await tester.tap(withSalt);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      assertExpectedSyncValuesArePopulated();
+
+      await waitForSync(tester);
+
+      resetExpectedSyncValues();
+
+      // Uncheck expiration parameter
+      await tester.tap(withExpiration);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
+      await waitForSync(tester);
+
+      assertExpectedSyncValuesArePopulated();
+    });
+
+    testWidgets("Click setUser with hash and Synchronized Users and underage true", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      if (!isReady) {
+        // Initialize if not ready
+        await InitializeHelper.initialize(tester, initializeBtnFinder);
+      }
+
+      resetExpectedSyncValues();
+
+      // Open the dropdown
+      await tester.tap(underageFinder);
+      await tester.pumpAndSettle();
+
+      // Select the desired option (assuming the option text is "true")
+      await tester.tap(find.text("true").last);
+      await tester.pumpAndSettle();
 
       // Click on expiration and salt so it becomes checked
       await tester.tap(setUserAuthWithHash);

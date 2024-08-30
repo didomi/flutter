@@ -59,12 +59,13 @@
         "denyAppliesToLI": true
     },
     "languages": {
-        "default": "ko",
+        "default": "en",
         "enabled": [
             "zh-CN",
             "zh-TW",
             "ja",
-            "ko"
+            "ko",
+            "en"
         ]
     },
     "preferences": {
@@ -160,6 +161,16 @@
                     "analytics": false,
                     "ad": false
                 }
+            }
+        }
+    },
+    "underageNotice": {
+        "content": {
+            "description": {
+                "en": "underage notice text"
+            },
+            "disagree": {
+                "en": "Acknowledge"
             }
         }
     }

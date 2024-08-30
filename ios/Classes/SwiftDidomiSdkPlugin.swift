@@ -164,7 +164,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             languageCode: args["languageCode"] as? String,
             noticeID: args["noticeId"] as? String,
             countryCode: args["countryCode"] as? String,
-            regionCode: args["regionCode"] as? String
+            regionCode: args["regionCode"] as? String,
+            isUnderage: args["isUnderage"] as? Bool ?? false
         )
         Didomi.shared.initialize(parameters)
         result(nil)
@@ -666,7 +667,13 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             return
         }
 
-        Didomi.shared.setUser(id: userId)
+        let isUnderage = args["isUnderage"] as? Bool
+
+        if let isUnderage = isUnderage {
+            Didomi.shared.setUser(id: userId, isUnderage: isUnderage)
+        } else {
+            Didomi.shared.setUser(id: userId)
+        }
         result(nil)
     }
 
@@ -680,8 +687,16 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             return
         }
 
+        let isUnderage = args["isUnderage"] as? Bool
+
         if let viewController: UIViewController = UIApplication.shared.rootViewController {
-            Didomi.shared.setUser(id: userId, containerController: viewController)
+            if let isUnderage = isUnderage {
+                Didomi.shared.setUser(id: userId, isUnderage: isUnderage, containerController: viewController)
+            } else {
+                Didomi.shared.setUser(id: userId, containerController: viewController)
+            }
+        } else if let isUnderage = isUnderage {
+            Didomi.shared.setUser(id: userId, isUnderage: isUnderage)
         } else {
             Didomi.shared.setUser(id: userId)
         }
@@ -756,12 +771,19 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         }
 
         let jsonSynchronizedUsers = args["jsonSynchronizedUsers"] as? [[String: Any]]
+        let isUnderage = args["isUnderage"] as? Bool
 
         let userAuthParams = buildUserAuthParams(jsonParameters: jsonUserAuthParams)
         let synchronizedUsers = jsonSynchronizedUsers?.map { buildUserAuthParams(jsonParameters: $0) }
 
         if let synchronizedUsers = synchronizedUsers {
-            Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers)
+            if let isUnderage = isUnderage {
+                Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers, isUnderage: isUnderage)
+            } else {
+                Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers)
+            }
+        } else if let isUnderage = isUnderage {
+            Didomi.shared.setUser(userAuthParams: userAuthParams, isUnderage: isUnderage)
         } else {
             Didomi.shared.setUser(userAuthParams: userAuthParams)
         }
@@ -781,18 +803,31 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         }
 
         let jsonSynchronizedUsers = args["jsonSynchronizedUsers"] as? [[String: Any]]
+        let isUnderage = args["isUnderage"] as? Bool
 
         let userAuthParams = buildUserAuthParams(jsonParameters: jsonUserAuthParams)
         let synchronizedUsers = jsonSynchronizedUsers?.map { buildUserAuthParams(jsonParameters: $0) }
 
         if let viewController: UIViewController = UIApplication.shared.rootViewController {
             if let synchronizedUsers = synchronizedUsers {
-                Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers, containerController: viewController)
+                if let isUnderage = isUnderage {
+                    Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers, isUnderage: isUnderage, containerController: viewController)
+                } else {
+                    Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers, containerController: viewController)
+                }
+            } else if let isUnderage = isUnderage {
+                Didomi.shared.setUser(userAuthParams: userAuthParams, isUnderage: isUnderage, containerController: viewController)
             } else {
                 Didomi.shared.setUser(userAuthParams: userAuthParams, containerController: viewController)
             }
         } else if let synchronizedUsers = synchronizedUsers {
-           Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers)
+            if let isUnderage = isUnderage {
+               Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers, isUnderage: isUnderage)
+            } else {
+               Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers)
+            }
+       } else if let isUnderage = isUnderage {
+           Didomi.shared.setUser(userAuthParams: userAuthParams, isUnderage: isUnderage)
        } else {
            Didomi.shared.setUser(userAuthParams: userAuthParams)
        }
