@@ -198,10 +198,10 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private fun initialize(call: MethodCall, result: Result) {
         currentActivity?.also {
-            val apiKey = argumentOrError("apiKey", "initialize", call, result)
-                    ?: return
+            val apiKey = argumentOrError("apiKey", "initialize", call, result) ?: return
             val disableDidomiRemoteConfig: Boolean = call.argument("disableDidomiRemoteConfig") ?: false
             val androidTvEnabled: Boolean = call.argument("androidTvEnabled") ?: false
+            val isUnderage: Boolean = call.argument("isUnderage") ?: false
             Didomi.getInstance().initialize(
                 it.application,
                 DidomiInitializeParameters(
@@ -215,7 +215,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                     call.argument("androidTvNoticeId"),
                     androidTvEnabled,
                     call.argument("countryCode"),
-                    call.argument("regionCode")
+                    call.argument("regionCode"),
+                    isUnderage
                 )
             )
             result.success(null)
@@ -531,16 +532,16 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun setUser(call: MethodCall, result: Result) {
-        val userId = argumentOrError("organizationUserId", "setUser", call, result)
-            ?: return
-        Didomi.getInstance().setUser(userId)
+        val organizationUserId = argumentOrError("organizationUserId", "setUser", call, result) ?: return
+        val isUnderage: Boolean? = call.argument("isUnderage")
+        Didomi.getInstance().setUser(organizationUserId = organizationUserId, isUnderage = isUnderage)
         result.success(null)
     }
 
     private fun setUserAndSetupUI(call: MethodCall, result: Result) {
-        val userId = argumentOrError("organizationUserId", "setUser", call, result)
-            ?: return
-        Didomi.getInstance().setUser(userId, getFragmentActivity(result))
+        val organizationUserId = argumentOrError("organizationUserId", "setUser", call, result) ?: return
+        val isUnderage: Boolean? = call.argument("isUnderage")
+        Didomi.getInstance().setUser(organizationUserId = organizationUserId, activity = getFragmentActivity(result), isUnderage = isUnderage)
         result.success(null)
     }
 
@@ -582,11 +583,12 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
 
         val jsonSynchronizedUsers: List<Map<String, Any>>? = call.argument("jsonSynchronizedUsers")
+        val isUnderage: Boolean? = call.argument("isUnderage")
 
         val userAuthParams = buildUserAuthParams(jsonUserAuthParams)
         val synchronizedUsers = jsonSynchronizedUsers?.map { buildUserAuthParams(it) }
 
-        Didomi.getInstance().setUser(userAuthParams, synchronizedUsers)
+        Didomi.getInstance().setUser(userAuthParams = userAuthParams, synchronizedUsers = synchronizedUsers, isUnderage = isUnderage)
 
         result.success(null)
     }
@@ -599,11 +601,12 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
 
         val jsonSynchronizedUsers: List<Map<String, Any>>? = call.argument("jsonSynchronizedUsers")
+        val isUnderage: Boolean? = call.argument("isUnderage")
 
         val userAuthParams = buildUserAuthParams(jsonUserAuthParams)
         val synchronizedUsers = jsonSynchronizedUsers?.map { buildUserAuthParams(it) }
 
-        Didomi.getInstance().setUser(userAuthParams, synchronizedUsers, getFragmentActivity(result))
+        Didomi.getInstance().setUser(userAuthParams, synchronizedUsers, getFragmentActivity(result), isUnderage)
 
         result.success(null)
     }
