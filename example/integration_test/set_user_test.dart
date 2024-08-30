@@ -11,6 +11,7 @@ import 'package:integration_test/integration_test.dart';
 import 'util/assertion_helper.dart';
 import 'util/constants.dart';
 import 'util/initialize_helper.dart';
+import 'util/scroll_helper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +32,7 @@ void main() {
   final underageFinder = find.byKey(Key("isUnderage"));
   final submitSetUser = find.byKey(Key("setUser"));
   final reset = find.byKey(Key("reset"));
+  final listKey = Key("components_list");
 
   String? syncUserId;
   bool isReady = false;
@@ -109,6 +111,23 @@ void main() {
     assert(syncUserId == null);
     assert(syncError == false);
     assert(syncReadyEvent == null);
+  }
+
+  // Set the underage value.
+  Future<void> scrollDownToUnderageAndSetValue(WidgetTester tester, bool value) async {
+    // Scroll DOWN (dropdown is at the bottom of the screen)
+    await scrollDown(tester, listKey);
+
+    // Open the dropdown
+    await tester.tap(underageFinder);
+    await tester.pumpAndSettle();
+
+    // Select the desired option
+    await tester.tap(find.text(value.toString()).last);
+    await tester.pumpAndSettle();
+
+    // Scroll UP (revert previous position)
+    await scrollUp(tester, listKey);
   }
 
   group("Set User", () {
@@ -225,17 +244,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Reset
-      await tester.tap(reset);
-      await tester.pumpAndSettle();
-
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "false")
-      await tester.tap(find.text("false").last);
-      await tester.pumpAndSettle();
+      // Set underage to false
+      await scrollDownToUnderageAndSetValue(tester, false);
 
       // Select with id
       await tester.tap(setUserWithId);
@@ -268,13 +278,8 @@ void main() {
       await tester.tap(reset);
       await tester.pumpAndSettle();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "false")
-      await tester.tap(find.text("true").last);
-      await tester.pumpAndSettle();
+      // Set underage to true
+      await scrollDownToUnderageAndSetValue(tester, true);
 
       // Select with id
       await tester.tap(setUserWithId);
@@ -338,13 +343,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "false")
-      await tester.tap(find.text("false").last);
-      await tester.pumpAndSettle();
+      // Set underage to false
+      await scrollDownToUnderageAndSetValue(tester, false);
 
       // Select Encryption auth
       await tester.tap(setUserAuthWithEncryption);
@@ -381,13 +381,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "false")
-      await tester.tap(find.text("true").last);
-      await tester.pumpAndSettle();
+      // Set underage to true
+      await scrollDownToUnderageAndSetValue(tester, true);
 
       // Select Encryption auth
       await tester.tap(setUserAuthWithEncryption);
@@ -470,13 +465,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "false")
-      await tester.tap(find.text("false").last);
-      await tester.pumpAndSettle();
+      // Set underage to false
+      await scrollDownToUnderageAndSetValue(tester, false);
 
       // Click on expiration and salt so it becomes checked
       await tester.tap(setUserAuthWithHash);
@@ -524,13 +514,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "false")
-      await tester.tap(find.text("true").last);
-      await tester.pumpAndSettle();
+      // Set underage to true
+      await scrollDownToUnderageAndSetValue(tester, true);
 
       // Click on expiration and salt so it becomes checked
       await tester.tap(setUserAuthWithHash);
@@ -641,13 +626,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "false")
-      await tester.tap(find.text("false").last);
-      await tester.pumpAndSettle();
+      // Set underage to false
+      await scrollDownToUnderageAndSetValue(tester, false);
 
       // Select with id
       await tester.tap(setUserWithId);
@@ -675,13 +655,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "true")
-      await tester.tap(find.text("true").last);
-      await tester.pumpAndSettle();
+      // Set underage to true
+      await scrollDownToUnderageAndSetValue(tester, true);
 
       // Select with id
       await tester.tap(setUserWithId);
@@ -744,13 +719,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "false")
-      await tester.tap(find.text("false").last);
-      await tester.pumpAndSettle();
+      // Set underage to false
+      await scrollDownToUnderageAndSetValue(tester, false);
 
       // Select Encryption auth
       await tester.tap(setUserAuthWithEncryption);
@@ -787,13 +757,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "true")
-      await tester.tap(find.text("true").last);
-      await tester.pumpAndSettle();
+      // Set underage to true
+      await scrollDownToUnderageAndSetValue(tester, true);
 
       // Select Encryption auth
       await tester.tap(setUserAuthWithEncryption);
@@ -876,13 +841,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "false")
-      await tester.tap(find.text("false").last);
-      await tester.pumpAndSettle();
+      // Set underage to false
+      await scrollDownToUnderageAndSetValue(tester, false);
 
       // Click on expiration and salt so it becomes checked
       await tester.tap(setUserAuthWithHash);
@@ -930,13 +890,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "true")
-      await tester.tap(find.text("true").last);
-      await tester.pumpAndSettle();
+      // Set underage to true
+      await scrollDownToUnderageAndSetValue(tester, true);
 
       // Click on expiration and salt so it becomes checked
       await tester.tap(setUserAuthWithHash);
@@ -1024,13 +979,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "false")
-      await tester.tap(find.text("false").last);
-      await tester.pumpAndSettle();
+      // Set underage to false
+      await scrollDownToUnderageAndSetValue(tester, false);
 
       // Select Encryption auth
       await tester.tap(setUserAuthWithEncryption);
@@ -1070,13 +1020,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "true")
-      await tester.tap(find.text("true").last);
-      await tester.pumpAndSettle();
+      // Set underage to true
+      await scrollDownToUnderageAndSetValue(tester, true);
 
       // Select Encryption auth
       await tester.tap(setUserAuthWithEncryption);
@@ -1162,13 +1107,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "false")
-      await tester.tap(find.text("false").last);
-      await tester.pumpAndSettle();
+      // Set underage to false
+      await scrollDownToUnderageAndSetValue(tester, false);
 
       // Click on expiration and salt so it becomes checked
       await tester.tap(setUserAuthWithHash);
@@ -1217,13 +1157,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "true")
-      await tester.tap(find.text("true").last);
-      await tester.pumpAndSettle();
+      // Set underage to true
+      await scrollDownToUnderageAndSetValue(tester, true);
 
       // Click on expiration and salt so it becomes checked
       await tester.tap(setUserAuthWithHash);
@@ -1310,13 +1245,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "false")
-      await tester.tap(find.text("false").last);
-      await tester.pumpAndSettle();
+      // Set underage to false
+      await scrollDownToUnderageAndSetValue(tester, false);
 
       // Select Encryption auth
       await tester.tap(setUserAuthWithEncryption);
@@ -1355,13 +1285,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "true")
-      await tester.tap(find.text("true").last);
-      await tester.pumpAndSettle();
+      // Set underage to true
+      await scrollDownToUnderageAndSetValue(tester, true);
 
       // Select Encryption auth
       await tester.tap(setUserAuthWithEncryption);
@@ -1446,13 +1371,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "false")
-      await tester.tap(find.text("false").last);
-      await tester.pumpAndSettle();
+      // Set underage to false
+      await scrollDownToUnderageAndSetValue(tester, false);
 
       // Click on expiration and salt so it becomes checked
       await tester.tap(setUserAuthWithHash);
@@ -1500,13 +1420,8 @@ void main() {
 
       resetExpectedSyncValues();
 
-      // Open the dropdown
-      await tester.tap(underageFinder);
-      await tester.pumpAndSettle();
-
-      // Select the desired option (assuming the option text is "true")
-      await tester.tap(find.text("true").last);
-      await tester.pumpAndSettle();
+      // Set underage to true
+      await scrollDownToUnderageAndSetValue(tester, true);
 
       // Click on expiration and salt so it becomes checked
       await tester.tap(setUserAuthWithHash);
