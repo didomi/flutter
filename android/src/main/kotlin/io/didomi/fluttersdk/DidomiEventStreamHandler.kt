@@ -228,6 +228,18 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
     }
 
     /*
+     * TODO: DCS events
+     */
+
+    override fun dcsSignatureReady(event: DcsSignatureReadyEvent) {
+        //sendEvent("onDCSSignatureReady")
+    }
+
+    override fun dcsSignatureError(event: DcsSignatureErrorEvent) {
+        //sendEvent("onDCSSignatureError")
+    }
+
+    /*
      * Vendor status change event
      */
 
