@@ -36,7 +36,8 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
         androidTvNoticeId: androidTvNoticeId,
         androidTvEnabled: _androidTvEnabled,
         countryCode: _countryCodeController.text.isEmpty ? null : _countryCodeController.text,
-        regionCode: _regionCodeController.text.isEmpty ? null : _regionCodeController.text
+        regionCode: _regionCodeController.text.isEmpty ? null : _regionCodeController.text,
+        isUnderage: _isUnderage
     );
 
     return "OK";
@@ -58,6 +59,8 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
 
   bool _androidTvEnabled = false;
 
+  bool _isUnderage = false;
+
   @override
   List<Widget> buildWidgets() => [
         ElevatedButton(
@@ -72,6 +75,30 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
         TextFormField(controller: _languageController, key: Key("languageCode"), decoration: InputDecoration(labelText: 'Language code')),
         TextFormField(controller: _countryCodeController, key: Key("countryCode"), decoration: InputDecoration(labelText: 'Country code')),
         TextFormField(controller: _regionCodeController, key: Key("regionCode"), decoration: InputDecoration(labelText: 'Region code')),
+        Center(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Is Underage:'),
+              SizedBox(width: 10),
+              DropdownButton<bool>(
+                key: Key("isUnderage"),
+                value: _isUnderage,
+                onChanged: (bool? newValue) {
+                  setState(() {
+                    _isUnderage = newValue!;
+                  });
+                },
+                items: <bool>[true, false].map<DropdownMenuItem<bool>>((bool value) {
+                  return DropdownMenuItem<bool>(
+                    value: value,
+                    child: Text(value.toString()),
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
+        ),
         CheckboxListTile(
           title: Text("Disable remote config"),
           key: Key('disableRemoteConfig'),

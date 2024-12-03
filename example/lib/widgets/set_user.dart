@@ -18,6 +18,8 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
   bool _withSetupUI = false;
   bool _withSynchronizedUsers = false;
 
+  bool? _isUnderage = null;
+
   @override
   String getButtonName() => "Set User";
 
@@ -35,6 +37,7 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
     int? expiration = _withExpiration ? 3600 : null;
     bool setUserAndSetupUI = _withSetupUI;
     bool hasSynchronizedUsers = _withSynchronizedUsers;
+    bool? isUnderage = _isUnderage;
     List<UserAuthParams>? synchronizedUsers;
 
     switch (_authenticationType) {
@@ -43,9 +46,9 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
         break;
       case AuthType.userId:
         if (setUserAndSetupUI) {
-          await DidomiSdk.setUserAndSetupUI(userId);
+          await DidomiSdk.setUserAndSetupUI(userId, isUnderage);
         } else {
-          await DidomiSdk.setUser(userId);
+          await DidomiSdk.setUser(userId, isUnderage);
         }
         break;
       case AuthType.withHash:
@@ -58,12 +61,14 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
         if (setUserAndSetupUI) {
           await DidomiSdk.setUserWithAuthParamsAndSetupUI(
               new UserAuthWithHashParams(userId, "hash-md5", secretId, "test-digest", salt, expiration),
-              synchronizedUsers
+              synchronizedUsers,
+              isUnderage
           );
         } else {
           await DidomiSdk.setUserWithAuthParams(
               new UserAuthWithHashParams(userId, "hash-md5", secretId, "test-digest", salt, expiration),
-              synchronizedUsers
+              synchronizedUsers,
+              isUnderage
           );
         }
         break;
@@ -77,12 +82,14 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
         if (setUserAndSetupUI) {
           await DidomiSdk.setUserWithAuthParamsAndSetupUI(
               new UserAuthWithEncryptionParams(userId, "aes-256-cbc", secretId, initializationVector, expiration),
-              synchronizedUsers
+              synchronizedUsers,
+              isUnderage
           );
         } else {
           await DidomiSdk.setUserWithAuthParams(
               new UserAuthWithEncryptionParams(userId, "aes-256-cbc", secretId, initializationVector, expiration),
-              synchronizedUsers
+              synchronizedUsers,
+              isUnderage
           );
         }
         break;
@@ -96,12 +103,14 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
         if (setUserAndSetupUI) {
           await DidomiSdk.setUserWithAuthParamsAndSetupUI(
               new UserAuthWithEncryptionParams(userId, "hash-md6", secretId, initializationVector, expiration),
-              synchronizedUsers
+              synchronizedUsers,
+              isUnderage
           );
         } else {
           await DidomiSdk.setUserWithAuthParams(
               new UserAuthWithEncryptionParams(userId, "hash-md6", secretId, initializationVector, expiration),
-              synchronizedUsers
+              synchronizedUsers,
+              isUnderage
           );
         }
         break;
@@ -233,6 +242,30 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
           }
         },
         controlAffinity: ListTileControlAffinity.leading, //  <-- leading Checkbox
+      ),
+      Center(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Is Underage:'),
+            SizedBox(width: 10),
+            DropdownButton<bool?>(
+              key: Key("isUnderage"),
+              value: _isUnderage,
+              onChanged: (bool? newValue) {
+                setState(() {
+                  _isUnderage = newValue;
+                });
+              },
+              items: <bool?>[true, false, null].map<DropdownMenuItem<bool?>>((bool? value) {
+                return DropdownMenuItem<bool?>(
+                  value: value,
+                  child: Text(value == null ? 'null' : value.toString()),
+                );
+              }).toList(),
+            ),
+          ],
+        ),
       ),
       buildResponseText(getActionId())
     ];

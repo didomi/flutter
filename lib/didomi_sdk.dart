@@ -32,7 +32,8 @@ class DidomiSdk {
           String? androidTvNoticeId,
           bool androidTvEnabled = false,
           String? countryCode,
-          String? regionCode}) async =>
+          String? regionCode,
+          bool isUnderage = false}) async =>
       await _channel.invokeMethod("initialize", {
         "apiKey": apiKey,
         "localConfigurationPath": localConfigurationPath,
@@ -44,7 +45,8 @@ class DidomiSdk {
         "androidTvNoticeId": androidTvNoticeId,
         "androidTvEnabled": androidTvEnabled,
         "countryCode": countryCode,
-        "regionCode": regionCode
+        "regionCode": regionCode,
+        "isUnderage": isUnderage
       });
 
   /// Check if Didomi SDK was successfully initialized
@@ -335,29 +337,35 @@ class DidomiSdk {
   static Future<void> clearUser() async => await _channel.invokeMethod("clearUser");
 
   /// Set user information
-  static Future<void> setUser(String organizationUserId) async =>
-      await _channel.invokeMethod("setUser", {"organizationUserId": organizationUserId});
+  static Future<void> setUser(String organizationUserId, [bool? isUnderage = null]) async =>
+      await _channel.invokeMethod("setUser", {"organizationUserId": organizationUserId, "isUnderage": isUnderage});
 
   /// Set user information and check for missing consent
-  static Future<void> setUserAndSetupUI(String organizationUserId) async =>
-      await _channel.invokeMethod("setUserAndSetupUI", {"organizationUserId": organizationUserId});
+  static Future<void> setUserAndSetupUI(String organizationUserId, [bool? isUnderage = null]) async =>
+      await _channel.invokeMethod("setUserAndSetupUI", {"organizationUserId": organizationUserId, "isUnderage": isUnderage});
 
   /// Set user information with authentication
   static Future<void> setUserWithAuthParams(UserAuthParams userAuthParams,
-      [List<UserAuthParams>? synchronizedUsers]) async {
+      [List<UserAuthParams>? synchronizedUsers, bool? isUnderage = null]) async {
     Map<String, dynamic> jsonUserAuthParams = userAuthParams.toJson();
     List<Map<String, dynamic>>? jsonSynchronizedUsers = synchronizedUsers?.map((user) => user.toJson()).toList();
-    return await _channel.invokeMethod("setUserWithAuthParams",
-        {"jsonUserAuthParams": jsonUserAuthParams, "jsonSynchronizedUsers": jsonSynchronizedUsers});
+    return await _channel.invokeMethod("setUserWithAuthParams", {
+      "jsonUserAuthParams": jsonUserAuthParams,
+      "jsonSynchronizedUsers": jsonSynchronizedUsers,
+      "isUnderage": isUnderage
+    });
   }
 
   /// Set user information with authentication and check for missing consent
   static Future<void> setUserWithAuthParamsAndSetupUI(UserAuthParams userAuthParams,
-      [List<UserAuthParams>? synchronizedUsers]) async {
+      [List<UserAuthParams>? synchronizedUsers, bool? isUnderage = null]) async {
     Map<String, dynamic> jsonUserAuthParams = userAuthParams.toJson();
     List<Map<String, dynamic>>? jsonSynchronizedUsers = synchronizedUsers?.map((user) => user.toJson()).toList();
-    return await _channel.invokeMethod("setUserWithAuthParamsAndSetupUI",
-        {"jsonUserAuthParams": jsonUserAuthParams, "jsonSynchronizedUsers": jsonSynchronizedUsers});
+    return await _channel.invokeMethod("setUserWithAuthParamsAndSetupUI", {
+      "jsonUserAuthParams": jsonUserAuthParams,
+      "jsonSynchronizedUsers": jsonSynchronizedUsers,
+      "isUnderage": isUnderage
+    });
   }
 
   /// Creates a `CurrentUserStatusTransaction` object.
