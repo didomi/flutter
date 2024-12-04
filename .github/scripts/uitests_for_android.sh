@@ -43,7 +43,7 @@ if [ -f machine.log ]; then
 fi
 
 # Run tests and print logs
-flutter test --machine -d emulator-5554 -r expanded integration_test >machine.log
+flutter test --reporter failures-only --machine -d emulator-5554 -r expanded integration_test >machine.log
 
 # Shutdown emulator
 adb -s emulator-5554 emu kill
