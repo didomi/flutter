@@ -79,7 +79,7 @@ void main() {
     assert(syncReadyEvent?.statusApplied == true);
     assert((await syncReadyEvent?.syncAcknowledged()) == true);
     assert((await syncReadyEvent?.syncAcknowledged()) == false);
-    assert(syncReadyEvent?.statusApplied == false);
+    assert(syncReadyEvent?.organizationUserId == userId);
 
     // We reinitialize the SDK to re-trigger the sync event.
     await tester.tap(initializeBtnFinder);
