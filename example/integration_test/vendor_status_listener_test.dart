@@ -33,11 +33,13 @@ void main() {
       await tester.tap(agreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
+      await Future.delayed(Duration(milliseconds: 100));
       assert(vendorStatusEnabled == true);
 
       await tester.tap(disagreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
+      await Future.delayed(Duration(milliseconds: 200));
       assert(vendorStatusEnabled == false);
 
       // Check removeVendorStatusListener
@@ -46,6 +48,7 @@ void main() {
       await tester.tap(agreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
+      await Future.delayed(Duration(milliseconds: 200));
       // Vendor status not updated
       assert(vendorStatusEnabled == false);
     });
