@@ -6,9 +6,9 @@ import io.didomi.sdk.Didomi
 import io.didomi.sdk.DidomiInitializeParameters
 import io.didomi.sdk.exceptions.DidomiNotReadyException
 import io.didomi.sdk.models.CurrentUserStatus
-import io.didomi.sdk.user.UserAuthParams
-import io.didomi.sdk.user.UserAuthWithEncryptionParams
-import io.didomi.sdk.user.UserAuthWithHashParams
+import io.didomi.sdk.user.model.UserAuthParams
+import io.didomi.sdk.user.model.UserAuthWithEncryptionParams
+import io.didomi.sdk.user.model.UserAuthWithHashParams
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding

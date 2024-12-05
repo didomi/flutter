@@ -5,6 +5,8 @@ import io.didomi.sdk.functionalinterfaces.DidomiEventListener
 import io.flutter.plugin.common.EventChannel
 import org.json.JSONObject
 import io.didomi.sdk.models.CurrentUserStatus.VendorStatus
+import android.os.Handler
+import android.os.Looper
 
 /**
  * Handler for SDK events
@@ -228,6 +230,18 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
     }
 
     /*
+     * TODO: DCS events
+     */
+
+    override fun dcsSignatureReady(event: DcsSignatureReadyEvent) {
+        //sendEvent("onDCSSignatureReady")
+    }
+
+    override fun dcsSignatureError(event: DcsSignatureErrorEvent) {
+        //sendEvent("onDCSSignatureError")
+    }
+
+    /*
      * Vendor status change event
      */
 
@@ -243,7 +257,9 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
     private fun sendEvent(eventType: String, arguments: Map<String, *>? = null) {
         val event = mutableMapOf<String, Any?>("type" to eventType)
         arguments?.also { event.putAll(it) }
-        this.eventSink?.success(event)
+        Handler(Looper.getMainLooper()).post {
+            this.eventSink?.success(event)
+        }
     }
 
     // Request to execute a specific syncAcknowledged callback. It returns **true** if the API Event was sent, **false** otherwise.
