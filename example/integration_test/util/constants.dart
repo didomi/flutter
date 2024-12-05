@@ -6,6 +6,3 @@ const resultFalseMessage = "Native message: Result = false";
 const resultTrueMessage = "Native message: Result = true";
 const sdkNotReadyMessage = "Native message: Waiting for onReady callback";
 const sdkReadyMessage = "Native message: SDK is ready!";
-
-/// Common delay times
-const initializationTimeout = Duration(seconds: 5);

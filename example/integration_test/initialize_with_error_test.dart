@@ -69,7 +69,8 @@ void main() {
       await tester.tap(initializeBtnFinder);
       await tester.pumpAndSettle();
 
-      await Future.delayed(initializationTimeout);
+      // Wait for initialization error
+      await Future.delayed(Duration(seconds: 4));
 
       // SDK is not ready
       await tester.tap(onReadyBtnFinder);
