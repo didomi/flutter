@@ -72,7 +72,7 @@ void main() {
       await tester.tap(initializeBtnFinder);
       await tester.pumpAndSettle();
 
-      await Future.delayed(Duration(seconds: 10));
+      await Future.delayed(Duration(seconds: 5));
 
       assert(isError == false);
       assert(isReady == true);
