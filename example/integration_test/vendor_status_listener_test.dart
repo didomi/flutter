@@ -39,7 +39,7 @@ void main() {
       await tester.tap(disagreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      await Future.delayed(Duration(milliseconds: 200));
+      await Future.delayed(Duration(milliseconds: 100));
       assert(vendorStatusEnabled == false);
 
       // Check removeVendorStatusListener
@@ -48,7 +48,7 @@ void main() {
       await tester.tap(agreeToAllBtnFinder);
       await tester.pumpAndSettle();
 
-      await Future.delayed(Duration(milliseconds: 200));
+      await Future.delayed(Duration(milliseconds: 100));
       // Vendor status not updated
       assert(vendorStatusEnabled == false);
     });
