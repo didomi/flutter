@@ -7,6 +7,7 @@ import 'package:integration_test/integration_test.dart';
 
 import 'util/assertion_helper.dart';
 import 'util/constants.dart';
+import 'util/initialize_helper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -69,10 +70,7 @@ void main() {
 
       assertNativeMessage("onReady", sdkNotReadyMessage);
 
-      await tester.tap(initializeBtnFinder);
-      await tester.pumpAndSettle();
-
-      await Future.delayed(Duration(seconds: 4));
+      await InitializeHelper.initialize(tester, initializeBtnFinder);
 
       assertNativeMessage("initialize", okMessage);
 
@@ -108,10 +106,7 @@ void main() {
       FocusManager.instance.primaryFocus?.unfocus();
       await tester.pumpAndSettle();
 
-      await tester.tap(initializeBtnFinder);
-      await tester.pumpAndSettle();
-
-      await Future.delayed(Duration(seconds: 4));
+      await InitializeHelper.initialize(tester, initializeBtnFinder);
 
       assertNativeMessage("initialize", okMessage);
 
@@ -147,10 +142,7 @@ void main() {
       await tester.tap(disableRemoteConfigFinder);
       await tester.pumpAndSettle();
 
-      await tester.tap(initializeBtnFinder);
-      await tester.pumpAndSettle();
-
-      await Future.delayed(Duration(seconds: 4));
+      await InitializeHelper.initialize(tester, initializeBtnFinder);
 
       assertNativeMessage("initialize", okMessage);
 
