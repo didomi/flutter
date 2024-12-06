@@ -17,5 +17,6 @@ class InitializeHelper {
       }
       await expectLater(await DidomiSdk.isReady, isTrue);
     });
+    await Future.delayed(Duration(milliseconds: 100));
   }
 }
