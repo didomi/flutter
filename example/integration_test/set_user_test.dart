@@ -182,7 +182,7 @@ void main() {
       await waitForSync(tester);
 
       // Encryption parameters are not valid
-      assert(syncUserId == null);
+      assert(syncDoneUserId == null);
       assert(syncError == true);
       assert(syncReadyEvent == null);
     });
@@ -212,10 +212,10 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncUserId == userId);
+      assert(syncDoneUserId == userId);
       assert(syncError == false);
 
-      await assertSyncEvent(tester);
+      await assertSyncReadyEvent(tester);
     });
 
     testWidgets("Click setUser with id and underage false", (WidgetTester tester) async {
@@ -257,10 +257,10 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncUserId == userId);
+      assert(syncDoneUserId == userId);
       assert(syncError == false);
 
-      await assertSyncEvent(tester);
+      await assertSyncReadyEvent(tester);
     });
 
     testWidgets("Click setUser with id and underage true", (WidgetTester tester) async {
@@ -302,10 +302,10 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncUserId == userId);
+      assert(syncDoneUserId == userId);
       assert(syncError == false);
 
-      await assertSyncEvent(tester);
+      await assertSyncReadyEvent(tester);
     });
 
     testWidgets("Click setUser with encryption", (WidgetTester tester) async {
