@@ -280,7 +280,6 @@ class EventsHandler {
       case "onSyncReady":
         for (var listener in listeners) {
           final SyncReadyEvent newEvent = SyncReadyEvent(
-            event["organizationUserId"],
             event["statusApplied"],
             () async {
               // This method allows us to execute the syncAcknowledged callback from the flutter side.

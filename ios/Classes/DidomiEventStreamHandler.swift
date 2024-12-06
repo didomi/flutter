@@ -146,7 +146,7 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
             }
             strongSelf.syncReadyEventIndex += 1
             strongSelf.syncReadyEventReferences[strongSelf.syncReadyEventIndex] = event
-            strongSelf.sendEvent(eventType: "onSyncReady", arguments: ["organizationUserId": event.organizationUserId, "statusApplied": event.statusApplied, "syncReadyEventIndex": strongSelf.syncReadyEventIndex])
+            strongSelf.sendEvent(eventType: "onSyncReady", arguments: ["statusApplied": event.statusApplied, "syncReadyEventIndex": strongSelf.syncReadyEventIndex])
         }
         eventListener.onSyncDone = { [weak self] event, organizationUserId in
             self?.sendEvent(eventType: "onSyncDone", arguments: ["organizationUserId": organizationUserId])
