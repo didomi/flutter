@@ -34,7 +34,7 @@ void main() {
   final reset = find.byKey(Key("reset"));
   final listKey = Key("components_list");
 
-  String? syncUserId;
+  String? syncDoneUserId;
   bool isReady = false;
   bool syncError = false;
   bool consentChanged = false;
@@ -45,7 +45,7 @@ void main() {
     isReady = true;
   };
   listener.onConsentChanged = () {
-    syncUserId = null;
+    syncDoneUserId = null;
     syncError = false;
     consentChanged = true;
     syncReadyEvent = null;
@@ -55,7 +55,7 @@ void main() {
   };
   // ignore: deprecated_member_use
   listener.onSyncDone = (String userId) {
-    syncUserId = userId != "null" ? userId : null;
+    syncDoneUserId = userId != "null" ? userId : null;
   };
   listener.onSyncError = (String error) {
     syncError = true;
@@ -67,18 +67,19 @@ void main() {
   Future waitForSync(WidgetTester tester) async {
     // Wait for sync result
     await tester.runAsync(() async {
-      while (syncUserId == null && !syncError) {
+      while (syncReadyEvent == null && !syncError) {
         await Future.delayed(Duration(milliseconds: 100));
       }
     });
   }
 
   // Assert sync event is triggered correctly.
-  Future<void> assertSyncEvent(WidgetTester tester) async {
+  Future<void> assertSyncReadyEvent(WidgetTester tester) async {
     // First time the sync event is triggered. Status is applied and API Event triggered only once.
     assert(syncReadyEvent?.statusApplied == true);
     assert((await syncReadyEvent?.syncAcknowledged()) == true);
     assert((await syncReadyEvent?.syncAcknowledged()) == false);
+    assert(syncReadyEvent?.organizationUserId == userId);
 
     // We reinitialize the SDK to re-trigger the sync event.
     await tester.tap(initializeBtnFinder);
@@ -89,11 +90,12 @@ void main() {
     assert(syncReadyEvent?.statusApplied == false);
     assert((await syncReadyEvent?.syncAcknowledged()) == false);
     assert((await syncReadyEvent?.syncAcknowledged()) == false);
+    assert(syncReadyEvent?.organizationUserId == userId);
   }
 
   // Reset all variables used for assertion.
   void resetExpectedSyncValues() {
-    syncUserId = null;
+    syncDoneUserId = null;
     syncError = false;
     consentChanged = false;
     syncReadyEvent = null;
@@ -101,14 +103,15 @@ void main() {
 
   // Assert that all the expected sync variables are populated.
   void assertExpectedSyncValuesArePopulated() {
-    assert(syncUserId == userId);
+    assert(syncDoneUserId == userId);
     assert(syncError == false);
     assert(syncReadyEvent != null);
+    assert(syncReadyEvent?.organizationUserId == userId);
   }
 
   // Assert that all the expected sync variables are empty.
   void assertExpectedSyncValuesAreEmpty() {
-    assert(syncUserId == null);
+    assert(syncDoneUserId == null);
     assert(syncError == false);
     assert(syncReadyEvent == null);
   }
@@ -126,7 +129,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      assert(syncUserId == null);
+      assert(syncDoneUserId == null);
       assert(syncError == false);
       assert(syncReadyEvent == null);
 
@@ -179,7 +182,7 @@ void main() {
       await waitForSync(tester);
 
       // Encryption parameters are not valid
-      assert(syncUserId == null);
+      assert(syncDoneUserId == null);
       assert(syncError == true);
       assert(syncReadyEvent == null);
     });
@@ -209,10 +212,10 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncUserId == userId);
+      assert(syncDoneUserId == userId);
       assert(syncError == false);
 
-      await assertSyncEvent(tester);
+      await assertSyncReadyEvent(tester);
     });
 
     testWidgets("Click setUser with id and underage false", (WidgetTester tester) async {
@@ -254,10 +257,10 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncUserId == userId);
+      assert(syncDoneUserId == userId);
       assert(syncError == false);
 
-      await assertSyncEvent(tester);
+      await assertSyncReadyEvent(tester);
     });
 
     testWidgets("Click setUser with id and underage true", (WidgetTester tester) async {
@@ -299,10 +302,10 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncUserId == userId);
+      assert(syncDoneUserId == userId);
       assert(syncError == false);
 
-      await assertSyncEvent(tester);
+      await assertSyncReadyEvent(tester);
     });
 
     testWidgets("Click setUser with encryption", (WidgetTester tester) async {

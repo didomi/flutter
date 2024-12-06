@@ -146,7 +146,7 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
             }
             strongSelf.syncReadyEventIndex += 1
             strongSelf.syncReadyEventReferences[strongSelf.syncReadyEventIndex] = event
-            strongSelf.sendEvent(eventType: "onSyncReady", arguments: ["statusApplied": event.statusApplied, "syncReadyEventIndex": strongSelf.syncReadyEventIndex])
+            strongSelf.sendEvent(eventType: "onSyncReady", arguments: ["organizationUserId": event.organizationUserId, "statusApplied": event.statusApplied, "syncReadyEventIndex": strongSelf.syncReadyEventIndex])
         }
         eventListener.onSyncDone = { [weak self] event, organizationUserId in
             self?.sendEvent(eventType: "onSyncDone", arguments: ["organizationUserId": organizationUserId])
@@ -162,6 +162,16 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
         eventListener.onLanguageUpdateFailed = { [weak self] event, reason in
             self?.sendEvent(eventType: "onLanguageUpdateFailed", arguments: ["reason": reason])
         }
+
+        // TODO: DCS events
+        /*
+        eventListener.onDCSSignatureReady = { [weak self] event in
+            self?.sendEvent(eventType: "onDCSSignatureReady")
+        }
+        eventListener.onDCSSignatureError = { [weak self] event in
+            self?.sendEvent(eventType: "onDCSSignatureError")
+        }
+        */
     }
         
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
