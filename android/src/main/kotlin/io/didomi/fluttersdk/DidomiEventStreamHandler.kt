@@ -206,7 +206,7 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
     override fun syncReady(event: SyncReadyEvent) {
         syncReadyEventIndex++
         syncReadyEventReferences.put(syncReadyEventIndex, event)
-        sendEvent("onSyncReady", mapOf("statusApplied" to event.statusApplied, "syncReadyEventIndex" to syncReadyEventIndex))
+        sendEvent("onSyncReady", mapOf("organizationUserId" to event.organizationUserId, "statusApplied" to event.statusApplied, "syncReadyEventIndex" to syncReadyEventIndex))
     }
 
     override fun syncDone(event: SyncDoneEvent) {
