@@ -162,6 +162,16 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
         eventListener.onLanguageUpdateFailed = { [weak self] event, reason in
             self?.sendEvent(eventType: "onLanguageUpdateFailed", arguments: ["reason": reason])
         }
+
+        // TODO: DCS events
+        /*
+        eventListener.onDCSSignatureReady = { [weak self] event in
+            self?.sendEvent(eventType: "onDCSSignatureReady")
+        }
+        eventListener.onDCSSignatureError = { [weak self] event in
+            self?.sendEvent(eventType: "onDCSSignatureError")
+        }
+        */
     }
         
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
