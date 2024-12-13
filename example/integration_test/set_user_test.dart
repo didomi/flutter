@@ -61,9 +61,6 @@ void main() {
     syncError = true;
     syncReadyEvent = null;
   };
-  listener.onSyncUserChanged = () {
-    print("Sync user changed!!!!!");
-  };
 
   DidomiSdk.addEventListener(listener);
 
