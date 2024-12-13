@@ -1,6 +1,6 @@
 PODS:
   - Didomi-XCFramework (2.17.0)
-  - didomi_sdk (2.7.0):
+  - didomi_sdk (2.8.0):
     - Didomi-XCFramework (= 2.17.0)
     - Flutter
   - Flutter (1.0.0)
@@ -26,10 +26,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Didomi-XCFramework: e73645f4ff19c39309dcc02691c985bbbeb38896
-  didomi_sdk: 4fbe133e774d33e4546aea4226366057a96897b7
+  didomi_sdk: a4d39f5d8232f5d3fdfdad3bbcb87a4197fbd20b
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
 
 PODFILE CHECKSUM: eb82984a624d653d2e3bbebcdf3d34861d5eb905
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
