@@ -337,16 +337,16 @@ class DidomiSdk {
   static Future<void> clearUser() async => await _channel.invokeMethod("clearUser");
 
   /// Set user information
-  static Future<void> setUser(String organizationUserId, [bool? isUnderage = null]) async =>
+  static Future<void> setUser(String organizationUserId, [bool? isUnderage]) async =>
       await _channel.invokeMethod("setUser", {"organizationUserId": organizationUserId, "isUnderage": isUnderage});
 
   /// Set user information and check for missing consent
-  static Future<void> setUserAndSetupUI(String organizationUserId, [bool? isUnderage = null]) async =>
+  static Future<void> setUserAndSetupUI(String organizationUserId, [bool? isUnderage]) async =>
       await _channel.invokeMethod("setUserAndSetupUI", {"organizationUserId": organizationUserId, "isUnderage": isUnderage});
 
   /// Set user information with authentication
   static Future<void> setUserWithAuthParams(UserAuthParams userAuthParams,
-      [List<UserAuthParams>? synchronizedUsers, bool? isUnderage = null]) async {
+      [List<UserAuthParams>? synchronizedUsers, bool? isUnderage]) async {
     Map<String, dynamic> jsonUserAuthParams = userAuthParams.toJson();
     List<Map<String, dynamic>>? jsonSynchronizedUsers = synchronizedUsers?.map((user) => user.toJson()).toList();
     return await _channel.invokeMethod("setUserWithAuthParams", {
@@ -358,7 +358,7 @@ class DidomiSdk {
 
   /// Set user information with authentication and check for missing consent
   static Future<void> setUserWithAuthParamsAndSetupUI(UserAuthParams userAuthParams,
-      [List<UserAuthParams>? synchronizedUsers, bool? isUnderage = null]) async {
+      [List<UserAuthParams>? synchronizedUsers, bool? isUnderage]) async {
     Map<String, dynamic> jsonUserAuthParams = userAuthParams.toJson();
     List<Map<String, dynamic>>? jsonSynchronizedUsers = synchronizedUsers?.map((user) => user.toJson()).toList();
     return await _channel.invokeMethod("setUserWithAuthParamsAndSetupUI", {
