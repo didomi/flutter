@@ -643,9 +643,8 @@ void main() {
 
       await waitForSync(tester);
 
-      // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
-      assert(consentChanged == false);
+      assertExpectedSyncValuesArePopulated();
+      assert(consentChanged == true);
 
       // Clear user
       await tester.tap(clearUser);
