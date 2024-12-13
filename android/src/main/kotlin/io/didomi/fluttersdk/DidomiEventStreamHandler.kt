@@ -209,6 +209,10 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
         sendEvent("onSyncReady", mapOf("organizationUserId" to event.organizationUserId, "statusApplied" to event.statusApplied, "syncReadyEventIndex" to syncReadyEventIndex))
     }
 
+    override fun syncUserChanged(event: SyncUserChangedEvent) {
+        // TODO Support event
+    }
+
     override fun syncDone(event: SyncDoneEvent) {
         sendEvent("onSyncDone", mapOf("organizationUserId" to event.organizationUserId))
     }
