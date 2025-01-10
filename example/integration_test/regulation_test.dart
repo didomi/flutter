@@ -6,10 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'util/assertion_helper.dart';
-import 'util/constants.dart';
 import 'util/initialize_helper.dart';
-import 'util/scroll_helper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
