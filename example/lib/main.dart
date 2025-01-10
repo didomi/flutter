@@ -2,6 +2,7 @@ import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk/log_level.dart';
 import 'package:didomi_sdk_example/events_helper.dart';
+import 'package:didomi_sdk_example/widgets/get_applicable_regulation.dart';
 import 'package:didomi_sdk_example/widgets/get_vendor_count.dart';
 import 'package:didomi_sdk_example/widgets/transactions/disable_purpose_transaction.dart';
 import 'package:didomi_sdk_example/widgets/transactions/disable_purposes_transaction.dart';
@@ -145,6 +146,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 GetCurrentUserStatusPurposes(),
                 GetCurrentUserStatusVendors(),
                 GetCurrentUserStatusOtherInfo(),
+                // Applicable regulation
+                GetApplicableRegulation(),
                 // Purposes
                 Text("Purposes:"),
                 GetRequiredPurposeIds(),

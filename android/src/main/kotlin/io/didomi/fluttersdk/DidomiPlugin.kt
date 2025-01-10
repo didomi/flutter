@@ -143,6 +143,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "getUserStatus" -> getUserStatus(result)
 
+                "getApplicableRegulation" -> getApplicableRegulation(result)
+
                 "getRequiredPurposeIds" -> getRequiredPurposeIds(result)
 
                 "getRequiredVendorIds" -> getRequiredVendorIds(result)
@@ -358,6 +360,18 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(map)
         } catch (e: DidomiNotReadyException) {
             result.error("getUserStatus", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the applicable regulation
+     */
+    private fun getApplicableRegulation(result: Result) {
+        try {
+            val regulation = Didomi.getInstance().applicableRegulation
+            result.success(regulation.value)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getApplicableRegulation", e.message.orEmpty(), e)
         }
     }
 
