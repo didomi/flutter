@@ -1,7 +1,7 @@
 PODS:
-  - Didomi-XCFramework (2.17.0)
+  - Didomi-XCFramework (2.18.0)
   - didomi_sdk (2.8.0):
-    - Didomi-XCFramework (= 2.17.0)
+    - Didomi-XCFramework (= 2.18.0)
     - Flutter
   - Flutter (1.0.0)
   - integration_test (0.0.1):
@@ -25,11 +25,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  Didomi-XCFramework: e73645f4ff19c39309dcc02691c985bbbeb38896
-  didomi_sdk: a4d39f5d8232f5d3fdfdad3bbcb87a4197fbd20b
+  Didomi-XCFramework: cf8c43b0c954b19c423f8a2f7ec23124f6eb5231
+  didomi_sdk: fdf241ddc1e70bfecd5ef0c8bfe245bef6485c02
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
 
 PODFILE CHECKSUM: eb82984a624d653d2e3bbebcdf3d34861d5eb905
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.15.2

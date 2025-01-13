@@ -226,6 +226,13 @@ class DidomiSdk {
     return UserStatus.fromJson(result);
   }
 
+  /// Determine the regulation applicable for the user.
+  /// If no regulation is applicable, will return [none].
+  static Future<String> get applicableRegulation async {
+    final String result = await _channel.invokeMethod("getApplicableRegulation");
+    return result;
+  }
+
   /// Get the IDs of the required purposes
   @Deprecated("Use 'requiredPurposes' instead")
   static Future<List<String>> get requiredPurposeIds async {

@@ -89,6 +89,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             setCurrentUserStatus(call, result: result)
         case "getUserStatus":
             getUserStatus(result: result)
+        case "getApplicableRegulation":
+            getApplicableRegulation(result: result)
         case "getRequiredPurposeIds":
             getRequiredPurposeIds(result: result)
         case "getRequiredVendorIds":
@@ -445,6 +447,19 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         let userStatus = Didomi.shared.getUserStatus()
         let encoded = EntitiesHelper.dictionary(from: userStatus)
         result(encoded)
+    }
+    
+    /**
+     * Get the applicable regulation
+     - Returns: applicable regulation
+     */
+    func getApplicableRegulation(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let regulation = Didomi.shared.applicableRegulation.description
+        result(regulation)
     }
 
     /**
