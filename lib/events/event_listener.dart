@@ -38,6 +38,7 @@ class EventListener {
   dynamic Function() onNoticeClickViewVendors = () {};
 
   /// SPI screen was opened from the notice
+  @Deprecated("SPI purposes are now displayed in preferences screen, use onNoticeClickMoreInfo instead.")
   dynamic Function() onNoticeClickViewSPIPurposes = () {};
 
   /// Preferences screen was opened from the notice
@@ -72,6 +73,7 @@ class EventListener {
   dynamic Function() onPreferencesClickViewVendors = () {};
 
   /// SPI screen was opened from preferences screen
+  @Deprecated("SPI purposes are now displayed in preferences screen.")
   dynamic Function() onPreferencesClickViewSPIPurposes = () {};
 
   /// Save button was clicked from preferences screen
@@ -113,18 +115,23 @@ class EventListener {
    */
 
   /// User switched a SPI purpose status to Agree
+  @Deprecated("SPI purposes are now treated as other purposes, use onPreferencesClickPurposeAgree instead.")
   dynamic Function(String purposeId) onPreferencesClickSPIPurposeAgree = (purposeId) {};
 
   /// User switched a SPI purpose status to Disagree
+  @Deprecated("SPI purposes are now treated as other purposes, use onPreferencesClickPurposeDisagree instead.")
   dynamic Function(String purposeId) onPreferencesClickSPIPurposeDisagree = (purposeId) {};
 
   /// User switched a SPI category status to Agree
+  @Deprecated("SPI purposes are now treated as other purposes, use onPreferencesClickCategoryAgree instead.")
   dynamic Function(String categoryId) onPreferencesClickSPICategoryAgree = (categoryId) {};
 
   /// User switched a SPI category status to Disagree
+  @Deprecated("SPI purposes are now treated as other purposes, use onPreferencesClickCategoryDisagree instead.")
   dynamic Function(String categoryId) onPreferencesClickSPICategoryDisagree = (categoryId) {};
 
   /// Save button was clicked from SPI screen
+  @Deprecated("SPI purposes are now displayed in preferences screen, use onPreferencesClickSaveChoices instead.")
   dynamic Function() onPreferencesClickSPIPurposeSaveChoices = () {};
 
   /*

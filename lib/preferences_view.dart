@@ -4,6 +4,7 @@ enum PreferencesView {
   purposes,
 
   /// Sensitive Personal Information preferences screen
+  @Deprecated("SPI purposes are now displayed in Preferences screen, use PreferencesView.purposes instead.")
   sensitivePersonalInformation,
 
   /// Vendors preferences screen
@@ -13,14 +14,9 @@ enum PreferencesView {
 /// Extension to get the name of the enum
 extension PreferencesViewExtension on PreferencesView {
   String get name {
-    switch (this) {
-      case PreferencesView.sensitivePersonalInformation:
-        return "sensitive-personal-information";
-      case PreferencesView.vendors:
-        return "vendors";
-      default:
-        // purposes is the default value
-        return "purposes";
+    if (this == PreferencesView.vendors) {
+      return "vendors";
     }
+    return "purposes";
   }
 }
