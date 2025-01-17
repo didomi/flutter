@@ -105,12 +105,6 @@ class EventsHandler {
         }
         break;
 
-      case "onNoticeClickViewSPIPurposes":
-        for (var listener in listeners) {
-          listener.onNoticeClickViewSPIPurposes();
-        }
-        break;
-
       case "onNoticeClickMoreInfo":
         for (var listener in listeners) {
           listener.onNoticeClickMoreInfo();
@@ -166,12 +160,6 @@ class EventsHandler {
       case "onPreferencesClickViewVendors":
         for (var listener in listeners) {
           listener.onPreferencesClickViewVendors();
-        }
-        break;
-
-      case "onPreferencesClickViewSPIPurposes":
-        for (var listener in listeners) {
-          listener.onPreferencesClickViewSPIPurposes();
         }
         break;
 
@@ -234,40 +222,6 @@ class EventsHandler {
       case "onPreferencesClickDisagreeToAllVendors":
         for (var listener in listeners) {
           listener.onPreferencesClickDisagreeToAllVendors();
-        }
-        break;
-
-      case "onPreferencesClickSPIPurposeAgree":
-        final String purposeId = event["purposeId"].toString();
-        for (var listener in listeners) {
-          listener.onPreferencesClickSPIPurposeAgree(purposeId);
-        }
-        break;
-
-      case "onPreferencesClickSPIPurposeDisagree":
-        final String purposeId = event["purposeId"].toString();
-        for (var listener in listeners) {
-          listener.onPreferencesClickSPIPurposeDisagree(purposeId);
-        }
-        break;
-
-      case "onPreferencesClickSPICategoryAgree":
-        final String categoryId = event["categoryId"].toString();
-        for (var listener in listeners) {
-          listener.onPreferencesClickSPICategoryAgree(categoryId);
-        }
-        break;
-
-      case "onPreferencesClickSPICategoryDisagree":
-        final String categoryId = event["categoryId"].toString();
-        for (var listener in listeners) {
-          listener.onPreferencesClickSPICategoryDisagree(categoryId);
-        }
-        break;
-
-      case "onPreferencesClickSPIPurposeSaveChoices":
-        for (var listener in listeners) {
-          listener.onPreferencesClickSPIPurposeSaveChoices();
         }
         break;
 
