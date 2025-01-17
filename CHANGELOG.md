@@ -1,10 +1,17 @@
 # Release Note
 
+## 2.9.0
+- Update latest versions of native Android (2.18.0) and iOS (2.18.0) sdks
+- Deprecate methods and parameters related to SPI purposes
+
 ## 2.8.0
 - Update latest versions of native Android (2.17.0) and iOS (2.17.0) sdks
+- Handle `organizationUserId` field in SyncReadyEvent 
+- Android: Add `jvmTarget` in `build.gradle` `kotlinOptions`
 
 ## 2.7.0
 - Update latest versions of native Android (2.10.1) and iOS (2.11.1) sdks
+- Add support for vendor count methods
 
 ## 2.6.0
 - Update latest versions of native Android (2.10.0) and iOS (2.11.0) sdks
