@@ -1,4 +1,3 @@
-
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk/events/sync_ready_event.dart';
@@ -29,7 +28,6 @@ void main() {
   String? syncDoneUserId;
   bool isReady = false;
   bool syncError = false;
-  bool consentChanged = false;
   SyncReadyEvent? syncReadyEvent;
 
   final listener = EventListener();
@@ -39,7 +37,6 @@ void main() {
   listener.onConsentChanged = () {
     syncDoneUserId = null;
     syncError = false;
-    consentChanged = true;
     syncReadyEvent = null;
   };
   listener.onSyncReady = (SyncReadyEvent event) {
@@ -69,7 +66,6 @@ void main() {
   void resetExpectedSyncValues() {
     syncDoneUserId = null;
     syncError = false;
-    consentChanged = false;
     syncReadyEvent = null;
   }
 

@@ -1,4 +1,3 @@
-
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk/events/sync_ready_event.dart';
@@ -30,7 +29,6 @@ void main() {
   String? syncDoneUserId;
   bool isReady = false;
   bool syncError = false;
-  bool consentChanged = false;
   SyncReadyEvent? syncReadyEvent;
 
   final listener = EventListener();
@@ -40,7 +38,6 @@ void main() {
   listener.onConsentChanged = () {
     syncDoneUserId = null;
     syncError = false;
-    consentChanged = true;
     syncReadyEvent = null;
   };
   listener.onSyncReady = (SyncReadyEvent event) {
@@ -70,7 +67,6 @@ void main() {
   void resetExpectedSyncValues() {
     syncDoneUserId = null;
     syncError = false;
-    consentChanged = false;
     syncReadyEvent = null;
   }
 
@@ -1203,7 +1199,8 @@ void main() {
 
     /// With synchronized users and SetupUI
 
-    testWidgets("Click setUser with hash and underage null and Synchronized Users and setupUI", (WidgetTester tester) async {
+    testWidgets("Click setUser with hash and underage null and Synchronized Users and setupUI",
+        (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -1432,7 +1429,8 @@ void main() {
 
     /// With DCS user and synchronized users
 
-    testWidgets("Click setUser with hash and underage null and DCS user and Synchronized Users", (WidgetTester tester) async {
+    testWidgets("Click setUser with hash and underage null and DCS user and Synchronized Users",
+        (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -1661,7 +1659,8 @@ void main() {
 
     /// With DCS user, synchronized users and SetupUI
 
-    testWidgets("Click setUser with hash and underage null and DCS user and Synchronized Users and setupUI", (WidgetTester tester) async {
+    testWidgets("Click setUser with hash and underage null and DCS user and Synchronized Users and setupUI",
+        (WidgetTester tester) async {
       // Start app
       app.main();
       await tester.pumpAndSettle();
