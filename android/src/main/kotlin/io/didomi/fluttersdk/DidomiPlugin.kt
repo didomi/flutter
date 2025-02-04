@@ -177,9 +177,9 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "setUserWithAuthParamsAndSetupUI" -> setUserWithAuthParamsAndSetupUI(call, result)
 
-                "setUserWithDidomiUserParameters" -> setUserWithDidomiUserParameters(call, result)
+                "setUserWithParameters" -> setUserWithParameters(call, result)
 
-                "setUserWithDidomiUserParametersAndSetupUI" -> setUserWithDidomiUserParametersAndSetupUI(call, result)
+                "setUserWithParametersAndSetupUI" -> setUserWithParametersAndSetupUI(call, result)
 
                 "listenToVendorStatus" -> listenToVendorStatus(call, result)
 
@@ -641,7 +641,10 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      * @param jsonParameters the JSON parameters
      * @param activity the optional [FragmentActivity]
      */
-    private fun buildDidomiUserParameters(jsonParameters: Map<String, Any>, activity: FragmentActivity? = null): DidomiUserParameters {
+    private fun buildDidomiUserParameters(
+        jsonParameters: Map<String, Any>,
+        activity: FragmentActivity? = null
+    ): DidomiUserParameters {
 
         val userAuth = jsonParameters["userAuth"] as Map<String, Any>
         val dcsUserAuth = jsonParameters["dcsUserAuth"] as? Map<String, Any>
@@ -733,7 +736,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /**
      * Set Didomi User params
      */
-    private fun setUserWithDidomiUserParameters(call: MethodCall, result: Result) {
+    private fun setUserWithParameters(call: MethodCall, result: Result) {
         val jsonDidomiUserParameters = call.argument("jsonDidomiUserParameters") as? Map<String, Any>
         if (jsonDidomiUserParameters == null) {
             result.error("setUser", "Missing parameters", null)
@@ -750,7 +753,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /**
      * Set Didomi User params with activity
      */
-    private fun setUserWithDidomiUserParametersAndSetupUI(call: MethodCall, result: Result) {
+    private fun setUserWithParametersAndSetupUI(call: MethodCall, result: Result) {
         val jsonDidomiUserParameters = call.argument("jsonDidomiUserParameters") as? Map<String, Any>
         if (jsonDidomiUserParameters == null) {
             result.error("setUser", "Missing parameters", null)

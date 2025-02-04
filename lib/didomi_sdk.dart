@@ -345,17 +345,17 @@ class DidomiSdk {
   static Future<void> clearUser() async => await _channel.invokeMethod("clearUser");
 
   /// Set user information
-  @Deprecated("Use 'setUserWithDidomiUserParameters' instead")
+  @Deprecated("Use 'setUserWithParameters' instead")
   static Future<void> setUser(String organizationUserId, [bool? isUnderage]) async =>
       await _channel.invokeMethod("setUser", {"organizationUserId": organizationUserId, "isUnderage": isUnderage});
 
   /// Set user information and check for missing consent
-  @Deprecated("Use 'setUserWithDidomiUserParametersAndSetupUI' instead")
+  @Deprecated("Use 'setUserWithParametersAndSetupUI' instead")
   static Future<void> setUserAndSetupUI(String organizationUserId, [bool? isUnderage]) async => await _channel
       .invokeMethod("setUserAndSetupUI", {"organizationUserId": organizationUserId, "isUnderage": isUnderage});
 
   /// Set user information with authentication
-  @Deprecated("Use 'setUserWithDidomiUserParameters' instead")
+  @Deprecated("Use 'setUserWithParameters' instead")
   static Future<void> setUserWithAuthParams(UserAuthParams userAuthParams,
       [List<UserAuthParams>? synchronizedUsers, bool? isUnderage]) async {
     Map<String, dynamic> jsonUserAuthParams = userAuthParams.toJson();
@@ -368,7 +368,7 @@ class DidomiSdk {
   }
 
   /// Set user information with authentication and check for missing consent
-  @Deprecated("Use 'setUserWithDidomiUserParametersAndSetupUI' instead")
+  @Deprecated("Use 'setUserWithParametersAndSetupUI' instead")
   static Future<void> setUserWithAuthParamsAndSetupUI(UserAuthParams userAuthParams,
       [List<UserAuthParams>? synchronizedUsers, bool? isUnderage]) async {
     Map<String, dynamic> jsonUserAuthParams = userAuthParams.toJson();
@@ -381,14 +381,14 @@ class DidomiSdk {
   }
 
   /// Set user information by using a `DidomiUserParameters` object
-  static Future<void> setUserWithDidomiUserParameters(DidomiUserParameters didomiUserParameters) async =>
-      await _channel.invokeMethod("setUserWithDidomiUserParameters", {
+  static Future<void> setUserWithParameters(DidomiUserParameters didomiUserParameters) async =>
+      await _channel.invokeMethod("setUserWithParameters", {
         "jsonDidomiUserParameters": didomiUserParameters.toJson(),
       });
 
   /// Set user information by using a `DidomiUserParameters` object and check for missing consent
-  static Future<void> setUserWithDidomiUserParametersAndSetupUI(DidomiUserParameters didomiUserParameters) async =>
-      await _channel.invokeMethod("setUserWithDidomiUserParametersAndSetupUI", {
+  static Future<void> setUserWithParametersAndSetupUI(DidomiUserParameters didomiUserParameters) async =>
+      await _channel.invokeMethod("setUserWithParametersAndSetupUI", {
         "jsonDidomiUserParameters": didomiUserParameters.toJson(),
       });
 

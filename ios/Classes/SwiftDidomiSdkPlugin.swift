@@ -123,10 +123,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             setUserWithAuthParams(call, result: result)
         case "setUserWithAuthParamsAndSetupUI":
             setUserWithAuthParamsAndSetupUI(call, result: result)
-        case "setUserWithDidomiUserParameters":
-            setUserWithDidomiUserParameters(call, result: result)
-        case "setUserWithDidomiUserParametersAndSetupUI":
-            setUserWithDidomiUserParametersAndSetupUI(call, result: result)
+        case "setUserWithParameters":
+            setUserWithParameters(call, result: result)
+        case "setUserWithParametersAndSetupUI":
+            setUserWithParametersAndSetupUI(call, result: result)
         case "listenToVendorStatus":
             listenToVendorStatus(call, result: result)
         case "stopListeningToVendorStatus":
@@ -721,7 +721,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
 
     func setUserWithAuthParams(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         guard let args = call.arguments as? Dictionary<String, Any> else {
-            result(FlutterError(code: "setUser", message: "Missing parameters", details: nil))
+            result(FlutterError(code: "setUserWithAuthParams", message: "Missing parameters", details: nil))
             return
         }
 
@@ -757,7 +757,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
 
     func setUserWithAuthParamsAndSetupUI(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         guard let args = call.arguments as? Dictionary<String, Any> else {
-            result(FlutterError(code: "setUser", message: "Missing parameters", details: nil))
+            result(FlutterError(code: "setUserWithAuthParams", message: "Missing parameters", details: nil))
             return
         }
 
@@ -793,14 +793,14 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(nil)
     }
 
-    func setUserWithDidomiUserParameters(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    func setUserWithParameters(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         guard let args = call.arguments as? Dictionary<String, Any> else {
-            result(FlutterError(code: "setUser", message: "Missing parameters", details: nil))
+            result(FlutterError(code: "setUserWithParameters", message: "Missing parameters", details: nil))
             return
         }
 
         guard let jsonDidomiUserParameters = args["jsonDidomiUserParameters"] as? Dictionary<String, Any> else {
-            result(FlutterError(code: "setUserWithDidomiUserParameters", message: "Missing jsonDidomiUserParameters", details: nil))
+            result(FlutterError(code: "setUserWithParameters", message: "Missing jsonDidomiUserParameters", details: nil))
             return
         }
 
@@ -811,14 +811,14 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(nil)
     }
 
-    func setUserWithDidomiUserParametersAndSetupUI(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    func setUserWithParametersAndSetupUI(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         guard let args = call.arguments as? Dictionary<String, Any> else {
-            result(FlutterError(code: "setUser", message: "Missing parameters", details: nil))
+            result(FlutterError(code: "setUserWithParametersAndSetupUI", message: "Missing parameters", details: nil))
             return
         }
 
         guard let jsonDidomiUserParameters = args["jsonDidomiUserParameters"] as? Dictionary<String, Any> else {
-            result(FlutterError(code: "setUserWithDidomiUserParametersAndSetupUI", message: "Missing jsonDidomiUserParameters", details: nil))
+            result(FlutterError(code: "setUserWithParametersAndSetupUI", message: "Missing jsonDidomiUserParameters", details: nil))
             return
         }
 

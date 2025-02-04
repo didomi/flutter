@@ -59,14 +59,19 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
             new UserAuthWithHashParams(userId1, "hash-md5", secretId, "test-digest", salt, expiration),
             new UserAuthWithEncryptionParams(userId2, "aes-256-cbc", secretId, initializationVector, expiration)
           ];
-          didomiUserParameters = DidomiMultiUserParameters(UserAuthWithoutParams(userId), dcsUser, synchronizedUsers, isUnderage);
+          didomiUserParameters = DidomiMultiUserParameters(
+              userAuth: UserAuthWithoutParams(userId),
+              dcsUserAuth: dcsUser,
+              synchronizedUsers: synchronizedUsers,
+              isUnderage: isUnderage);
         } else {
-          didomiUserParameters = DidomiUserParameters(UserAuthWithoutParams(userId), dcsUser, isUnderage);
+          didomiUserParameters = DidomiUserParameters(
+              userAuth: UserAuthWithoutParams(userId), dcsUserAuth: dcsUser, isUnderage: isUnderage);
         }
         if (setUserAndSetupUI) {
-          await DidomiSdk.setUserWithDidomiUserParametersAndSetupUI(didomiUserParameters);
+          await DidomiSdk.setUserWithParametersAndSetupUI(didomiUserParameters);
         } else {
-          await DidomiSdk.setUserWithDidomiUserParameters(didomiUserParameters);
+          await DidomiSdk.setUserWithParameters(didomiUserParameters);
         }
         break;
       case AuthType.withHash:
@@ -78,14 +83,21 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
             new UserAuthWithHashParams(userId1, "hash-md5", secretId, "test-digest", salt, expiration),
             new UserAuthWithEncryptionParams(userId2, "aes-256-cbc", secretId, initializationVector, expiration)
           ];
-          didomiUserParameters = DidomiMultiUserParameters(UserAuthWithHashParams(userId, "hash-md5", secretId, "test-digest", salt, expiration), dcsUser, synchronizedUsers, isUnderage);
+          didomiUserParameters = DidomiMultiUserParameters(
+              userAuth: UserAuthWithHashParams(userId, "hash-md5", secretId, "test-digest", salt, expiration),
+              dcsUserAuth: dcsUser,
+              synchronizedUsers: synchronizedUsers,
+              isUnderage: isUnderage);
         } else {
-          didomiUserParameters = DidomiUserParameters(UserAuthWithHashParams(userId, "hash-md5", secretId, "test-digest", salt, expiration), dcsUser, isUnderage);
+          didomiUserParameters = DidomiUserParameters(
+              userAuth: UserAuthWithHashParams(userId, "hash-md5", secretId, "test-digest", salt, expiration),
+              dcsUserAuth: dcsUser,
+              isUnderage: isUnderage);
         }
         if (setUserAndSetupUI) {
-          await DidomiSdk.setUserWithDidomiUserParametersAndSetupUI(didomiUserParameters);
+          await DidomiSdk.setUserWithParametersAndSetupUI(didomiUserParameters);
         } else {
-          await DidomiSdk.setUserWithDidomiUserParameters(didomiUserParameters);
+          await DidomiSdk.setUserWithParameters(didomiUserParameters);
         }
         break;
       case AuthType.withEncryption:
@@ -97,14 +109,21 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
             new UserAuthWithHashParams(userId1, "hash-md5", secretId, "test-digest", salt, expiration),
             new UserAuthWithEncryptionParams(userId2, "aes-256-cbc", secretId, initializationVector, expiration)
           ];
-          didomiUserParameters = DidomiMultiUserParameters(UserAuthWithEncryptionParams(userId, "aes-256-cbc", secretId, initializationVector, expiration), dcsUser, synchronizedUsers, isUnderage);
+          didomiUserParameters = DidomiMultiUserParameters(
+              userAuth: UserAuthWithEncryptionParams(userId, "aes-256-cbc", secretId, initializationVector, expiration),
+              dcsUserAuth: dcsUser,
+              synchronizedUsers: synchronizedUsers,
+              isUnderage: isUnderage);
         } else {
-          didomiUserParameters = DidomiUserParameters(UserAuthWithEncryptionParams(userId, "aes-256-cbc", secretId, initializationVector, expiration), dcsUser, isUnderage);
+          didomiUserParameters = DidomiUserParameters(
+              userAuth: UserAuthWithEncryptionParams(userId, "aes-256-cbc", secretId, initializationVector, expiration),
+              dcsUserAuth: dcsUser,
+              isUnderage: isUnderage);
         }
         if (setUserAndSetupUI) {
-          await DidomiSdk.setUserWithDidomiUserParametersAndSetupUI(didomiUserParameters);
+          await DidomiSdk.setUserWithParametersAndSetupUI(didomiUserParameters);
         } else {
-          await DidomiSdk.setUserWithDidomiUserParameters(didomiUserParameters);
+          await DidomiSdk.setUserWithParameters(didomiUserParameters);
         }
         break;
       case AuthType.invalid:
@@ -116,14 +135,21 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
             new UserAuthWithHashParams(userId1, "error", secretId, "test-digest-fail", salt, expiration),
             new UserAuthWithEncryptionParams(userId2, "hash-md6", secretId, initializationVector, expiration)
           ];
-          didomiUserParameters = DidomiMultiUserParameters(UserAuthWithEncryptionParams(userId, "hash-md6", secretId, initializationVector, expiration), dcsUser, synchronizedUsers, isUnderage);
+          didomiUserParameters = DidomiMultiUserParameters(
+              userAuth: UserAuthWithEncryptionParams(userId, "hash-md6", secretId, initializationVector, expiration),
+              dcsUserAuth: dcsUser,
+              synchronizedUsers: synchronizedUsers,
+              isUnderage: isUnderage);
         } else {
-          didomiUserParameters = DidomiUserParameters(UserAuthWithEncryptionParams(userId, "hash-md6", secretId, initializationVector, expiration), dcsUser, isUnderage);
+          didomiUserParameters = DidomiUserParameters(
+              userAuth: UserAuthWithEncryptionParams(userId, "hash-md6", secretId, initializationVector, expiration),
+              dcsUserAuth: dcsUser,
+              isUnderage: isUnderage);
         }
         if (setUserAndSetupUI) {
-          await DidomiSdk.setUserWithDidomiUserParametersAndSetupUI(didomiUserParameters);
+          await DidomiSdk.setUserWithParametersAndSetupUI(didomiUserParameters);
         } else {
-          await DidomiSdk.setUserWithDidomiUserParameters(didomiUserParameters);
+          await DidomiSdk.setUserWithParameters(didomiUserParameters);
         }
         break;
     }
