@@ -136,13 +136,13 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
             new UserAuthWithEncryptionParams(userId2, "hash-md6", secretId, initializationVector, expiration)
           ];
           didomiUserParameters = DidomiMultiUserParameters(
-              userAuth: UserAuthWithEncryptionParams(userId, "hash-md6", secretId, initializationVector, expiration),
+              userAuth: UserAuthWithEncryptionParams(userId, "hash-md6", "invalid", initializationVector, expiration),
               dcsUserAuth: dcsUser,
               synchronizedUsers: synchronizedUsers,
               isUnderage: isUnderage);
         } else {
           didomiUserParameters = DidomiUserParameters(
-              userAuth: UserAuthWithEncryptionParams(userId, "hash-md6", secretId, initializationVector, expiration),
+              userAuth: UserAuthWithEncryptionParams(userId, "hash-md6", "invalid", initializationVector, expiration),
               dcsUserAuth: dcsUser,
               isUnderage: isUnderage);
         }

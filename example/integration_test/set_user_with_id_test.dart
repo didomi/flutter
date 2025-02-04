@@ -170,6 +170,8 @@ void main() {
         await InitializeHelper.initialize(tester, initializeBtnFinder);
       }
 
+      resetExpectedSyncValues();
+
       await tester.tap(setUserWithInvalidParams);
       await tester.tap(submitSetUser);
       await tester.pumpAndSettle();
