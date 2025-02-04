@@ -1,18 +1,29 @@
-abstract class UserAuthParams {
-  /// Organization ID to associate with the user
+abstract class UserAuth {
+  /// Organization User ID
   String id;
 
-  /// Algorithm used for computing the user ID
+  UserAuth(this.id);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+    };
+  }
+}
+
+abstract class UserAuthParams extends UserAuth {
+  /// Algorithm used for computing the OUID
   String algorithm;
 
-  /// ID of the secret used for computing the user ID
+  /// ID of the secret used for computing the OUID
   String secretId;
 
   /// Expiration date as timestamp (to prevent replay attacks)
   int? expiration;
 
-  UserAuthParams(this.id, this.algorithm, this.secretId, this.expiration);
+  UserAuthParams(String id, this.algorithm, this.secretId, this.expiration) : super(id);
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -23,8 +34,9 @@ abstract class UserAuthParams {
   }
 }
 
+/// User Authentication Parameters with encryption
 class UserAuthWithEncryptionParams extends UserAuthParams {
-  /// Initialization Vector used for computing the user ID
+  /// Initialization Vector used for computing the OUID
   String initializationVector;
 
   UserAuthWithEncryptionParams(String id, String algorithm, String secretId, this.initializationVector,
@@ -41,11 +53,12 @@ class UserAuthWithEncryptionParams extends UserAuthParams {
   }
 }
 
+/// User Authentication Parameters with hash
 class UserAuthWithHashParams extends UserAuthParams {
-  /// Digest used for representing the user ID
+  /// Digest used for representing the OUID
   String digest;
 
-  /// Salt used for computing the user ID (optional)
+  /// Salt used for computing the OUID (optional)
   String? salt;
 
   UserAuthWithHashParams(String id, String algorithm, String secretId, this.digest, this.salt, [int? expiration])
@@ -60,4 +73,9 @@ class UserAuthWithHashParams extends UserAuthParams {
     });
     return map;
   }
+}
+
+/// User Authentication Parameters without encryption or hash
+class UserAuthWithoutParams extends UserAuth {
+  UserAuthWithoutParams(String id) : super(id);
 }

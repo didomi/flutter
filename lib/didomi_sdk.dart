@@ -6,6 +6,7 @@ import 'package:didomi_sdk/entities/entities_helper.dart';
 import 'package:didomi_sdk/entities/purpose.dart';
 import 'package:didomi_sdk/entities/user_status.dart';
 import 'package:didomi_sdk/entities/vendor.dart';
+import 'package:didomi_sdk/parameters/didomi_user_parameters.dart';
 import 'package:didomi_sdk/parameters/user_auth_params.dart';
 import 'package:didomi_sdk/transactions/current_user_status_transaction.dart';
 import 'package:flutter/services.dart';
@@ -273,7 +274,7 @@ class DidomiSdk {
     return Vendor.fromJson(result);
   }
 
-  /// Get nuber of vendors
+  /// Get number of vendors
   static Future<int> getTotalVendorCount() async {
     final int result = await _channel.invokeMethod('getTotalVendorCount');
     return result;
@@ -344,14 +345,17 @@ class DidomiSdk {
   static Future<void> clearUser() async => await _channel.invokeMethod("clearUser");
 
   /// Set user information
+  @Deprecated("Use 'setUserWithDidomiUserParameters' instead")
   static Future<void> setUser(String organizationUserId, [bool? isUnderage]) async =>
       await _channel.invokeMethod("setUser", {"organizationUserId": organizationUserId, "isUnderage": isUnderage});
 
   /// Set user information and check for missing consent
-  static Future<void> setUserAndSetupUI(String organizationUserId, [bool? isUnderage]) async =>
-      await _channel.invokeMethod("setUserAndSetupUI", {"organizationUserId": organizationUserId, "isUnderage": isUnderage});
+  @Deprecated("Use 'setUserWithDidomiUserParametersAndSetupUI' instead")
+  static Future<void> setUserAndSetupUI(String organizationUserId, [bool? isUnderage]) async => await _channel
+      .invokeMethod("setUserAndSetupUI", {"organizationUserId": organizationUserId, "isUnderage": isUnderage});
 
   /// Set user information with authentication
+  @Deprecated("Use 'setUserWithDidomiUserParameters' instead")
   static Future<void> setUserWithAuthParams(UserAuthParams userAuthParams,
       [List<UserAuthParams>? synchronizedUsers, bool? isUnderage]) async {
     Map<String, dynamic> jsonUserAuthParams = userAuthParams.toJson();
@@ -364,6 +368,7 @@ class DidomiSdk {
   }
 
   /// Set user information with authentication and check for missing consent
+  @Deprecated("Use 'setUserWithDidomiUserParametersAndSetupUI' instead")
   static Future<void> setUserWithAuthParamsAndSetupUI(UserAuthParams userAuthParams,
       [List<UserAuthParams>? synchronizedUsers, bool? isUnderage]) async {
     Map<String, dynamic> jsonUserAuthParams = userAuthParams.toJson();
@@ -374,6 +379,18 @@ class DidomiSdk {
       "isUnderage": isUnderage
     });
   }
+
+  /// Set user information by using a `DidomiUserParameters` object
+  static Future<void> setUserWithDidomiUserParameters(DidomiUserParameters didomiUserParameters) async =>
+      await _channel.invokeMethod("setUserWithDidomiUserParameters", {
+        "jsonDidomiUserParameters": didomiUserParameters.toJson(),
+      });
+
+  /// Set user information by using a `DidomiUserParameters` object and check for missing consent
+  static Future<void> setUserWithDidomiUserParametersAndSetupUI(DidomiUserParameters didomiUserParameters) async =>
+      await _channel.invokeMethod("setUserWithDidomiUserParametersAndSetupUI", {
+        "jsonDidomiUserParameters": didomiUserParameters.toJson(),
+      });
 
   /// Creates a `CurrentUserStatusTransaction` object.
   /// This object provides mechanisms to stage updates to the user status regarding purposes and vendors, allowing for batch operations.

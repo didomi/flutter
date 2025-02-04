@@ -123,6 +123,10 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             setUserWithAuthParams(call, result: result)
         case "setUserWithAuthParamsAndSetupUI":
             setUserWithAuthParamsAndSetupUI(call, result: result)
+        case "setUserWithDidomiUserParameters":
+            setUserWithDidomiUserParameters(call, result: result)
+        case "setUserWithDidomiUserParametersAndSetupUI":
+            setUserWithDidomiUserParametersAndSetupUI(call, result: result)
         case "listenToVendorStatus":
             listenToVendorStatus(call, result: result)
         case "stopListeningToVendorStatus":
@@ -488,7 +492,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(vendorIdList)
     }
     
-    // Get required purposes from native to flutter.
+    /// Get required purposes from native to flutter.
     func getRequiredPurposes(result: @escaping FlutterResult) {
         if !Didomi.shared.isReady() {
             result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
@@ -499,7 +503,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(encoded)
     }
     
-    // Get required vendors from native to flutter.
+    /// Get required vendors from native to flutter.
     func getRequiredVendors(result: @escaping FlutterResult) {
         if !Didomi.shared.isReady() {
             result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
@@ -510,7 +514,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(encoded)
     }
     
-    // Get a purpose based on its ID from native to flutter.
+    /// Get a purpose based on its ID from native to flutter.
     func getPurpose(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         if !Didomi.shared.isReady() {
             result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
@@ -532,7 +536,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(encoded)
     }
     
-    // Get a vendor based on its ID from native to flutter.
+    /// Get a vendor based on its ID from native to flutter.
     func getVendor(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         if !Didomi.shared.isReady() {
             result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
@@ -674,104 +678,45 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
 
     func setUser(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         guard let args = call.arguments as? Dictionary<String, Any> else {
-            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUser", details: nil))
+            result(FlutterError.init(code: "invalid_args", message: "Missing arguments for setUser", details: nil))
             return
         }
 
-        guard let userId = argumentOrError(argumentName: "organizationUserId", methodName: "setUser", args: args, result: result) else {
+        guard let organizationUserId = argumentOrError(argumentName: "organizationUserId", methodName: "setUser", args: args, result: result) else {
+            result(FlutterError.init(code: "invalid_args", message: "Missing organizationUserId for setUser", details: nil))
             return
         }
 
-        let isUnderage = args["isUnderage"] as? Bool
+        let didomiUserParameters = DidomiUserParameters(
+            userAuth: UserAuthWithoutParams(id: organizationUserId),
+            isUnderage: args["isUnderage"] as? Bool
+        )
 
-        if let isUnderage = isUnderage {
-            Didomi.shared.setUser(id: userId, isUnderage: isUnderage)
-        } else {
-            Didomi.shared.setUser(id: userId)
-        }
+        Didomi.shared.setUser(didomiUserParameters)
+
         result(nil)
     }
 
     func setUserAndSetupUI(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         guard let args = call.arguments as? Dictionary<String, Any> else {
-            result(FlutterError.init(code: "invalid_args", message: "Wrong arguments for setUser", details: nil))
+            result(FlutterError.init(code: "invalid_args", message: "Missing arguments for setUser", details: nil))
             return
         }
 
-        guard let userId = argumentOrError(argumentName: "organizationUserId", methodName: "setUser", args: args, result: result) else {
+        guard let organizationUserId = argumentOrError(argumentName: "organizationUserId", methodName: "setUser", args: args, result: result) else {
+            result(FlutterError.init(code: "invalid_args", message: "Missing organizationUserId for setUser", details: nil))
             return
         }
 
-        let isUnderage = args["isUnderage"] as? Bool
+        let didomiUserParameters = DidomiUserParameters(
+            userAuth: UserAuthWithoutParams(id: organizationUserId),
+            containerController: UIApplication.shared.rootViewController,
+            isUnderage: args["isUnderage"] as? Bool
+        )
 
-        if let viewController: UIViewController = UIApplication.shared.rootViewController {
-            if let isUnderage = isUnderage {
-                Didomi.shared.setUser(id: userId, isUnderage: isUnderage, containerController: viewController)
-            } else {
-                Didomi.shared.setUser(id: userId, containerController: viewController)
-            }
-        } else if let isUnderage = isUnderage {
-            Didomi.shared.setUser(id: userId, isUnderage: isUnderage)
-        } else {
-            Didomi.shared.setUser(id: userId)
-        }
+        Didomi.shared.setUser(didomiUserParameters)
 
         result(nil)
-    }
-
-    private func buildUserAuthParams(jsonParameters: [String: Any]) -> UserAuthParams {
-
-        guard let id = jsonParameters["id"] as? String,
-              let algorithm = jsonParameters["algorithm"] as? String,
-              let secretID = jsonParameters["secretId"] as? String else {
-            fatalError("Missing required parameters")
-        }
-
-        let expiration = jsonParameters["expiration"] as? CLong
-        let initializationVector = jsonParameters["initializationVector"] as? String
-        let digest = jsonParameters["digest"] as? String
-        let salt = jsonParameters["salt"] as? String
-
-        if let initializationVector = initializationVector {
-            if let expiration = expiration {
-                return UserAuthWithEncryptionParams(
-                    id: id,
-                    algorithm: algorithm,
-                    secretID: secretID,
-                    initializationVector: initializationVector,
-                    legacyExpiration: Double(expiration)
-                )
-            } else {
-                return UserAuthWithEncryptionParams(
-                    id: id,
-                    algorithm: algorithm,
-                    secretID: secretID,
-                    initializationVector: initializationVector
-                )
-            }
-        } else {
-            guard let digest = digest else {
-                fatalError("Missing required digest parameter")
-            }
-            if let expiration = expiration {
-                return UserAuthWithHashParams(
-                    id: id,
-                    algorithm: algorithm,
-                    secretID: secretID,
-                    digest: digest,
-                    salt: salt,
-                    legacyExpiration: Double(expiration)
-                )
-            } else {
-                return UserAuthWithHashParams(
-                    id: id,
-                    algorithm: algorithm,
-                    secretID: secretID,
-                    digest: digest,
-                    salt: salt
-                )
-            }
-        }
     }
 
     func setUserWithAuthParams(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -786,21 +731,25 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         }
 
         let jsonSynchronizedUsers = args["jsonSynchronizedUsers"] as? [[String: Any]]
-        let isUnderage = args["isUnderage"] as? Bool
 
-        let userAuthParams = buildUserAuthParams(jsonParameters: jsonUserAuthParams)
-        let synchronizedUsers = jsonSynchronizedUsers?.map { buildUserAuthParams(jsonParameters: $0) }
+        let userAuth = buildUserAuth(jsonParameters: jsonUserAuthParams)
+        let synchronizedUsers = jsonSynchronizedUsers?.compactMap { buildUserAuthParams(jsonParameters: $0) }
 
         if let synchronizedUsers = synchronizedUsers {
-            if let isUnderage = isUnderage {
-                Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers, isUnderage: isUnderage)
-            } else {
-                Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers)
-            }
-        } else if let isUnderage = isUnderage {
-            Didomi.shared.setUser(userAuthParams: userAuthParams, isUnderage: isUnderage)
+            Didomi.shared.setUser(
+                DidomiMultiUserParameters(
+                    userAuth: userAuth,
+                    synchronizedUsers: synchronizedUsers,
+                    isUnderage: args["isUnderage"] as? Bool
+                )
+            )
         } else {
-            Didomi.shared.setUser(userAuthParams: userAuthParams)
+            Didomi.shared.setUser(
+                DidomiUserParameters(
+                    userAuth: userAuth,
+                    isUnderage: args["isUnderage"] as? Bool
+                )
+            )
         }
 
         result(nil)
@@ -818,34 +767,67 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         }
 
         let jsonSynchronizedUsers = args["jsonSynchronizedUsers"] as? [[String: Any]]
-        let isUnderage = args["isUnderage"] as? Bool
 
-        let userAuthParams = buildUserAuthParams(jsonParameters: jsonUserAuthParams)
-        let synchronizedUsers = jsonSynchronizedUsers?.map { buildUserAuthParams(jsonParameters: $0) }
+        let userAuth = buildUserAuth(jsonParameters: jsonUserAuthParams)
+        let synchronizedUsers = jsonSynchronizedUsers?.compactMap { buildUserAuthParams(jsonParameters: $0) }
 
-        if let viewController: UIViewController = UIApplication.shared.rootViewController {
-            if let synchronizedUsers = synchronizedUsers {
-                if let isUnderage = isUnderage {
-                    Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers, isUnderage: isUnderage, containerController: viewController)
-                } else {
-                    Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers, containerController: viewController)
-                }
-            } else if let isUnderage = isUnderage {
-                Didomi.shared.setUser(userAuthParams: userAuthParams, isUnderage: isUnderage, containerController: viewController)
-            } else {
-                Didomi.shared.setUser(userAuthParams: userAuthParams, containerController: viewController)
-            }
-        } else if let synchronizedUsers = synchronizedUsers {
-            if let isUnderage = isUnderage {
-               Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers, isUnderage: isUnderage)
-            } else {
-               Didomi.shared.setUser(userAuthParams: userAuthParams, synchronizedUsers: synchronizedUsers)
-            }
-       } else if let isUnderage = isUnderage {
-           Didomi.shared.setUser(userAuthParams: userAuthParams, isUnderage: isUnderage)
-       } else {
-           Didomi.shared.setUser(userAuthParams: userAuthParams)
-       }
+        if let synchronizedUsers = synchronizedUsers {
+            Didomi.shared.setUser(
+                DidomiMultiUserParameters(
+                    userAuth: userAuth,
+                    synchronizedUsers: synchronizedUsers,
+                    containerController: UIApplication.shared.rootViewController,
+                    isUnderage: args["isUnderage"] as? Bool
+                )
+            )
+        } else {
+            Didomi.shared.setUser(
+                DidomiUserParameters(
+                    userAuth: userAuth,
+                    containerController: UIApplication.shared.rootViewController,
+                    isUnderage: args["isUnderage"] as? Bool
+                )
+            )
+        }
+
+        result(nil)
+    }
+
+    func setUserWithDidomiUserParameters(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+            result(FlutterError(code: "setUser", message: "Missing parameters", details: nil))
+            return
+        }
+
+        guard let jsonDidomiUserParameters = args["jsonDidomiUserParameters"] as? Dictionary<String, Any> else {
+            result(FlutterError(code: "setUserWithDidomiUserParameters", message: "Missing jsonDidomiUserParameters", details: nil))
+            return
+        }
+
+        let didomiUserParameters = buildDidomiUserParameters(jsonParameters: jsonDidomiUserParameters)
+
+        Didomi.shared.setUser(didomiUserParameters)
+
+        result(nil)
+    }
+
+    func setUserWithDidomiUserParametersAndSetupUI(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+            result(FlutterError(code: "setUser", message: "Missing parameters", details: nil))
+            return
+        }
+
+        guard let jsonDidomiUserParameters = args["jsonDidomiUserParameters"] as? Dictionary<String, Any> else {
+            result(FlutterError(code: "setUserWithDidomiUserParametersAndSetupUI", message: "Missing jsonDidomiUserParameters", details: nil))
+            return
+        }
+
+        let didomiUserParameters = buildDidomiUserParameters(
+            jsonParameters: jsonDidomiUserParameters,
+            containerController: UIApplication.shared.rootViewController
+        )
+
+        Didomi.shared.setUser(didomiUserParameters)
 
         result(nil)
     }
@@ -937,7 +919,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(eventWasSent)
     }
     
-    // Get total vendor count.
+    /// Get total vendor count.
     func getTotalVendorCount(result: @escaping FlutterResult) {
         if !Didomi.shared.isReady() {
             result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
@@ -947,7 +929,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(count)
     }
     
-    // Get IAB vendor count.
+    /// Get IAB vendor count.
     func getIABVendorCount(result: @escaping FlutterResult) {
         if !Didomi.shared.isReady() {
             result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
@@ -957,7 +939,7 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         result(count)
     }
     
-    // Get non-IAB vendor count.
+    /// Get non-IAB vendor count.
     func getNonIABVendorCount(result: @escaping FlutterResult) {
         if !Didomi.shared.isReady() {
             result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
@@ -968,8 +950,123 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
     }
 }
 
+// MARK: - User methods
+private extension SwiftDidomiSdkPlugin {
+
+    /**
+    Convert JSON dictionary to DidomiUserParameters
+    - Parameters jsonParameters: Dictionary to convert.
+    - Parameters containerController: optional view controller.
+    - Returns: the computed DidomiUserParameters.
+    */
+    func buildDidomiUserParameters(jsonParameters: [String: Any], containerController: UIViewController? = nil) -> DidomiUserParameters {
+        guard let jsonUserAuth = jsonParameters["userAuth"] as? [String: Any] else {
+            fatalError("Missing required parameters")
+        }
+
+        let userAuth = buildUserAuth(jsonParameters: jsonUserAuth)
+        let dcsUserAuth: UserAuthParams? = {
+            if let dcsUserAuthParams = jsonParameters["dcsUserAuth"] as? [String: Any] {
+                return buildUserAuthParams(jsonParameters: dcsUserAuthParams)
+            }
+            return nil
+        }()
+        let synchronizedUsers = (jsonParameters["synchronizedUsers"] as? [[String: Any]])?.compactMap { buildUserAuthParams(jsonParameters: $0) }
+        let isUnderage = jsonParameters["isUnderage"] as? Bool
+
+        if let synchronizedUsers = synchronizedUsers {
+            return DidomiMultiUserParameters(
+                userAuth: userAuth,
+                dcsUserAuth: dcsUserAuth,
+                synchronizedUsers: synchronizedUsers,
+                containerController: containerController,
+                isUnderage: isUnderage
+            )
+        } else {
+            return DidomiUserParameters(
+                userAuth: userAuth,
+                dcsUserAuth: dcsUserAuth,
+                containerController: containerController,
+                isUnderage: isUnderage
+            )
+        }
+    }
+
+    /**
+    Convert JSON dictionary to UserAuth
+    - Parameters jsonParameters: Dictionary to convert.
+    - Returns: the computed UserAuthParams or UserAuthWithoutParams.
+    */
+    func buildUserAuth(jsonParameters: [String: Any]) -> UserAuth {
+        guard let id = jsonParameters["id"] as? String else {
+            fatalError("Missing required parameters")
+        }
+        return buildUserAuthParams(jsonParameters: jsonParameters) ?? UserAuthWithoutParams(id: id)
+    }
+
+    /**
+    Convert JSON dictionary to UserAuth
+    - Parameters jsonParameters: Dictionary to convert.
+    - Returns: the computed UserAuthParams or nil if the parameters are invalid (or should be mapped into UserAuthWithoutParams).
+    */
+    func buildUserAuthParams(jsonParameters: [String: Any]) -> UserAuthParams? {
+
+        guard let id = jsonParameters["id"] as? String,
+              let algorithm = jsonParameters["algorithm"] as? String,
+              let secretID = jsonParameters["secretId"] as? String else {
+            return nil
+        }
+
+        let expiration = jsonParameters["expiration"] as? CLong
+        let initializationVector = jsonParameters["initializationVector"] as? String
+        let digest = jsonParameters["digest"] as? String
+        let salt = jsonParameters["salt"] as? String
+
+        if let initializationVector = initializationVector {
+            if let expiration = expiration {
+                return UserAuthWithEncryptionParams(
+                    id: id,
+                    algorithm: algorithm,
+                    secretID: secretID,
+                    initializationVector: initializationVector,
+                    legacyExpiration: Double(expiration)
+                )
+            } else {
+                return UserAuthWithEncryptionParams(
+                    id: id,
+                    algorithm: algorithm,
+                    secretID: secretID,
+                    initializationVector: initializationVector
+                )
+            }
+        } else {
+            guard let digest = digest else {
+                return nil
+            }
+            if let expiration = expiration {
+                return UserAuthWithHashParams(
+                    id: id,
+                    algorithm: algorithm,
+                    secretID: secretID,
+                    digest: digest,
+                    salt: salt,
+                    legacyExpiration: Double(expiration)
+                )
+            } else {
+                return UserAuthWithHashParams(
+                    id: id,
+                    algorithm: algorithm,
+                    secretID: secretID,
+                    digest: digest,
+                    salt: salt
+                )
+            }
+        }
+    }
+}
+
 extension UIApplication {
-    // Computed property to get the root view controller of the application
+    /// Computed property to get the root view controller of the application
     var rootViewController: UIViewController? {
         if let viewController = UIApplication.shared.delegate?.window??.rootViewController {
             return viewController
