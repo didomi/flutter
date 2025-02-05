@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:didomi_sdk/didomi_sdk.dart';
+import 'package:didomi_sdk/parameters/didomi_initialize_parameters.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
 import 'package:flutter/material.dart';
 
@@ -28,17 +29,18 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
     String androidTvNoticeIdText = _androidTvNoticeIdController.text;
     String? androidTvNoticeId = androidTvNoticeIdText.isEmpty ? null : androidTvNoticeIdText;
 
-    await DidomiSdk.initialize(
-        _apiKeyController.text,
+    DidomiInitializeParameters didomiInitializeParameters = DidomiInitializeParameters(
+        apiKey: _apiKeyController.text,
         disableDidomiRemoteConfig: _disableRemoteConfigValue,
         languageCode: languageCode,
         noticeId: noticeId,
-        androidTvNoticeId: androidTvNoticeId,
+        tvNoticeId: androidTvNoticeId,
         androidTvEnabled: _androidTvEnabled,
         countryCode: _countryCodeController.text.isEmpty ? null : _countryCodeController.text,
         regionCode: _regionCodeController.text.isEmpty ? null : _regionCodeController.text,
-        isUnderage: _isUnderage
-    );
+        isUnderage: _isUnderage);
+
+    await DidomiSdk.initializeWithParameters(didomiInitializeParameters);
 
     return "OK";
   }

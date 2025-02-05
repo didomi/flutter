@@ -6,6 +6,7 @@ import 'package:didomi_sdk/entities/entities_helper.dart';
 import 'package:didomi_sdk/entities/purpose.dart';
 import 'package:didomi_sdk/entities/user_status.dart';
 import 'package:didomi_sdk/entities/vendor.dart';
+import 'package:didomi_sdk/parameters/didomi_initialize_parameters.dart';
 import 'package:didomi_sdk/parameters/didomi_user_parameters.dart';
 import 'package:didomi_sdk/parameters/user_auth_params.dart';
 import 'package:didomi_sdk/transactions/current_user_status_transaction.dart';
@@ -23,6 +24,7 @@ class DidomiSdk {
   static EventsHandler _eventsHandler = EventsHandler(_channel);
 
   /// Initialize the SDK
+  @Deprecated("Use 'initializeWithParameters' instead")
   static Future<void> initialize(String apiKey,
           {String? localConfigurationPath,
           String? remoteConfigurationURL,
@@ -48,6 +50,12 @@ class DidomiSdk {
         "countryCode": countryCode,
         "regionCode": regionCode,
         "isUnderage": isUnderage
+      });
+
+  /// Initialize the SDK by using a `DidomiInitializeParameters` object
+  static Future<void> initializeWithParameters(DidomiInitializeParameters didomiInitializeParameters) async =>
+      await _channel.invokeMethod("initializeWithParameters", {
+        "jsonDidomiInitializeParameters": didomiInitializeParameters.toJson(),
       });
 
   /// Check if Didomi SDK was successfully initialized

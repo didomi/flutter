@@ -78,6 +78,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "initialize" -> initialize(call, result)
 
+                "initializeWithParameters" -> initializeWithParameters(call, result)
+
                 "isReady" -> result.success(didomi.isReady)
 
                 "onReady" -> didomi.onReady {
@@ -212,23 +214,53 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             Didomi.getInstance().initialize(
                 it.application,
                 DidomiInitializeParameters(
-                    apiKey,
-                    call.argument("localConfigurationPath"),
-                    call.argument("remoteConfigurationURL"),
-                    call.argument("providerId"),
-                    disableDidomiRemoteConfig,
-                    call.argument("languageCode"),
-                    call.argument("noticeId"),
-                    call.argument("androidTvNoticeId"),
-                    androidTvEnabled,
-                    call.argument("countryCode"),
-                    call.argument("regionCode"),
-                    isUnderage
+                    apiKey = apiKey,
+                    localConfigurationPath = call.argument("localConfigurationPath"),
+                    remoteConfigurationUrl = call.argument("remoteConfigurationURL"),
+                    providerId = call.argument("providerId"),
+                    disableDidomiRemoteConfig = disableDidomiRemoteConfig,
+                    languageCode = call.argument("languageCode"),
+                    noticeId = call.argument("noticeId"),
+                    tvNoticeId = call.argument("androidTvNoticeId"),
+                    androidTvEnabled = androidTvEnabled,
+                    countryCode = call.argument("countryCode"),
+                    regionCode = call.argument("regionCode"),
+                    isUnderage = isUnderage
                 )
             )
             result.success(null)
         } ?: run {
             result.error("no_activity", "No activity available", null)
+        }
+    }
+
+    private fun initializeWithParameters(call: MethodCall, result: Result) {
+        val jsonDidomiInitializeParameters = call.argument("jsonDidomiInitializeParameters") as? Map<String, Any>
+        if (jsonDidomiInitializeParameters == null) {
+            result.error("initializeWithParameters", "Missing parameter", null)
+            return
+        }
+
+        currentActivity?.also {
+            val didomiInitializeParameters = DidomiInitializeParameters(
+                apiKey = jsonDidomiInitializeParameters["apiKey"] as String,
+                localConfigurationPath = jsonDidomiInitializeParameters["localConfigurationPath"] as? String,
+                remoteConfigurationUrl = jsonDidomiInitializeParameters["remoteConfigurationUrl"] as? String,
+                providerId = jsonDidomiInitializeParameters["providerId"] as? String,
+                disableDidomiRemoteConfig = jsonDidomiInitializeParameters["disableDidomiRemoteConfig"] as Boolean,
+                languageCode = jsonDidomiInitializeParameters["languageCode"] as? String,
+                noticeId = jsonDidomiInitializeParameters["noticeId"] as? String,
+                tvNoticeId = jsonDidomiInitializeParameters["tvNoticeId"] as? String,
+                androidTvEnabled = jsonDidomiInitializeParameters["androidTvEnabled"] as Boolean,
+                countryCode = jsonDidomiInitializeParameters["countryCode"] as? String,
+                regionCode = jsonDidomiInitializeParameters["regionCode"] as? String,
+                isUnderage = jsonDidomiInitializeParameters["isUnderage"] as Boolean,
+            )
+
+            Didomi.getInstance().initialize(it.application, didomiInitializeParameters)
+            result.success(null)
+        } ?: run {
+            result.error("initializeWithParameters", "No activity available", null)
         }
     }
 

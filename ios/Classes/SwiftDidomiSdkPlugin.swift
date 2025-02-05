@@ -35,6 +35,8 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
         switch(call.method) {
         case "initialize":
             initialize(call, result: result)
+        case "initializeWithParameters":
+            initializeWithParameters(call, result: result)
         case "isReady":
             result(Didomi.shared.isReady())
         case "onReady":
@@ -172,6 +174,33 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
             countryCode: args["countryCode"] as? String,
             regionCode: args["regionCode"] as? String,
             isUnderage: args["isUnderage"] as? Bool ?? false
+        )
+        Didomi.shared.initialize(parameters)
+        result(nil)
+    }
+
+    func initializeWithParameters(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let args = call.arguments as? Dictionary<String, Any> else {
+            result(FlutterError(code: "initializeWithParameters", message: "Missing parameters", details: nil))
+            return
+        }
+
+        guard let jsonDidomiInitializeParameters = args["jsonDidomiInitializeParameters"] as? Dictionary<String, Any> else {
+            result(FlutterError(code: "initializeWithParameters", message: "Missing jsonDidomiInitializeParameters", details: nil))
+            return
+        }
+
+        let parameters = DidomiInitializeParameters(
+            apiKey: jsonDidomiInitializeParameters["apiKey"] as! String,
+            localConfigurationPath: jsonDidomiInitializeParameters["localConfigurationPath"] as? String,
+            remoteConfigurationURL: jsonDidomiInitializeParameters["remoteConfigurationUrl"] as? String,
+            providerID: jsonDidomiInitializeParameters["providerId"] as? String,
+            disableDidomiRemoteConfig: jsonDidomiInitializeParameters["disableDidomiRemoteConfig"] as! Bool,
+            languageCode: jsonDidomiInitializeParameters["languageCode"] as? String,
+            noticeID: jsonDidomiInitializeParameters["noticeId"] as? String,
+            countryCode: jsonDidomiInitializeParameters["countryCode"] as? String,
+            regionCode: jsonDidomiInitializeParameters["regionCode"] as? String,
+            isUnderage: jsonDidomiInitializeParameters["isUnderage"] as! Bool
         )
         Didomi.shared.initialize(parameters)
         result(nil)
