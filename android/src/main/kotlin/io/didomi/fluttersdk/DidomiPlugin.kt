@@ -668,7 +668,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     /**
-     * Build DidomiUSerParameters from JSON and optional activity
+     * Build DidomiUserParameters from JSON and optional activity
      * @param jsonParameters the JSON parameters
      * @param activity the optional [FragmentActivity]
      * @return the DidomiUserParameters object (as [DidomiUserParameters] or [DidomiMultiUserParameters])
