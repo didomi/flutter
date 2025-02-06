@@ -26,7 +26,7 @@ class DidomiInitializeParameters {
 
   /// ID of the notice configuration to load on TV devices if you are not using app ID targeting.
   /// If [androidTvEnabled] is true and SDK is launched on a TV device, this parameter will be used instead of [noticeId] to get configuration from console.
-  String? tvNoticeId;
+  String? androidTvNoticeId;
 
   /// If set to true, when launched on a AndroidTV device, the SDK will display TV notice:
   /// * Only Didomi remote config is allowed
@@ -54,7 +54,7 @@ class DidomiInitializeParameters {
       this.disableDidomiRemoteConfig = false,
       this.languageCode = null,
       this.noticeId = null,
-      this.tvNoticeId = null,
+      this.androidTvNoticeId = null,
       this.androidTvEnabled = false,
       this.countryCode = null,
       this.regionCode = null,
@@ -68,7 +68,7 @@ class DidomiInitializeParameters {
         'disableDidomiRemoteConfig': disableDidomiRemoteConfig,
         'languageCode': languageCode,
         'noticeId': noticeId,
-        'tvNoticeId': tvNoticeId,
+        'androidTvNoticeId': androidTvNoticeId,
         'androidTvEnabled': androidTvEnabled,
         'countryCode': countryCode,
         'regionCode': regionCode,

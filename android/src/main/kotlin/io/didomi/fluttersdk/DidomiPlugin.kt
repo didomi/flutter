@@ -249,7 +249,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 disableDidomiRemoteConfig = jsonDidomiInitializeParameters["disableDidomiRemoteConfig"] as Boolean,
                 languageCode = jsonDidomiInitializeParameters["languageCode"] as? String,
                 noticeId = jsonDidomiInitializeParameters["noticeId"] as? String,
-                tvNoticeId = jsonDidomiInitializeParameters["tvNoticeId"] as? String,
+                tvNoticeId = jsonDidomiInitializeParameters["androidTvNoticeId"] as? String,
                 androidTvEnabled = jsonDidomiInitializeParameters["androidTvEnabled"] as Boolean,
                 countryCode = jsonDidomiInitializeParameters["countryCode"] as? String,
                 regionCode = jsonDidomiInitializeParameters["regionCode"] as? String,

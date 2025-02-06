@@ -34,7 +34,7 @@ class _InitializeState extends BaseSampleWidgetState<Initialize> {
         disableDidomiRemoteConfig: _disableRemoteConfigValue,
         languageCode: languageCode,
         noticeId: noticeId,
-        tvNoticeId: androidTvNoticeId,
+        androidTvNoticeId: androidTvNoticeId,
         androidTvEnabled: _androidTvEnabled,
         countryCode: _countryCodeController.text.isEmpty ? null : _countryCodeController.text,
         regionCode: _regionCodeController.text.isEmpty ? null : _regionCodeController.text,
