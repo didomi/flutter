@@ -170,8 +170,14 @@ void main() {
         await InitializeHelper.initialize(tester, initializeBtnFinder);
       }
 
+      // Clear user for bulk tests
+      await tester.tap(clearUser);
+      await tester.tap(submitSetUser);
+      await tester.pumpAndSettle();
+
       resetExpectedSyncValues();
 
+      // Set user with invalid parameters
       await tester.tap(setUserWithInvalidParams);
       await tester.tap(submitSetUser);
       await tester.pumpAndSettle();
