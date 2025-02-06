@@ -13,6 +13,7 @@ class DidomiInitializeParameters {
   String? providerId;
 
   /// If set to true, disable remote configuration (only local config file will be used).
+  @Deprecated("In the future, it will be mandatory to create your notice from the console (see https://developers.didomi.io/cmp/mobile-sdk/android/setup#from-the-console-recommended for more information).")
   bool disableDidomiRemoteConfig = false;
 
   /// Language in which the consent UI should be displayed.
