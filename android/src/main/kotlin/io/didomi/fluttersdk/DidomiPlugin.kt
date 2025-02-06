@@ -207,8 +207,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun initialize(call: MethodCall, result: Result) {
         currentActivity?.also {
             val apiKey = argumentOrError("apiKey", "initialize", call, result) ?: return
-            val disableDidomiRemoteConfig: Boolean =
-                call.argument("disableDidomiRemoteConfig") ?: false
+            val disableDidomiRemoteConfig: Boolean = call.argument("disableDidomiRemoteConfig") ?: false
             val androidTvEnabled: Boolean = call.argument("androidTvEnabled") ?: false
             val isUnderage: Boolean = call.argument("isUnderage") ?: false
             Didomi.getInstance().initialize(
@@ -586,7 +585,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     /**
-     * Set Organisation User ID and optional underAge flag
+     * Set Organisation User ID and optional underage flag
      */
     private fun setUser(call: MethodCall, result: Result) {
         val organizationUserId = argumentOrError("organizationUserId", "setUser", call, result) ?: return
@@ -602,7 +601,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     /**
-     * Set Organisation User ID and optional underAge flag with activity
+     * Set Organisation User ID and optional underage flag with activity
      */
     private fun setUserAndSetupUI(call: MethodCall, result: Result) {
         val organizationUserId = argumentOrError("organizationUserId", "setUser", call, result) ?: return
@@ -672,6 +671,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      * Build DidomiUSerParameters from JSON and optional activity
      * @param jsonParameters the JSON parameters
      * @param activity the optional [FragmentActivity]
+     * @return the DidomiUserParameters object (as [DidomiUserParameters] or [DidomiMultiUserParameters])
      */
     private fun buildDidomiUserParameters(
         jsonParameters: Map<String, Any>,
@@ -702,7 +702,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     /**
-     * Set Organisation User Auth and optional underAge flag
+     * Set Organisation User Auth and optional underage flag
      */
     private fun setUserWithAuthParams(call: MethodCall, result: Result) {
         val jsonUserAuthParams = call.argument("jsonUserAuthParams") as? Map<String, Any>
