@@ -1,8 +1,14 @@
 # Release Note
 
+## 2.10.0
+- Update latest versions of native Android (2.19.0) and iOS (2.19.0) sdks
+- Implement new public function `initializeWithParameters()`.
+- Implement new public functions `setUserWithParameters()` and `setUserWithParametersAndSetupUI()`.
+
 ## 2.9.0
 - Update latest versions of native Android (2.18.0) and iOS (2.18.0) sdks
 - Deprecate methods and parameters related to SPI purposes
+- Implement new public computed property `applicableRegulation`.
 
 ## 2.8.0
 - Update latest versions of native Android (2.17.0) and iOS (2.17.0) sdks

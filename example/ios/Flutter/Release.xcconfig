@@ -1,2 +1,5 @@
 #include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
+#include? "Pods/Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release.xcconfig"
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"
+#include? "Pods/Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile.xcconfig"
 #include "Generated.xcconfig"

@@ -78,20 +78,14 @@ void main() {
 
       assertNativeMessage("isReady", resultFalseMessage);
 
-      // TODO('Check this difference')
       if (Platform.isAndroid) {
-        /// Android falls back to local configuration
-        assert(errorMessage == "");
-
-        assert(isError == false);
-        assert(isReady == false);
+        assert(errorMessage == "Invalid Didomi API key");
       } else if (Platform.isIOS) {
-        /// iOS doesn't
         assert(errorMessage == "The initialization parameter API Key () is invalid.");
-
-        assert(isError == true);
-        assert(isReady == false);
       }
+
+      assert(isError == true);
+      assert(isReady == false);
     });
   });
 }

@@ -3,12 +3,13 @@ package io.didomi.fluttersdk
 import android.app.Activity
 import androidx.fragment.app.FragmentActivity
 import io.didomi.sdk.Didomi
+import io.didomi.sdk.Log
 import io.didomi.sdk.DidomiInitializeParameters
+import io.didomi.sdk.DidomiUserParameters
+import io.didomi.sdk.DidomiMultiUserParameters
 import io.didomi.sdk.exceptions.DidomiNotReadyException
 import io.didomi.sdk.models.CurrentUserStatus
-import io.didomi.sdk.user.model.UserAuthParams
-import io.didomi.sdk.user.model.UserAuthWithEncryptionParams
-import io.didomi.sdk.user.model.UserAuthWithHashParams
+import io.didomi.sdk.user.model.*
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -30,7 +31,6 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private val vendorStatusListeners = mutableSetOf<String>()
 
     /// The Activity used to interact with the Didomi SDK.
-    ///
     /// This is always the current displayed Activity, as activities can not be passed through Flutter channels
     private var currentActivity: Activity? = null
 
@@ -77,6 +77,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             when (call.method) {
 
                 "initialize" -> initialize(call, result)
+
+                "initializeWithParameters" -> initializeWithParameters(call, result)
 
                 "isReady" -> result.success(didomi.isReady)
 
@@ -177,6 +179,10 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "setUserWithAuthParamsAndSetupUI" -> setUserWithAuthParamsAndSetupUI(call, result)
 
+                "setUserWithParameters" -> setUserWithParameters(call, result)
+
+                "setUserWithParametersAndSetupUI" -> setUserWithParametersAndSetupUI(call, result)
+
                 "listenToVendorStatus" -> listenToVendorStatus(call, result)
 
                 "stopListeningToVendorStatus" -> stopListeningToVendorStatus(call, result)
@@ -207,23 +213,53 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             Didomi.getInstance().initialize(
                 it.application,
                 DidomiInitializeParameters(
-                    apiKey,
-                    call.argument("localConfigurationPath"),
-                    call.argument("remoteConfigurationURL"),
-                    call.argument("providerId"),
-                    disableDidomiRemoteConfig,
-                    call.argument("languageCode"),
-                    call.argument("noticeId"),
-                    call.argument("androidTvNoticeId"),
-                    androidTvEnabled,
-                    call.argument("countryCode"),
-                    call.argument("regionCode"),
-                    isUnderage
+                    apiKey = apiKey,
+                    localConfigurationPath = call.argument("localConfigurationPath"),
+                    remoteConfigurationUrl = call.argument("remoteConfigurationURL"),
+                    providerId = call.argument("providerId"),
+                    disableDidomiRemoteConfig = disableDidomiRemoteConfig,
+                    languageCode = call.argument("languageCode"),
+                    noticeId = call.argument("noticeId"),
+                    tvNoticeId = call.argument("androidTvNoticeId"),
+                    androidTvEnabled = androidTvEnabled,
+                    countryCode = call.argument("countryCode"),
+                    regionCode = call.argument("regionCode"),
+                    isUnderage = isUnderage
                 )
             )
             result.success(null)
         } ?: run {
             result.error("no_activity", "No activity available", null)
+        }
+    }
+
+    private fun initializeWithParameters(call: MethodCall, result: Result) {
+        val jsonDidomiInitializeParameters = call.argument("jsonDidomiInitializeParameters") as? Map<String, Any>
+        if (jsonDidomiInitializeParameters == null) {
+            result.error("initializeWithParameters", "Missing parameter", null)
+            return
+        }
+
+        currentActivity?.also {
+            val didomiInitializeParameters = DidomiInitializeParameters(
+                apiKey = jsonDidomiInitializeParameters["apiKey"] as String,
+                localConfigurationPath = jsonDidomiInitializeParameters["localConfigurationPath"] as? String,
+                remoteConfigurationUrl = jsonDidomiInitializeParameters["remoteConfigurationUrl"] as? String,
+                providerId = jsonDidomiInitializeParameters["providerId"] as? String,
+                disableDidomiRemoteConfig = jsonDidomiInitializeParameters["disableDidomiRemoteConfig"] as Boolean,
+                languageCode = jsonDidomiInitializeParameters["languageCode"] as? String,
+                noticeId = jsonDidomiInitializeParameters["noticeId"] as? String,
+                tvNoticeId = jsonDidomiInitializeParameters["androidTvNoticeId"] as? String,
+                androidTvEnabled = jsonDidomiInitializeParameters["androidTvEnabled"] as Boolean,
+                countryCode = jsonDidomiInitializeParameters["countryCode"] as? String,
+                regionCode = jsonDidomiInitializeParameters["regionCode"] as? String,
+                isUnderage = jsonDidomiInitializeParameters["isUnderage"] as Boolean,
+            )
+
+            Didomi.getInstance().initialize(it.application, didomiInitializeParameters)
+            result.success(null)
+        } ?: run {
+            result.error("initializeWithParameters", "No activity available", null)
         }
     }
 
@@ -522,14 +558,14 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun setUserStatus(call: MethodCall, result: Result) {
         try {
             val consentHasBeenUpdated = Didomi.getInstance().setUserStatus(
-                    getListArgAsSet(call, "enabledConsentPurposeIds"),
-                    getListArgAsSet(call, "disabledConsentPurposeIds"),
-                    getListArgAsSet(call, "enabledLIPurposeIds"),
-                    getListArgAsSet(call, "disabledLIPurposeIds"),
-                    getListArgAsSet(call, "enabledConsentVendorIds"),
-                    getListArgAsSet(call, "disabledConsentVendorIds"),
-                    getListArgAsSet(call, "enabledLIVendorIds"),
-                    getListArgAsSet(call, "disabledLIVendorIds")
+                getListArgAsSet(call, "enabledConsentPurposeIds"),
+                getListArgAsSet(call, "disabledConsentPurposeIds"),
+                getListArgAsSet(call, "enabledLIPurposeIds"),
+                getListArgAsSet(call, "disabledLIPurposeIds"),
+                getListArgAsSet(call, "enabledConsentVendorIds"),
+                getListArgAsSet(call, "disabledConsentVendorIds"),
+                getListArgAsSet(call, "enabledLIVendorIds"),
+                getListArgAsSet(call, "disabledLIVendorIds")
             )
             result.success(consentHasBeenUpdated)
         } catch (e: DidomiNotReadyException) {
@@ -539,96 +575,233 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private fun getListArgAsSet(call: MethodCall, key: String) = (call.argument(key) as? List<String>)?.toSet() ?: emptySet()
 
+    /**
+     * Clear user
+     */
     private fun clearUser(call: MethodCall, result: Result) {
         eventStreamHandler.clearSyncReadyEventReferences();
         Didomi.getInstance().clearUser()
         result.success(null)
     }
 
+    /**
+     * Set Organisation User ID and optional underage flag
+     */
     private fun setUser(call: MethodCall, result: Result) {
         val organizationUserId = argumentOrError("organizationUserId", "setUser", call, result) ?: return
-        val isUnderage: Boolean? = call.argument("isUnderage")
-        Didomi.getInstance().setUser(organizationUserId = organizationUserId, isUnderage = isUnderage)
+
+        val didomiUserParameters = DidomiUserParameters(
+            userAuth = UserAuthWithoutParams(organizationUserId),
+            isUnderage = call.argument("isUnderage")
+        )
+
+        Didomi.getInstance().setUser(parameters = didomiUserParameters)
+
         result.success(null)
     }
 
+    /**
+     * Set Organisation User ID and optional underage flag with activity
+     */
     private fun setUserAndSetupUI(call: MethodCall, result: Result) {
         val organizationUserId = argumentOrError("organizationUserId", "setUser", call, result) ?: return
-        val isUnderage: Boolean? = call.argument("isUnderage")
-        Didomi.getInstance().setUser(organizationUserId = organizationUserId, activity = getFragmentActivity(result), isUnderage = isUnderage)
+
+        val didomiUserParameters = DidomiUserParameters(
+            userAuth = UserAuthWithoutParams(organizationUserId),
+            activity = getFragmentActivity(result),
+            isUnderage = call.argument("isUnderage")
+        )
+
+        Didomi.getInstance().setUser(parameters = didomiUserParameters)
+
         result.success(null)
     }
 
-    private fun buildUserAuthParams(jsonParameters: Map<String, Any>): UserAuthParams {
+    /**
+     * Build UserAuth object from JSON
+     * @param jsonParameters the JSON parameters
+     * @return UserAuth object (UserAuthWithoutParams or UserAuthWithHashParams or UserAuthWithEncryptionParams)
+     */
+    private fun buildUserAuth(jsonParameters: Map<String, Any>): UserAuth = buildUserAuthParams(jsonParameters)
+        ?: UserAuthWithoutParams(id = jsonParameters["id"] as String)
 
-        val id = jsonParameters["id"] as String
-        val algorithm = jsonParameters["algorithm"] as String
-        val secretId = jsonParameters["secretId"] as String
+    /**
+     * Build UserAuthParams object (with encryption or hash) from JSON
+     * @param jsonParameters the JSON parameters
+     * @return UserAuthParams object (UserAuthWithHashParams or UserAuthWithEncryptionParams) or null
+     */
+    private fun buildUserAuthParams(jsonParameters: Map<String, Any>?): UserAuthParams? {
+
+        if (jsonParameters.isNullOrEmpty()) {
+            return null
+        }
+
+        val id = jsonParameters["id"] as? String ?: return null
+        val algorithm = jsonParameters["algorithm"] as? String ?: return null
+        val secretId = jsonParameters["secretId"] as? String ?: return null
         val expiration = jsonParameters["expiration"] as? Int
         val initializationVector = jsonParameters["initializationVector"] as? String
         val digest = jsonParameters["digest"] as? String
         val salt = jsonParameters["salt"] as? String
 
-        return if (initializationVector.isNullOrBlank()) {
-           UserAuthWithHashParams(
+        return when {
+            // Encryption
+            !digest.isNullOrBlank() -> UserAuthWithHashParams(
                 id = id,
                 algorithm = algorithm,
                 secretId = secretId,
-                digest = digest as String,
+                digest = digest,
                 salt = salt,
                 expiration = expiration?.toLong()
             )
-        } else {
-            UserAuthWithEncryptionParams(
+            // Hash
+            !initializationVector.isNullOrBlank() -> UserAuthWithEncryptionParams(
                 id = id,
                 algorithm = algorithm,
                 secretId = secretId,
-                initializationVector = initializationVector as String,
+                initializationVector = initializationVector,
                 expiration = expiration?.toLong()
+            )
+
+            else -> null
+        }
+    }
+
+    /**
+     * Build DidomiUserParameters from JSON and optional activity
+     * @param jsonParameters the JSON parameters
+     * @param activity the optional [FragmentActivity]
+     * @return the DidomiUserParameters object (as [DidomiUserParameters] or [DidomiMultiUserParameters])
+     */
+    private fun buildDidomiUserParameters(
+        jsonParameters: Map<String, Any>,
+        activity: FragmentActivity? = null
+    ): DidomiUserParameters {
+
+        val userAuth = jsonParameters["userAuth"] as Map<String, Any>
+        val dcsUserAuth = jsonParameters["dcsUserAuth"] as? Map<String, Any>
+        val synchronizedUsers = jsonParameters["synchronizedUsers"] as? List<Map<String, Any>>
+        val isUnderage = jsonParameters["isUnderage"] as? Boolean
+
+        return if (synchronizedUsers == null) {
+            DidomiUserParameters(
+                userAuth = buildUserAuth(userAuth),
+                dcsUserAuth = buildUserAuthParams(dcsUserAuth),
+                activity = activity,
+                isUnderage = isUnderage,
+            )
+        } else {
+            DidomiMultiUserParameters(
+                userAuth = buildUserAuth(userAuth),
+                dcsUserAuth = buildUserAuthParams(dcsUserAuth),
+                synchronizedUsers = synchronizedUsers.mapNotNull { buildUserAuthParams(it) }.toTypedArray(),
+                activity = activity,
+                isUnderage = isUnderage,
             )
         }
     }
 
+    /**
+     * Set Organisation User Auth and optional underage flag
+     */
     private fun setUserWithAuthParams(call: MethodCall, result: Result) {
-        val jsonUserAuthParams: Map<String, Any>? = call.argument("jsonUserAuthParams")
+        val jsonUserAuthParams = call.argument("jsonUserAuthParams") as? Map<String, Any>
         if (jsonUserAuthParams == null) {
             result.error("setUser", "Missing parameters", null)
             return
         }
 
-        val jsonSynchronizedUsers: List<Map<String, Any>>? = call.argument("jsonSynchronizedUsers")
-        val isUnderage: Boolean? = call.argument("isUnderage")
+        val jsonSynchronizedUsers = call.argument("jsonSynchronizedUsers") as? List<Map<String, Any>>
+        val isUnderage = call.argument("isUnderage") as? Boolean
 
-        val userAuthParams = buildUserAuthParams(jsonUserAuthParams)
-        val synchronizedUsers = jsonSynchronizedUsers?.map { buildUserAuthParams(it) }
+        val didomiUserParameters = if (jsonSynchronizedUsers == null) {
+            DidomiUserParameters(
+                userAuth = buildUserAuth(jsonUserAuthParams),
+                isUnderage = isUnderage
+            )
+        } else {
+            DidomiMultiUserParameters(
+                userAuth = buildUserAuth(jsonUserAuthParams),
+                synchronizedUsers = jsonSynchronizedUsers.mapNotNull { buildUserAuthParams(it) }.toTypedArray(),
+                isUnderage = isUnderage
+            )
+        }
 
-        Didomi.getInstance().setUser(userAuthParams = userAuthParams, synchronizedUsers = synchronizedUsers, isUnderage = isUnderage)
+        Didomi.getInstance().setUser(parameters = didomiUserParameters)
 
         result.success(null)
     }
 
+    /**
+     * Set Organisation User Auth and optional underAge flag with activity
+     */
     private fun setUserWithAuthParamsAndSetupUI(call: MethodCall, result: Result) {
-        val jsonUserAuthParams: Map<String, Any>? = call.argument("jsonUserAuthParams")
+        val jsonUserAuthParams = call.argument("jsonUserAuthParams") as? Map<String, Any>
         if (jsonUserAuthParams == null) {
             result.error("setUser", "Missing parameters", null)
             return
         }
 
-        val jsonSynchronizedUsers: List<Map<String, Any>>? = call.argument("jsonSynchronizedUsers")
-        val isUnderage: Boolean? = call.argument("isUnderage")
+        val jsonSynchronizedUsers = call.argument("jsonSynchronizedUsers") as? List<Map<String, Any>>
+        val isUnderage = call.argument("isUnderage") as? Boolean
 
-        val userAuthParams = buildUserAuthParams(jsonUserAuthParams)
-        val synchronizedUsers = jsonSynchronizedUsers?.map { buildUserAuthParams(it) }
+        val didomiUserParameters = if (jsonSynchronizedUsers == null) {
+            DidomiUserParameters(
+                userAuth = buildUserAuth(jsonUserAuthParams),
+                activity = getFragmentActivity(result),
+                isUnderage = isUnderage
+            )
+        } else {
+            DidomiMultiUserParameters(
+                userAuth = buildUserAuth(jsonUserAuthParams),
+                synchronizedUsers = jsonSynchronizedUsers.mapNotNull { buildUserAuthParams(it) }.toTypedArray(),
+                activity = getFragmentActivity(result),
+                isUnderage = isUnderage
+            )
+        }
 
-        Didomi.getInstance().setUser(userAuthParams, synchronizedUsers, getFragmentActivity(result), isUnderage)
+        Didomi.getInstance().setUser(parameters = didomiUserParameters)
+
+        result.success(null)
+    }
+
+    /**
+     * Set Didomi User params
+     */
+    private fun setUserWithParameters(call: MethodCall, result: Result) {
+        val jsonDidomiUserParameters = call.argument("jsonDidomiUserParameters") as? Map<String, Any>
+        if (jsonDidomiUserParameters == null) {
+            result.error("setUser", "Missing parameters", null)
+            return
+        }
+
+        val didomiUserParameters = buildDidomiUserParameters(jsonDidomiUserParameters)
+
+        Didomi.getInstance().setUser(parameters = didomiUserParameters)
+
+        result.success(null)
+    }
+
+    /**
+     * Set Didomi User params with activity
+     */
+    private fun setUserWithParametersAndSetupUI(call: MethodCall, result: Result) {
+        val jsonDidomiUserParameters = call.argument("jsonDidomiUserParameters") as? Map<String, Any>
+        if (jsonDidomiUserParameters == null) {
+            result.error("setUser", "Missing parameters", null)
+            return
+        }
+
+        val didomiUserParameters = buildDidomiUserParameters(jsonDidomiUserParameters, activity = getFragmentActivity(result))
+
+        Didomi.getInstance().setUser(parameters = didomiUserParameters)
 
         result.success(null)
     }
 
     private fun listenToVendorStatus(call: MethodCall, result: Result) {
         val methodName = "listenToVendorStatus"
-        val vendorId = argumentOrError("vendorId", methodName, call, result)
-            ?: return
+        val vendorId = argumentOrError("vendorId", methodName, call, result) ?: return
 
         if (!vendorStatusListeners.contains(vendorId)) {
             Didomi.getInstance().addVendorStatusListener(vendorId) { vendorStatus ->
@@ -639,14 +812,13 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         result.success(null)
     }
 
-   private fun stopListeningToVendorStatus(call: MethodCall, result: Result) {
-       val methodName = "stopListeningToVendorStatus"
-       val vendorId = argumentOrError("vendorId", methodName, call, result)
-           ?: return
+    private fun stopListeningToVendorStatus(call: MethodCall, result: Result) {
+        val methodName = "stopListeningToVendorStatus"
+        val vendorId = argumentOrError("vendorId", methodName, call, result) ?: return
 
-       vendorStatusListeners.remove(vendorId)
-       result.success(null)
-   }
+        vendorStatusListeners.remove(vendorId)
+        result.success(null)
+    }
 
     /**
      * Return the requested argument as non-empty String, or raise an error in result and return null
@@ -676,7 +848,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 .enableVendors(*enabledVendors)
                 .disableVendors(*disabledVendors)
                 .commit()
-            
+
             result.success(updated)
 
         } catch (e: DidomiNotReadyException) {
