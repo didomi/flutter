@@ -31,7 +31,7 @@ class DidomiInitializeParameters {
 
   /// If set to true, when launched on a AndroidTV device, the SDK will display TV notice:
   /// * Only Didomi remote config is allowed
-  /// * Connected TV must be enabled for your organization, and [apiKey] / [tvNoticeId] must correspond to a TV notice in the console.
+  /// * Connected TV must be enabled for your organization, and [apiKey] / [androidTvNoticeId] must correspond to a TV notice in the console.
   /// If false or not set, the SDK will not be able to initialize on a TV device.
   bool androidTvEnabled = false;
 
