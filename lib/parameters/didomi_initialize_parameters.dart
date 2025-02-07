@@ -49,16 +49,16 @@ class DidomiInitializeParameters {
 
   DidomiInitializeParameters(
       {required this.apiKey,
-      this.localConfigurationPath = null,
-      this.remoteConfigurationUrl = null,
-      this.providerId = null,
+      this.localConfigurationPath,
+      this.remoteConfigurationUrl,
+      this.providerId,
       this.disableDidomiRemoteConfig = false,
-      this.languageCode = null,
-      this.noticeId = null,
-      this.androidTvNoticeId = null,
+      this.languageCode,
+      this.noticeId,
+      this.androidTvNoticeId,
       this.androidTvEnabled = false,
-      this.countryCode = null,
-      this.regionCode = null,
+      this.countryCode,
+      this.regionCode,
       this.isUnderage = false});
 
   Map<String, dynamic> toJson() => {
