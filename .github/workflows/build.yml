@@ -114,3 +114,21 @@ jobs:
           name: ios-app
           path: example/build/ios/iphoneos/*.ipa
           retention-days: 5
+
+  publish:
+    name: Publish Flutter SDK (DRY RUN)
+    needs: [ build_ios, build_android ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Publish
+        # Version 1.4.1 will fail because of `Potential leak of Google OAuth Refresh Token detected.`
+        uses: sakebook/actions-flutter-pub-publisher@v1.3.1
+        with:
+          credential: ${{ secrets.PUB_DEV_CREDENTIALS }}
+          flutter_package: true
+          skip_test: true
+          dry_run: true
