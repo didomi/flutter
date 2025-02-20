@@ -1,5 +1,8 @@
 # Release Note
 
+## 2.10.1
+- Update latest versions of native Android (2.19.1) and iOS (2.19.1) sdks
+
 ## 2.10.0
 - Update latest versions of native Android (2.19.0) and iOS (2.19.0) sdks
 - Implement new public function `initializeWithParameters()`.
