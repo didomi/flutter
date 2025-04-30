@@ -25,11 +25,8 @@ fi
 echo "Using $DEVICE"
 
 # (re)Launch emulator
-adb -s emulator-5554 emu kill
-~/Library/Android/sdk/emulator/emulator "@$DEVICE" -no-window -wipe-data &
-
-# Wait for emulator to start
-sleep 30
+adb devices | grep emulator | cut -f1 | while read -r line; do adb -s "$line" emu kill; done
+emulator -avd "$DEVICE" -grpc 8554 -no-window -read-only -no-snapshot-load -no-snapshot-save &
 
 # Move to sample folder
 cd ./example || exit 1
@@ -42,11 +39,15 @@ if [ -f machine.log ]; then
   rm machine.log
 fi
 
-# Run tests and print logs
-flutter test --machine -d emulator-5554 -r expanded integration_test >machine.log
+# Wait 60 seconds to make sure emulator is started
+sleep 60
 
-# Shutdown emulator
-adb -s emulator-5554 emu kill
+# Run tests and print logs
+EMULATOR_ID=$(adb devices | grep emulator | cut -f1)
+flutter test --machine -d "$EMULATOR_ID" -r expanded integration_test | tee machine.log
+
+# Shutdown emulator(s)
+adb devices | grep emulator | cut -f1 | while read -r line; do adb -s "$line" emu kill; done
 
 # Extract log information
 RESULT="$(tail -n1 'machine.log')"
