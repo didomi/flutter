@@ -24,18 +24,19 @@ if (flutterVersionName == null) {
 }
 
 android {
-    compileSdkVersion(34)
+    compileSdkVersion(35)
     namespace = "io.didomi.flutter.sample"
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion(34)
+        targetSdkVersion(35)
 
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
 
         applicationId = "io.didomi.flutter.sample"
         multiDexEnabled = true
+        ndkVersion = "26.3.11579264"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
