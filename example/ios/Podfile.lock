@@ -26,9 +26,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Didomi-XCFramework: abd0910674f061e74095ae7a1a8492767658692b
-  didomi_sdk: 79b567ee643b1555ea75839e61d0ecbaf492c25b
+  didomi_sdk: 974e2d43c474617e84e0738fc77b69aecfa8602c
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
+  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
 
 PODFILE CHECKSUM: eb82984a624d653d2e3bbebcdf3d34861d5eb905
 
