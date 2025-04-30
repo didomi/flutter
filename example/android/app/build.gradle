@@ -60,18 +60,6 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17
     }
-
-    packagingOptions {
-        resources {
-            // Required for minSdkVersion < 21
-            excludes += ['androidsupportmultidexversion.txt']
-        }
-    }
-
-    sourceSets {
-        // AndroidTest source must remains in Java for the moment (flutter 2.2.0)
-        main.java.srcDirs += "src/main/kotlin"
-    }
 }
 
 flutter {
