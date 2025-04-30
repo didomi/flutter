@@ -6,6 +6,7 @@ class CurrentUserStatus {
   String? updated;
   String? consentString;
   String? additionalConsent;
+  String? gppString;
   String? didomiDcs;
   String? regulation;
 
@@ -20,6 +21,7 @@ class CurrentUserStatus {
         consentString = json["consent_string"],
         additionalConsent = json["addtl_consent"],
         didomiDcs = json["didomi_dcs"],
+        gppString = json["gpp_string"],
         regulation = json["regulation"];
 
   Map<String, dynamic>? purposesAsJson() => purposes?.map((key, value) => MapEntry(key, value.toJson()));
