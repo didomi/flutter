@@ -24,18 +24,19 @@ if (flutterVersionName == null) {
 }
 
 android {
-    compileSdkVersion(34)
+    compileSdkVersion(35)
     namespace = "io.didomi.flutter.sample"
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion(34)
+        targetSdkVersion(35)
 
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
 
         applicationId = "io.didomi.flutter.sample"
         multiDexEnabled = true
+        ndkVersion = "26.3.11579264"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -59,18 +60,6 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17
     }
-
-    packagingOptions {
-        resources {
-            // Required for minSdkVersion < 21
-            excludes += ['androidsupportmultidexversion.txt']
-        }
-    }
-
-    sourceSets {
-        // AndroidTest source must remains in Java for the moment (flutter 2.2.0)
-        main.java.srcDirs += "src/main/kotlin"
-    }
 }
 
 flutter {
@@ -78,7 +67,7 @@ flutter {
 }
 
 dependencies {
-    implementation("com.google.code.gson:gson:2.11.0")
+    implementation("com.google.code.gson:gson:2.12.1")
 
     testImplementation("junit:junit:4.12") // Must match flutter dependencies
 
