@@ -66,4 +66,5 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
     implementation("io.didomi.sdk:android:2.27.0")
     implementation("androidx.multidex:multidex:2.0.1")
+    implementation("com.google.code.gson:gson:2.13.1")
 }
