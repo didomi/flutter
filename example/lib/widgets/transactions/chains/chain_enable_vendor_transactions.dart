@@ -22,7 +22,7 @@ class _ChainEnableVendorTransactionsState extends BaseSampleWidgetState<ChainEna
 
     final vendor1 = "152media-Aa6Z6mLC";
     final vendor2 = "ipromote";
-    final vendor3 = "amob-txzcQCyq";
+    final vendor3 = "amob-Vd2fVzAM";
 
     final ids = [vendor1, vendor2, vendor3];
 

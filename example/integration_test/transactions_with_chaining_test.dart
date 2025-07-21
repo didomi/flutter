@@ -153,7 +153,7 @@ void main() {
       await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
-      const vendors = "(152media-Aa6Z6mLC, ipromote, amob-txzcQCyq)";
+      const vendors = "(152media-Aa6Z6mLC, ipromote, amob-Vd2fVzAM)";
       assertNativeMessage("chainEnableVendorTransactions", "Native message: Updated: true, Enabled: $vendors.");
     });
 
@@ -178,7 +178,7 @@ void main() {
       await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
-      const vendors = "(152media-Aa6Z6mLC, ipromote, amob-txzcQCyq)";
+      const vendors = "(152media-Aa6Z6mLC, ipromote, amob-Vd2fVzAM)";
       assertNativeMessage("chainDisableVendorTransactions", "Native message: Updated: true, Disabled: $vendors.");
     });
 
@@ -203,7 +203,7 @@ void main() {
       await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
-      const vendors = "(152media-Aa6Z6mLC, ipromote, amob-txzcQCyq)";
+      const vendors = "(152media-Aa6Z6mLC, ipromote, amob-Vd2fVzAM)";
       assertNativeMessage("chainEnableVendorTransactions", "Native message: Updated: false, Enabled: $vendors.");
     });
 
@@ -228,7 +228,7 @@ void main() {
       await Future.delayed(Duration(seconds: 1));
       await tester.pumpAndSettle();
 
-      const vendors = "(152media-Aa6Z6mLC, ipromote, amob-txzcQCyq)";
+      const vendors = "(152media-Aa6Z6mLC, ipromote, amob-Vd2fVzAM)";
       assertNativeMessage("chainDisableVendorTransactions", "Native message: Updated: false, Disabled: $vendors.");
     });
   });
