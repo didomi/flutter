@@ -100,12 +100,12 @@ void main() {
           containsAll([
             "152media-Aa6Z6mLC",
             "ipromote",
-            "amob-txzcQCyq",
+            "amob-Vd2fVzAM",
           ]));
 
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "152media-Aa6Z6mLC", enabled: false));
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "ipromote", enabled: false));
-      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-txzcQCyq", enabled: false));
+      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-Vd2fVzAM", enabled: false));
     });
 
     testWidgets("Get user status after agree to all", (WidgetTester tester) async {
@@ -164,12 +164,12 @@ void main() {
           containsAll([
             "152media-Aa6Z6mLC",
             "ipromote",
-            "amob-txzcQCyq",
+            "amob-Vd2fVzAM",
           ]));
 
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "152media-Aa6Z6mLC", enabled: true));
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "ipromote", enabled: true));
-      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-txzcQCyq", enabled: true));
+      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-Vd2fVzAM", enabled: true));
     });
 
     testWidgets("Get user status after disagree to all", (WidgetTester tester) async {
@@ -228,12 +228,12 @@ void main() {
           containsAll([
             "152media-Aa6Z6mLC",
             "ipromote",
-            "amob-txzcQCyq",
+            "amob-Vd2fVzAM",
           ]));
 
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "152media-Aa6Z6mLC", enabled: false));
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "ipromote", enabled: false));
-      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-txzcQCyq", enabled: false));
+      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-Vd2fVzAM", enabled: false));
     });
   });
 }

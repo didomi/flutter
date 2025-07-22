@@ -111,12 +111,12 @@ void main() {
           containsAll([
             "152media-Aa6Z6mLC",
             "ipromote",
-            "amob-txzcQCyq",
+            "amob-Vd2fVzAM",
           ]));
 
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "152media-Aa6Z6mLC", enabled: false));
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "ipromote", enabled: false));
-      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-txzcQCyq", enabled: false));
+      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-Vd2fVzAM", enabled: false));
     });
 
     testWidgets("Set user status for purposes only with initialization", (WidgetTester tester) async {
@@ -179,12 +179,12 @@ void main() {
           containsAll([
             "152media-Aa6Z6mLC",
             "ipromote",
-            "amob-txzcQCyq",
+            "amob-Vd2fVzAM",
           ]));
 
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "152media-Aa6Z6mLC", enabled: false));
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "ipromote", enabled: false));
-      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-txzcQCyq", enabled: false));
+      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-Vd2fVzAM", enabled: false));
     });
 
     testWidgets("Set user status for vendors only with initialization", (WidgetTester tester) async {
@@ -203,7 +203,7 @@ void main() {
       var statusSet = await DidomiSdk.setCurrentUserStatus(CurrentUserStatus(vendors: {
         "152media-Aa6Z6mLC": VendorStatus(id: "152media-Aa6Z6mLC", enabled: true),
         "ipromote": VendorStatus(id: "ipromote", enabled: true),
-        "amob-txzcQCyq": VendorStatus(id: "amob-txzcQCyq", enabled: true),
+        "amob-Vd2fVzAM": VendorStatus(id: "amob-Vd2fVzAM", enabled: true),
       }));
 
       assert(statusSet);
@@ -247,13 +247,13 @@ void main() {
           containsAll([
             "152media-Aa6Z6mLC",
             "ipromote",
-            "amob-txzcQCyq",
+            "amob-Vd2fVzAM",
           ]));
 
       // Vendors are disabled since all purposes are disabled
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "152media-Aa6Z6mLC", enabled: false));
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "ipromote", enabled: false));
-      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-txzcQCyq", enabled: false));
+      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-Vd2fVzAM", enabled: false));
     });
 
     testWidgets("Set user status with initialization", (WidgetTester tester) async {
@@ -322,12 +322,12 @@ void main() {
           containsAll([
             "152media-Aa6Z6mLC",
             "ipromote",
-            "amob-txzcQCyq",
+            "amob-Vd2fVzAM",
           ]));
 
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "152media-Aa6Z6mLC", enabled: true));
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "ipromote", enabled: false));
-      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-txzcQCyq", enabled: false));
+      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-Vd2fVzAM", enabled: false));
     });
 
     // TODO: Understand this test
@@ -397,13 +397,13 @@ void main() {
           containsAll([
             "152media-Aa6Z6mLC",
             "ipromote",
-            "amob-txzcQCyq",
+            "amob-Vd2fVzAM",
           ]));
 
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "152media-Aa6Z6mLC", enabled: false));
       // False because the purposes is disabled
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "ipromote", enabled: false));
-      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-txzcQCyq", enabled: false));
+      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-Vd2fVzAM", enabled: false));
     });
 
     testWidgets("Get user status after disagree to all", (WidgetTester tester) async {
@@ -476,12 +476,12 @@ void main() {
           containsAll([
             "152media-Aa6Z6mLC",
             "ipromote",
-            "amob-txzcQCyq",
+            "amob-Vd2fVzAM",
           ]));
 
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "152media-Aa6Z6mLC", enabled: true));
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "ipromote", enabled: false));
-      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-txzcQCyq", enabled: false));
+      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-Vd2fVzAM", enabled: false));
     });
   });
 }
