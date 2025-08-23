@@ -78,7 +78,8 @@ void main() {
       assertMatchesDatePattern(result.created);
       assertMatchesDatePattern(result.updated);
       assert(result.regulation == "gdpr");
-      assert(result.didomiDcs == ""); // DCS feature flag not enabled (empty string)
+      assert(result.didomiDcs == ""); // DCS feature not enabled (empty string)
+      assert(result.gppString == ""); // GPP feature not enabled (empty string)
 
       // Purposes
       expect(
@@ -146,7 +147,8 @@ void main() {
       assertMatchesDatePattern(result.created);
       assertMatchesDatePattern(result.updated);
       assert(result.regulation == "gdpr");
-      assert(result.didomiDcs == ""); // DCS feature flag not enabled (empty string)
+      assert(result.didomiDcs == ""); // DCS feature not enabled (empty string)
+      assert(result.gppString == ""); // GPP feature not enabled (empty string)
 
       // Purposes
       expect(
@@ -214,7 +216,8 @@ void main() {
       assertMatchesDatePattern(result.created);
       assertMatchesDatePattern(result.updated);
       assert(result.regulation == "gdpr");
-      assert(result.didomiDcs == ""); // DCS feature flag not enabled (empty string)
+      assert(result.didomiDcs == ""); // DCS feature not enabled (empty string)
+      assert(result.gppString == ""); // GPP feature not enabled (empty string)
 
       // Purposes
       expect(
@@ -289,7 +292,8 @@ void main() {
       assertMatchesDatePattern(result.created);
       assertMatchesDatePattern(result.updated);
       assert(result.regulation == "gdpr");
-      assert(result.didomiDcs == ""); // DCS feature flag not enabled (empty string)
+      assert(result.didomiDcs == ""); // DCS feature not enabled (empty string)
+      assert(result.gppString == ""); // GPP feature not enabled (empty string)
 
       // Purposes
       expect(
@@ -364,7 +368,8 @@ void main() {
       assertMatchesDatePattern(result.created);
       assertMatchesDatePattern(result.updated);
       assert(result.regulation == "gdpr");
-      assert(result.didomiDcs == ""); // DCS feature flag not enabled (empty string)
+      assert(result.didomiDcs == ""); // DCS feature not enabled (empty string)
+      assert(result.gppString == ""); // GPP feature not enabled (empty string)
 
       // Purposes
       expect(
@@ -443,7 +448,8 @@ void main() {
       assertMatchesDatePattern(result.created);
       assertMatchesDatePattern(result.updated);
       assert(result.regulation == "gdpr");
-      assert(result.didomiDcs == ""); // DCS feature flag not enabled (empty string)
+      assert(result.didomiDcs == ""); // DCS feature not enabled (empty string)
+      assert(result.gppString == ""); // GPP feature not enabled (empty string)
 
       // Purposes
       expect(
