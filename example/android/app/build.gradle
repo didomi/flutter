@@ -24,19 +24,19 @@ if (flutterVersionName == null) {
 }
 
 android {
-    compileSdkVersion(35)
+    compileSdk = 36
     namespace = "io.didomi.flutter.sample"
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion(35)
+        minSdkVersion = flutter.minSdkVersion
+        targetSdk = 36
 
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
 
         applicationId = "io.didomi.flutter.sample"
         multiDexEnabled = true
-        ndkVersion = "26.3.11579264"
+        ndkVersion = "27.0.12077973"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -67,13 +67,13 @@ flutter {
 }
 
 dependencies {
-    implementation("com.google.code.gson:gson:2.12.1")
+    implementation("com.google.code.gson:gson:2.13.2")
 
-    testImplementation("junit:junit:4.12") // Must match flutter dependencies
+    testImplementation("junit:junit:4.13.2")
 
-    // https://developer.android.com/jetpack/androidx/releases/test/#1.2.0
-    androidTestImplementation("androidx.test:runner:1.2.0") // Must match flutter dependencies
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0") // Must match flutter dependencies
+    // https://developer.android.com/jetpack/androidx/releases/test
+    androidTestImplementation("androidx.test:runner:1.7.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
 }
 
 /**
