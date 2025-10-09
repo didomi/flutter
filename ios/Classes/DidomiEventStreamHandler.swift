@@ -9,15 +9,15 @@ import Flutter
 import Didomi
 
 /// Handler for SDK events
-class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
-    
+class DidomiEventStreamHandler: NSObject, FlutterStreamHandler {
+
     private var eventSink: FlutterEventSink?
     // We keep references to all the Sync Ready events being registered so we can call their respective syncAcknowledged callback from the Flutter side through a method channel.
     private var syncReadyEventReferences: [Int: SyncReadyEvent] = [:]
     // Index used to keep track of the Sync Ready events being registered.
     private var syncReadyEventIndex: Int = 0
     let eventListener = EventListener()
-    
+
     override init() {
         super.init()
 
@@ -163,35 +163,33 @@ class DidomiEventStreamHandler : NSObject, FlutterStreamHandler {
             self?.sendEvent(eventType: "onLanguageUpdateFailed", arguments: ["reason": reason])
         }
 
-        // TODO: DCS events
-        /*
+        // DCS events
         eventListener.onDCSSignatureReady = { [weak self] event in
             self?.sendEvent(eventType: "onDCSSignatureReady")
         }
         eventListener.onDCSSignatureError = { [weak self] event in
             self?.sendEvent(eventType: "onDCSSignatureError")
         }
-        */
     }
-        
+
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
         eventSink = events
         return nil
     }
-        
+
     func onCancel(withArguments arguments: Any?) -> FlutterError? {
         eventSink = nil
         return nil
     }
-    
+
     func onReadyCallback() {
         self.sendEvent(eventType: "onReadyCallback")
     }
-    
+
     func onErrorCallback() {
         self.sendEvent(eventType: "onErrorCallback")
     }
-    
+
     func sendEvent(eventType: String, arguments: Dictionary<String, Any?>? = nil) {
         let eventDictionary: NSMutableDictionary = NSMutableDictionary()
         eventDictionary.setValue(eventType, forKey: "type")

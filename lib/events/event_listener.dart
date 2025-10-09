@@ -160,4 +160,14 @@ class EventListener {
 
   /// The language update is complete
   dynamic Function(String reason) onLanguageUpdateFailed = (reason) {};
+
+  /*
+   * DCS signature events
+   */
+
+  /// DCS signature generation encountered an error
+  dynamic Function() onDcsSignatureError = () {};
+
+  /// DCS signature is ready
+  dynamic Function() onDcsSignatureReady = () {};
 }
