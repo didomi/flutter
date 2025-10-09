@@ -1,17 +1,17 @@
 //noinspection GrPackage
 
 group = "io.didomi.fluttersdk"
-version = "2.14.0"
+version = "2.15.0"
 
 buildscript {
-    ext.kotlin_version = "1.9.20"
+    ext.kotlin_version = "2.2.20"
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:8.4.2")
+        classpath("com.android.tools.build:gradle:8.13.0")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
@@ -28,7 +28,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
 android {
-    compileSdk(34)
+    compileSdk = 36
     namespace = "io.didomi.fluttersdk"
 
     sourceSets {
@@ -36,8 +36,8 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion(19)
-        targetSdkVersion(34)
+        minSdk = 21
+        targetSdk = 36
         multiDexEnabled = true
 
         buildConfigField("String", "PLUGIN_VERSION", "\"" + version + "\"")
@@ -66,5 +66,5 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
     implementation("io.didomi.sdk:android:2.28.0")
     implementation("androidx.multidex:multidex:2.0.1")
-    implementation("com.google.code.gson:gson:2.13.1")
+    implementation("com.google.code.gson:gson:2.13.2")
 }

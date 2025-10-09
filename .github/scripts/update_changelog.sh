@@ -15,7 +15,7 @@ fi
 
 target="CHANGELOG.md"
 title="# Release Note"
-message="- Update latest versions of native Android ($2) and iOS ($3) sdks"
+message="- Update latest versions of native Android ($2) and iOS ($3) sdks."
 
 replace="$title\n\n## $version\n$message"
 
