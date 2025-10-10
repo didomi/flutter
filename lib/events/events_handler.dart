@@ -315,7 +315,7 @@ class EventsHandler {
         }
         break;
 
-      /// GCM - External SDKs integration events
+      /// External SDKs integration events
 
       case "onIntegrationError":
         final IntegrationErrorEvent newEvent = IntegrationErrorEvent(
