@@ -28,6 +28,7 @@ class _GetCurrentUserStatusOtherInfoState extends BaseSampleWidgetState<GetCurre
         "- Additional consent: ${result.additionalConsent}\n"
         "- Consent String: ${result.consentString}\n"
         "- DCS: ${result.didomiDcs}\n"
+        "- GPP: ${result.gppString}\n"
         "- Regulation: ${result.regulation}";
   }
 }
