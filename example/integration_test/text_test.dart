@@ -16,15 +16,21 @@ void main() {
   // Messages
   const expectedConsentEn = "Native message: With your agreement, we";
   const expectedConsentFr = "Native message: Avec votre consentement, nous";
-  const expectedResult = "Native message: fr =>Avec votre consentement, nous et <a href=\"javascript:Didomi.preferences.show('vendors')\">nos partenaires</a> "
-      "utilisons l'espace de stockage du terminal pour stocker et accéder à des données personnelles telles que des données de géolocalisation "
-      "précises et d'identification par analyse du terminal. Nous traitons ces données à des fins telles que les publicités et contenus personnalisés, "
-      "la mesure de performance des publicités et du contenu, les données d'audience et le développement des produits. Vous pouvez à tout moment retirer "
-      "votre consentement ou vous opposer au traitement des données sur la base de l'intérêt légitime depuis le menu de l'application.en =>With your "
-      "agreement, we and <a href=\"javascript:Didomi.preferences.show('vendors')\">our partners</a> use device storage to store and access personal data "
-      "like precise geolocation data, and identification through device scanning. We process that data for purposes like personalised ads and content, "
-      "ad and content measurement, audience insights and product development. You can withdraw your consent or object to data processing based on "
-      "legitimate interest at any time from the app menu.";
+  const expectedResult = "Native message: fr =>Avec votre consentement, nous et <a "
+      "href=\"javascript:Didomi.preferences.show('vendors')\">nos partenaires</a> utilisons l'espace de "
+      "stockage du terminal pour stocker, et accéder à, <stack id=\"1\">des données personnelles telles que "
+      "des données de géolocalisation précises et d'identification par analyse du terminal.</stack><br "
+      "/>Nous traitons ces données à des fins telles que <stack id=\"42\">les publicités et contenus "
+      "personnalisés, la mesure de performance des publicités et du contenu, les données d'audience et le "
+      "développement des produits.</stack><br />Vous pouvez à tout moment retirer votre consentement ou "
+      "vous opposer au traitement des données sur la base de l'intérêt légitime en consultant la rubrique « "
+      "Préférences de consentement » dans le menu de cette application.en =>With your agreement, we and <a "
+      "href=\"javascript:Didomi.preferences.show('vendors')\">our partners</a> use device storage to store "
+      "and access personal data like <stack id=\"1\">precise geolocation data, and identification through "
+      "device scanning</stack>.<br />We process that data for purposes like <stack id=\"42\">personalised ads "
+      "and content, ad and content measurement, audience insights and product development</stack>.<br />You "
+      "can withdraw your consent or object to data processing based on legitimate interest at any time by "
+      "going to \"Consent Preferences\" in the menu of this app.";
   const expectedJavascript = "window.didomiOnReady = window.didomiOnReady ||\n[];window.didomiOnReady.push(function (Didomi)\n{Didomi.notice.hide();"
       "Didomi.setUserStatus({\"purposes\":{\"consent\":{\"enabled\":[],\"disabled\":[]},\"legitimate_interest\":{\"enabled\":[],\"disabled\":[]}},"
       "\"vendors\":{\"consent\":{\"enabled\":[],\"disabled\":[]},\"legitimate_interest\":{\"enabled\":[],\"disabled\":[]}},"

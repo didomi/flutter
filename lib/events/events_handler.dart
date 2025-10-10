@@ -4,10 +4,12 @@ import 'package:didomi_sdk/events/sync_ready_event.dart';
 import 'package:flutter/services.dart';
 
 import 'event_listener.dart';
+import 'integration_error_event.dart';
 
 /// Handler for events emitted by native SDK
 class EventsHandler {
   static const EventChannel _eventChannel = EventChannel(eventsChannelName);
+
   // Reference to the channel so we can call methods on the native side.
   MethodChannel _channel;
   List<EventListener> listeners = [];
@@ -26,6 +28,8 @@ class EventsHandler {
     final String eventType = event["type"].toString();
 
     switch (eventType) {
+      /// Ready events
+
       case "onReady":
         for (var listener in listeners) {
           listener.onReady();
@@ -43,6 +47,8 @@ class EventsHandler {
           onReadyCallbacks.remove(function);
         }
         break;
+
+      /// Error events
 
       case "onError":
         final String message = event["message"].toString();
@@ -62,6 +68,8 @@ class EventsHandler {
           onErrorCallbacks.remove(function);
         }
         break;
+
+      /// UI events
 
       case "onShowNotice":
         for (var listener in listeners) {
@@ -86,6 +94,8 @@ class EventsHandler {
           listener.onHidePreferences();
         }
         break;
+
+      /// Notice events
 
       case "onNoticeClickAgree":
         for (var listener in listeners) {
@@ -116,6 +126,8 @@ class EventsHandler {
           listener.onNoticeClickPrivacyPolicy();
         }
         break;
+
+      /// Preferences events
 
       case "onPreferencesClickAgreeToAll":
         for (var listener in listeners) {
@@ -225,11 +237,23 @@ class EventsHandler {
         }
         break;
 
+      /// Consent events
+
+      case "onVendorStatusChanged":
+        final VendorStatus vendorStatus = VendorStatus.fromJson(event["vendorStatus"]);
+        final List<Function(VendorStatus)> callbacks = vendorStatusListeners[vendorStatus.id] ?? [];
+        for (var callback in callbacks) {
+          callback(vendorStatus);
+        }
+        break;
+
       case "onConsentChanged":
         for (var listener in listeners) {
           listener.onConsentChanged();
         }
         break;
+
+      /// Sync events
 
       case "onSyncReady":
         for (var listener in listeners) {
@@ -261,6 +285,8 @@ class EventsHandler {
         }
         break;
 
+      /// Language events
+
       case "onLanguageUpdated":
         final String languageCode = event["languageCode"].toString();
         for (var listener in listeners) {
@@ -275,11 +301,29 @@ class EventsHandler {
         }
         break;
 
-      case "onVendorStatusChanged":
-        final VendorStatus vendorStatus = VendorStatus.fromJson(event["vendorStatus"]);
-        final List<Function(VendorStatus)> callbacks = vendorStatusListeners[vendorStatus.id] ?? [];
-        for (var callback in callbacks) {
-          callback(vendorStatus);
+      /// DCS signature events
+
+      case "onDcsSignatureError":
+        for (var listener in listeners) {
+          listener.onDcsSignatureError();
+        }
+        break;
+
+      case "onDcsSignatureReady":
+        for (var listener in listeners) {
+          listener.onDcsSignatureReady();
+        }
+        break;
+
+      /// External SDKs integration events
+
+      case "onIntegrationError":
+        final IntegrationErrorEvent newEvent = IntegrationErrorEvent(
+          event["integrationName"],
+          event["reason"],
+        );
+        for (var listener in listeners) {
+          listener.onIntegrationError(newEvent);
         }
         break;
 

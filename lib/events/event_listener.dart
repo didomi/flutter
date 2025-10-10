@@ -1,5 +1,7 @@
 import 'package:didomi_sdk/events/sync_ready_event.dart';
 
+import 'integration_error_event.dart';
+
 /// Listener to events sent by the Didomi SDK
 class EventListener {
   /*
@@ -160,4 +162,21 @@ class EventListener {
 
   /// The language update is complete
   dynamic Function(String reason) onLanguageUpdateFailed = (reason) {};
+
+  /*
+   * DCS signature events
+   */
+
+  /// DCS signature generation encountered an error
+  dynamic Function() onDcsSignatureError = () {};
+
+  /// DCS signature is ready
+  dynamic Function() onDcsSignatureReady = () {};
+
+  /*
+   * External SDKs integration events
+   */
+
+  /// Integration with an external SDK encountered an error
+  dynamic Function(IntegrationErrorEvent event) onIntegrationError = (event) {};
 }

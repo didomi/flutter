@@ -1,5 +1,10 @@
 # Release Note
 
+## 2.15.0
+- Update latest versions of native Android (2.31.1) and iOS (2.31.1) sdks.
+- Add support for `DcsSignatureReadyEvent` and `DcsSignatureErrorEvent` events.
+- Add support for `IntegrationErrorEvent` event.
+
 ## 2.14.0
 - Update latest versions of native Android (2.28.0) and iOS (2.28.0) sdks
 

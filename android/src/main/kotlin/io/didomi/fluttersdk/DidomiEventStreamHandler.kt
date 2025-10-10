@@ -1,12 +1,11 @@
 package io.didomi.fluttersdk
 
-import io.didomi.sdk.events.*
-import io.didomi.sdk.functionalinterfaces.DidomiEventListener
-import io.flutter.plugin.common.EventChannel
-import org.json.JSONObject
-import io.didomi.sdk.models.CurrentUserStatus.VendorStatus
 import android.os.Handler
 import android.os.Looper
+import io.didomi.sdk.events.*
+import io.didomi.sdk.functionalinterfaces.DidomiEventListener
+import io.didomi.sdk.models.CurrentUserStatus.VendorStatus
+import io.flutter.plugin.common.EventChannel
 
 /**
  * Handler for SDK events
@@ -14,8 +13,10 @@ import android.os.Looper
 class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener {
 
     private var eventSink: EventChannel.EventSink? = null
+
     // We keep references to all the Sync Ready events being registered so we can call their respective syncAcknowledged callback from the Flutter side through a method channel.
     private var syncReadyEventReferences: MutableMap<Int, SyncReadyEvent> = mutableMapOf()
+
     // Index used to keep track of the Sync Ready events being registered.
     private var syncReadyEventIndex: Int = 0
 
@@ -79,6 +80,7 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
         sendEvent("onNoticeClickViewVendors")
     }
 
+    @Deprecated("SPI purposes are now displayed in preferences screen.", replaceWith = ReplaceWith("noticeClickMoreInfo"))
     override fun noticeClickViewSPIPurposes(event: NoticeClickViewSPIPurposesEvent) {
         sendEvent("noticeClickViewSPIPurposes")
     }
@@ -123,6 +125,7 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
         sendEvent("onPreferencesClickViewVendors")
     }
 
+    @Deprecated("SPI purposes are now displayed in preferences screen.", replaceWith = ReplaceWith("noticeClickMoreInfo"))
     override fun preferencesClickViewSPIPurposes(event: PreferencesClickViewSPIPurposesEvent) {
         sendEvent("preferencesClickViewSPIPurposes")
     }
@@ -175,22 +178,27 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
      * SPI screen events
      */
 
+    @Deprecated("SPI purposes now trigger the same events as other purposes.", replaceWith = ReplaceWith("preferencesClickPurposeAgree"))
     override fun preferencesClickSPIPurposeAgree(event: PreferencesClickSPIPurposeAgreeEvent) {
         sendEvent("preferencesClickSPIPurposeAgree", mapOf("purposeId" to event.purposeId))
     }
 
+    @Deprecated("SPI purposes now trigger the same events as other purposes.", replaceWith = ReplaceWith("preferencesClickPurposeDisagree"))
     override fun preferencesClickSPIPurposeDisagree(event: PreferencesClickSPIPurposeDisagreeEvent) {
         sendEvent("onPreferencesClickSPIPurposeDisagree", mapOf("purposeId" to event.purposeId))
     }
 
+    @Deprecated("SPI purposes now trigger the same events as other purposes.", replaceWith = ReplaceWith("preferencesClickCategoryAgree"))
     override fun preferencesClickSPICategoryAgree(event: PreferencesClickSPICategoryAgreeEvent) {
         sendEvent("onPreferencesClickSPICategoryAgree", mapOf("categoryId" to event.categoryId))
     }
 
+    @Deprecated("SPI purposes now trigger the same events as other purposes.", replaceWith = ReplaceWith("preferencesClickCategoryDisagree"))
     override fun preferencesClickSPICategoryDisagree(event: PreferencesClickSPICategoryDisagreeEvent) {
         sendEvent("onPreferencesClickSPICategoryDisagree", mapOf("categoryId" to event.categoryId))
     }
 
+    @Deprecated("SPI purposes now trigger the same events as other purposes.", replaceWith = ReplaceWith("preferencesClickSaveChoices"))
     override fun preferencesClickSPIPurposeSaveChoices(event: PreferencesClickSPIPurposeSaveChoicesEvent) {
         sendEvent("preferencesClickSPIPurposeSaveChoices")
     }
@@ -206,13 +214,17 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
     override fun syncReady(event: SyncReadyEvent) {
         syncReadyEventIndex++
         syncReadyEventReferences.put(syncReadyEventIndex, event)
-        sendEvent("onSyncReady", mapOf("organizationUserId" to event.organizationUserId, "statusApplied" to event.statusApplied, "syncReadyEventIndex" to syncReadyEventIndex))
+        sendEvent(
+            "onSyncReady",
+            mapOf("organizationUserId" to event.organizationUserId, "statusApplied" to event.statusApplied, "syncReadyEventIndex" to syncReadyEventIndex)
+        )
     }
 
     override fun syncUserChanged(event: SyncUserChangedEvent) {
         // TODO Support event
     }
 
+    @Deprecated("Use syncReady instead", replaceWith = ReplaceWith("syncReady()"))
     override fun syncDone(event: SyncDoneEvent) {
         sendEvent("onSyncDone", mapOf("organizationUserId" to event.organizationUserId))
     }
@@ -234,15 +246,23 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
     }
 
     /*
-     * TODO: DCS events
+     * DCS events
      */
 
     override fun dcsSignatureReady(event: DcsSignatureReadyEvent) {
-        //sendEvent("onDCSSignatureReady")
+        sendEvent("onDCSSignatureReady")
     }
 
     override fun dcsSignatureError(event: DcsSignatureErrorEvent) {
-        //sendEvent("onDCSSignatureError")
+        sendEvent("onDCSSignatureError")
+    }
+
+    /*
+     * External SDKs error event
+     */
+
+    override fun integrationError(event: IntegrationErrorEvent) {
+        sendEvent("onIntegrationError", mapOf("integrationName" to event.integrationName, "reason" to event.reason))
     }
 
     /*
