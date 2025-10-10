@@ -258,7 +258,7 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
     }
 
     /*
-     * GCM - External SDKs error event
+     * External SDKs error event
      */
 
     override fun integrationError(event: IntegrationErrorEvent) {

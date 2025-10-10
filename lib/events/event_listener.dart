@@ -174,7 +174,7 @@ class EventListener {
   dynamic Function() onDcsSignatureReady = () {};
 
   /*
-   * GCM - External SDKs integration events
+   * External SDKs integration events
    */
 
   /// Integration with an external SDK encountered an error
