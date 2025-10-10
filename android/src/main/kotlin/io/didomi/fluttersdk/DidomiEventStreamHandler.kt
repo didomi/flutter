@@ -256,6 +256,13 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
     override fun dcsSignatureError(event: DcsSignatureErrorEvent) {
         sendEvent("onDCSSignatureError")
     }
+
+    /*
+     * GCM - External SDKs error event
+     */
+
+    override fun integrationError(event: IntegrationErrorEvent) {
+        sendEvent("onIntegrationError", mapOf("integrationName" to event.integrationName, "reason" to event.reason))
     }
 
     /*

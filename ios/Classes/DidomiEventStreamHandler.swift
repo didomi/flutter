@@ -170,6 +170,11 @@ class DidomiEventStreamHandler: NSObject, FlutterStreamHandler {
         eventListener.onDCSSignatureError = { [weak self] event in
             self?.sendEvent(eventType: "onDCSSignatureError")
         }
+
+        // GCM event
+        eventListener.onIntegrationError = { [weak self] event in
+            self?.sendEvent(eventType: "onIntegrationError", arguments: ["integrationName": event.integrationName, "reason": event.reason])
+        }
     }
 
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
