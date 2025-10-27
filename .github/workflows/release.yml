@@ -131,6 +131,26 @@ jobs:
         run: |
           echo "Flutter version is: ${{ env.flutter_version }}"
 
+      - name: Extract Changelog for Current Version
+        run: |
+          extracted_log=$(sh .github/scripts/extract_changelog.sh ${{ env.flutter_version }})
+
+          # Check if extraction failed (starts with "Error" or is empty)
+          if [[ -z "$extracted_log" ]] || [[ "$extracted_log" == Error* ]]; then
+            android_sdk_version=$(sh .github/scripts/extract_android_sdk_version.sh)
+            ios_sdk_version=$(sh .github/scripts/extract_ios_sdk_version.sh)
+          
+            echo "change_log=- Update latest versions of native Android ($android_sdk_version) and iOS ($ios_sdk_version) sdks." >> $GITHUB_ENV
+          else
+            echo "change_log<<EOF" >> $GITHUB_ENV
+            echo "$extracted_log" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+          fi
+
+      - name: Print Change log
+        run: |
+          echo "Changelog:\n${{ env.change_log }}"
+
       - name: Create Release
         uses: actions/github-script@v7
         with:
@@ -143,5 +163,5 @@ jobs:
               tag_name: "${{ env.flutter_version }}",
               draft: false,
               prerelease: false,
-              body: "- Update latest versions of native Android (${{ env.android_sdk_version }}) and iOS (${{ env.ios_sdk_version }}) sdks\n\nMore info: https://developers.didomi.io/cmp/mobile-sdk"
+              body: "${{ env.change_log }}\n\nMore info: https://developers.didomi.io/cmp/mobile-sdk"
             });
