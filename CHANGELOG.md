@@ -1,5 +1,8 @@
 # Release Note
 
+## 2.16.0
+- Update latest versions of native Android (2.32.0) and iOS (2.32.0) sdks.
+
 ## 2.15.0
 - Update latest versions of native Android (2.31.1) and iOS (2.31.1) sdks.
 - Add support for `DcsSignatureReadyEvent` and `DcsSignatureErrorEvent` events.
