@@ -5,6 +5,8 @@
 //  Created by Philémon Merlet on 10/05/2021.
 //
 
+import Foundation
+
 struct Constants {
     // Channels names
     static let methodsChannelName = "didomi_sdk"
