@@ -1,6 +1,6 @@
 #import "DidomiSdkPlugin.h"
-#if __has_include(<didomi_sdk/didomi_sdk-Swift.h>)
-#import <didomi_sdk/didomi_sdk-Swift.h>
+#if __has_include(<didomi_sdk/Sources/DidomiSwift/didomi_sdk-Swift.h>)
+#import <didomi_sdk/Sources/DidomiSwift/didomi_sdk-Swift.h>
 #else
 // Support project import fallback if the generated compatibility header
 // is not copied when this plugin is created as a library.
