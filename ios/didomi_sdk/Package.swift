@@ -20,7 +20,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Didomi", package: "didomi-ios-sdk-spm")
             ],
-            path: "Classes/DidomiSwift",
+            path: "Sources/DidomiSwift",
             resources: [],
             linkerSettings: [
                 .linkedFramework("Flutter", .when(platforms: [.iOS]))
@@ -29,7 +29,7 @@ let package = Package(
         .target(
             name: "didomi_sdk",
             dependencies: ["DidomiSwift"],
-            path: "Classes/DidomiObjC",
+            path: "Sources/DidomiObjC",
             resources: [],
             publicHeadersPath: "include",
             linkerSettings: [
