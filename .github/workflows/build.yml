@@ -102,7 +102,7 @@ jobs:
           flutter config --enable-swift-package-manager
           flutter build ios --no-codesign
           cd build/ios/iphoneos
-          mkdir Payload
+          mkdir -p Payload
           cd Payload
           ln -s ../Runner.app
           cd ..
@@ -115,7 +115,7 @@ jobs:
           flutter config --no-enable-swift-package-manager
           flutter build ios --no-codesign
           cd build/ios/iphoneos
-          mkdir Payload
+          mkdir -p Payload
           cd Payload
           ln -s ../Runner.app
           cd ..
