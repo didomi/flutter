@@ -102,11 +102,11 @@ jobs:
           flutter config --enable-swift-package-manager
           flutter build ios --no-codesign
           cd build/ios/iphoneos
-          mkdir -p Payload
-          cd Payload
+          mkdir Payload-spm
+          cd Payload-spm
           ln -s ../Runner.app
           cd ..
-          zip -r app-spm.ipa Payload
+          zip -r app-spm.ipa Payload-spm
 
       # iOS IPA with CocoaPods
       - name: Build iOS Sample (CocoaPods)
@@ -115,7 +115,7 @@ jobs:
           flutter config --no-enable-swift-package-manager
           flutter build ios --no-codesign
           cd build/ios/iphoneos
-          mkdir -p Payload
+          mkdir Payload
           cd Payload
           ln -s ../Runner.app
           cd ..
