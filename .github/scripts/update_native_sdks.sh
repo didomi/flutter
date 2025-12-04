@@ -34,7 +34,7 @@ echo "Android SDK last version is $androidVersion"
 
 sed -i~ -e "s|io.didomi.sdk:android:[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}|io.didomi.sdk:android:$androidVersion|g" android/build.gradle || exit 1
 
-# Update ios SDK Version
+# Update ios SDK Version for both CocoaPods and SPM builds
 iOSVersion=$(pod_last_version)
 if [[ ! $iOSVersion =~ ^[0-9]+.[0-9]+.[0-9]+$ ]]; then
   echo "Error while getting ios SDK version ($iOSVersion)"
@@ -44,6 +44,7 @@ fi
 echo "iOS SDK last version is $iOSVersion"
 
 sed -i~ -e "s|s.dependency       'Didomi-XCFramework', '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|s.dependency       'Didomi-XCFramework', '$iOSVersion'|g" ios/didomi_sdk.podspec || exit 1
+sed -i~ -e "s|from: \"[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}\"|from: \"$iOSVersion\"|g" ios/didomi_sdk/Package.swift || exit 1
 
 # Cleanup backup files
 find . -type f -name '*~' -delete
