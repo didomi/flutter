@@ -2,7 +2,7 @@ import Flutter
 import UIKit
 import Didomi
 
-public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
+@objc public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
 
     /// Default message if SDK is not ready
     private static let didomiNotReadyException: String = "Didomi SDK is not ready. Use the onReady callback to access this method."
@@ -12,13 +12,13 @@ public class SwiftDidomiSdkPlugin: NSObject, FlutterPlugin {
 
     override init() {
         super.init()
-        
+
         if let userAgentVersion = Constants.userAgentVersion {
             Didomi.shared.setUserAgent(name: Constants.userAgentName, version: userAgentVersion)
         }
     }
-    
-    public static func register(with registrar: FlutterPluginRegistrar) {
+
+    @objc public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: Constants.methodsChannelName, binaryMessenger: registrar.messenger())
         let instance = SwiftDidomiSdkPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
