@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "didomi_sdk",
     platforms: [
-        .iOS("13.0")
+        .iOS("10.0")
     ],
     products: [
         .library(name: "didomi-sdk", targets: ["didomi_sdk"])
