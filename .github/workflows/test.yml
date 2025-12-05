@@ -57,9 +57,16 @@ jobs:
       - name: Add Homebrew to PATH
         run: echo "/opt/homebrew/bin" >> $GITHUB_PATH
 
+      - name: Setup CocoaPods repo (workaround for CDN HTTP/2 issues)
+        run: |
+          pod repo remove trunk 2>/dev/null || true
+          if ! pod repo list | grep -q "^master"; then
+            git clone --depth 1 https://github.com/CocoaPods/Specs.git ~/.cocoapods/repos/master
+          fi
+
       - name: Run pod update
         working-directory: ./example/ios
-        run: pod update
+        run: pod update --repo-update
 
       - name: List all simulators
         run: xcrun xctrace list devices
