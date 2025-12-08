@@ -46,6 +46,7 @@ jobs:
         with:
           distribution: "temurin"
           java-version: "17"
+
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
@@ -53,6 +54,9 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
+
+      - name: Add Homebrew to PATH
+        run: echo "/opt/homebrew/bin" >> $GITHUB_PATH
 
       - name: Run pod update
         working-directory: ./example/ios

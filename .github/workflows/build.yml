@@ -90,6 +90,9 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Add Homebrew to PATH
+        run: echo "/opt/homebrew/bin" >> $GITHUB_PATH
+
       # pod update
       - name: Run pod update
         working-directory: ./example/ios
