@@ -98,10 +98,24 @@ jobs:
         working-directory: ./example/ios
         run: pod update
 
-      # iOS IPA
-      - name: Build iOS Sample
+      # iOS IPA with SPM
+      - name: Build iOS Sample (SPM)
         working-directory: ./example
         run: |
+          flutter config --enable-swift-package-manager
+          flutter build ios --no-codesign
+          cd build/ios/iphoneos
+          mkdir Payload-spm
+          cd Payload-spm
+          ln -s ../Runner.app
+          cd ..
+          zip -r app-spm.ipa Payload-spm
+
+      # iOS IPA with CocoaPods
+      - name: Build iOS Sample (CocoaPods)
+        working-directory: ./example
+        run: |
+          flutter config --no-enable-swift-package-manager
           flutter build ios --no-codesign
           cd build/ios/iphoneos
           mkdir Payload
