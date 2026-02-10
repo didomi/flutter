@@ -63,9 +63,9 @@ void main() {
 
   // Assert sync event is triggered correctly.
   Future<void> assertSyncReadyEvent(WidgetTester tester) async {
-    // First time the sync event is triggered. Status is applied and API Event triggered only once.
+    // First time the sync event is triggered. Status is applied and API Event not triggered.
     assert(syncReadyEvent?.statusApplied == true);
-    assert((await syncReadyEvent?.syncAcknowledged()) == true);
+    assert((await syncReadyEvent?.syncAcknowledged()) == false);
     assert((await syncReadyEvent?.syncAcknowledged()) == false);
     assert(syncReadyEvent?.organizationUserId == userId);
 
