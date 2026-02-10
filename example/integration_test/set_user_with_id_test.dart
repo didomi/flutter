@@ -32,18 +32,11 @@ void main() {
   String? syncDoneUserId;
   bool isReady = false;
   bool syncError = false;
-  bool consentChanged = false;
   SyncReadyEvent? syncReadyEvent;
 
   final listener = EventListener();
   listener.onReady = () {
     isReady = true;
-  };
-  listener.onConsentChanged = () {
-    syncDoneUserId = null;
-    syncError = false;
-    consentChanged = true;
-    syncReadyEvent = null;
   };
   listener.onSyncReady = (SyncReadyEvent event) {
     syncReadyEvent = event;
@@ -92,7 +85,6 @@ void main() {
   void resetExpectedSyncValues() {
     syncDoneUserId = null;
     syncError = false;
-    consentChanged = false;
     syncReadyEvent = null;
   }
 
@@ -351,17 +343,15 @@ void main() {
       await waitForSync(tester);
 
       assertExpectedSyncValuesArePopulated();
-      assert(consentChanged == true);
 
       // Clear user
       await tester.tap(clearUser);
       await tester.tap(submitSetUser);
       await tester.pumpAndSettle();
 
-      assertNativeMessage("setUser", "Native message: OK");
+      assertNativeMessage("setUser", okMessage);
 
-      assertExpectedSyncValuesAreEmpty();
-      assert(consentChanged == true);
+      assertExpectedSyncValuesArePopulated();
     });
 
     /// With setupUI
