@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "didomi-sdk", targets: ["didomi_sdk"])
     ],
     dependencies: [
-        .package(url: "https://github.com/didomi/didomi-ios-sdk-spm", from: "2.36.2")
+        .package(url: "https://github.com/didomi/didomi-ios-sdk-spm", from: "2.37.0")
     ],
     targets: [
         .target(
