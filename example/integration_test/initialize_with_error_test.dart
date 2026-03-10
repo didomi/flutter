@@ -79,8 +79,7 @@ void main() {
       assertNativeMessage("isReady", resultFalseMessage);
 
       if (Platform.isAndroid) {
-        // assert(errorMessage == "Invalid Didomi API key"); not anymore since 2.38.0
-        assert(errorMessage == "");
+        assert(errorMessage == "Invalid Didomi API key");
       } else if (Platform.isIOS) {
         assert(errorMessage == "The initialization parameter API Key () is invalid.");
       }
