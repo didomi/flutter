@@ -329,7 +329,7 @@ void main() {
             "amob-Vd2fVzAM",
           ]));
 
-      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "152media-Aa6Z6mLC", enabled: true));
+      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "152media-Aa6Z6mLC", enabled: false));
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "ipromote", enabled: false));
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-Vd2fVzAM", enabled: false));
     });
@@ -485,7 +485,7 @@ void main() {
             "amob-Vd2fVzAM",
           ]));
 
-      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "152media-Aa6Z6mLC", enabled: true));
+      assertVendorStatusMapContains(result.vendors, VendorStatus(id: "152media-Aa6Z6mLC", enabled: false));
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "ipromote", enabled: false));
       assertVendorStatusMapContains(result.vendors, VendorStatus(id: "amob-Vd2fVzAM", enabled: false));
     });
