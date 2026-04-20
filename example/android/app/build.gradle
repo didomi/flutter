@@ -36,7 +36,7 @@ android {
 
         applicationId = "io.didomi.flutter.sample"
         multiDexEnabled = true
-        ndkVersion = "29.0.14206865"
+        ndkVersion = "30.0.14904198"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
