@@ -176,6 +176,10 @@ void main() {
       await tester.tap(submitSetUser);
       await tester.pumpAndSettle();
 
+      // Drain any pending sync from previously queued setUser calls
+      // (e.g. from tests that called setUser before the SDK was initialized).
+      await waitForSync(tester);
+
       resetExpectedSyncValues();
 
       // Set user with invalid parameters
