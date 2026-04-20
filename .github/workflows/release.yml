@@ -155,7 +155,7 @@ jobs:
           echo "Changelog:\n${{ env.change_log }}"
 
       - name: Create Release
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }} # Use custom token to trigger following workflows
           script: |
