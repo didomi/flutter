@@ -6,34 +6,35 @@ import PackageDescription
 let package = Package(
     name: "didomi_sdk",
     platforms: [
-        .iOS("13.0")
+        .iOS("10.0")
     ],
     products: [
         .library(name: "didomi-sdk", targets: ["didomi_sdk"])
     ],
     dependencies: [
-        .package(name: "FlutterFramework", path: "../FlutterFramework"),
         .package(url: "https://github.com/didomi/didomi-ios-sdk-spm", from: "2.42.0")
     ],
     targets: [
         .target(
             name: "DidomiSwift",
             dependencies: [
-                .product(name: "FlutterFramework", package: "FlutterFramework"),
                 .product(name: "Didomi", package: "didomi-ios-sdk-spm")
             ],
             path: "Sources/DidomiSwift",
-            resources: []
+            resources: [],
+            linkerSettings: [
+                .linkedFramework("Flutter", .when(platforms: [.iOS]))
+            ]
         ),
         .target(
             name: "didomi_sdk",
-            dependencies: [
-                "DidomiSwift",
-                .product(name: "FlutterFramework", package: "FlutterFramework")
-            ],
+            dependencies: ["DidomiSwift"],
             path: "Sources/DidomiObjC",
             resources: [],
-            publicHeadersPath: "include"
+            publicHeadersPath: "include",
+            linkerSettings: [
+                .linkedFramework("Flutter", .when(platforms: [.iOS]))
+            ]
         )
     ]
 )
