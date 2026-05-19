@@ -44,7 +44,7 @@ fi
 echo "iOS SDK last version is $iOSVersion"
 
 sed -i~ -e "s|s.dependency       'Didomi-XCFramework', '[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}'|s.dependency       'Didomi-XCFramework', '$iOSVersion'|g" ios/didomi_sdk.podspec || exit 1
-sed -i~ -e "s|from: \"[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}\"|from: \"$iOSVersion\"|g" ios/didomi_sdk/Package.swift || exit 1
+sed -i~ -e "s|\(didomi-ios-sdk-spm\".*from: \)\"[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{1,2\}\"|\1\"$iOSVersion\"|g" ios/didomi_sdk/Package.swift || exit 1
 
 # Cleanup backup files
 find . -type f -name '*~' -delete
