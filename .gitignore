@@ -7,6 +7,7 @@
 .dart_tool/
 .packages
 build/
+.build/
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock
 
@@ -26,3 +27,8 @@ runConfigurations.xml
 
 # AI
 CLAUDE.md
+
+# Swift Package Manager (Flutter SPM integration generates these per-build)
+.swiftpm/
+**/Flutter/ephemeral/
+**/xcshareddata/swiftpm/

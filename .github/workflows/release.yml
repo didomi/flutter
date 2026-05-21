@@ -40,7 +40,12 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      # Checkout into a directory matching the plugin name (didomi_sdk) so
+      # Flutter's SPM integration generates the right symlink identity on
+      # Flutter 3.44+ (see build.yml for full context).
       - uses: actions/checkout@v6
+        with:
+          path: didomi_sdk
       - uses: actions/setup-java@v5
         with:
           distribution: "temurin"
@@ -51,26 +56,28 @@ jobs:
           architecture: arm64 # optional value for v2 (use self-hosted mac mini)
 
       - name: Install dependencies
+        working-directory: ./didomi_sdk
         run: flutter pub get
 
       - name: Add Homebrew to PATH
         run: echo "/opt/homebrew/bin" >> $GITHUB_PATH
 
       - name: Run pod update
-        working-directory: ./example/ios
+        working-directory: ./didomi_sdk/example/ios
         run: pod update
 
       - name: List all simulators
         run: xcrun xctrace list devices
 
       - name: Build & run all tests
+        working-directory: ./didomi_sdk
         run: sh .github/scripts/uitests_for_ios.sh
 
       - name: Archive test results
         uses: actions/upload-artifact@v7
         with:
           name: logs_ios
-          path: example/machine.log
+          path: didomi_sdk/example/machine.log
 
   # job responsible for running Flutter tests on Android devices
   test_android:
