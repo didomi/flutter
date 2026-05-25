@@ -4,6 +4,11 @@
 # Launch UI tests for iOS
 #----------------------------------------------------------
 
+# Clear Swift Package Manager caches so newly published tags of
+# didomi-ios-sdk-spm are picked up on the self-hosted runner.
+rm -rf ~/Library/Caches/org.swift.swiftpm
+rm -rf ~/Library/Developer/Xcode/DerivedData
+
 # Search for device ID
 DEVICE=$(xcrun simctl list devices | grep -m 1 'iPhone 17' | grep -E -o -i '([0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12})')
 
