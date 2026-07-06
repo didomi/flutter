@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.source_files     = 'didomi_sdk/Sources/**/*.{swift,h,m}'
   s.public_header_files = 'didomi_sdk/Sources/DidomiObjC/include/**/*.h'
   s.dependency       'Flutter'
-  s.dependency       'Didomi-XCFramework', '2.44.0'
+  s.dependency       'Didomi-XCFramework', '2.45.0'
   s.platform         = :ios, '13.0'
 
   # Flutter.framework does not contain a i386 slice.

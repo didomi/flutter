@@ -47,6 +47,14 @@ class DidomiInitializeParameters {
   /// If set to true, the SDK will only display the underage notice (false by default).
   bool isUnderage = false;
 
+  /// Base URL used to load all static files (didomi_config.json, GVL, IAB vendor list).
+  /// Defaults to the Didomi SDK CDN if not set. Must use HTTPS.
+  String? sdkPath;
+
+  /// Base URL used for all API requests (Consents API, cross-device sync, API Events).
+  /// Defaults to the Didomi API if not set. Must use HTTPS.
+  String? apiPath;
+
   DidomiInitializeParameters(
       {required this.apiKey,
       this.localConfigurationPath,
@@ -59,7 +67,9 @@ class DidomiInitializeParameters {
       this.androidTvEnabled = false,
       this.countryCode,
       this.regionCode,
-      this.isUnderage = false});
+      this.isUnderage = false,
+      this.sdkPath,
+      this.apiPath});
 
   Map<String, dynamic> toJson() => {
         'apiKey': apiKey,
@@ -74,5 +84,7 @@ class DidomiInitializeParameters {
         'countryCode': countryCode,
         'regionCode': regionCode,
         'isUnderage': isUnderage,
+        'sdkPath': sdkPath,
+        'apiPath': apiPath,
       };
 }
