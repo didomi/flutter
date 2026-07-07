@@ -4,12 +4,12 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'didomi_sdk'
-  s.version          = '2.28.0'
+  s.version          = '2.29.0'
   s.summary          = 'Didomi CMP Plugin.'
   s.homepage         = 'https://github.com/didomi/flutter'
   s.license          = { :type => 'BSD', :file => '../LICENSE' }
   s.author           = { 'Didomi ' => 'tech@didomi.io' }
-  s.source           = { :path => 'git@github.com:didomi/flutter.git', :tag => '2.28.0' }
+  s.source           = { :path => 'git@github.com:didomi/flutter.git', :tag => '2.29.0' }
   s.source_files     = 'didomi_sdk/Sources/**/*.{swift,h,m}'
   s.public_header_files = 'didomi_sdk/Sources/DidomiObjC/include/**/*.h'
   s.dependency       'Flutter'
