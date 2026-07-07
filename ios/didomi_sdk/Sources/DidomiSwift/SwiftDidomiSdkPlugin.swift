@@ -200,7 +200,9 @@ import Didomi
             noticeID: jsonDidomiInitializeParameters["noticeId"] as? String,
             countryCode: jsonDidomiInitializeParameters["countryCode"] as? String,
             regionCode: jsonDidomiInitializeParameters["regionCode"] as? String,
-            isUnderage: jsonDidomiInitializeParameters["isUnderage"] as! Bool
+            isUnderage: jsonDidomiInitializeParameters["isUnderage"] as! Bool,
+            sdkPath: jsonDidomiInitializeParameters["sdkPath"] as? String,
+            apiPath: jsonDidomiInitializeParameters["apiPath"] as? String
         )
         Didomi.shared.initialize(parameters)
         result(nil)

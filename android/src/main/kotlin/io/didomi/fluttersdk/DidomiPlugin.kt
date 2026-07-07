@@ -254,6 +254,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 countryCode = jsonDidomiInitializeParameters["countryCode"] as? String,
                 regionCode = jsonDidomiInitializeParameters["regionCode"] as? String,
                 isUnderage = jsonDidomiInitializeParameters["isUnderage"] as Boolean,
+                sdkPath = jsonDidomiInitializeParameters["sdkPath"] as? String,
+                apiPath = jsonDidomiInitializeParameters["apiPath"] as? String,
             )
 
             Didomi.getInstance().initialize(it.application, didomiInitializeParameters)
