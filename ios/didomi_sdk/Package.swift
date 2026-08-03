@@ -12,29 +12,30 @@ let package = Package(
         .library(name: "didomi-sdk", targets: ["didomi_sdk"])
     ],
     dependencies: [
-        .package(url: "https://github.com/didomi/didomi-ios-sdk-spm", from: "2.47.0")
+        .package(url: "https://github.com/didomi/didomi-ios-sdk-spm", from: "2.47.0"),
+        // Provided by the Flutter tool: it generates this package next to the
+        // plugin package when building an app, so the relative path resolves then.
+        .package(name: "FlutterFramework", path: "../FlutterFramework")
     ],
     targets: [
         .target(
             name: "DidomiSwift",
             dependencies: [
-                .product(name: "Didomi", package: "didomi-ios-sdk-spm")
+                .product(name: "Didomi", package: "didomi-ios-sdk-spm"),
+                .product(name: "FlutterFramework", package: "FlutterFramework")
             ],
             path: "Sources/DidomiSwift",
-            resources: [],
-            linkerSettings: [
-                .linkedFramework("Flutter", .when(platforms: [.iOS]))
-            ]
+            resources: []
         ),
         .target(
             name: "didomi_sdk",
-            dependencies: ["DidomiSwift"],
+            dependencies: [
+                "DidomiSwift",
+                .product(name: "FlutterFramework", package: "FlutterFramework")
+            ],
             path: "Sources/DidomiObjC",
             resources: [],
-            publicHeadersPath: "include",
-            linkerSettings: [
-                .linkedFramework("Flutter", .when(platforms: [.iOS]))
-            ]
+            publicHeadersPath: "include"
         )
     ]
 )
