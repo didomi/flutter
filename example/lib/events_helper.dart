@@ -148,6 +148,14 @@ class EventsHelper {
       onEvent("Language has not changed: $reason");
     };
 
+    // Widgets events
+    didomiListener.onShowWidget = (event) {
+      onEvent("Widget displayed (widgetId: ${event.widgetId}, layerName: ${event.layerName})");
+    };
+    didomiListener.onHideWidget = () {
+      onEvent("Widget hidden");
+    };
+
     DidomiSdk.addEventListener(didomiListener);
   }
 

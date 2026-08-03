@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import 'event_listener.dart';
 import 'integration_error_event.dart';
+import 'show_widget_event.dart';
 
 /// Handler for events emitted by native SDK
 class EventsHandler {
@@ -324,6 +325,26 @@ class EventsHandler {
         );
         for (var listener in listeners) {
           listener.onIntegrationError(newEvent);
+        }
+        break;
+
+      /// Widgets events
+
+      case "onShowWidget":
+        // Cast instead of toString(): both fields are nullable natively, and
+        // toString() would turn a null into the literal string "null".
+        final ShowWidgetEvent showWidgetEvent = ShowWidgetEvent(
+          event["widgetId"] as String?,
+          event["layerName"] as String?,
+        );
+        for (var listener in listeners) {
+          listener.onShowWidget(showWidgetEvent);
+        }
+        break;
+
+      case "onHideWidget":
+        for (var listener in listeners) {
+          listener.onHideWidget();
         }
         break;
 

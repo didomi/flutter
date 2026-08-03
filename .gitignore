@@ -32,3 +32,4 @@ CLAUDE.md
 .swiftpm/
 **/Flutter/ephemeral/
 **/xcshareddata/swiftpm/
+ios/didomi_sdk/Package.resolved

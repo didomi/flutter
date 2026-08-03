@@ -2,6 +2,7 @@
 
 ## 2.31.0
 - Update latest versions of native Android (2.47.0) and iOS (2.47.0) sdks.
+- Add support for `onShowWidget` and `onHideWidget` events.
 
 ## 2.30.0
 - Update latest versions of native Android (2.46.0) and iOS (2.46.0) sdks.

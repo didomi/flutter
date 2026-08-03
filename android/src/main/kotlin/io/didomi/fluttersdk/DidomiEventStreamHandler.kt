@@ -204,6 +204,18 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
     }
 
     /*
+     * Widgets events
+     */
+
+    override fun showWidget(event: ShowWidgetEvent) {
+        sendEvent("onShowWidget", mapOf("widgetId" to event.widgetId, "layerName" to event.layerName))
+    }
+
+    override fun hideWidget(event: HideWidgetEvent) {
+        sendEvent("onHideWidget")
+    }
+
+    /*
      * Consent events
      */
 

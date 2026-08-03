@@ -1,6 +1,7 @@
 import 'package:didomi_sdk/events/sync_ready_event.dart';
 
 import 'integration_error_event.dart';
+import 'show_widget_event.dart';
 
 /// Listener to events sent by the Didomi SDK
 class EventListener {
@@ -179,4 +180,14 @@ class EventListener {
 
   /// Integration with an external SDK encountered an error
   dynamic Function(IntegrationErrorEvent event) onIntegrationError = (event) {};
+
+  /*
+   * Widgets events
+   */
+
+  /// A widget was displayed
+  dynamic Function(ShowWidgetEvent event) onShowWidget = (event) {};
+
+  /// A widget was hidden
+  dynamic Function() onHideWidget = () {};
 }
