@@ -1,5 +1,8 @@
 # Release Note
 
+## 2.31.0
+- Update latest versions of native Android (2.47.0) and iOS (2.47.0) sdks.
+
 ## 2.30.0
 - Update latest versions of native Android (2.46.0) and iOS (2.46.0) sdks.
 
