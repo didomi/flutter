@@ -2,6 +2,8 @@
 
 ## 2.31.0
 - Update latest versions of native Android (2.47.0) and iOS (2.47.0) sdks.
+- Fix DCS signature events (`onDcsSignatureReady`, `onDcsSignatureError`) never being triggered.
+- Fix SPI screen events never being triggered.
 
 ## 2.30.0
 - Update latest versions of native Android (2.46.0) and iOS (2.46.0) sdks.

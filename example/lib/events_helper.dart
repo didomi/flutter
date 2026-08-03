@@ -148,6 +148,19 @@ class EventsHelper {
       onEvent("Language has not changed: $reason");
     };
 
+    // DCS signature events
+    didomiListener.onDcsSignatureReady = () {
+      onEvent("DCS signature is ready");
+    };
+    didomiListener.onDcsSignatureError = () {
+      onEvent("DCS signature generation failed");
+    };
+
+    // External SDKs integration events
+    didomiListener.onIntegrationError = (event) {
+      onEvent("Integration error on ${event.integrationName}: ${event.reason}");
+    };
+
     // Widgets events
     didomiListener.onShowWidget = (event) {
       onEvent("Widget displayed (widgetId: ${event.widgetId}, layerName: ${event.layerName})");

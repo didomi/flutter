@@ -82,7 +82,7 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
 
     @Deprecated("SPI purposes are now displayed in preferences screen.", replaceWith = ReplaceWith("noticeClickMoreInfo"))
     override fun noticeClickViewSPIPurposes(event: NoticeClickViewSPIPurposesEvent) {
-        sendEvent("noticeClickViewSPIPurposes")
+        sendEvent("onNoticeClickViewSPIPurposes")
     }
 
     override fun noticeClickMoreInfo(event: NoticeClickMoreInfoEvent) {
@@ -127,7 +127,7 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
 
     @Deprecated("SPI purposes are now displayed in preferences screen.", replaceWith = ReplaceWith("noticeClickMoreInfo"))
     override fun preferencesClickViewSPIPurposes(event: PreferencesClickViewSPIPurposesEvent) {
-        sendEvent("preferencesClickViewSPIPurposes")
+        sendEvent("onPreferencesClickViewSPIPurposes")
     }
 
     override fun preferencesClickSaveChoices(event: PreferencesClickSaveChoicesEvent) {
@@ -180,7 +180,7 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
 
     @Deprecated("SPI purposes now trigger the same events as other purposes.", replaceWith = ReplaceWith("preferencesClickPurposeAgree"))
     override fun preferencesClickSPIPurposeAgree(event: PreferencesClickSPIPurposeAgreeEvent) {
-        sendEvent("preferencesClickSPIPurposeAgree", mapOf("purposeId" to event.purposeId))
+        sendEvent("onPreferencesClickSPIPurposeAgree", mapOf("purposeId" to event.purposeId))
     }
 
     @Deprecated("SPI purposes now trigger the same events as other purposes.", replaceWith = ReplaceWith("preferencesClickPurposeDisagree"))
@@ -200,7 +200,7 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
 
     @Deprecated("SPI purposes now trigger the same events as other purposes.", replaceWith = ReplaceWith("preferencesClickSaveChoices"))
     override fun preferencesClickSPIPurposeSaveChoices(event: PreferencesClickSPIPurposeSaveChoicesEvent) {
-        sendEvent("preferencesClickSPIPurposeSaveChoices")
+        sendEvent("onPreferencesClickSPIPurposeSaveChoices")
     }
 
     /*
