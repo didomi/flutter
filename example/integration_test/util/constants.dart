@@ -1,3 +1,8 @@
+/// Upper bound for waiting on user-synchronization events (`onSyncReady`,
+/// `onSyncDone`, `onSyncError`). Prevents a lost event from hanging a test
+/// until the much coarser suite-level timeout.
+const syncTimeout = Duration(seconds: 20);
+
 /// Common messages for assertions
 const defaultMessage = "Native message: --";
 const notReadyMessage = "Native message: Failed: 'Didomi SDK is not ready. Use the onReady callback to access this method.'.";

@@ -54,9 +54,17 @@ void main() {
   DidomiSdk.addEventListener(listener);
 
   Future waitForSync(WidgetTester tester) async {
-    // Wait for sync result
+    // Wait for sync result.
+    //
+    // `onSyncReady` and `onSyncDone` are dispatched as separate events with no
+    // ordering guarantee, so waiting on `syncReadyEvent` alone can return while
+    // `syncDoneUserId` is still unset and race callers that assert on it.
+    // On `onSyncError` neither is populated, so the error flag ends the wait.
+    final startTime = DateTime.now();
     await tester.runAsync(() async {
-      while (syncReadyEvent == null && !syncError) {
+      while ((syncReadyEvent == null || syncDoneUserId == null) &&
+          !syncError &&
+          DateTime.now().difference(startTime) < syncTimeout) {
         await Future.delayed(Duration(milliseconds: 100));
       }
     });
