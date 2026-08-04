@@ -17,7 +17,7 @@ void main() {
   const purpose1Name = "Store and/or access information on a device";
   const purpose1Description = "Cookies, device or similar onl...";
   const purposeNames = "$purpose1Name, "
-      "Create profiles for personalised advertising, Actively scan device characteristics for identification, "
+      "Create profiles for personalised advertising, Identify devices based on information actively requested, "
       "Use precise geolocation data, Develop and improve services, Understand audiences through statistics or "
       "combinations of data from different sources, Measure advertising performance, "
       "Use limited data to select advertising, Use profiles to select personalised advertising.";

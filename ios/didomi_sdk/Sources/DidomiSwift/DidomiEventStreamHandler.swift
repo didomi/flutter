@@ -175,6 +175,16 @@ class DidomiEventStreamHandler: NSObject, FlutterStreamHandler {
         eventListener.onIntegrationError = { [weak self] event in
             self?.sendEvent(eventType: "onIntegrationError", arguments: ["integrationName": event.integrationName, "reason": event.reason])
         }
+
+        // Widgets events
+        // Note: the iOS SDK names the property `widgetID`, Android names it `widgetId`.
+        // The wire key must stay `widgetId` so both platforms match the Dart handler.
+        eventListener.onShowWidget = { [weak self] event in
+            self?.sendEvent(eventType: "onShowWidget", arguments: ["widgetId": event.widgetID, "layerName": event.layerName])
+        }
+        eventListener.onHideWidget = { [weak self] event in
+            self?.sendEvent(eventType: "onHideWidget")
+        }
     }
 
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
