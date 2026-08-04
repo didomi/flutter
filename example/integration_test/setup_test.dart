@@ -70,7 +70,7 @@ void main() {
 
       assertNativeMessage("setupUI", okMessage);
 
-      await InitializeHelper.initialize(tester, initializeBtnFinder);
+      await InitializeHelper.initialize(tester, initializeBtnFinder, isReady: () => isReady);
 
       assert(isError == false);
       assert(isReady == true);

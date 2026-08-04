@@ -55,7 +55,7 @@ void main() {
 
       if (!isReady) {
         // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
+        await InitializeHelper.initialize(tester, initializeBtnFinder, isReady: () => isReady);
       }
 
       assert(isError == false);
@@ -116,7 +116,7 @@ void main() {
 
       if (!isReady) {
         // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
+        await InitializeHelper.initialize(tester, initializeBtnFinder, isReady: () => isReady);
       }
 
       assert(isError == false);
@@ -181,7 +181,7 @@ void main() {
 
       if (!isReady) {
         // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
+        await InitializeHelper.initialize(tester, initializeBtnFinder, isReady: () => isReady);
       }
 
       assert(isError == false);
