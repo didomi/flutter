@@ -163,15 +163,21 @@ jobs:
 
       - name: Create Release
         uses: actions/github-script@v9
+        env:
+          RELEASE_VERSION: ${{ env.flutter_version }}
+          RELEASE_BODY: ${{ env.change_log }}
         with:
           github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }} # Use custom token to trigger following workflows
           script: |
+            const version = process.env.RELEASE_VERSION;
+            const body = `${process.env.RELEASE_BODY}\n\nMore info: https://developers.didomi.io/cmp/mobile-sdk`;
+
             github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              name: "${{ env.flutter_version }}",
-              tag_name: "${{ env.flutter_version }}",
+              name: version,
+              tag_name: version,
               draft: false,
               prerelease: false,
-              body: "${{ env.change_log }}\n\nMore info: https://developers.didomi.io/cmp/mobile-sdk"
+              body: body
             });
