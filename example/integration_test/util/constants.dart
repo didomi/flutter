@@ -1,6 +1,5 @@
-/// Upper bound for waiting on user-synchronization events (`onSyncReady`,
-/// `onSyncDone`, `onSyncError`). Prevents a lost event from hanging a test
-/// until the much coarser suite-level timeout.
+/// Upper bound for waiting on user-synchronization events (`onSyncReady`, `onSyncError`).
+/// Prevents a lost event from hanging a test until the much coarser suite-level timeout.
 const syncTimeout = Duration(seconds: 20);
 
 /// Common messages for assertions

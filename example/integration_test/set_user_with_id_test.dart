@@ -29,7 +29,6 @@ void main() {
   final reset = find.byKey(Key("reset"));
   final listKey = Key("components_list");
 
-  String? syncDoneUserId;
   bool isReady = false;
   bool syncError = false;
   SyncReadyEvent? syncReadyEvent;
@@ -41,10 +40,6 @@ void main() {
   listener.onSyncReady = (SyncReadyEvent event) {
     syncReadyEvent = event;
   };
-  // ignore: deprecated_member_use
-  listener.onSyncDone = (String userId) {
-    syncDoneUserId = userId != "null" ? userId : null;
-  };
   listener.onSyncError = (String error) {
     syncError = true;
     syncReadyEvent = null;
@@ -54,14 +49,9 @@ void main() {
 
   Future waitForSync(WidgetTester tester) async {
     // Wait for sync result.
-    //
-    // `onSyncReady` and `onSyncDone` are dispatched as separate events with no
-    // ordering guarantee, so waiting on `syncReadyEvent` alone can return while
-    // `syncDoneUserId` is still unset and race callers that assert on it.
-    // On `onSyncError` neither is populated, so the error flag ends the wait.
     final startTime = DateTime.now();
     await tester.runAsync(() async {
-      while ((syncReadyEvent == null || syncDoneUserId == null) &&
+      while (syncReadyEvent == null &&
           !syncError &&
           DateTime.now().difference(startTime) < syncTimeout) {
         await Future.delayed(Duration(milliseconds: 100));
@@ -100,14 +90,12 @@ void main() {
 
   // Reset all variables used for assertion.
   void resetExpectedSyncValues() {
-    syncDoneUserId = null;
     syncError = false;
     syncReadyEvent = null;
   }
 
   // Assert that all the expected sync variables are populated.
   void assertExpectedSyncValuesArePopulated() {
-    assert(syncDoneUserId == userId);
     assert(syncError == false);
     assert(syncReadyEvent != null);
     assert(syncReadyEvent?.organizationUserId == userId);
@@ -115,7 +103,6 @@ void main() {
 
   // Assert that all the expected sync variables are empty.
   void assertExpectedSyncValuesAreEmpty() {
-    assert(syncDoneUserId == null);
     assert(syncError == false);
     assert(syncReadyEvent == null);
   }
@@ -133,7 +120,6 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      assert(syncDoneUserId == null);
       assert(syncError == false);
       assert(syncReadyEvent == null);
 
@@ -198,7 +184,6 @@ void main() {
       await waitForSync(tester);
 
       // Encryption parameters are not valid
-      assert(syncDoneUserId == null);
       assert(syncError == true);
       assert(syncReadyEvent == null);
     });
@@ -242,7 +227,7 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncDoneUserId == userId);
+      assert(syncReadyEvent?.organizationUserId == userId);
       assert(syncError == false);
 
       await assertSyncReadyEvent(tester);
@@ -287,7 +272,7 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncDoneUserId == userId);
+      assert(syncReadyEvent?.organizationUserId == userId);
       assert(syncError == false);
 
       await assertSyncReadyEvent(tester);
@@ -332,7 +317,7 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncDoneUserId == userId);
+      assert(syncReadyEvent?.organizationUserId == userId);
       assert(syncError == false);
 
       await assertSyncReadyEvent(tester);
