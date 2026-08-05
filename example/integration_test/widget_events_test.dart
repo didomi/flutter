@@ -79,7 +79,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      await InitializeHelper.initialize(tester, initializeBtnFinder);
+      await InitializeHelper.initialize(tester, initializeBtnFinder, isReady: () => isReady);
 
       assert(isError == false);
       assert(isReady == true);

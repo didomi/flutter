@@ -54,7 +54,7 @@ void main() {
 
       await tester.tap(localConfigBoxFinder);
 
-      await InitializeHelper.initialize(tester, initializeBtnFinder);
+      await InitializeHelper.initialize(tester, initializeBtnFinder, isReady: () => isReady);
 
       assertNativeMessage("initialize", okMessage);
 

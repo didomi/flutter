@@ -4,7 +4,14 @@ import 'package:flutter_test/flutter_test.dart';
 class InitializeHelper {
   static const initializationTimeout = Duration(seconds: 20);
 
-  static Future initialize(WidgetTester tester, Finder finder) async {
+  /// Tap [finder] to initialize the SDK and wait until it is ready.
+  ///
+  /// [isReady] lets callers also wait for their own `onReady` event listener to
+  /// have run. The method channel reports readiness before the event channel has
+  /// dispatched `onReady`, so tests asserting on a listener-backed flag right
+  /// after this call would otherwise race the event. Pass the flag as a getter
+  /// (e.g. `isReady: () => isReady`) so it is re-read on every poll.
+  static Future initialize(WidgetTester tester, Finder finder, {bool Function()? isReady}) async {
 
     await tester.tap(finder);
     await tester.pumpAndSettle();
@@ -16,6 +23,24 @@ class InitializeHelper {
         await Future.delayed(Duration(milliseconds: 100));
       }
       await expectLater(await DidomiSdk.isReady, isTrue);
+
+      // Wait for the onReady event to reach the caller's listener.
+      while (isReady != null && isReady() == false && DateTime.now().difference(startTime) < initializationTimeout) {
+        await Future.delayed(Duration(milliseconds: 100));
+      }
     });
+
+    if (isReady != null) {
+      await expectLater(isReady(), isTrue, reason: "onReady event was not received before timeout");
+    }
+  }
+
+  /// Tap [finder] to initialize the SDK, but only if [isReady] reports false.
+  ///
+  /// Wraps [initialize] with the `if (!isReady())` guard otherwise duplicated
+  /// at every call site across the integration test suite.
+  static Future initializeIfNeeded(WidgetTester tester, Finder finder, {required bool Function() isReady}) async {
+    if (isReady()) return;
+    await initialize(tester, finder, isReady: isReady);
   }
 }
