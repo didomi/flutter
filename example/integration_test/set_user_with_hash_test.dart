@@ -108,10 +108,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -177,10 +174,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -246,10 +240,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -317,10 +308,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -389,10 +377,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -461,10 +446,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -535,10 +517,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -607,10 +586,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -679,10 +655,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -753,10 +726,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -828,10 +798,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -903,10 +870,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -980,10 +944,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -1052,10 +1013,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -1124,10 +1082,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -1199,10 +1154,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -1275,10 +1227,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -1351,10 +1300,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -1429,10 +1375,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -1505,10 +1448,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -1581,10 +1521,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -1659,10 +1596,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -1738,10 +1672,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 
@@ -1817,10 +1748,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       resetExpectedSyncValues();
 

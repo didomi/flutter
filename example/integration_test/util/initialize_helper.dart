@@ -34,4 +34,13 @@ class InitializeHelper {
       await expectLater(isReady(), isTrue, reason: "onReady event was not received before timeout");
     }
   }
+
+  /// Tap [finder] to initialize the SDK, but only if [isReady] reports false.
+  ///
+  /// Wraps [initialize] with the `if (!isReady())` guard otherwise duplicated
+  /// at every call site across the integration test suite.
+  static Future initializeIfNeeded(WidgetTester tester, Finder finder, {required bool Function() isReady}) async {
+    if (isReady()) return;
+    await initialize(tester, finder, isReady: isReady);
+  }
 }

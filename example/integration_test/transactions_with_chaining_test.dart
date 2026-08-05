@@ -35,10 +35,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder, isReady: () => isReady);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       assert(isError == false);
       assert(isReady == true);
@@ -60,10 +57,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder, isReady: () => isReady);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       assert(isError == false);
       assert(isReady == true);
@@ -85,10 +79,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder, isReady: () => isReady);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       assert(isError == false);
       assert(isReady == true);
@@ -110,10 +101,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder, isReady: () => isReady);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       assert(isError == false);
       assert(isReady == true);
@@ -137,10 +125,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder, isReady: () => isReady);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       assert(isError == false);
       assert(isReady == true);
@@ -162,10 +147,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder, isReady: () => isReady);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       assert(isError == false);
       assert(isReady == true);
@@ -187,10 +169,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder, isReady: () => isReady);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       assert(isError == false);
       assert(isReady == true);
@@ -212,10 +191,7 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      if (!isReady) {
-        // Initialize if not ready
-        await InitializeHelper.initialize(tester, initializeBtnFinder, isReady: () => isReady);
-      }
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
 
       assert(isError == false);
       assert(isReady == true);
