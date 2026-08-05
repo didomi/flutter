@@ -238,6 +238,61 @@ class EventsHandler {
         }
         break;
 
+      /// SPI screen events
+
+      case "onNoticeClickViewSPIPurposes":
+        for (var listener in listeners) {
+          // ignore: deprecated_member_use_from_same_package
+          listener.onNoticeClickViewSPIPurposes();
+        }
+        break;
+
+      case "onPreferencesClickViewSPIPurposes":
+        for (var listener in listeners) {
+          // ignore: deprecated_member_use_from_same_package
+          listener.onPreferencesClickViewSPIPurposes();
+        }
+        break;
+
+      case "onPreferencesClickSPIPurposeAgree":
+        final String spiPurposeAgreeId = event["purposeId"].toString();
+        for (var listener in listeners) {
+          // ignore: deprecated_member_use_from_same_package
+          listener.onPreferencesClickSPIPurposeAgree(spiPurposeAgreeId);
+        }
+        break;
+
+      case "onPreferencesClickSPIPurposeDisagree":
+        final String spiPurposeDisagreeId = event["purposeId"].toString();
+        for (var listener in listeners) {
+          // ignore: deprecated_member_use_from_same_package
+          listener.onPreferencesClickSPIPurposeDisagree(spiPurposeDisagreeId);
+        }
+        break;
+
+      case "onPreferencesClickSPICategoryAgree":
+        final String spiCategoryAgreeId = event["categoryId"].toString();
+        for (var listener in listeners) {
+          // ignore: deprecated_member_use_from_same_package
+          listener.onPreferencesClickSPICategoryAgree(spiCategoryAgreeId);
+        }
+        break;
+
+      case "onPreferencesClickSPICategoryDisagree":
+        final String spiCategoryDisagreeId = event["categoryId"].toString();
+        for (var listener in listeners) {
+          // ignore: deprecated_member_use_from_same_package
+          listener.onPreferencesClickSPICategoryDisagree(spiCategoryDisagreeId);
+        }
+        break;
+
+      case "onPreferencesClickSPIPurposeSaveChoices":
+        for (var listener in listeners) {
+          // ignore: deprecated_member_use_from_same_package
+          listener.onPreferencesClickSPIPurposeSaveChoices();
+        }
+        break;
+
       /// Consent events
 
       case "onVendorStatusChanged":
@@ -304,13 +359,13 @@ class EventsHandler {
 
       /// DCS signature events
 
-      case "onDcsSignatureError":
+      case "onDCSSignatureError":
         for (var listener in listeners) {
           listener.onDcsSignatureError();
         }
         break;
 
-      case "onDcsSignatureReady":
+      case "onDCSSignatureReady":
         for (var listener in listeners) {
           listener.onDcsSignatureReady();
         }
