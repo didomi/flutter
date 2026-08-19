@@ -1,5 +1,10 @@
 # Release Note
 
+## 2.32.0
+- Update latest versions of native Android (2.48.0) and iOS (2.48.0) sdks.
+
+> **⚠️ Warning:** The minimum iOS deployment target is now **15.0**, as required by Flutter 3.47+.
+
 ## 2.31.0
 - Update latest versions of native Android (2.47.0) and iOS (2.47.0) sdks.
 - Fix DCS signature events (`onDcsSignatureReady`, `onDcsSignatureError`) never being triggered.
