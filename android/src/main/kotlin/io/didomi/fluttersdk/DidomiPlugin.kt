@@ -147,6 +147,10 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "getApplicableRegulation" -> getApplicableRegulation(result)
 
+                "getUserCountryCode" -> getUserCountryCode(result)
+
+                "getUserRegionCode" -> getUserRegionCode(result)
+
                 "getRequiredPurposeIds" -> getRequiredPurposeIds(result)
 
                 "getRequiredVendorIds" -> getRequiredVendorIds(result)
@@ -410,6 +414,28 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(regulation.value)
         } catch (e: DidomiNotReadyException) {
             result.error("getApplicableRegulation", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the country determined by the SDK for the current user
+     */
+    private fun getUserCountryCode(result: Result) {
+        try {
+            result.success(Didomi.getInstance().userCountryCode)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getUserCountryCode", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the region determined by the SDK for the current user
+     */
+    private fun getUserRegionCode(result: Result) {
+        try {
+            result.success(Didomi.getInstance().userRegionCode)
+        } catch (e: DidomiNotReadyException) {
+            result.error("getUserRegionCode", e.message.orEmpty(), e)
         }
     }
 
