@@ -55,10 +55,12 @@ void main() {
       assert(isError == false);
       assert(isReady == true);
 
+      // regionCode is only populated for countries where a region is applicable
+      // (e.g. US states), so it can legitimately be null depending on the
+      // location the SDK resolves for the test environment.
       final countryCode = await DidomiSdk.userCountryCode;
-      final regionCode = await DidomiSdk.userRegionCode;
+      await DidomiSdk.userRegionCode;
       assert(countryCode != null);
-      assert(regionCode != null);
     });
   });
 }
