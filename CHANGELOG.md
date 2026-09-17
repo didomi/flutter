@@ -1,5 +1,8 @@
 # Release Note
 
+## ?????
+- Add userCountryCode and userRegionCode to read the user location determined by the SDK.
+
 ## 2.34.0
 - Update latest versions of native Android (2.50.0) and iOS (2.50.0) sdks.
 

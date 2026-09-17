@@ -44,7 +44,16 @@ sleep 60
 
 # Run tests and print logs
 EMULATOR_ID=$(adb devices | grep emulator | cut -f1)
+
+# Capture device logcat alongside the test run so sync/network failures
+# (e.g. Didomi SDK errors) can be diagnosed from the archived artifact.
+adb -s "$EMULATOR_ID" logcat -c
+adb -s "$EMULATOR_ID" logcat -v epoch >logcat.log &
+LOGCAT_PID=$!
+
 flutter test --machine -d "$EMULATOR_ID" -r expanded integration_test | tee machine.log
+
+kill "$LOGCAT_PID" 2>/dev/null || true
 
 # Shutdown emulator(s)
 adb devices | grep emulator | cut -f1 | while read -r line; do adb -s "$line" emu kill; done
