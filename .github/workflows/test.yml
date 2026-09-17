@@ -110,4 +110,6 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: logs_android
-          path: example/machine.log
+          path: |
+            example/machine.log
+            example/logcat.log
