@@ -93,6 +93,10 @@ import Didomi
             getUserStatus(result: result)
         case "getApplicableRegulation":
             getApplicableRegulation(result: result)
+        case "getUserCountryCode":
+            getUserCountryCode(result: result)
+        case "getUserRegionCode":
+            getUserRegionCode(result: result)
         case "getRequiredPurposeIds":
             getRequiredPurposeIds(result: result)
         case "getRequiredVendorIds":
@@ -495,6 +499,30 @@ import Didomi
         }
         let regulation = Didomi.shared.applicableRegulation.description
         result(regulation)
+    }
+
+    /**
+     * Get the country determined by the SDK for the current user
+     - Returns: user country code
+     */
+    func getUserCountryCode(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        result(Didomi.shared.userCountryCode)
+    }
+
+    /**
+     * Get the region determined by the SDK for the current user
+     - Returns: user region code
+     */
+    func getUserRegionCode(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        result(Didomi.shared.userRegionCode)
     }
 
     /**

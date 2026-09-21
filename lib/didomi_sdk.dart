@@ -242,6 +242,12 @@ class DidomiSdk {
     return result;
   }
 
+  /// Get the country determined by the SDK for the current user
+  static Future<String?> get userCountryCode async => await _channel.invokeMethod("getUserCountryCode");
+
+  /// Get the region determined by the SDK for the current user
+  static Future<String?> get userRegionCode async => await _channel.invokeMethod("getUserRegionCode");
+
   /// Get the IDs of the required purposes
   @Deprecated("Use 'requiredPurposes' instead")
   static Future<List<String>> get requiredPurposeIds async {
