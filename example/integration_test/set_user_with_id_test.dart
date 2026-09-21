@@ -47,7 +47,7 @@ void main() {
 
   DidomiSdk.addEventListener(listener);
 
-  Future waitForSync(WidgetTester tester) async {
+  Future<void> waitForSync(WidgetTester tester) async {
     // Wait for sync result.
     final startTime = DateTime.now();
     await tester.runAsync(() async {
@@ -57,6 +57,11 @@ void main() {
         await Future.delayed(Duration(milliseconds: 100));
       }
     });
+    expect(
+      syncReadyEvent != null || syncError,
+      true,
+      reason: 'waitForSync timed out after $syncTimeout without onSyncReady/onSyncError firing',
+    );
   }
 
   // Assert sync event is triggered correctly. TODO: Fails since 2.36.2, needs to be fixed from the native side to be re-enabled.
@@ -82,10 +87,10 @@ void main() {
   // Assert sync event is triggered correctly.
   Future<void> assertSyncReadyEvent(WidgetTester tester) async {
     // First time the sync event is triggered. Status is applied and API Event not triggered.
-    assert(syncReadyEvent?.statusApplied == true);
-    assert((await syncReadyEvent?.syncAcknowledged()) != null); // Can be true or false from iOS, but should not be null
-    assert((await syncReadyEvent?.syncAcknowledged()) == false);
-    assert(syncReadyEvent?.organizationUserId == userId);
+    expect(syncReadyEvent?.statusApplied, true);
+    expect((await syncReadyEvent?.syncAcknowledged()), isNot(null)); // Can be true or false from iOS, but should not be null
+    expect((await syncReadyEvent?.syncAcknowledged()), false);
+    expect(syncReadyEvent?.organizationUserId, userId);
   }
 
   // Reset all variables used for assertion.
@@ -96,15 +101,15 @@ void main() {
 
   // Assert that all the expected sync variables are populated.
   void assertExpectedSyncValuesArePopulated() {
-    assert(syncError == false);
-    assert(syncReadyEvent != null);
-    assert(syncReadyEvent?.organizationUserId == userId);
+    expect(syncError, false);
+    expect(syncReadyEvent, isNot(null));
+    expect(syncReadyEvent?.organizationUserId, userId);
   }
 
   // Assert that all the expected sync variables are empty.
   void assertExpectedSyncValuesAreEmpty() {
-    assert(syncError == false);
-    assert(syncReadyEvent == null);
+    expect(syncError, false);
+    expect(syncReadyEvent, null);
   }
 
   group("Set User with OUID only", () {
@@ -120,8 +125,8 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      assert(syncError == false);
-      assert(syncReadyEvent == null);
+      expect(syncError, false);
+      expect(syncReadyEvent, null);
 
       await tester.tap(setUserWithId);
       await tester.tap(submitSetUser);
@@ -181,8 +186,8 @@ void main() {
       await waitForSync(tester);
 
       // Encryption parameters are not valid
-      assert(syncError == true);
-      assert(syncReadyEvent == null);
+      expect(syncError, true);
+      expect(syncReadyEvent, null);
     });
 
     testWidgets("Click setUser with id with underage null", (WidgetTester tester) async {
@@ -221,8 +226,8 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncReadyEvent?.organizationUserId == userId);
-      assert(syncError == false);
+      expect(syncReadyEvent?.organizationUserId, userId);
+      expect(syncError, false);
 
       await assertSyncReadyEvent(tester);
     });
@@ -263,8 +268,8 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncReadyEvent?.organizationUserId == userId);
-      assert(syncError == false);
+      expect(syncReadyEvent?.organizationUserId, userId);
+      expect(syncError, false);
 
       await assertSyncReadyEvent(tester);
     });
@@ -305,8 +310,8 @@ void main() {
 
       await waitForSync(tester);
 
-      assert(syncReadyEvent?.organizationUserId == userId);
-      assert(syncError == false);
+      expect(syncReadyEvent?.organizationUserId, userId);
+      expect(syncError, false);
 
       await assertSyncReadyEvent(tester);
     });
