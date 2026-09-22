@@ -119,18 +119,18 @@ jobs:
           cd ..
           zip -r app-spm.ipa Payload-spm
 
-      # iOS IPA with CocoaPods
-      - name: Build iOS Sample (CocoaPods)
-        working-directory: ./didomi_sdk/example
-        run: |
-          flutter config --no-enable-swift-package-manager
-          flutter build ios --no-codesign
-          cd build/ios/iphoneos
-          mkdir Payload
-          cd Payload
-          ln -s ../Runner.app
-          cd ..
-          zip -r app.ipa Payload
+      # iOS IPA with CocoaPods disabled from https://github.com/didomi/flutter/pull/160
+#      - name: Build iOS Sample (CocoaPods)
+#        working-directory: ./didomi_sdk/example
+#        run: |
+#          flutter config --no-enable-swift-package-manager
+#          flutter build ios --no-codesign
+#          cd build/ios/iphoneos
+#          mkdir Payload
+#          cd Payload
+#          ln -s ../Runner.app
+#          cd ..
+#          zip -r app.ipa Payload
 
       # Archive iOS IPA
       - name: Archive iOS artifacts
