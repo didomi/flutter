@@ -4,6 +4,9 @@
 # Launch UI tests for Android
 #----------------------------------------------------------
 
+# Silence the Gradle wrapper's restricted-native-access warning (JDK 24+, native-platform lib).
+export GRADLE_OPTS="$GRADLE_OPTS --enable-native-access=ALL-UNNAMED"
+
 # Get current user ('administrator' for the CI)
 USER=$(whoami)
 
