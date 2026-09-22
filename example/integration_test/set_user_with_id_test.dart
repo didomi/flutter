@@ -47,8 +47,13 @@ void main() {
 
   DidomiSdk.addEventListener(listener);
 
-  Future<void> waitForSync(WidgetTester tester) async {
-    // Wait for sync result.
+  // Reset all variables used for assertion.
+  void resetExpectedSyncValues() {
+    syncError = false;
+    syncReadyEvent = null;
+  }
+
+  Future<void> waitForSyncResult(WidgetTester tester) async {
     final startTime = DateTime.now();
     await tester.runAsync(() async {
       while (syncReadyEvent == null &&
@@ -57,6 +62,23 @@ void main() {
         await Future.delayed(Duration(milliseconds: 100));
       }
     });
+  }
+
+  /// Waits for the sync result.
+  ///
+  /// [retry], when provided, re-triggers the action that caused the sync (e.g. re-tapping
+  /// `submitSetUser`) once if a [syncError] is observed, to absorb a transient failure from the
+  /// real sync backend hit by these tests. Only pass [retry] where a successful sync is expected;
+  /// tests that intentionally expect a sync error should call [waitForSync] without it.
+  Future<void> waitForSync(WidgetTester tester, {Future<void> Function()? retry}) async {
+    await waitForSyncResult(tester);
+
+    if (retry != null && syncError) {
+      resetExpectedSyncValues();
+      await retry();
+      await waitForSyncResult(tester);
+    }
+
     expect(
       syncReadyEvent != null || syncError,
       true,
@@ -91,12 +113,6 @@ void main() {
     expect((await syncReadyEvent?.syncAcknowledged()), isNot(null)); // Can be true or false from iOS, but should not be null
     expect((await syncReadyEvent?.syncAcknowledged()), false);
     expect(syncReadyEvent?.organizationUserId, userId);
-  }
-
-  // Reset all variables used for assertion.
-  void resetExpectedSyncValues() {
-    syncError = false;
-    syncReadyEvent = null;
   }
 
   // Assert that all the expected sync variables are populated.
@@ -224,7 +240,10 @@ void main() {
 
       assertNativeMessage("setUser", okMessage);
 
-      await waitForSync(tester);
+      await waitForSync(tester, retry: () async {
+        await tester.tap(submitSetUser);
+        await tester.pumpAndSettle();
+      });
 
       expect(syncReadyEvent?.organizationUserId, userId);
       expect(syncError, false);
@@ -266,7 +285,10 @@ void main() {
 
       assertNativeMessage("setUser", okMessage);
 
-      await waitForSync(tester);
+      await waitForSync(tester, retry: () async {
+        await tester.tap(submitSetUser);
+        await tester.pumpAndSettle();
+      });
 
       expect(syncReadyEvent?.organizationUserId, userId);
       expect(syncError, false);
@@ -308,7 +330,10 @@ void main() {
 
       assertNativeMessage("setUser", okMessage);
 
-      await waitForSync(tester);
+      await waitForSync(tester, retry: () async {
+        await tester.tap(submitSetUser);
+        await tester.pumpAndSettle();
+      });
 
       expect(syncReadyEvent?.organizationUserId, userId);
       expect(syncError, false);
@@ -336,7 +361,10 @@ void main() {
 
       assertNativeMessage("setUser", okMessage);
 
-      await waitForSync(tester);
+      await waitForSync(tester, retry: () async {
+        await tester.tap(submitSetUser);
+        await tester.pumpAndSettle();
+      });
 
       assertExpectedSyncValuesArePopulated();
 
@@ -389,7 +417,10 @@ void main() {
 
       assertNativeMessage("setUser", okMessage);
 
-      await waitForSync(tester);
+      await waitForSync(tester, retry: () async {
+        await tester.tap(submitSetUser);
+        await tester.pumpAndSettle();
+      });
 
       assertExpectedSyncValuesArePopulated();
     });
@@ -431,7 +462,10 @@ void main() {
 
       assertNativeMessage("setUser", okMessage);
 
-      await waitForSync(tester);
+      await waitForSync(tester, retry: () async {
+        await tester.tap(submitSetUser);
+        await tester.pumpAndSettle();
+      });
 
       assertExpectedSyncValuesArePopulated();
     });
@@ -473,7 +507,10 @@ void main() {
 
       assertNativeMessage("setUser", okMessage);
 
-      await waitForSync(tester);
+      await waitForSync(tester, retry: () async {
+        await tester.tap(submitSetUser);
+        await tester.pumpAndSettle();
+      });
 
       assertExpectedSyncValuesArePopulated();
     });
