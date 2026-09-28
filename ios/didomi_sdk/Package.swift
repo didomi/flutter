@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "didomi-sdk", targets: ["didomi_sdk"])
     ],
     dependencies: [
-        .package(url: "https://github.com/didomi/didomi-ios-sdk-spm", from: "2.50.0"),
+        .package(url: "https://github.com/didomi/didomi-ios-sdk-spm", from: "2.51.0"),
         .package(name: "FlutterFramework", path: "../FlutterFramework")
     ],
     targets: [
