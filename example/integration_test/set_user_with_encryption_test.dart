@@ -47,7 +47,7 @@ void main() {
 
   DidomiSdk.addEventListener(listener);
 
-  Future waitForSync(WidgetTester tester) async {
+  Future<void> waitForSync(WidgetTester tester) async {
     // Wait for sync result.
     final startTime = DateTime.now();
     await tester.runAsync(() async {
@@ -57,6 +57,11 @@ void main() {
         await Future.delayed(Duration(milliseconds: 100));
       }
     });
+    expect(
+      syncReadyEvent != null || syncError,
+      true,
+      reason: 'waitForSync timed out after $syncTimeout without onSyncReady/onSyncError firing',
+    );
   }
 
   // Reset all variables used for assertion.
@@ -67,8 +72,8 @@ void main() {
 
   // Assert that all the expected sync variables are empty.
   void assertExpectedSyncValuesAreEmpty() {
-    assert(syncError == false);
-    assert(syncReadyEvent == null);
+    expect(syncError, false);
+    expect(syncReadyEvent, null);
   }
 
   /**
@@ -88,8 +93,8 @@ void main() {
       app.main();
       await tester.pumpAndSettle();
 
-      assert(syncError == false);
-      assert(syncReadyEvent == null);
+      expect(syncError, false);
+      expect(syncReadyEvent, null);
 
       await tester.tap(setUserAuthWithEncryption);
       await tester.tap(submitSetUser);
@@ -140,7 +145,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -152,7 +157,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     testWidgets("Click setUser with encryption and underage false", (WidgetTester tester) async {
@@ -189,7 +194,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -201,7 +206,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     testWidgets("Click setUser with encryption and underage true", (WidgetTester tester) async {
@@ -238,7 +243,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -250,7 +255,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     /// With setupUI
@@ -296,7 +301,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -308,7 +313,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     testWidgets("Click setUser with encryption and underage false and setupUI", (WidgetTester tester) async {
@@ -352,7 +357,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -364,7 +369,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     testWidgets("Click setUser with encryption and underage true and setupUI", (WidgetTester tester) async {
@@ -408,7 +413,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -420,7 +425,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     /// With DCS user
@@ -466,7 +471,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -478,7 +483,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     testWidgets("Click setUser with encryption and underage false and DCS user", (WidgetTester tester) async {
@@ -522,7 +527,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -534,7 +539,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     testWidgets("Click setUser with encryption and underage true and DCS user", (WidgetTester tester) async {
@@ -578,7 +583,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -590,7 +595,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     /// With DCS user ans SetupUI
@@ -640,7 +645,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -652,7 +657,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     testWidgets("Click setUser with encryption and underage false and DCS user and setupUI",
@@ -700,7 +705,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -712,7 +717,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     testWidgets("Click setUser with encryption and underage true and DCS user and setupUI",
@@ -760,7 +765,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -772,7 +777,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     /// With synchronized users
@@ -818,7 +823,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -830,7 +835,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     testWidgets("Click setUser with encryption and underage false and Synchronized Users", (WidgetTester tester) async {
@@ -874,7 +879,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -886,7 +891,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     testWidgets("Click setUser with encryption and underage true and Synchronized Users", (WidgetTester tester) async {
@@ -930,7 +935,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -942,7 +947,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     /// With synchronized users and SetupUI
@@ -992,7 +997,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -1004,7 +1009,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     testWidgets("Click setUser with encryption and underage false and Synchronized Users and setupUI",
@@ -1052,7 +1057,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -1064,7 +1069,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     testWidgets("Click setUser with encryption and underage true and Synchronized Users and setupUI",
@@ -1112,7 +1117,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -1124,7 +1129,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     /// With DCS user and synchronized users
@@ -1174,7 +1179,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -1186,7 +1191,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     testWidgets("Click setUser with encryption and underage false and DCS user and Synchronized Users",
@@ -1234,7 +1239,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -1246,7 +1251,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     testWidgets("Click setUser with encryption and underage true and DCS user and Synchronized Users",
@@ -1294,7 +1299,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -1306,7 +1311,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     /// With DCS user, synchronized users and SetupUI
@@ -1359,7 +1364,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -1371,7 +1376,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     testWidgets("Click setUser with encryption and underage false and DCS user and Synchronized Users and setupUI",
@@ -1422,7 +1427,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -1434,7 +1439,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
 
     testWidgets("Click setUser with encryption and underage true and DCS user and Synchronized Users and setupUI",
@@ -1485,7 +1490,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
 
       resetExpectedSyncValues();
 
@@ -1497,7 +1502,7 @@ void main() {
       await waitForSync(tester);
 
       // TODO Restore with correct user parameters : assertExpectedSyncValuesArePopulated();
-      assert(syncError == true);
+      expect(syncError, true);
     });
   });
 }
