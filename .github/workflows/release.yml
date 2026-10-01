@@ -38,6 +38,7 @@ jobs:
     name: Testing iOS
     needs: analyse
     runs-on: self-hosted
+    timeout-minutes: 30
 
     steps:
       # Checkout into a directory matching the plugin name (didomi_sdk) so
@@ -84,6 +85,7 @@ jobs:
     name: Testing Android
     needs: analyse
     runs-on: self-hosted
+    timeout-minutes: 30
 
     steps:
       - uses: actions/checkout@v6
