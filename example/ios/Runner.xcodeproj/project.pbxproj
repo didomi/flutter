@@ -16,6 +16,7 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		D2836438265D53BC00612DA4 /* didomi_config.json in Resources */ = {isa = PBXBuildFile; fileRef = D2836437265D53BC00612DA4 /* didomi_config.json */; };
+		A7C0E1F12E9B000100A1B2C3 /* didomi_config_widgets.json in Resources */ = {isa = PBXBuildFile; fileRef = A7C0E1F02E9B000100A1B2C3 /* didomi_config_widgets.json */; };
 		F66BEADB265D5365002ACF58 /* RunnerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F66BEADA265D5365002ACF58 /* RunnerTests.m */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE4ECBD82CA122D29953F010 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		D2836437265D53BC00612DA4 /* didomi_config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = didomi_config.json; sourceTree = "<group>"; };
+		A7C0E1F02E9B000100A1B2C3 /* didomi_config_widgets.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = didomi_config_widgets.json; sourceTree = "<group>"; };
 		F66BEAD8265D5365002ACF58 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F66BEADA265D5365002ACF58 /* RunnerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RunnerTests.m; sourceTree = "<group>"; };
 		F66BEADC265D5365002ACF58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				D2836437265D53BC00612DA4 /* didomi_config.json */,
+				A7C0E1F02E9B000100A1B2C3 /* didomi_config_widgets.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 				D2836438265D53BC00612DA4 /* didomi_config.json in Resources */,
+				A7C0E1F12E9B000100A1B2C3 /* didomi_config_widgets.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

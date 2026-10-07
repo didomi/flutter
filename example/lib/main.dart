@@ -28,8 +28,10 @@ import 'widgets/check_consent.dart';
 import 'widgets/get_required_purpose_ids.dart';
 import 'widgets/get_required_vendor_ids.dart';
 import 'widgets/get_user_status_vendors.dart';
+import 'widgets/hide_widget.dart';
 import 'widgets/initialize.dart';
 import 'widgets/is_ready.dart';
+import 'widgets/is_widget_visible.dart';
 import 'widgets/on_error.dart';
 import 'widgets/on_ready.dart';
 import 'widgets/reset.dart';
@@ -41,6 +43,7 @@ import 'widgets/set_user_status.dart';
 import 'widgets/setup_ui.dart';
 import 'widgets/show_hide_notice.dart';
 import 'widgets/show_hide_preferences.dart';
+import 'widgets/show_widget.dart';
 import 'widgets/webview_strings.dart';
 
 void main() => runApp(MyApp());
@@ -130,6 +133,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 SetupUI(),
                 ShowHideNotice(),
                 ShowHidePreferences(),
+                ShowWidget(),
+                HideWidget(),
+                IsWidgetVisible(),
                 // Consents
                 Text("Consents:"),
                 CheckConsent(),
