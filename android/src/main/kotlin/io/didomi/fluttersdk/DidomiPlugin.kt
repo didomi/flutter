@@ -7,6 +7,7 @@ import io.didomi.sdk.Log
 import io.didomi.sdk.DidomiInitializeParameters
 import io.didomi.sdk.DidomiUserParameters
 import io.didomi.sdk.DidomiMultiUserParameters
+import io.didomi.sdk.DidomiWidgetParameters
 import io.didomi.sdk.exceptions.DidomiNotReadyException
 import io.didomi.sdk.models.CurrentUserStatus
 import io.didomi.sdk.user.model.*
@@ -119,6 +120,17 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 }
 
                 "isNoticeVisible" -> result.success(didomi.isNoticeVisible())
+
+                "showWidget" -> showWidget(call, result)
+
+                "hideWidget" -> {
+                    didomi.hideWidget()
+                    result.success(null)
+                }
+
+                "isWidgetVisible" -> result.success(
+                    didomi.isWidgetVisible(DidomiWidgetParameters(widgetId = call.argument("widgetId")))
+                )
 
                 "showPreferences" -> showPreferences(call, result)
 
@@ -281,6 +293,17 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun showNotice(result: Result) {
         getFragmentActivity(result)?.also {
             Didomi.getInstance().showNotice(it)
+            result.success(null)
+        }
+    }
+
+    private fun showWidget(call: MethodCall, result: Result) {
+        getFragmentActivity(result)?.also {
+            val parameters = DidomiWidgetParameters(
+                widgetId = call.argument("widgetId"),
+                layerName = call.argument("layerName")
+            )
+            Didomi.getInstance().showWidget(it, parameters)
             result.success(null)
         }
     }

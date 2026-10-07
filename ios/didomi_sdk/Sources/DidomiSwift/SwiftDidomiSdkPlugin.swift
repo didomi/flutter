@@ -69,6 +69,12 @@ import Didomi
             hideNotice(result: result)
         case "isNoticeVisible":
             isNoticeVisible(result: result)
+        case "showWidget":
+            showWidget(call, result: result)
+        case "hideWidget":
+            hideWidget(result: result)
+        case "isWidgetVisible":
+            isWidgetVisible(call, result: result)
         case "showPreferences":
             showPreferences(call, result: result)
         case "hidePreferences":
@@ -302,6 +308,39 @@ import Didomi
             return
         }
         result(Didomi.shared.isNoticeVisible())
+    }
+
+    func showWidget(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let args = call.arguments as? Dictionary<String, Any>
+        let parameters = DidomiWidgetParameters(
+            widgetID: args?["widgetId"] as? String,
+            layerName: args?["layerName"] as? String
+        )
+        Didomi.shared.showWidget(controller: UIApplication.shared.rootViewController, parameters: parameters)
+        result(nil)
+    }
+
+    func hideWidget(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        Didomi.shared.hideWidget()
+        result(nil)
+    }
+
+    func isWidgetVisible(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let args = call.arguments as? Dictionary<String, Any>
+        let parameters = DidomiWidgetParameters(widgetID: args?["widgetId"] as? String)
+        result(Didomi.shared.isWidgetVisible(parameters: parameters))
     }
 
     func showPreferences(_ call: FlutterMethodCall, result: @escaping FlutterResult) {

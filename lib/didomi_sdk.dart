@@ -8,6 +8,7 @@ import 'package:didomi_sdk/entities/user_status.dart';
 import 'package:didomi_sdk/entities/vendor.dart';
 import 'package:didomi_sdk/parameters/didomi_initialize_parameters.dart';
 import 'package:didomi_sdk/parameters/didomi_user_parameters.dart';
+import 'package:didomi_sdk/parameters/didomi_widget_parameters.dart';
 import 'package:didomi_sdk/parameters/user_auth_params.dart';
 import 'package:didomi_sdk/transactions/current_user_status_transaction.dart';
 import 'package:flutter/services.dart';
@@ -131,6 +132,26 @@ class DidomiSdk {
   /// Check if notice is visible
   static Future<bool> get isNoticeVisible async {
     final bool result = await _channel.invokeMethod('isNoticeVisible');
+    return result;
+  }
+
+  /// Show a widget.
+  /// Widgets are only available when the notice is rendered by the Web SDK.
+  /// If [DidomiWidgetParameters.widgetId] is not set, the widget is selected by the Rules Engine.
+  /// If [DidomiWidgetParameters.layerName] is not set, the widget is displayed at its default layer.
+  static Future<void> showWidget([DidomiWidgetParameters? parameters]) async {
+    await _channel.invokeMethod("showWidget", (parameters ?? DidomiWidgetParameters()).toJson());
+  }
+
+  /// Hide the currently displayed widget, if any. Unsaved changes are discarded.
+  static Future<void> hideWidget() async {
+    await _channel.invokeMethod("hideWidget");
+  }
+
+  /// Check if a widget is visible.
+  /// If [widgetId] is not set, returns true if any widget is visible.
+  static Future<bool> isWidgetVisible([String? widgetId]) async {
+    final bool result = await _channel.invokeMethod("isWidgetVisible", {"widgetId": widgetId});
     return result;
   }
 

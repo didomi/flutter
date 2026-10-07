@@ -5,6 +5,7 @@
 
 ## ?????
 - Add userCountryCode and userRegionCode to read the user location determined by the SDK.
+- Add showWidget, hideWidget and isWidgetVisible to display and hide widgets.
 
 ## 2.34.0
 - Update latest versions of native Android (2.50.0) and iOS (2.50.0) sdks.
