@@ -136,6 +136,7 @@ class DidomiSdk {
   }
 
   /// Show a widget.
+  /// **Beta**: this API is in beta - Privacy widget feature is still in development
   /// Widgets are only available when the notice is rendered by the Web SDK.
   /// If [DidomiWidgetParameters.widgetId] is not set, the widget is selected by the Rules Engine.
   /// If [DidomiWidgetParameters.layerName] is not set, the widget is displayed at its default layer.
@@ -144,11 +145,13 @@ class DidomiSdk {
   }
 
   /// Hide the currently displayed widget, if any. Unsaved changes are discarded.
+  /// **Beta**: this API is in beta - Privacy widget feature is still in development
   static Future<void> hideWidget() async {
     await _channel.invokeMethod("hideWidget");
   }
 
   /// Check if a widget is visible.
+  /// **Beta**: this API is in beta - Privacy widget feature is still in development
   /// If [widgetId] is not set, returns true if any widget is visible.
   static Future<bool> isWidgetVisible([String? widgetId]) async {
     final bool result = await _channel.invokeMethod("isWidgetVisible", {"widgetId": widgetId});
