@@ -14,9 +14,9 @@ import 'util/initialize_helper.dart';
 ///
 /// onShowWidget / onHideWidget are emitted by the Web SDK from inside a
 /// WebView-rendered experience. The notice served by this example app's
-/// configuration is natively rendered and contains no widget, and there is no
-/// Dart-side API to trigger a widget, so real widget event delivery cannot be
-/// produced here.
+/// configuration is natively rendered and contains no widget, so real widget
+/// event delivery is not produced here: it is covered by widget_api_test.dart,
+/// which initializes the SDK with a configuration containing widgets.
 ///
 /// This test therefore covers what is verifiable automatically:
 ///  - the new listener fields exist, are assignable and are accepted by
@@ -27,10 +27,6 @@ import 'util/initialize_helper.dart';
 ///    would indicate a wire-string or dispatch mistake;
 ///  - both native handlers still build and register — a missing Kotlin override
 ///    or a Swift typo regresses here.
-///
-/// Asserting a real onShowWidget payload requires a Didomi configuration whose
-/// experience is web-rendered and serves a widget. See the manual verification
-/// steps in the pull request description.
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
