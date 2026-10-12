@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/parameters/didomi_user_parameters.dart';
@@ -8,6 +9,13 @@ import 'package:flutter/material.dart';
 
 /// Widget to call DidomiSdk.SetUser()
 class SetUser extends StatefulWidget {
+  /// Organization user ID, generated once per app process so that each test run syncs a fresh user.
+  /// Syncing a long-lived user with a large history is slow on the backend and hits the SDK sync timeout.
+  static final String freshUserId = "flutter-sample-${DateTime.now().millisecondsSinceEpoch}-${Random().nextInt(1 << 32)}";
+
+  /// Organization user ID used by setUser with an ID, can be overridden by tests.
+  static String userId = freshUserId;
+
   @override
   State<StatefulWidget> createState() => _SetUserState();
 }
@@ -30,7 +38,7 @@ class _SetUserState extends BaseSampleWidgetState<SetUser> {
 
   @override
   Future<String> callDidomiPlugin() async {
-    String userId = "d13e49f6255c8729cbb201310f49d70d65f365415a67f034b567b7eac962b944eda131376594ef5e23b025fada4e4259e953ceb45ea57a2ced7872c567e6d1fae8dcc3a9772ead783d8513032e77d3fd";
+    String userId = SetUser.userId;
     String userId1 = "d13e49f6255c8729cbb201310f49d70d65f365415a67f034b567b7eac962b944eda131376594ef5e23b025fada4e4259e953ceb45ea57a2ced7872c567e6d1fae8dcc3a9772ead783d8513032e77d3f1";
     String userId2 = "d13e49f6255c8729cbb201310f49d70d65f365415a67f034b567b7eac962b944eda131376594ef5e23b025fada4e4259e953ceb45ea57a2ced7872c567e6d1fae8dcc3a9772ead783d8513032e77d3f2";
     String userId3 = "d13e49f6255c8729cbb201310f49d70d65f365415a67f034b567b7eac962b944eda131376594ef5e23b025fada4e4259e953ceb45ea57a2ced7872c567e6d1fae8dcc3a9772ead783d8513032e77d3f3";

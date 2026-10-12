@@ -4,6 +4,7 @@ import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk/events/sync_ready_event.dart';
 import 'package:didomi_sdk_example/testapps/sample_for_set_user_tests.dart' as app;
+import 'package:didomi_sdk_example/widgets/set_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -16,7 +17,9 @@ import 'util/scroll_helper.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  const String userId =
+  // Long-lived user with consents stored on the server, required to assert that the remote status is applied.
+  // Its sync is slow on the backend (large history) and can hit the SDK sync timeout: other tests use a fresh user.
+  const String existingUserId =
       "d13e49f6255c8729cbb201310f49d70d65f365415a67f034b567b7eac962b944eda131376594ef5e23b025fada4e4259e953ceb45ea57a2ced7872c567e6d1fae8dcc3a9772ead783d8513032e77d3fd";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
@@ -67,13 +70,15 @@ void main() {
   /// Waits for the sync result.
   ///
   /// [retry], when provided, re-triggers the action that caused the sync (e.g. re-tapping
-  /// `submitSetUser`) once if a [syncError] is observed, to absorb a transient failure from the
-  /// real sync backend hit by these tests. Only pass [retry] where a successful sync is expected;
+  /// `submitSetUser`) up to [maxSyncRetries] times, with an increasing delay, while a [syncError]
+  /// is observed, to absorb transient failures (e.g. 3s read timeouts on CI) from the real sync
+  /// backend hit by these tests. Only pass [retry] where a successful sync is expected;
   /// tests that intentionally expect a sync error should call [waitForSync] without it.
   Future<void> waitForSync(WidgetTester tester, {Future<void> Function()? retry}) async {
     await waitForSyncResult(tester);
 
-    if (retry != null && syncError) {
+    for (var attempt = 1; retry != null && syncError && attempt <= maxSyncRetries; attempt++) {
+      await tester.runAsync(() => Future.delayed(Duration(seconds: 2 * attempt)));
       resetExpectedSyncValues();
       await retry();
       await waitForSyncResult(tester);
@@ -112,14 +117,14 @@ void main() {
     expect(syncReadyEvent?.statusApplied, true);
     expect((await syncReadyEvent?.syncAcknowledged()), isNot(null)); // Can be true or false from iOS, but should not be null
     expect((await syncReadyEvent?.syncAcknowledged()), false);
-    expect(syncReadyEvent?.organizationUserId, userId);
+    expect(syncReadyEvent?.organizationUserId, SetUser.userId);
   }
 
   // Assert that all the expected sync variables are populated.
   void assertExpectedSyncValuesArePopulated() {
     expect(syncError, false);
     expect(syncReadyEvent, isNot(null));
-    expect(syncReadyEvent?.organizationUserId, userId);
+    expect(syncReadyEvent?.organizationUserId, SetUser.userId);
   }
 
   // Assert that all the expected sync variables are empty.
@@ -132,6 +137,7 @@ void main() {
     // Run before each test.
     setUp(() {
       syncReadyEvent = null;
+      SetUser.userId = SetUser.freshUserId;
     });
 
     /// Without initialization
@@ -207,6 +213,8 @@ void main() {
     });
 
     testWidgets("Click setUser with id with underage null", (WidgetTester tester) async {
+      SetUser.userId = existingUserId;
+
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -245,13 +253,15 @@ void main() {
         await tester.pumpAndSettle();
       });
 
-      expect(syncReadyEvent?.organizationUserId, userId);
+      expect(syncReadyEvent?.organizationUserId, SetUser.userId);
       expect(syncError, false);
 
       await assertSyncReadyEvent(tester);
     });
 
     testWidgets("Click setUser with id and underage false", (WidgetTester tester) async {
+      SetUser.userId = existingUserId;
+
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -290,13 +300,15 @@ void main() {
         await tester.pumpAndSettle();
       });
 
-      expect(syncReadyEvent?.organizationUserId, userId);
+      expect(syncReadyEvent?.organizationUserId, SetUser.userId);
       expect(syncError, false);
 
       await assertSyncReadyEvent(tester);
     });
 
     testWidgets("Click setUser with id and underage true", (WidgetTester tester) async {
+      SetUser.userId = existingUserId;
+
       // Start app
       app.main();
       await tester.pumpAndSettle();
@@ -335,7 +347,7 @@ void main() {
         await tester.pumpAndSettle();
       });
 
-      expect(syncReadyEvent?.organizationUserId, userId);
+      expect(syncReadyEvent?.organizationUserId, SetUser.userId);
       expect(syncError, false);
 
       await assertSyncReadyEvent(tester);
