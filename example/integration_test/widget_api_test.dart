@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
@@ -106,9 +105,6 @@ void main() {
       assert(isError == false);
     });
 
-    // With the current Android SDK, the Web SDK fails to notify the native SDK that the widget is shown
-    // ("androidInterface.onWidgetShown is not a function"): isWidgetVisible returns false and hideWidget is ignored.
-    // To be enabled on Android once the native SDK including the fix is released.
     testWidgets("Widget visibility and hide", (WidgetTester tester) async {
       // Start app: the SDK is still initialized and the widget displayed by the previous test is still visible
       app.main();
@@ -130,6 +126,6 @@ void main() {
       assertNativeMessage("isWidgetVisible", resultFalseMessage);
 
       assert(isError == false);
-    }, skip: Platform.isAndroid);
+    });
   });
 }
