@@ -2,6 +2,10 @@
 /// Prevents a lost event from hanging a test until the much coarser suite-level timeout.
 const syncTimeout = Duration(seconds: 20);
 
+/// Number of times a sync expected to succeed is re-triggered after an `onSyncError`,
+/// to absorb transient failures from the real sync backend.
+const maxSyncRetries = 3;
+
 /// Common messages for assertions
 const defaultMessage = "Native message: --";
 const notReadyMessage = "Native message: Failed: 'Didomi SDK is not ready. Use the onReady callback to access this method.'.";
