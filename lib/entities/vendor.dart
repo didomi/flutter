@@ -1,3 +1,6 @@
+import 'dart:core';
+import 'dart:core' as core show num;
+
 // Class used to represent a vendor.
 class Vendor implements Comparable<Vendor> {
   // Vendor ID.
@@ -60,7 +63,7 @@ class Namespaces {
 
   Namespaces.fromJson(dynamic json)
       : iab2 = json["iab2"],
-        num = json["num"];
+        num = (json["num"] as core.num?)?.toInt();
 }
 
 class Url {

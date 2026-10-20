@@ -690,7 +690,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val id = jsonParameters["id"] as? String ?: return null
         val algorithm = jsonParameters["algorithm"] as? String ?: return null
         val secretId = jsonParameters["secretId"] as? String ?: return null
-        val expiration = jsonParameters["expiration"] as? Int
+        val expiration = jsonParameters["expiration"] as? Number
         val initializationVector = jsonParameters["initializationVector"] as? String
         val digest = jsonParameters["digest"] as? String
         val salt = jsonParameters["salt"] as? String
