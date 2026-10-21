@@ -11,7 +11,10 @@ import 'package:flutter/material.dart';
 class SetUser extends StatefulWidget {
   /// Organization user ID, generated once per app process so that each test run syncs a fresh user.
   /// Syncing a long-lived user with a large history is slow on the backend and hits the SDK sync timeout.
-  static final String freshUserId = "flutter-sample-${DateTime.now().millisecondsSinceEpoch}-${Random().nextInt(1 << 32)}";
+  static final String freshUserId = newUserId();
+
+  /// Generates a new organization user ID, unknown from the sync backend.
+  static String newUserId() => "flutter-sample-${DateTime.now().millisecondsSinceEpoch}-${Random().nextInt(1 << 32)}";
 
   /// Organization user ID used by setUser with an ID, can be overridden by tests.
   static String userId = freshUserId;
