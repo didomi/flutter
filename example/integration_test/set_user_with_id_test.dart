@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk/events/sync_ready_event.dart';
+import 'package:didomi_sdk/parameters/didomi_user_parameters.dart';
+import 'package:didomi_sdk/parameters/user_auth_params.dart';
 import 'package:didomi_sdk_example/testapps/sample_for_set_user_tests.dart' as app;
 import 'package:didomi_sdk_example/widgets/set_user.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +18,6 @@ import 'util/scroll_helper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-
-  // Long-lived user with consents stored on the server, required to assert that the remote status is applied.
-  // Its sync is slow on the backend (large history) and can hit the SDK sync timeout: other tests use a fresh user.
-  const String existingUserId =
-      "d13e49f6255c8729cbb201310f49d70d65f365415a67f034b567b7eac962b944eda131376594ef5e23b025fada4e4259e953ceb45ea57a2ced7872c567e6d1fae8dcc3a9772ead783d8513032e77d3fd";
 
   final initializeBtnFinder = find.byKey(Key("initializeSmall"));
   final clearUser = find.byKey(Key("clearUser"));
@@ -89,6 +86,34 @@ void main() {
       true,
       reason: 'waitForSync timed out after $syncTimeout without onSyncReady/onSyncError firing',
     );
+  }
+
+  /// Sets a new user whose consents are stored on the server, so that its next sync after a reset
+  /// applies the remote status.
+  ///
+  /// A new user is used instead of a long-lived one: syncing a user with a large history is slow
+  /// on the backend and hits the SDK sync timeout (3s on Android).
+  Future<void> setNewUserWithRemoteStatus(WidgetTester tester) async {
+    SetUser.userId = SetUser.newUserId();
+    final userParameters = DidomiUserParameters(userAuth: UserAuthWithoutParams(SetUser.userId));
+
+    // The user is unknown from the server: give consent so that it is stored for this user
+    await DidomiSdk.reset();
+    resetExpectedSyncValues();
+    await DidomiSdk.setUserWithParameters(userParameters);
+    await waitForSyncResult(tester);
+    await DidomiSdk.setUserAgreeToAll();
+
+    // Wait until the server returns the stored status for this user
+    for (var attempt = 1; attempt <= maxSyncRetries && syncReadyEvent?.statusApplied != true; attempt++) {
+      await tester.runAsync(() => Future.delayed(Duration(seconds: 2 * attempt)));
+      await DidomiSdk.reset();
+      resetExpectedSyncValues();
+      await DidomiSdk.setUserWithParameters(userParameters);
+      await waitForSyncResult(tester);
+    }
+
+    expect(syncReadyEvent?.statusApplied, true, reason: 'Remote status of the new user was not applied');
   }
 
   // Assert sync event is triggered correctly. TODO: Fails since 2.36.2, needs to be fixed from the native side to be re-enabled.
@@ -213,13 +238,13 @@ void main() {
     });
 
     testWidgets("Click setUser with id with underage null", (WidgetTester tester) async {
-      SetUser.userId = existingUserId;
-
       // Start app
       app.main();
       await tester.pumpAndSettle();
 
       await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
+
+      await setNewUserWithRemoteStatus(tester);
 
       resetExpectedSyncValues();
 
@@ -260,13 +285,13 @@ void main() {
     });
 
     testWidgets("Click setUser with id and underage false", (WidgetTester tester) async {
-      SetUser.userId = existingUserId;
-
       // Start app
       app.main();
       await tester.pumpAndSettle();
 
       await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
+
+      await setNewUserWithRemoteStatus(tester);
 
       resetExpectedSyncValues();
 
@@ -307,13 +332,13 @@ void main() {
     });
 
     testWidgets("Click setUser with id and underage true", (WidgetTester tester) async {
-      SetUser.userId = existingUserId;
-
       // Start app
       app.main();
       await tester.pumpAndSettle();
 
       await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
+
+      await setNewUserWithRemoteStatus(tester);
 
       resetExpectedSyncValues();
 
