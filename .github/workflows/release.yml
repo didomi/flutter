@@ -75,6 +75,7 @@ jobs:
         run: sh .github/scripts/uitests_for_ios.sh
 
       - name: Archive test results
+        if: ${{ always() }}
         uses: actions/upload-artifact@v7
         with:
           name: logs_ios
