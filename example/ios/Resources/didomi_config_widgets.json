@@ -145,7 +145,11 @@
             "artifacts": {
                 "web": {
                     "en": {
-                        "modern": "https://sdk.privacy-center.org/widgets/ccd26148-1e19-4c39-b1af-a51e09b1137d/NL7TGFDE/4qKUgHGF/widget-agTqkmk7.en.js"
+                        "modern": "https://sdk.privacy-center.org/widgets/ccd26148-1e19-4c39-b1af-a51e09b1137d/NL7TGFDE/4qKUgHGF/widget-agTqkmk7.en.js",
+                        "legacy": {
+                            "url": "https://sdk.privacy-center.org/widgets/ccd26148-1e19-4c39-b1af-a51e09b1137d/NL7TGFDE/4qKUgHGF/widget-agTqkmk7.en.legacy.js",
+                            "globalName": "widget-agTqkmk7_en"
+                        }
                     }
                 }
             }
@@ -155,7 +159,11 @@
             "artifacts": {
                 "web": {
                     "en": {
-                        "modern": "https://sdk.privacy-center.org/widgets/ccd26148-1e19-4c39-b1af-a51e09b1137d/Btba3hwV/AyXBPXAm/widget-n9LHkiCT.en.js"
+                        "modern": "https://sdk.privacy-center.org/widgets/ccd26148-1e19-4c39-b1af-a51e09b1137d/Btba3hwV/AyXBPXAm/widget-n9LHkiCT.en.js",
+                        "legacy": {
+                            "url": "https://sdk.privacy-center.org/widgets/ccd26148-1e19-4c39-b1af-a51e09b1137d/Btba3hwV/AyXBPXAm/widget-n9LHkiCT.en.legacy.js",
+                            "globalName": "widget-n9LHkiCT_en"
+                        }
                     }
                 }
             }
@@ -165,7 +173,11 @@
             "artifacts": {
                 "web": {
                     "en": {
-                        "modern": "https://sdk.privacy-center.org/widgets/ccd26148-1e19-4c39-b1af-a51e09b1137d/HacCYnLW/6mDVphxT/widget-i44BcgLB.en.js"
+                        "modern": "https://sdk.privacy-center.org/widgets/ccd26148-1e19-4c39-b1af-a51e09b1137d/HacCYnLW/6mDVphxT/widget-i44BcgLB.en.js",
+                        "legacy": {
+                            "url": "https://sdk.privacy-center.org/widgets/ccd26148-1e19-4c39-b1af-a51e09b1137d/HacCYnLW/6mDVphxT/widget-i44BcgLB.en.legacy.js",
+                            "globalName": "widget-i44BcgLB_en"
+                        }
                     }
                 }
             }
@@ -175,7 +187,11 @@
             "artifacts": {
                 "web": {
                     "en": {
-                        "modern": "https://sdk.privacy-center.org/widgets/ccd26148-1e19-4c39-b1af-a51e09b1137d/gC8XQhbM/WAAriM9P/widget-kp3bfLR8.en.js"
+                        "modern": "https://sdk.privacy-center.org/widgets/ccd26148-1e19-4c39-b1af-a51e09b1137d/gC8XQhbM/WAAriM9P/widget-kp3bfLR8.en.js",
+                        "legacy": {
+                            "url": "https://sdk.privacy-center.org/widgets/ccd26148-1e19-4c39-b1af-a51e09b1137d/gC8XQhbM/WAAriM9P/widget-kp3bfLR8.en.legacy.js",
+                            "globalName": "widget-kp3bfLR8_en"
+                        }
                     }
                 }
             }
