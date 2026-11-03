@@ -215,6 +215,13 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
         sendEvent("onHideWidget")
     }
 
+    override fun widgetSwitchLayer(event: WidgetSwitchLayerEvent) {
+        sendEvent(
+            "onWidgetSwitchLayer",
+            mapOf("widgetId" to event.widgetId, "layerName" to event.layerName, "targetLayerName" to event.targetLayerName)
+        )
+    }
+
     /*
      * Consent events
      */

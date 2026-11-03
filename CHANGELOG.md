@@ -1,5 +1,8 @@
 # Release Note
 
+## ?????
+- Add onWidgetSwitchLayer event, triggered when the user navigates to another layer inside a widget.
+
 ## 2.37.1
 - Update latest versions of native Android (2.53.0) and iOS (2.53.1) sdks.
 

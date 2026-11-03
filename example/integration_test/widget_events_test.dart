@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk/events/show_widget_event.dart';
+import 'package:didomi_sdk/events/widget_switch_layer_event.dart';
 import 'package:didomi_sdk_example/testapps/sample_for_notice_tests.dart' as app;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,11 +13,13 @@ import 'util/initialize_helper.dart';
 
 /// Coverage note:
 ///
-/// onShowWidget / onHideWidget are emitted by the Web SDK from inside a
+/// onShowWidget / onHideWidget / onWidgetSwitchLayer are emitted by the Web SDK from inside a
 /// WebView-rendered experience. The notice served by this example app's
 /// configuration is natively rendered and contains no widget, so real widget
 /// event delivery is not produced here: it is covered by widget_api_test.dart,
 /// which initializes the SDK with a configuration containing widgets.
+/// onWidgetSwitchLayer requires navigating between layers inside the widget
+/// WebView, which is not automated here.
 ///
 /// This test therefore covers what is verifiable automatically:
 ///  - the new listener fields exist, are assignable and are accepted by
@@ -39,6 +42,7 @@ void main() {
   bool widgetWasShown = false;
   bool widgetWasHidden = false;
   ShowWidgetEvent? lastShowWidgetEvent;
+  WidgetSwitchLayerEvent? lastWidgetSwitchLayerEvent;
 
   final listener = EventListener();
   listener.onError = (String message) {
@@ -54,6 +58,9 @@ void main() {
   listener.onHideWidget = () {
     widgetWasHidden = true;
   };
+  listener.onWidgetSwitchLayer = (WidgetSwitchLayerEvent event) {
+    lastWidgetSwitchLayerEvent = event;
+  };
 
   DidomiSdk.addEventListener(listener);
 
@@ -68,6 +75,7 @@ void main() {
       assert(widgetWasShown == false);
       assert(widgetWasHidden == false);
       assert(lastShowWidgetEvent == null);
+      assert(lastWidgetSwitchLayerEvent == null);
     });
 
     testWidgets("Widget event listeners do not disrupt the event flow", (WidgetTester tester) async {
@@ -97,6 +105,7 @@ void main() {
       assert(widgetWasShown == false);
       assert(widgetWasHidden == false);
       assert(lastShowWidgetEvent == null);
+      assert(lastWidgetSwitchLayerEvent == null);
     });
   });
 }

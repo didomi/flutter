@@ -2,6 +2,7 @@
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/events/event_listener.dart';
 import 'package:didomi_sdk/events/show_widget_event.dart';
+import 'package:didomi_sdk/events/widget_switch_layer_event.dart';
 import 'package:didomi_sdk_example/testapps/sample_for_widget_tests.dart' as app;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -28,6 +29,7 @@ void main() {
   bool isReady = false;
   ShowWidgetEvent? lastShowWidgetEvent;
   bool widgetWasHidden = false;
+  WidgetSwitchLayerEvent? lastWidgetSwitchLayerEvent;
 
   final listener = EventListener();
   listener.onError = (String message) {
@@ -41,6 +43,9 @@ void main() {
   };
   listener.onHideWidget = () {
     widgetWasHidden = true;
+  };
+  listener.onWidgetSwitchLayer = (WidgetSwitchLayerEvent event) {
+    lastWidgetSwitchLayerEvent = event;
   };
 
   DidomiSdk.addEventListener(listener);
@@ -80,6 +85,7 @@ void main() {
 
       assert(lastShowWidgetEvent == null);
       assert(widgetWasHidden == false);
+      assert(lastWidgetSwitchLayerEvent == null);
     });
 
     testWidgets("Show widget", (WidgetTester tester) async {
@@ -102,6 +108,8 @@ void main() {
 
       await waitFor(tester, () => lastShowWidgetEvent != null, "onShowWidget event was not received");
       expect(lastShowWidgetEvent?.widgetId, "widget_cpra");
+      // Displaying a widget is not a layer switch
+      assert(lastWidgetSwitchLayerEvent == null);
       assert(isError == false);
     });
 
@@ -125,6 +133,8 @@ void main() {
       await tester.pumpAndSettle();
       assertNativeMessage("isWidgetVisible", resultFalseMessage);
 
+      // Hiding a widget is not a layer switch
+      assert(lastWidgetSwitchLayerEvent == null);
       assert(isError == false);
     });
   });

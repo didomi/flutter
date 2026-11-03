@@ -168,6 +168,9 @@ class EventsHelper {
     didomiListener.onHideWidget = () {
       onEvent("Widget hidden");
     };
+    didomiListener.onWidgetSwitchLayer = (event) {
+      onEvent("Widget layer switched (widgetId: ${event.widgetId}, layerName: ${event.layerName}, targetLayerName: ${event.targetLayerName})");
+    };
 
     DidomiSdk.addEventListener(didomiListener);
   }
