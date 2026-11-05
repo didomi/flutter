@@ -2,6 +2,7 @@ import 'package:didomi_sdk/events/sync_ready_event.dart';
 
 import 'integration_error_event.dart';
 import 'show_widget_event.dart';
+import 'widget_custom_action_event.dart';
 import 'widget_switch_layer_event.dart';
 
 /// Listener to events sent by the Didomi SDK
@@ -194,4 +195,7 @@ class EventListener {
 
   /// The user navigated to another layer inside a widget
   dynamic Function(WidgetSwitchLayerEvent event) onWidgetSwitchLayer = (event) {};
+
+  /// The user clicked a custom action button inside a widget
+  dynamic Function(WidgetCustomActionEvent event) onWidgetCustomAction = (event) {};
 }

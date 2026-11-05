@@ -171,6 +171,9 @@ class EventsHelper {
     didomiListener.onWidgetSwitchLayer = (event) {
       onEvent("Widget layer switched (widgetId: ${event.widgetId}, layerName: ${event.layerName}, targetLayerName: ${event.targetLayerName})");
     };
+    didomiListener.onWidgetCustomAction = (event) {
+      onEvent("Widget custom action (widgetId: ${event.widgetId}, layerName: ${event.layerName}, customActionId: ${event.customActionId})");
+    };
 
     DidomiSdk.addEventListener(didomiListener);
   }

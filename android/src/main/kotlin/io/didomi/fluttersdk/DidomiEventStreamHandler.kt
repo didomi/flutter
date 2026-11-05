@@ -222,6 +222,13 @@ class DidomiEventStreamHandler : EventChannel.StreamHandler, DidomiEventListener
         )
     }
 
+    override fun widgetCustomAction(event: WidgetCustomActionEvent) {
+        sendEvent(
+            "onWidgetCustomAction",
+            mapOf("widgetId" to event.widgetId, "layerName" to event.layerName, "customActionId" to event.customActionId)
+        )
+    }
+
     /*
      * Consent events
      */
