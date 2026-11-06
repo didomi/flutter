@@ -45,6 +45,23 @@ void main() {
       assert(isReady == false);
     });
 
+    testWidgets("Get applicable regulation configuration without initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      var exceptionThrown = false;
+      try {
+        await DidomiSdk.applicableRegulationConfiguration;
+      } on PlatformException {
+        exceptionThrown = true;
+      }
+      assert(exceptionThrown);
+
+      assert(isError == false);
+      assert(isReady == false);
+    });
+
     testWidgets("Get applicable regulation with initialization", (WidgetTester tester) async {
       // Start app
       app.main();
@@ -57,6 +74,25 @@ void main() {
 
       final regulation = await DidomiSdk.applicableRegulation;
       assert(regulation == "gdpr");
+    });
+
+    testWidgets("Get applicable regulation configuration with initialization", (WidgetTester tester) async {
+      // Start app
+      app.main();
+      await tester.pumpAndSettle();
+
+      await InitializeHelper.initializeIfNeeded(tester, initializeBtnFinder, isReady: () => isReady);
+
+      assert(isError == false);
+      assert(isReady == true);
+
+      // No regulation configuration is provided with the default configuration
+      final configuration = await DidomiSdk.applicableRegulationConfiguration;
+      assert(configuration == null);
+
+      final currentUserStatus = await DidomiSdk.currentUserStatus;
+      assert(currentUserStatus.regulation == "gdpr");
+      assert(currentUserStatus.regulationConfiguration == null);
     });
   });
 }

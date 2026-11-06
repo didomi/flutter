@@ -99,6 +99,8 @@ import Didomi
             getUserStatus(result: result)
         case "getApplicableRegulation":
             getApplicableRegulation(result: result)
+        case "getApplicableRegulationConfiguration":
+            getApplicableRegulationConfiguration(result: result)
         case "getUserCountryCode":
             getUserCountryCode(result: result)
         case "getUserRegionCode":
@@ -538,6 +540,19 @@ import Didomi
         }
         let regulation = Didomi.shared.applicableRegulation.description
         result(regulation)
+    }
+
+    /**
+     * Get the applicable regulation configuration
+     - Returns: json describing the applicable regulation configuration, or nil if no regulation configuration is provided
+     */
+    func getApplicableRegulationConfiguration(result: @escaping FlutterResult) {
+        if !Didomi.shared.isReady() {
+            result(FlutterError.init(code: "sdk_not_ready", message: SwiftDidomiSdkPlugin.didomiNotReadyException, details: nil))
+            return
+        }
+        let encoded = EntitiesHelper.dictionary(from: Didomi.shared.applicableRegulationConfiguration)
+        result(encoded)
     }
 
     /**

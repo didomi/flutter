@@ -1,5 +1,8 @@
 # Release Note
 
+## ?????
+- Add the custom regulation (`applicableRegulation` returns `custom` when a regulation configuration is provided), `applicableRegulationConfiguration` and `CurrentUserStatus.regulationConfiguration`.
+
 ## 2.38.0
 - Update latest versions of native Android (2.54.0) and iOS (2.54.0) sdks.
 

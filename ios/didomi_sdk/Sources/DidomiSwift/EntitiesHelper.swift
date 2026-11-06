@@ -38,7 +38,25 @@ class EntitiesHelper {
     static func dictionary(from currentUserStatus: CurrentUserStatus?) -> [String: Any]? {
         let encoder = JSONEncoder()
         let data = try? encoder.encode(currentUserStatus)
-        return dictionary(from: data)
+        var encoded = dictionary(from: data)
+        // The regulation configuration is not encoded by the SDK
+        encoded?["regulation_configuration"] = (dictionary(from: currentUserStatus?.regulationConfiguration) as Any?) ?? NSNull()
+        return encoded
+    }
+
+    // Convert an instance of Regulation.Configuration into a dictionary (Regulation.Configuration is not Codable).
+    static func dictionary(from configuration: Regulation.Configuration?) -> [String: Any]? {
+        guard let configuration = configuration else {
+            return nil
+        }
+        return [
+            "id": configuration.id,
+            "versionId": (configuration.versionId as Any?) ?? NSNull(),
+            "numericalId": (configuration.numericalId as Any?) ?? NSNull(),
+            "regulationName": configuration.regulationName,
+            "tokenStorageName": configuration.tokenStorageName,
+            "mixed": configuration.mixed
+        ]
     }
     
     // Convert an instance of VendorStatus into a dictionary.
