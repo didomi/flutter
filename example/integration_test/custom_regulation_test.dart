@@ -62,8 +62,7 @@ void main() {
       assert(isReady == true);
 
       final currentUserStatus = await DidomiSdk.currentUserStatus;
-      // The regulation of the status is the regulation name of the configuration
-      assert(currentUserStatus.regulation == "gdpr");
+      assert(currentUserStatus.regulation == "custom");
       assert(currentUserStatus.regulationConfiguration != null);
       assert(currentUserStatus.regulationConfiguration!.id == "abcd");
       assert(currentUserStatus.regulationConfiguration!.versionId == "v1");

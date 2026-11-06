@@ -39,6 +39,10 @@ class EntitiesHelper {
         let encoder = JSONEncoder()
         let data = try? encoder.encode(currentUserStatus)
         var encoded = dictionary(from: data)
+        // Regulation of the status object ("custom" for a regulation configuration, the JSON contains the regulation name)
+        if let currentUserStatus = currentUserStatus {
+            encoded?["regulation"] = currentUserStatus.regulation.description
+        }
         // The regulation configuration is not encoded by the SDK
         encoded?["regulation_configuration"] = (dictionary(from: currentUserStatus?.regulationConfiguration) as Any?) ?? NSNull()
         return encoded
