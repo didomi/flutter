@@ -185,6 +185,12 @@ class DidomiEventStreamHandler: NSObject, FlutterStreamHandler {
         eventListener.onHideWidget = { [weak self] event in
             self?.sendEvent(eventType: "onHideWidget")
         }
+        eventListener.onWidgetSwitchLayer = { [weak self] event in
+            self?.sendEvent(eventType: "onWidgetSwitchLayer", arguments: ["widgetId": event.widgetID, "layerName": event.layerName, "targetLayerName": event.targetLayerName])
+        }
+        eventListener.onWidgetCustomAction = { [weak self] event in
+            self?.sendEvent(eventType: "onWidgetCustomAction", arguments: ["widgetId": event.widgetID, "layerName": event.layerName, "customActionId": event.customActionID])
+        }
     }
 
     func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {

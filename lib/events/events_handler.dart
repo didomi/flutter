@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'event_listener.dart';
 import 'integration_error_event.dart';
 import 'show_widget_event.dart';
+import 'widget_custom_action_event.dart';
+import 'widget_switch_layer_event.dart';
 
 /// Handler for events emitted by native SDK
 class EventsHandler {
@@ -400,6 +402,28 @@ class EventsHandler {
       case "onHideWidget":
         for (var listener in listeners) {
           listener.onHideWidget();
+        }
+        break;
+
+      case "onWidgetSwitchLayer":
+        final WidgetSwitchLayerEvent widgetSwitchLayerEvent = WidgetSwitchLayerEvent(
+          event["widgetId"] as String?,
+          event["layerName"] as String?,
+          event["targetLayerName"] as String?,
+        );
+        for (var listener in listeners) {
+          listener.onWidgetSwitchLayer(widgetSwitchLayerEvent);
+        }
+        break;
+
+      case "onWidgetCustomAction":
+        final WidgetCustomActionEvent widgetCustomActionEvent = WidgetCustomActionEvent(
+          event["widgetId"] as String,
+          event["layerName"] as String,
+          event["customActionId"] as String,
+        );
+        for (var listener in listeners) {
+          listener.onWidgetCustomAction(widgetCustomActionEvent);
         }
         break;
 
