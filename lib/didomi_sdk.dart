@@ -263,6 +263,7 @@ class DidomiSdk {
   /// Determine the regulation applicable for the user.
   /// If no regulation is applicable, will return [none].
   /// If a regulation configuration is provided, will return [custom] (see [applicableRegulationConfiguration]).
+  /// **Beta**: [custom] is in beta and may change in future releases.
   static Future<String> get applicableRegulation async {
     final String result = await _channel.invokeMethod("getApplicableRegulation");
     return result;
@@ -270,6 +271,8 @@ class DidomiSdk {
 
   /// Determine the regulation configuration applicable for the user (identity and version).
   /// If no regulation configuration is provided, will return null.
+  ///
+  /// **Beta**: this API is in beta and may change in future releases.
   static Future<RegulationConfiguration?> get applicableRegulationConfiguration async {
     final dynamic result = await _channel.invokeMethod("getApplicableRegulationConfiguration");
     if (result == null) return null;

@@ -11,6 +11,9 @@ class CurrentUserStatus {
   String? gppString;
   String? didomiDcs;
   String? regulation;
+  /// Regulation configuration applicable for the user (if a regulation configuration is provided).
+  ///
+  /// **Beta**: this API is in beta and may change in future releases.
   RegulationConfiguration? regulationConfiguration;
 
   CurrentUserStatus({this.purposes, this.vendors});

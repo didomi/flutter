@@ -1,4 +1,6 @@
-// Class used to represent the regulation configuration applicable for the user (identity and version).
+/// Class used to represent the regulation configuration applicable for the user (identity and version).
+///
+/// **Beta**: this API is in beta and may change in future releases.
 class RegulationConfiguration {
   // Regulation configuration ID.
   String id;
