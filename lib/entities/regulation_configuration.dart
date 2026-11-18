@@ -1,4 +1,4 @@
-/// Class used to represent the regulation configuration applicable for the user (identity and version).
+/// Regulation configuration defined in the console, applicable when the regulation is "custom" (identity and version).
 ///
 /// **Beta**: this API is in beta and may change in future releases.
 class RegulationConfiguration {

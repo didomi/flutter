@@ -10,6 +10,9 @@ class CurrentUserStatus {
   String? additionalConsent;
   String? gppString;
   String? didomiDcs;
+  /// Current regulation ("custom" if a regulation configuration is provided, see [regulationConfiguration]).
+  ///
+  /// **Beta**: "custom" is in beta and may change in future releases.
   String? regulation;
   /// Regulation configuration applicable for the user (if a regulation configuration is provided).
   ///
