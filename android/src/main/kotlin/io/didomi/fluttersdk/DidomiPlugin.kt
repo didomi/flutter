@@ -159,6 +159,8 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
                 "getApplicableRegulation" -> getApplicableRegulation(result)
 
+                "getApplicableRegulationConfiguration" -> getApplicableRegulationConfiguration(result)
+
                 "getUserCountryCode" -> getUserCountryCode(result)
 
                 "getUserRegionCode" -> getUserRegionCode(result)
@@ -380,6 +382,13 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         try {
             val currentUserStatus = Didomi.getInstance().currentUserStatus
             val map = EntitiesHelper.toMap(currentUserStatus)
+                ?.plus(
+                    mapOf(
+                        // Regulation of the status object ("custom" for a regulation configuration, the JSON contains the regulation name)
+                        "regulation" to currentUserStatus.regulation.value,
+                        "regulation_configuration" to EntitiesHelper.toMap(currentUserStatus.regulationConfiguration)
+                    )
+                )
             result.success(map)
         } catch (e: DidomiNotReadyException) {
             result.error("getCurrentUserStatus", e.message.orEmpty(), e)
@@ -437,6 +446,18 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             result.success(regulation.value)
         } catch (e: DidomiNotReadyException) {
             result.error("getApplicableRegulation", e.message.orEmpty(), e)
+        }
+    }
+
+    /**
+     * Get the applicable regulation configuration
+     */
+    private fun getApplicableRegulationConfiguration(result: Result) {
+        try {
+            val configuration = Didomi.getInstance().applicableRegulationConfiguration
+            result.success(EntitiesHelper.toMap(configuration))
+        } catch (e: DidomiNotReadyException) {
+            result.error("getApplicableRegulationConfiguration", e.message.orEmpty(), e)
         }
     }
 

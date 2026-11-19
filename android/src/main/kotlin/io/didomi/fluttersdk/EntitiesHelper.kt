@@ -2,6 +2,7 @@ package io.didomi.fluttersdk
 
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
+import io.didomi.sdk.Regulation
 import io.didomi.sdk.models.CurrentUserStatus
 import java.util.*
 
@@ -23,6 +24,19 @@ object EntitiesHelper {
         val valid = sourceObject ?: return null
         val json = gson.toJsonTree(valid)
         return gson.fromJson(json, HashMap::class.java)
+    }
+
+    /** Convert a regulation configuration into a map (built field by field to keep null values and the numerical id as an integer). */
+    fun toMap(configuration: Regulation.Configuration?): Map<String, Any?>? {
+        val valid = configuration ?: return null
+        return mapOf(
+            "id" to valid.id,
+            "versionId" to valid.versionId,
+            "numericalId" to valid.numericalId,
+            "regulationName" to valid.regulationName,
+            "tokenStorageName" to valid.tokenStorageName,
+            "mixed" to valid.mixed
+        )
     }
 
     /** Convert Map into PurposeStatus. */

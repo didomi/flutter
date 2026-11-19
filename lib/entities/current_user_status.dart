@@ -1,3 +1,5 @@
+import 'package:didomi_sdk/entities/regulation_configuration.dart';
+
 class CurrentUserStatus {
   Map<String, PurposeStatus>? purposes;
   Map<String, VendorStatus>? vendors;
@@ -8,7 +10,14 @@ class CurrentUserStatus {
   String? additionalConsent;
   String? gppString;
   String? didomiDcs;
+  /// Current regulation ("custom" if a regulation configuration is provided, see [regulationConfiguration]).
+  ///
+  /// **Beta**: "custom" is in beta and may change in future releases.
   String? regulation;
+  /// Regulation configuration applicable for the user (if a regulation configuration is provided).
+  ///
+  /// **Beta**: this API is in beta and may change in future releases.
+  RegulationConfiguration? regulationConfiguration;
 
   CurrentUserStatus({this.purposes, this.vendors});
 
@@ -22,7 +31,9 @@ class CurrentUserStatus {
         additionalConsent = json["addtl_consent"],
         didomiDcs = json["didomi_dcs"],
         gppString = json["gpp_string"],
-        regulation = json["regulation"];
+        regulation = json["regulation"],
+        regulationConfiguration =
+            json["regulation_configuration"] != null ? RegulationConfiguration.fromJson(json["regulation_configuration"]) : null;
 
   Map<String, dynamic>? purposesAsJson() => purposes?.map((key, value) => MapEntry(key, value.toJson()));
 

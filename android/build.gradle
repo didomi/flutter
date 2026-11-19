@@ -4,14 +4,14 @@ group = "io.didomi.fluttersdk"
 version = "2.38.0"
 
 buildscript {
-    ext.kotlin_version = "2.3.20"
+    ext.kotlin_version = "2.4.10"
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:9.0.1")
+        classpath("com.android.tools.build:gradle:9.1.1")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
@@ -66,7 +66,7 @@ kotlin {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    implementation("io.didomi.sdk:android:2.54.0")
+    implementation("io.didomi.sdk:android:2.54.1")
     implementation("androidx.multidex:multidex:2.0.1")
     implementation("com.google.code.gson:gson:2.13.2")
 }
