@@ -1,8 +1,6 @@
 import 'package:didomi_sdk/didomi_sdk.dart';
 import 'package:didomi_sdk/parameters/didomi_user_parameters.dart';
-import 'package:didomi_sdk/parameters/user_auth_params.dart';
 import 'package:didomi_sdk_example/widgets/base_sample_widget_state.dart';
-import 'package:didomi_sdk_example/widgets/set_user.dart';
 import 'package:flutter/material.dart';
 
 class SetUserWithContext extends StatefulWidget {
@@ -28,10 +26,7 @@ class _SetUserWithContextState
       age: 18,
       isLoggedIn: true,
     );
-    final parameters = DidomiUserParameters(
-      userAuth: UserAuthWithoutParams(SetUser.userId),
-      userContext: context,
-    );
+    final parameters = DidomiUserParameters(userContext: context);
     await DidomiSdk.setUserWithParameters(parameters);
     return 'OK';
   }

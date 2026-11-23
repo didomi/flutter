@@ -1073,11 +1073,9 @@ private extension SwiftDidomiSdkPlugin {
     - Returns: the computed DidomiUserParameters.
     */
     func buildDidomiUserParameters(jsonParameters: [String: Any], containerController: UIViewController? = nil) -> DidomiUserParameters {
-        guard let jsonUserAuth = jsonParameters["userAuth"] as? [String: Any] else {
-            fatalError("Missing required parameters")
+        let userAuth = (jsonParameters["userAuth"] as? [String: Any]).map {
+            buildUserAuth(jsonParameters: $0)
         }
-
-        let userAuth = buildUserAuth(jsonParameters: jsonUserAuth)
         let dcsUserAuth: UserAuthParams? = {
             if let dcsUserAuthParams = jsonParameters["dcsUserAuth"] as? [String: Any] {
                 return buildUserAuthParams(jsonParameters: dcsUserAuthParams)

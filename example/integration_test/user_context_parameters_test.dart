@@ -62,6 +62,23 @@ void main() {
     });
   }
 
+  testWidgets('context-only parameters omit userAuth from the channel',
+      (tester) async {
+    final parameters = DidomiUserParameters(userContext: contexts['full']);
+    await DidomiSdk.setUserWithParameters(parameters);
+    expect(calls, hasLength(1));
+    expect(calls.single.method, 'setUserWithParameters');
+    final json = calls.single.arguments['jsonDidomiUserParameters'] as Map;
+    expect(json.containsKey('userAuth'), false);
+    expect(json['userContext'], expectedContexts['full']);
+  });
+
+  testWidgets('empty parameters omit userAuth from serialization',
+      (tester) async {
+    expect(DidomiUserParameters().toJson().containsKey('userAuth'), false);
+    expect(DidomiMultiUserParameters().toJson().containsKey('userAuth'), false);
+  });
+
   testWidgets('native errors propagate to the caller', (tester) async {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (_) async {
