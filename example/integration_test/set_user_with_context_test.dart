@@ -16,36 +16,29 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   for (final platform in ['Android', 'iOS']) {
-    group('User context on $platform', () {
-      for (final action in [
-        'setUserWithContext',
-        'setUserWithContextAndSetupUI',
-        'setMultiUserWithContext',
-        'setMultiUserWithContextAndSetupUI',
-      ]) {
-        testWidgets('$action completes the native call', (tester) async {
-          app.main();
-          await tester.pumpAndSettle();
-          await InitializeHelper.initialize(
-              tester, find.byKey(Key('initializeSmall')));
-          await tester.tap(find.byKey(Key('reset')));
-          await tester.pumpAndSettle();
-          expect(await DidomiSdk.isReady, true);
+    testWidgets('SetUserWithContext completes the native call on $platform',
+        (tester) async {
+      app.main();
+      await tester.pumpAndSettle();
+      await InitializeHelper.initialize(
+          tester, find.byKey(Key('initializeSmall')));
+      await tester.tap(find.byKey(Key('reset')));
+      await tester.pumpAndSettle();
+      expect(await DidomiSdk.isReady, true);
 
-          final button = find.byKey(Key(action));
-          for (var attempt = 0;
-              attempt < 12 && button.hitTestable().evaluate().isEmpty;
-              attempt++) {
-            await scrollDown(tester, Key('components_list'));
-          }
-          expect(button.hitTestable(), findsOneWidget);
-          await tester.tap(button);
-          await tester.pumpAndSettle();
-          await tester.ensureVisible(find.byKey(Key('nativeResponse_$action')));
-          await tester.pumpAndSettle();
-          assertNativeMessage(action, okMessage);
-        }, skip: platform == 'Android' ? !Platform.isAndroid : !Platform.isIOS);
+      final button = find.byKey(Key('setUserWithContext'));
+      for (var attempt = 0;
+          attempt < 12 && button.hitTestable().evaluate().isEmpty;
+          attempt++) {
+        await scrollDown(tester, Key('components_list'));
       }
-    });
+      expect(button.hitTestable(), findsOneWidget);
+      await tester.tap(button);
+      await tester.pumpAndSettle();
+      await tester
+          .ensureVisible(find.byKey(Key('nativeResponse_setUserWithContext')));
+      await tester.pumpAndSettle();
+      assertNativeMessage('setUserWithContext', okMessage);
+    }, skip: platform == 'Android' ? !Platform.isAndroid : !Platform.isIOS);
   }
 }

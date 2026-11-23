@@ -1,6 +1,7 @@
 import 'package:didomi_sdk_example/widgets/initialize_small.dart';
 import 'package:didomi_sdk_example/widgets/reset.dart';
 import 'package:didomi_sdk_example/widgets/set_user.dart';
+import 'package:didomi_sdk_example/widgets/set_user_with_context.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(SampleForSetUserTestsApp());
@@ -23,6 +24,7 @@ class HomePage extends StatelessWidget {
             // Actions
             Reset(),
             SetUser(),
+            SetUserWithContext(),
           ],
         ),
       );
