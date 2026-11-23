@@ -1086,6 +1086,14 @@ private extension SwiftDidomiSdkPlugin {
         }()
         let synchronizedUsers = (jsonParameters["synchronizedUsers"] as? [[String: Any]])?.compactMap { buildUserAuthParams(jsonParameters: $0) }
         let isUnderage = jsonParameters["isUnderage"] as? Bool
+        let userContext = (jsonParameters["userContext"] as? [String: Any]).map {
+            DidomiUserContext(
+                attributes: $0["attributes"] as? [String: String],
+                variables: $0["variables"] as? [String: String],
+                age: $0["age"] as? Int,
+                isLoggedIn: $0["isLoggedIn"] as? Bool
+            )
+        }
 
         if let synchronizedUsers = synchronizedUsers {
             return DidomiMultiUserParameters(
@@ -1093,14 +1101,16 @@ private extension SwiftDidomiSdkPlugin {
                 dcsUserAuth: dcsUserAuth,
                 synchronizedUsers: synchronizedUsers,
                 containerController: containerController,
-                isUnderage: isUnderage
+                isUnderage: isUnderage,
+                userContext: userContext
             )
         } else {
             return DidomiUserParameters(
                 userAuth: userAuth,
                 dcsUserAuth: dcsUserAuth,
                 containerController: containerController,
-                isUnderage: isUnderage
+                isUnderage: isUnderage,
+                userContext: userContext
             )
         }
     }

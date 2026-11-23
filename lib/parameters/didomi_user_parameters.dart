@@ -1,4 +1,7 @@
+import 'package:didomi_sdk/parameters/didomi_user_context.dart';
 import 'package:didomi_sdk/parameters/user_auth_params.dart';
+
+export 'package:didomi_sdk/parameters/didomi_user_context.dart';
 
 /// User parameters for Didomi SDK
 class DidomiUserParameters {
@@ -11,12 +14,20 @@ class DidomiUserParameters {
   /// Whether the user is underage (null will keep the setting from initialization or from a previous call to `setUser`)
   bool? isUnderage;
 
-  DidomiUserParameters({required this.userAuth, this.dcsUserAuth, this.isUnderage});
+  /// Optional context forwarded with this user.
+  DidomiUserContext? userContext;
+
+  DidomiUserParameters(
+      {required this.userAuth,
+      this.dcsUserAuth,
+      this.isUnderage,
+      this.userContext});
 
   Map<String, dynamic> toJson() => {
         'userAuth': userAuth.toJson(),
         'dcsUserAuth': dcsUserAuth?.toJson(),
         'isUnderage': isUnderage,
+        if (userContext != null) 'userContext': userContext!.toJson(),
       };
 }
 
@@ -29,14 +40,20 @@ class DidomiMultiUserParameters extends DidomiUserParameters {
       {required UserAuth userAuth,
       UserAuthParams? dcsUserAuth,
       this.synchronizedUsers,
-      bool? isUnderage})
-      : super(userAuth: userAuth, dcsUserAuth: dcsUserAuth, isUnderage: isUnderage);
+      bool? isUnderage,
+      DidomiUserContext? userContext})
+      : super(
+            userAuth: userAuth,
+            dcsUserAuth: dcsUserAuth,
+            isUnderage: isUnderage,
+            userContext: userContext);
 
   @override
   Map<String, dynamic> toJson() {
     var map = super.toJson();
     map.addAll({
-      'synchronizedUsers': synchronizedUsers?.map((user) => user.toJson()).toList(),
+      'synchronizedUsers':
+          synchronizedUsers?.map((user) => user.toJson()).toList(),
     });
     return map;
   }

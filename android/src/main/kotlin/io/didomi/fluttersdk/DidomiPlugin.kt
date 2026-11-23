@@ -754,6 +754,14 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val dcsUserAuth = jsonParameters["dcsUserAuth"] as? Map<String, Any>
         val synchronizedUsers = jsonParameters["synchronizedUsers"] as? List<Map<String, Any>>
         val isUnderage = jsonParameters["isUnderage"] as? Boolean
+        val userContext = (jsonParameters["userContext"] as? Map<String, Any>)?.let {
+            UserContext(
+                attributes = it["attributes"] as? Map<String, String>,
+                variables = it["variables"] as? Map<String, String>,
+                age = (it["age"] as? Number)?.toInt(),
+                isLoggedIn = it["isLoggedIn"] as? Boolean,
+            )
+        }
 
         return if (synchronizedUsers == null) {
             DidomiUserParameters(
@@ -761,6 +769,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 dcsUserAuth = buildUserAuthParams(dcsUserAuth),
                 activity = activity,
                 isUnderage = isUnderage,
+                userContext = userContext,
             )
         } else {
             DidomiMultiUserParameters(
@@ -769,6 +778,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 synchronizedUsers = synchronizedUsers.mapNotNull { buildUserAuthParams(it) }.toTypedArray(),
                 activity = activity,
                 isUnderage = isUnderage,
+                userContext = userContext,
             )
         }
     }
