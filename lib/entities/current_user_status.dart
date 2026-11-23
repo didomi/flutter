@@ -1,4 +1,5 @@
 import 'package:didomi_sdk/entities/regulation_configuration.dart';
+import 'package:didomi_sdk/entities/source_widget.dart';
 
 class CurrentUserStatus {
   Map<String, PurposeStatus>? purposes;
@@ -18,6 +19,10 @@ class CurrentUserStatus {
   ///
   /// **Beta**: this API is in beta and may change in future releases.
   RegulationConfiguration? regulationConfiguration;
+  /// Privacy Widget that collected the current consent, if available.
+  ///
+  /// **Beta**: this API is in beta and may change in future releases.
+  SourceWidget? widget;
 
   CurrentUserStatus({this.purposes, this.vendors});
 
@@ -33,7 +38,8 @@ class CurrentUserStatus {
         gppString = json["gpp_string"],
         regulation = json["regulation"],
         regulationConfiguration =
-            json["regulation_configuration"] != null ? RegulationConfiguration.fromJson(json["regulation_configuration"]) : null;
+            json["regulation_configuration"] != null ? RegulationConfiguration.fromJson(json["regulation_configuration"]) : null,
+        widget = json["widget"] != null ? SourceWidget.fromJson(json["widget"]) : null;
 
   Map<String, dynamic>? purposesAsJson() => purposes?.map((key, value) => MapEntry(key, value.toJson()));
 
