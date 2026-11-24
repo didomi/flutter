@@ -93,6 +93,8 @@ void main() {
       final currentUserStatus = await DidomiSdk.currentUserStatus;
       assert(currentUserStatus.regulation == "gdpr");
       assert(currentUserStatus.regulationConfiguration == null);
+      // No consent collected by a Privacy Widget
+      assert(currentUserStatus.widget == null);
     });
   });
 }
