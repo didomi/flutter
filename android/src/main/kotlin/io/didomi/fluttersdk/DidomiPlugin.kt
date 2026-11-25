@@ -381,15 +381,7 @@ class DidomiPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun getCurrentUserStatus(result: Result) {
         try {
             val currentUserStatus = Didomi.getInstance().currentUserStatus
-            val map = EntitiesHelper.toMap(currentUserStatus)
-                ?.plus(
-                    mapOf(
-                        // Regulation of the status object ("custom" for a regulation configuration, the JSON contains the regulation name)
-                        "regulation" to currentUserStatus.regulation.value,
-                        "regulation_configuration" to EntitiesHelper.toMap(currentUserStatus.regulationConfiguration)
-                    )
-                )
-            result.success(map)
+            result.success(EntitiesHelper.toMap(currentUserStatus))
         } catch (e: DidomiNotReadyException) {
             result.error("getCurrentUserStatus", e.message.orEmpty(), e)
         }
